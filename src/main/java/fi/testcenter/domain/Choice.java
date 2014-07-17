@@ -1,5 +1,6 @@
 package fi.testcenter.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -9,6 +10,7 @@ public class Choice {
 	
 	@Id 
 	@GeneratedValue
+	
 	Integer id;
 	private String choice;
 	private Integer value;

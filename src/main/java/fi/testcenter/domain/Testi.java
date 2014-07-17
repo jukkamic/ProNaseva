@@ -2,6 +2,7 @@ package fi.testcenter.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,18 +12,17 @@ import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
-@Component
+
 @Entity
-public class Todo {
+public class Testi {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   
-  @Temporal(TemporalType.DATE)
-  private Date date;
-  
+  @Column(columnDefinition = "CHAR(20)")
   private String summary;
   
+  @Column(columnDefinition = "CHAR(20)")
   private String description;
 
   public String getSummary() {
@@ -43,7 +43,7 @@ public class Todo {
 
   @Override
   public String toString() {
-    return "Todo [summary=" + summary + ", description=" + description
+    return "Testi [summary=" + summary + ", description=" + description
         + "]";
   }
 

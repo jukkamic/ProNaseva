@@ -9,17 +9,17 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import fi.testcenter.domain.Todo;
+import fi.testcenter.domain.Testi;
 
 @Repository
-public class TodoDAO {
+public class TestiDAO {
 
 	
 	@PersistenceContext
 	EntityManager em;
 	
 	@Transactional
-	public void save(Todo todo) throws Exception {
+	public void save(Testi todo) throws Exception {
 		
 		em.persist(todo);
 				
@@ -28,13 +28,13 @@ public class TodoDAO {
 	}
 	
 	@Transactional
-	public void ListTodos() {
-	    Query q = em.createQuery("select t from Todo t");
-	    List<Todo> todoList = q.getResultList();
-	    System.out.println("Todo lukumäärä: " + todoList.size());
+	public void ListTesti() {
+	    Query q = em.createQuery("select t from Testi t");
+	    List<Testi> testiList = q.getResultList();
+	    System.out.println("Testiobjektien lukumäärä: " + testiList.size());
 	    System.out.println("Listaus: ");
-	    for(Todo todo : todoList) {
-	    	System.out.println(todo);
+	    for(Testi testi : testiList) {
+	    	System.out.println(testi);
 	    }
 	    
 	}

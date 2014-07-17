@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.dao.TodoDAO;
+import fi.testcenter.dao.TestiDAO;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Report;
-import fi.testcenter.domain.Todo;
+import fi.testcenter.domain.Testi;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.BasicInfoService;
 import fi.testcenter.service.ImporterService;
@@ -48,7 +48,7 @@ public class BasicInfoController {
 
 	
 	@Autowired
-	TodoDAO tdao;
+	TestiDAO tdao;
 	
 	
     @RequestMapping(method = RequestMethod.GET)
@@ -111,19 +111,19 @@ public class BasicInfoController {
     public String submitReport(HttpServletRequest request, Model model, 
     		@ModelAttribute("report") Report report, BindingResult result) {
     	
-    		Todo todo = new Todo();
+    		Testi testi = new Testi();
     	 	    		
-    	    todo.setSummary("This is a test");
-    	    todo.setDescription("This is a javatesti");
+    	    testi.setSummary("This is a test");
+    	    testi.setDescription("This is a javatesti");
     	    try {    	    
-    	    tdao.save(todo);
+    	    tdao.save(testi);
     	    }
     	    catch(Exception e)
     	    {
     	    	e.printStackTrace();
     	    	System.out.println("Errori: " + e.getMessage());
     	    }
-    	    tdao.ListTodos();
+    	    tdao.ListTesti();
     	        	       	    
     	    return "newReport";
     }

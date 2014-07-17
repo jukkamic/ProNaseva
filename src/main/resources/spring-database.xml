@@ -17,16 +17,15 @@
 		http://www.springframework.org/schema/data/jpa
 		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-	<bean id="entityManagerFactory"
+	<!--  <bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="ProNasevaPersistence" />
-		<property name="packagesToScan" value="fi.testcenter" />
-		<property name="dataSource" ref="dataSource" />
+				
 		<property name="jpaVendorAdapter">
 			<bean
 				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter" />
 		</property>
-	</bean>
+	</bean>  -->
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -37,17 +36,28 @@
 	</bean>
 
 
-	<!-- Käytetään EclipseLinkiä JPA-toteutuksena <bean id="entityManagerFactory" 
+	<bean id="entityManagerFactory" 
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> 
-		<property name="dataSource" ref="dataSource" /> <property name="packagesToScan" 
-		value="fi.testcenter" /> <property name="persistenceUnitName" value="Jarno" 
-		/> <property name="jpaVendorAdapter"> <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter" 
-		/> </property> <property name="jpaDialect"> <bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect" 
-		/> </property> <property name="loadTimeWeaver"> <bean class="org.springframework.instrument.classloading.SimpleLoadTimeWeaver" 
-		/> </property> </bean> <context:load-time-weaver weaver-class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver"/> 
-		Hallinnoidaan transaktioita automaattisesti <bean id="transactionManager" 
-		class="org.springframework.orm.jpa.JpaTransactionManager"> <property name="entityManagerFactory" 
-		ref="entityManagerFactory" /> </bean> -->
+			<property name="dataSource" ref="dataSource" /> 
+			<property name="packagesToScan" value="fi.testcenter.domain" /> 
+			<property name="persistenceUnitName" value="ProNasevaPersistence" /> 
+			<property name="jpaVendorAdapter"> 
+				<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter" /> 
+			</property> 
+			<property name="jpaDialect"> 
+				<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect"/> 
+			</property> 
+			<property name="loadTimeWeaver"> 
+				<bean class="org.springframework.instrument.classloading.SimpleLoadTimeWeaver"/> 
+			</property> 
+		</bean> 
+		 
+		<bean id="transactionManager" 
+			class="org.springframework.orm.jpa.JpaTransactionManager"> 
+		<property name="entityManagerFactory" ref="entityManagerFactory" /> 
+	</bean> 
 
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
 </beans>
