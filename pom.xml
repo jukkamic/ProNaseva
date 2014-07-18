@@ -92,7 +92,7 @@
 		</dependency>
 
 
-		
+	<!-- 	
 		    
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
@@ -103,14 +103,15 @@
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>javax.persistence</artifactId>
             <version>2.0.0</version>
-        </dependency>
-        
+        </dependency>   -->
+ 
+ <!-- 
 		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.2.4</version>
 		</dependency>
-
+ -->
 
 		<!-- Servlet -->
 		<dependency>

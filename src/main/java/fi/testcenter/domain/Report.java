@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Report {
@@ -23,6 +24,7 @@ public class Report {
     
 	private Workshop workshop;
     
+	@Transient
 	private List<Question> questions;	
 		
 	public Importer getImporter() {

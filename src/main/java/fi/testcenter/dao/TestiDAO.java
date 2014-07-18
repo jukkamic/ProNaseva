@@ -3,6 +3,8 @@ package fi.testcenter.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -14,21 +16,22 @@ import fi.testcenter.domain.Testi;
 @Repository
 public class TestiDAO {
 
-	
+
 	@PersistenceContext
-	EntityManager em;
+	EntityManager em; 
 	
 	@Transactional
-	public void save(Testi todo) throws Exception {
+	public void save(Testi testi) throws Exception {
+			
+		em.persist(testi);
 		
-		em.persist(todo);
-				
-		System.out.println("Persist: " + todo);
+		System.out.println("Persist: " + testi);
 		
 	}
 	
 	@Transactional
 	public void ListTesti() {
+		
 	    Query q = em.createQuery("select t from Testi t");
 	    List<Testi> testiList = q.getResultList();
 	    System.out.println("Testiobjektien lukumäärä: " + testiList.size());

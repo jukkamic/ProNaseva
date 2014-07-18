@@ -3,8 +3,6 @@ package fi.testcenter.web;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fi.testcenter.dao.ReportDAO;
 import fi.testcenter.dao.TestiDAO;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Report;
@@ -49,6 +48,9 @@ public class BasicInfoController {
 	
 	@Autowired
 	TestiDAO tdao;
+	
+	@Autowired
+	ReportDAO rdao;
 	
 	
     @RequestMapping(method = RequestMethod.GET)
@@ -117,13 +119,23 @@ public class BasicInfoController {
     	    testi.setDescription("This is a javatesti");
     	    try {    	    
     	    tdao.save(testi);
+    	    tdao.ListTesti();
     	    }
     	    catch(Exception e)
     	    {
     	    	e.printStackTrace();
     	    	System.out.println("Errori: " + e.getMessage());
     	    }
-    	    tdao.ListTesti();
+    	   
+    	    try {    	    
+        	    rdao.save(report);
+        	    rdao.ListTesti();
+        	    }
+        	    catch(Exception e)
+        	    {
+        	    	e.printStackTrace();
+        	    	System.out.println("Report error: " + e.getMessage());
+        	    }
     	        	       	    
     	    return "newReport";
     }
