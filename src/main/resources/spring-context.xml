@@ -13,8 +13,8 @@
 		http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 	<!-- Käytetään annotaatioita -->
-	
-	<context:component-scan base-package="fi.testcenter" />  
+
+	<context:component-scan base-package="fi.testcenter" />
 
 	<mvc:annotation-driven />
 	<task:annotation-driven />
