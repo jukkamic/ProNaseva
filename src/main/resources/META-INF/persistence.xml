@@ -6,9 +6,6 @@
 	<persistence-unit name="ProNasevaPersistence"
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>fi.testcenter.domain.Choice</class>
-		<class>fi.testcenter.domain.Report</class>
-		<class>fi.testcenter.domain.Testi</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver" />
