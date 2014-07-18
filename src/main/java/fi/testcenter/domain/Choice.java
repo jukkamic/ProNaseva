@@ -9,8 +9,8 @@ public class Choice {
 	
 	@Id 
 	@GeneratedValue
-	
 	Integer id;
+	
 	private String choice;
 	private Integer value;
 	
