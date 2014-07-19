@@ -16,7 +16,7 @@
 
 	<br><br>
 
-	<sf:form modelAttribute="basicInfo" action="submitWorkshopImporter" method="post">
+	<sf:form modelAttribute="report" action="submitWorkshopImporter" method="post">
 
 		<label for="importerSelect">Maahantuoja: </label>
 		<br>

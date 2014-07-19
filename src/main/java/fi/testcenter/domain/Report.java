@@ -22,8 +22,51 @@ public class Report {
 	Integer id;
 
 	private Importer importer;
-
 	private Workshop workshop;
+	private String vehicleModel;
+	private String vehicleRegistrationNumber;
+	private String vehicleRegistrationDate;
+	private String vehicleMileage;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getVehicleModel() {
+		return vehicleModel;
+	}
+
+	public void setVehicleModel(String vehicleModel) {
+		this.vehicleModel = vehicleModel;
+	}
+
+	public String getVehicleRegistrationNumber() {
+		return vehicleRegistrationNumber;
+	}
+
+	public void setVehicleRegistrationNumber(String vehicleRegistration) {
+		this.vehicleRegistrationNumber = vehicleRegistration;
+	}
+
+	public String getVehicleRegistrationDate() {
+		return vehicleRegistrationDate;
+	}
+
+	public void setVehicleRegistrationDate(String vehicleRegistrationDate) {
+		this.vehicleRegistrationDate = vehicleRegistrationDate;
+	}
+
+	public String getVehicleMileage() {
+		return vehicleMileage;
+	}
+
+	public void setVehicleMileage(String vehicleMileage) {
+		this.vehicleMileage = vehicleMileage;
+	}
 
 	@Transient
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();

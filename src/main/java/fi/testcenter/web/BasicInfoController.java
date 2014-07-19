@@ -24,11 +24,10 @@ import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.BasicInfoService;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.QuestionService;
-import fi.testcenter.web.form.BasicInfo;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes(value = { "basicInfo", "report" })
+@SessionAttributes(value = "report")
 public class BasicInfoController {
 
 	@Autowired
@@ -56,14 +55,14 @@ public class BasicInfoController {
 		importers = is.getImporters();
 		model.addAttribute("importers", importers);
 
-		model.addAttribute("basicInfo", new BasicInfo());
+		model.addAttribute("report", new Report());
 
 		return "start";
 	}
 
 	@RequestMapping(value = "/submitWorkshopImporter", method = RequestMethod.POST)
 	public String submitWorkshopImporter(HttpServletRequest request,
-			Model model, @ModelAttribute("basicInfo") BasicInfo bis,
+			Model model, @ModelAttribute("report") Report report,
 			BindingResult result) {
 
 		return "redirect:/basicInfo";
@@ -71,18 +70,14 @@ public class BasicInfoController {
 
 	@RequestMapping(value = "/basicInfo")
 	public String prepareForm(HttpServletRequest request, Model model,
-			@ModelAttribute("basicInfo") BasicInfo bis) {
-		model.addAttribute("basicInfo", bis);
+			@ModelAttribute("report") Report report) {
+		model.addAttribute("report", report);
 		return "basicInfo";
 	}
 
 	@RequestMapping(value = "/submitBasicInfo", method = RequestMethod.POST)
 	public String submitBasicInfo(HttpServletRequest request, Model model,
-			@ModelAttribute("basicInfo") BasicInfo bi, BindingResult result) {
-
-		Report report = new Report();
-		report.setImporter(bi.getImporter());
-		report.setWorkshop(bi.getWorkshop());
+			@ModelAttribute("report") Report report, BindingResult result) {
 
 		model.addAttribute("report", report);
 		return "redirect:/prepareReport";
@@ -92,6 +87,10 @@ public class BasicInfoController {
 	public String prepareForm(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
+		System.out.println("Maahantuoja: " + report.getImporter());
+		System.out.println("Korjaamo: " + report.getWorkshop());
+		System.out.println("Ajoneuvon rekisterinro: : "
+				+ report.getVehicleRegistrationNumber());
 		report.setQuestionGroups(qs.getQuestionGroups());
 		model.addAttribute("report", report);
 		return "newReport";
