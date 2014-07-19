@@ -17,16 +17,19 @@
 
 	<br><br>
 	<sf:form modelAttribute="report" action="submitBasicInfo" method="post">
-		Ajoneuvon malli:  <sf:input type="text" path="vehicleModel" class="form-control" 
-			style="width: 25em"></sf:input>
+		<label for="model">Ajoneuvon malli:</label>  
+		<sf:input type="text" path="vehicleModel" id="model" class="form-control" style="width: 25em"></sf:input>
 			<br>
-		Ajoneuvon rekisterinumero: <sf:input type="text" path="vehicleRegistrationNumber" class="form-control" 
+		<label for="registerNumber">Ajoneuvon rekisterinumero:</label> 			
+		<sf:input type="text" id="registerNumber" path="vehicleRegistrationNumber" class="form-control" 
 		 	style="width: 25em"></sf:input>
 		 	<br>
-		Ajoneuvon rekisteröintipäivämäärä: <sf:input type="text" path="vehicleRegistrationDate" class="form-control" 
+		<label for="registrationDate">Ajoneuvon rekisteröintipäivämäärä:</label> 
+		<sf:input type="text" id="registrationDate" path="vehicleRegistrationDate" class="form-control" 
 		 	style="width: 25em"></sf:input>
 		 	<br>
-		Ajoneuvon mittarilukema: <sf:input type="text" path="vehicleMileage" class="form-control" 
+		<label for="mileage">Ajoneuvon mittarilukema:</label> 
+		<sf:input type="text" id="mileage" path="vehicleMileage" class="form-control" 
 		 	style="width: 25em"></sf:input>
 		 	<br>
 		
