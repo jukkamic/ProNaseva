@@ -1,5 +1,6 @@
 package fi.testcenter.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,48 +14,54 @@ import javax.persistence.Transient;
 @Entity
 public class Report {
 
-    @Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	private Date date;
-    
-   @Id
-    @GeneratedValue
-    Integer id;
-    
+
+	@Id
+	@GeneratedValue
+	Integer id;
+
 	private Importer importer;
-    
+
 	private Workshop workshop;
-    
+
 	@Transient
-	private List<Question> questions;	
-		
+	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
+
 	public Importer getImporter() {
 		return importer;
 	}
+
 	public void setImporter(Importer importer) {
 		this.importer = importer;
 	}
+
 	public Workshop getWorkshop() {
 		return workshop;
 	}
+
 	public void setWorkshop(Workshop workshop) {
 		this.workshop = workshop;
 	}
-	public List<Question> getQuestions() {
-		return questions;
+
+	public List<QuestionGroup> getQuestionGroups() {
+		return questionGroups;
 	}
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+
+	public void setQuestionGroups(List<QuestionGroup> questionGroups) {
+		this.questionGroups = questionGroups;
 	}
+
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
+
 	public Report() {
 		this.date = new Date();
 	}
-		
-	
+
 }
