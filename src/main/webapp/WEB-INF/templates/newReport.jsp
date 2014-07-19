@@ -29,7 +29,7 @@
 												
 						<!-- MultipleChoiceQuestion (multiple choice + remarks) -->
 						<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
-							<h3><p>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</p></h3>
+							<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 						
 							
 							<div class="Demo-boot" style="padding-top: 15px;">
@@ -43,7 +43,7 @@
 							</div>
 							<br>
 							
-							<p><h4>Huomioita:</h4></p>
+							<h4>Huomioita:</h4>
 							<sf:textarea id="remarks" rows="5" cols="70" path="${question.remarks}" />
 							<br><br><br>
 						</c:if>
@@ -52,7 +52,7 @@
 						<!-- TextQuestion (textfield question) -->
 						
 						<c:if test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
-							<p><h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3></p>
+							<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 							<br>
 							<sf:textarea id="remarks" rows="5" cols="70" path="${question.answer}" />
 							<br>
