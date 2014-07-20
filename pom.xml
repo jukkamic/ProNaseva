@@ -6,7 +6,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-<!--  testi -->
 	<properties>
 		<java-version>1.6</java-version>
 		<org.springframework-version>3.2.0.RELEASE</org.springframework-version>
