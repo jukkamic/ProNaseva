@@ -84,6 +84,33 @@ public class QuestionDAOMock implements QuestionDAO {
 		questionGroup2.setQuestions(questionList2);
 		questionGroups.add(questionGroup2);
 
+		QuestionGroup questionGroup3 = new QuestionGroup();
+		questionGroup3.setTitle("Asiakkaan informoiminen");
+
+		ArrayList<Question> questionList3 = new ArrayList<Question>();
+		MultipleChoiceQuestion seventhQ = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options5 = new ArrayList<MultipleChoiceOption>();
+		seventhQ.setQuestion("Muistutettiinko asiakasta ottamaan huoltokirja mukaan?");
+		options5.add(new MultipleChoiceOption("Kyllä", 2));
+		options5.add(new MultipleChoiceOption("Ei", 0));
+		seventhQ.setOptions(options5);
+		questionList3.add(seventhQ);
+
+		MultipleChoiceQuestion eightQ = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options6 = new ArrayList<MultipleChoiceOption>();
+		eightQ.setQuestion("Nimettiinko huoltoneuvoja / vastasiko huoltoneuvoja nimellä selkeästi puhelimeen");
+		options6.add(new MultipleChoiceOption("Kyllä", 2));
+		options6.add(new MultipleChoiceOption("Ei", 0));
+		eightQ.setOptions(options6);
+		questionList3.add(eightQ);
+
+		TextfieldQuestion ninethQ = new TextfieldQuestion();
+		ninethQ.setQuestion("Muita huomioita");
+		questionList2.add(ninethQ);
+
+		questionGroup3.setQuestions(questionList3);
+		questionGroups.add(questionGroup3);
+
 		return questionGroups;
 
 	}

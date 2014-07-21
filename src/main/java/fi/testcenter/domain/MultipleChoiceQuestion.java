@@ -1,6 +1,7 @@
 package fi.testcenter.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Entity;
 public class MultipleChoiceQuestion extends Question implements Serializable {
 
 	private String question;
-	private List<MultipleChoiceOption> options;
+	private ArrayList<MultipleChoiceOption> options;
 	private MultipleChoiceOption chosenOption;
 	private String remarks;
 
@@ -25,7 +26,7 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 		return options;
 	}
 
-	public void setOptions(List<MultipleChoiceOption> options) {
+	public void setOptions(ArrayList<MultipleChoiceOption> options) {
 		this.options = options;
 	}
 

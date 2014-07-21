@@ -8,44 +8,53 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <body>
-<div id="wrap">
-	<div class="container">
-        <div class="page-header">
-			<h1>Alkutiedot</h1>
+	<div id="wrap">
+		<div class="container">
+			<div class="page-header">
+				<h1>Alkutiedot</h1>
+			</div>
+
+			<br>
+			<br>
+
+			<sf:form modelAttribute="report" action="submitWorkshopImporter"
+				method="post">
+
+				<label for="importerSelect">Maahantuoja: </label>
+				<br>
+				<sf:select style="width: auto" id="importerSelect" path="importer"
+					class="form-control">
+					<c:forEach var="importer" items="${importers}">
+						<option>${importer}</option>
+					</c:forEach>
+				</sf:select>
+				<br>
+				<br>
+				
+				<label for="workshopSelect">Korjaamo: </label>
+				<br>
+				<sf:select style="width: auto" id="workshopSelect" path="workshop"
+					class="form-control">
+					<c:forEach var="workshop" items="${workshops}">
+						<option>${workshop}</option>
+					</c:forEach>
+				</sf:select>
+
+				<br>
+				<br>
+				<button class="btn btn-large btn-primary" action="submit">Seuraava</button>
+			</sf:form>
 		</div>
 
-	<br><br>
-
-	<sf:form modelAttribute="report" action="submitWorkshopImporter" method="post">
-
-		<label for="importerSelect">Maahantuoja: </label>
 		<br>
-		<sf:select style="width: auto" id="importerSelect" path="importer" class="form-control">
-			<c:forEach var="importer" items="${importers}">
-				<option>${importer}</option>
-			</c:forEach>
-		</sf:select>
-		<br>
-		<br>
-		<label for="workshopSelect">Korjaamo: </label>
-		<br>
-		<sf:select style="width: auto" id="workshopSelect" path="workshop"
-			class="form-control">
-			<c:forEach var="workshop" items="${workshops}">
-				<option>${workshop}</option>
-			</c:forEach>
-		</sf:select>
-
-		<br><br>
-		<button class="btn btn-large btn-primary" action="submit">Seuraava</button>
-	</sf:form>
-</div>
 
 
-<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
 
 
-<!-- Le javascript
+	<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
+
+
+	<!-- Le javascript
     ================================================== 
     <!-- Placed at the end of the document so the pages load faster 
     <script src="../assets/js/jquery.js"></script>
@@ -61,4 +70,3 @@
     <script src="../assets/js/bootstrap-collapse.js"></script>
     <script src="../assets/js/bootstrap-carousel.js"></script>
     <script src="../assets/js/bootstrap-typeahead.js"></script> -->
-
