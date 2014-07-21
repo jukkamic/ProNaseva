@@ -13,12 +13,13 @@
 			<div class="page-header">
 				<h1>Raportti</h1>
 			</div>
-			<br><br>
+			<br>
+			<br>
 			<sf:form modelAttribute="report" action="submitReport" method="post">
 
 
 				<!-- QuestionGroup loop -->
-		
+
 				<div class="panel-group" id="accordion">
 					<c:forEach var="questionGroup" items="${report.questionGroups}"
 						varStatus="questionGroupCounter">
@@ -37,16 +38,16 @@
 								<div class="panel-body">
 
 									<!-- Questions loop -->
-		
+
 									<c:forEach var="question" items="${questionGroup.questions}"
 										varStatus="questionCounter">
 
 
 										<!-- Multiple choice question -->
-			
+
 										<c:if
 											test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
-											<h3>${questionCounter.count}.${question.question}</h3>
+											<h3>${questionCounter.count}. ${question.question}</h3>
 
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
@@ -62,25 +63,25 @@
 											</div>
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea id="remarks" rows="5" cols="70"
-												path="${question.remarks}" />
-											<br><br>
-											
+											<sf:textarea id="remarks" rows="5" style="width:100%;" path="${question.remarks}" />
+											<br>
+											<br>
+
 										</c:if>
 
 										<!--  Text field question -->
 
 										<c:if
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
-											<h3>${questionCounter.count}.${question.question}</h3>
+											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:textarea id="remarks" rows="5" cols="70"
-												path="${question.answer}" />
+											<sf:textarea id="remarks" rows="5" style="width:100%;" path="${question.answer}" />
 
 										</c:if>
 									</c:forEach>
 
-									<br><br>
+									<br>
+									<br>
 								</div>
 							</div>
 						</div>
@@ -88,7 +89,9 @@
 				</div>
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Valmis</button>
-				<br><br><br>
+				<br>
+				<br>
+				<br>
 
 			</sf:form>
 		</div>

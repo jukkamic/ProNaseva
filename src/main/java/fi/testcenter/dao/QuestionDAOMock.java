@@ -106,7 +106,7 @@ public class QuestionDAOMock implements QuestionDAO {
 
 		TextfieldQuestion ninethQ = new TextfieldQuestion();
 		ninethQ.setQuestion("Muita huomioita");
-		questionList2.add(ninethQ);
+		questionList3.add(ninethQ);
 
 		questionGroup3.setQuestions(questionList3);
 		questionGroups.add(questionGroup3);

@@ -22,7 +22,7 @@
 
 				<label for="importerSelect">Maahantuoja: </label>
 				<br>
-				<sf:select style="width: auto" id="importerSelect" path="importer"
+				<sf:select style="width: auto; max-width: 100%" id="importerSelect" path="importer"
 					class="form-control">
 					<c:forEach var="importer" items="${importers}">
 						<option>${importer}</option>
@@ -33,7 +33,7 @@
 				
 				<label for="workshopSelect">Korjaamo: </label>
 				<br>
-				<sf:select style="width: auto" id="workshopSelect" path="workshop"
+				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="workshop"
 					class="form-control">
 					<c:forEach var="workshop" items="${workshops}">
 						<option>${workshop}</option>
