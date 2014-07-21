@@ -88,6 +88,7 @@
 				</div>
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Valmis</button>
+				<br><br><br>
 
 			</sf:form>
 		</div>

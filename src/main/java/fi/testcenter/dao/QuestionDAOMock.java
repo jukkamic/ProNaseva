@@ -98,7 +98,7 @@ public class QuestionDAOMock implements QuestionDAO {
 
 		MultipleChoiceQuestion eightQ = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options6 = new ArrayList<MultipleChoiceOption>();
-		eightQ.setQuestion("Nimettiinko huoltoneuvoja / vastasiko huoltoneuvoja nimellä selkeästi puhelimeen");
+		eightQ.setQuestion("Nimettiinkö huoltoneuvoja / vastasiko huoltoneuvoja nimellä selkeästi puhelimeen");
 		options6.add(new MultipleChoiceOption("Kyllä", 2));
 		options6.add(new MultipleChoiceOption("Ei", 0));
 		eightQ.setOptions(options6);
