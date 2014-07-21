@@ -68,7 +68,6 @@
 											
 										</c:if>
 
-
 										<!--  Text field question -->
 
 										<c:if
