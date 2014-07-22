@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,8 @@ import fi.testcenter.service.ReportService;
 @RequestMapping("/")
 @SessionAttributes(value = "report")
 public class BasicInfoController {
+
+	Logger log = Logger.getLogger("fi.testcenter.web.BasicInfoController");
 
 	@Autowired
 	private ImporterService is;
@@ -66,8 +69,8 @@ public class BasicInfoController {
 			@ModelAttribute("reportBasicInfo") ReportBasicInfo reportInfo,
 			BindingResult result) {
 
-		System.out.println("Maahantuoja: " + reportInfo.getImporter());
-		System.out.println("Korjaamo: " + reportInfo.getWorkshop());
+		log.debug("Maahantuoja: " + reportInfo.getImporter());
+		log.debug("Korjaamo: " + reportInfo.getWorkshop());
 
 		Report report = rs.getReportTemplate();
 		report.setWorkshop(reportInfo.getWorkshop());
@@ -92,7 +95,7 @@ public class BasicInfoController {
 
 		for (QuestionGroup group : report.getQuestionGroups()) {
 			for (Question question : group.getQuestions()) {
-				System.out.println(question);
+				log.debug(question);
 			}
 		}
 
