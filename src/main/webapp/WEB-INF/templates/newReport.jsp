@@ -35,7 +35,7 @@
 									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
 								<c:choose>
 									<c:when test="${questionGroupCounter.count == 1}">
-										<div id="${questionGroupCounter.count}" class="panel-collapse collapse in">
+										<div id="${questionGroupCounter.count}" class="panel-collapse collapse start">
 									</c:when>
 									<c:otherwise>
 										<div id="${questionGroupCounter.count}" class="panel-collapse collapse">

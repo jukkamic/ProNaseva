@@ -32,7 +32,7 @@
 		$('#accordion').on(
 				'shown.bs.collapse',
 				function(e) {
-					var offset = $('.panel.panel-default > .panel-collapse.in')
+					var offset = $('.panel.panel-default > .panel-collapse.start')
 							.offset();
 					if (offset) {
 						$('html,body').animate({
