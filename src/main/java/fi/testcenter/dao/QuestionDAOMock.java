@@ -7,7 +7,7 @@ import fi.testcenter.domain.MultipleChoiceOption;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
-import fi.testcenter.domain.TextfieldQuestion;
+import fi.testcenter.domain.TextareaQuestion;
 
 public class QuestionDAOMock implements QuestionDAO {
 
@@ -48,7 +48,7 @@ public class QuestionDAOMock implements QuestionDAO {
 
 		questionList1.add(secondQ);
 
-		TextfieldQuestion thirdQ = new TextfieldQuestion();
+		TextareaQuestion thirdQ = new TextareaQuestion();
 		thirdQ.setQuestion("Muita huomioita");
 		questionList1.add(thirdQ);
 
@@ -77,7 +77,7 @@ public class QuestionDAOMock implements QuestionDAO {
 		fifthQ.setOptions(options4);
 		questionList2.add(fifthQ);
 
-		TextfieldQuestion sixthQ = new TextfieldQuestion();
+		TextareaQuestion sixthQ = new TextareaQuestion();
 		sixthQ.setQuestion("Muita huomioita");
 		questionList2.add(sixthQ);
 
@@ -104,7 +104,7 @@ public class QuestionDAOMock implements QuestionDAO {
 		eightQ.setOptions(options6);
 		questionList3.add(eightQ);
 
-		TextfieldQuestion ninethQ = new TextfieldQuestion();
+		TextareaQuestion ninethQ = new TextareaQuestion();
 		ninethQ.setQuestion("Muita huomioita");
 		questionList3.add(ninethQ);
 

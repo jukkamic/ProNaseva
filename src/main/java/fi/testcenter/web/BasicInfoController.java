@@ -19,11 +19,10 @@ import fi.testcenter.dao.ReportDAO;
 import fi.testcenter.dao.TestiDAO;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Report;
-import fi.testcenter.domain.Testi;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.BasicInfoService;
 import fi.testcenter.service.ImporterService;
-import fi.testcenter.service.QuestionService;
+import fi.testcenter.service.ReportService;
 
 @Controller
 @RequestMapping("/")
@@ -37,7 +36,7 @@ public class BasicInfoController {
 	private BasicInfoService ws;
 
 	@Autowired
-	private QuestionService qs;
+	private ReportService rs;
 
 	@Autowired
 	TestiDAO tdao;
@@ -55,31 +54,26 @@ public class BasicInfoController {
 		importers = is.getImporters();
 		model.addAttribute("importers", importers);
 
-		model.addAttribute("report", new Report());
+		model.addAttribute("reportBasicInfo", new ReportBasicInfo());
 
 		return "start";
 	}
 
-	@RequestMapping(value = "/submitWorkshopImporter", method = RequestMethod.POST)
+	@RequestMapping(value = "/submitBasicInfo", method = RequestMethod.POST)
 	public String submitWorkshopImporter(HttpServletRequest request,
-			Model model, @ModelAttribute("report") Report report,
+			Model model,
+			@ModelAttribute("reportBasicInfo") ReportBasicInfo reportInfo,
 			BindingResult result) {
 
-		return "redirect:/basicInfo";
-	}
+		System.out.println("Maahantuoja: " + reportInfo.getImporter());
+		System.out.println("Korjaamo: " + reportInfo.getWorkshop());
 
-	@RequestMapping(value = "/basicInfo")
-	public String prepareForm(HttpServletRequest request, Model model,
-			@ModelAttribute("report") Report report) {
-		model.addAttribute("report", report);
-		return "basicInfo";
-	}
-
-	@RequestMapping(value = "/submitBasicInfo", method = RequestMethod.POST)
-	public String submitBasicInfo(HttpServletRequest request, Model model,
-			@ModelAttribute("report") Report report, BindingResult result) {
+		Report report = rs.getReportTemplate();
+		report.setWorkshop(reportInfo.getWorkshop());
+		report.setImporter(reportInfo.getImporter());
 
 		model.addAttribute("report", report);
+
 		return "redirect:/prepareReport";
 	}
 
@@ -87,12 +81,6 @@ public class BasicInfoController {
 	public String prepareForm(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
-		System.out.println("Maahantuoja: " + report.getImporter());
-		System.out.println("Korjaamo: " + report.getWorkshop());
-		System.out.println("Ajoneuvon rekisterinro: : "
-				+ report.getVehicleRegistrationNumber());
-		report.setQuestionGroups(qs.getQuestionGroups());
-		model.addAttribute("report", report);
 		return "newReport";
 	}
 
@@ -100,26 +88,6 @@ public class BasicInfoController {
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
-
-		Testi testi = new Testi();
-
-		testi.setSummary("This is a test");
-		testi.setDescription("This is a javatesti");
-		try {
-			tdao.save(testi);
-			tdao.ListTesti();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Errori: " + e.getMessage());
-		}
-
-		try {
-			rdao.save(report);
-			rdao.ListTesti();
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Report error: " + e.getMessage());
-		}
 
 		return "newReport";
 	}

@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 public class Report {
@@ -27,6 +26,8 @@ public class Report {
 	private String vehicleRegistrationNumber;
 	private String vehicleRegistrationDate;
 	private String vehicleMileage;
+
+	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
 	public Integer getId() {
 		return id;
@@ -67,9 +68,6 @@ public class Report {
 	public void setVehicleMileage(String vehicleMileage) {
 		this.vehicleMileage = vehicleMileage;
 	}
-
-	@Transient
-	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
 	public Importer getImporter() {
 		return importer;

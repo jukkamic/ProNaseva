@@ -12,14 +12,14 @@ public class ImporterDAOMock implements ImporterDAO {
 
 	@Override
 	public List<Importer> getImporters() {
-		List<Importer> importers = new ArrayList<Importer> ();
-		add(importers, "Volvo");
+		List<Importer> importers = new ArrayList<Importer>();
+		add(importers, "Volvo Auto Oy Ab");
 		add(importers, "Tesla");
 		add(importers, "Bugatti");
 		add(importers, "Lamborghini");
 		return importers;
 	}
-	
+
 	private void add(List<Importer> importers, String name) {
 		importers.add(new Importer(name));
 	}

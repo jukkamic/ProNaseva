@@ -17,9 +17,7 @@
 			<br>
 			<sf:form modelAttribute="report" action="submitReport" method="post">
 
-
 				<!-- QuestionGroup loop -->
-
 				<div class="panel-group" id="accordion">
 					<c:forEach var="questionGroup" items="${report.questionGroups}"
 						varStatus="questionGroupCounter">
@@ -33,6 +31,8 @@
 								</h4>
 							</div>
 
+								<!-- Ensimmäisen kysymysryhmän luokka on "collapse in" jotta javascript 
+									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
 								<c:choose>
 									<c:when test="${questionGroupCounter.count == 1}">
 										<div id="${questionGroupCounter.count}" class="panel-collapse collapse in">
@@ -41,68 +41,56 @@
 										<div id="${questionGroupCounter.count}" class="panel-collapse collapse">
 								</c:otherwise>
 							</c:choose>
-								
 								<div class="panel-body">
 								
-
 									<!-- Questions loop -->
-
 									<c:forEach var="question" items="${questionGroup.questions}"
 										varStatus="questionCounter">
 
-
 										<!-- Multiple choice question -->
-
 										<c:if
 											test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
-
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
-
 													<c:forEach var="option" items="${question.options}">
 														<label class="btn btn-primary"> <sf:radiobutton
 																id="button" path="${question.chosenOption}"
 																value="${option}" /> ${option}
 														</label>
 													</c:forEach>
-
 												</div>
 											</div>
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea id="remarks" rows="5" style="width:100%;" path="${question.remarks}" />
+											<sf:textarea rows="5" style="width:100%;" path="${question.remarks}" />
 											<br><br>
-
 										</c:if>
 
-										<!--  Text field question -->
-
+										<!--  Text area question -->
+										<c:if
+											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
+											<h3>${questionCounter.count}. ${question.question}</h3>
+											<br>
+											<sf:textarea rows="5" style="width:100%;" path="${question.answer}" />
+										</c:if>
+										
+										<!-- Text field question -->
 										<c:if
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:textarea id="remarks" rows="5" style="width:100%;" path="${question.answer}" />
-
+											<sf:input type="text" style="width:100%;" path="${question.answer}" />
 										</c:if>
-										
-										
 									</c:forEach>
 									</div>
 									</div>
-														
 							</div>
-						
 					</c:forEach>
-					
 				</div>
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Valmis</button>
-				<br>
-				<br>
-				<br>
-
-			</sf:form>
+				<br><br>
+				<br></sf:form>
 		</div>
-
 		<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
