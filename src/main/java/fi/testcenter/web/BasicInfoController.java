@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.dao.ReportDAO;
 import fi.testcenter.dao.TestiDAO;
 import fi.testcenter.domain.Importer;
+import fi.testcenter.domain.Question;
+import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.BasicInfoService;
@@ -81,13 +82,19 @@ public class BasicInfoController {
 	public String prepareForm(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
+		model.addAttribute("report", report);
 		return "newReport";
 	}
 
-	@Transactional
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
+
+		for (QuestionGroup group : report.getQuestionGroups()) {
+			for (Question question : group.getQuestions()) {
+				System.out.println(question);
+			}
+		}
 
 		return "newReport";
 	}

@@ -28,4 +28,9 @@ public class TextareaQuestion extends Question {
 		this.answer = answer;
 	}
 
+	public String toString() {
+		return new String("Kysymys: " + this.question + " - vastaus: "
+				+ this.answer);
+	}
+
 }

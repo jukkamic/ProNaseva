@@ -80,7 +80,7 @@
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:input type="text" style="width:100%;" path="${question.answer}" />
+											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer" />
 										</c:if>
 									</c:forEach>
 									</div>

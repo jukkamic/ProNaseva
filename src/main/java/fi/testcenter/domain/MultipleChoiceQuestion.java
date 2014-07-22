@@ -46,4 +46,9 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 		this.remarks = remarks;
 	}
 
+	public String toString() {
+		return new String("Monivalintakysymys: " + this.question
+				+ " - valinta: " + chosenOption);
+	}
+
 }
