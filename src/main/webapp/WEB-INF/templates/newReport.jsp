@@ -53,7 +53,7 @@
 												<div class="btn-group" data-toggle="buttons">
 
 													<c:forEach var="option" items="${question.options}">
-														<label class="btn btn-primary" for="button"> <sf:radiobutton
+														<label class="btn btn-primary"> <sf:radiobutton
 																id="button" path="${question.chosenOption}"
 																value="${option}" /> ${option}
 														</label>
