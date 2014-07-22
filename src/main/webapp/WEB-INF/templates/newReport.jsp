@@ -23,7 +23,6 @@
 				<div class="panel-group" id="accordion">
 					<c:forEach var="questionGroup" items="${report.questionGroups}"
 						varStatus="questionGroupCounter">
-
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
@@ -33,9 +32,18 @@
 										href="#${questionGroupCounter.count}">${questionGroup.title}</a>
 								</h4>
 							</div>
-							<div id="${questionGroupCounter.count}"
-								class="panel-collapse collapse">
+
+								<c:choose>
+									<c:when test="${questionGroupCounter.count == 1}">
+										<div id="${questionGroupCounter.count}" class="panel-collapse collapse in">
+									</c:when>
+									<c:otherwise>
+										<div id="${questionGroupCounter.count}" class="panel-collapse collapse">
+								</c:otherwise>
+							</c:choose>
+								
 								<div class="panel-body">
+								
 
 									<!-- Questions loop -->
 
@@ -64,8 +72,7 @@
 											<br>
 											<h4>Huomioita:</h4>
 											<sf:textarea id="remarks" rows="5" style="width:100%;" path="${question.remarks}" />
-											<br>
-											<br>
+											<br><br>
 
 										</c:if>
 
@@ -78,14 +85,16 @@
 											<sf:textarea id="remarks" rows="5" style="width:100%;" path="${question.answer}" />
 
 										</c:if>
+										
+										
 									</c:forEach>
-
-									<br>
-									<br>
-								</div>
+									</div>
+									</div>
+														
 							</div>
-						</div>
+						
 					</c:forEach>
+					
 				</div>
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Valmis</button>

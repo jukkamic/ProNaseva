@@ -26,8 +26,22 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-</script>
+<script type="text/javascript">
 
+	$(function() {
+		$('#accordion').on(
+				'shown.bs.collapse',
+				function(e) {
+					var offset = $('.panel.panel-default > .panel-collapse.in')
+							.offset();
+					if (offset) {
+						$('html,body').animate({
+							scrollTop : $('.panel-title a').offset().top - 20
+						}, 500);
+					}
+				});
+	});
+</script>
 
 
 
