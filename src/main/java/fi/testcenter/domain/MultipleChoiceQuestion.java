@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 @Entity
 public class MultipleChoiceQuestion extends Question implements Serializable {
@@ -26,7 +25,6 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 	private MultipleChoiceOption chosenOption;
 	private String remarks;
 
-	@Transient
 	private int chosenOptionIndex;
 
 	public MultipleChoiceQuestion() {

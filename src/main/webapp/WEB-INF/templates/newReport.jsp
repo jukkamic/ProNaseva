@@ -54,17 +54,30 @@
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
-														<label class="btn btn-primary"> 
-															<c:choose>
+														
+														<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
+																raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
+														<c:choose>
+															<c:when test="${question.chosenOptionIndex == optionsCounter.index}">
+																<label class="btn btn-primary active">
+															</c:when>
+															<c:otherwise>
+																<label class="btn btn-primary">
+															</c:otherwise>
+														</c:choose> 
+														
+														<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
+																varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
+																riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
+																ei ole tägejä -->
+														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
-																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
+																<sf:radiobutton id="button" checked="checked" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
 																value="${optionsCounter.index}" /> ${option.radiobuttonText}
 															</c:when>
 															<c:otherwise>
-																														
-								<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
-								value="${optionsCounter.index}" /> ${option.option}
-								
+																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
+																value="${optionsCounter.index}" /> ${option.option}
 															</c:otherwise>
 															</c:choose>
 														</label>
