@@ -55,7 +55,7 @@
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
 														<label class="btn btn-primary"> 
-								<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionName" value="${option.option}" /> ${option.option}
+								<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionName" value="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].options[${optionsCounter.index}]" /> ${option.option}
 														</label>
 													</c:forEach>
 												</div>

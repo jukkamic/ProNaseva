@@ -57,7 +57,8 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 
 	public String toString() {
 		return new String("Monivalintakysymys: " + this.question
-				+ " - valinta: " + this.chosenOption + " - huomiot: " + remarks);
+				+ " - valinta: " + this.chosenOptionName + " - huomiot: "
+				+ remarks);
 	}
 
 }
