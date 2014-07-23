@@ -53,17 +53,16 @@
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
-													<c:forEach var="option" items="${question.options}">
-														<label class="btn btn-primary"> <sf:radiobutton
-																id="button" path="${question.chosenOption}"
-																value="${option}" /> ${option}
+													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
+														<label class="btn btn-primary"> 
+								<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionName" value="${option.option}" /> ${option.option}
 														</label>
 													</c:forEach>
 												</div>
 											</div>
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea rows="5" style="width:100%;" path="${question.remarks}" />
+											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].remarks" />
 											<br><br>
 										</c:if>
 
@@ -72,7 +71,7 @@
 											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:textarea rows="5" style="width:100%;" path="${question.answer}" />
+											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer" />
 										</c:if>
 										
 										<!-- Text field question -->

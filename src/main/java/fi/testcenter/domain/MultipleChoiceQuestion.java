@@ -13,6 +13,15 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 	private ArrayList<MultipleChoiceOption> options;
 	private MultipleChoiceOption chosenOption;
 	private String remarks;
+	private String chosenOptionName;
+
+	public String getChosenOptionName() {
+		return chosenOptionName;
+	}
+
+	public void setChosenOptionName(String chosenOptionName) {
+		this.chosenOptionName = chosenOptionName;
+	}
 
 	public MultipleChoiceOption getChosenOption() {
 		return chosenOption;
@@ -48,7 +57,7 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 
 	public String toString() {
 		return new String("Monivalintakysymys: " + this.question
-				+ " - valinta: " + chosenOption);
+				+ " - valinta: " + this.chosenOption + " - huomiot: " + remarks);
 	}
 
 }

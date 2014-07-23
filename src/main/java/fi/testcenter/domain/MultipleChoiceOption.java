@@ -28,8 +28,4 @@ public class MultipleChoiceOption implements Serializable {
 		this.points = points;
 	}
 
-	public String toString() {
-		return new String(this.option + " / pisteet: " + this.points);
-	}
-
 }
