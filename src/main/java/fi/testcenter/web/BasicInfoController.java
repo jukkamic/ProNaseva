@@ -120,7 +120,7 @@ public class BasicInfoController {
 			System.out.println("SQLERROR: " + e.getMessage());
 		}
 
-		return "redirect:newReport";
+		return "redirect:/";
 	}
 
 }
