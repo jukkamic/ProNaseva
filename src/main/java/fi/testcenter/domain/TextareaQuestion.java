@@ -1,13 +1,7 @@
 package fi.testcenter.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
-@Entity
 public class TextareaQuestion extends Question {
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long Id;
 	private String question;
 	private String answer;

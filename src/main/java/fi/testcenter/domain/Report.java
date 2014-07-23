@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -27,6 +29,7 @@ public class Report {
 	private String vehicleRegistrationDate;
 	private String vehicleMileage;
 
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
 	public Integer getId() {

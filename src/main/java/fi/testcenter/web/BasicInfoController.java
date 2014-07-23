@@ -1,6 +1,7 @@
 package fi.testcenter.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,9 +100,27 @@ public class BasicInfoController {
 			}
 		}
 
-		rs.saveReport(report);
+		try {
+			rs.saveReport(report);
+		} catch (Exception e) {
+			System.out.println("SQLERROR: " + e.getMessage());
+		}
 
-		return "newReport";
+		try {
+			Collection<Report> dbReports = rs.findAllReports();
+
+			for (Report loopReport : dbReports) {
+				log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
+
+				log.debug("Kysymysryhmä: "
+						+ loopReport.getQuestionGroups().get(0).getTitle());
+			}
+
+		} catch (Exception e) {
+			System.out.println("SQLERROR: " + e.getMessage());
+		}
+
+		return "redirect:newReport";
 	}
 
 }

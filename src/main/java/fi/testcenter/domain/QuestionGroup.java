@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class QuestionGroup {
@@ -16,6 +17,7 @@ public class QuestionGroup {
 
 	private String title;
 
+	@Transient
 	private ArrayList<Question> questions;
 
 	public String getTitle() {

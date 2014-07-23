@@ -13,11 +13,11 @@ import fi.testcenter.domain.TextareaQuestion;
 import fi.testcenter.domain.TextfieldQuestion;
 
 /* JAETAAN YLI 25 MERKKIÄ PITKÄT MONIVALINTAVAIHTOEHDOT KAHDELLE RIVILLE 
- * KÄYTTÄMÄLLÄ VAIHTOEHDON TEKSTISSÄ <BR> &NBSP 
+ * KÄYTTÄMÄLLÄ VAIHTOEHDON TEKSTISSÄ <BR> 
  * JOTTA VAIHTOTEHTONAPEISTA EI TULE LIIAN LEVEITÄ
  * 
  * Kaikkiin kyseisen monivalintakysymyksen vaihtoehtoihin voisi silloin
- * lisätä loppuun <br> &nbsp  vaikka ne olisivat lyhyempiä jotta kaikki
+ * lisätä loppuun <BR> &NBSP  vaikka ne olisivat lyhyempiä jotta kaikki
  * napit ovat kahden rivin korkuisia. 
  */
 
@@ -210,7 +210,7 @@ public class ReportDAOMockVolvo implements ReportDAO {
 		q33.setQuestion("Huollon tarkastuslistan täyttö");
 		options14.add(new MultipleChoiceOption("Täydellisesti <br> &nbsp", 2));
 		options14.add(new MultipleChoiceOption(
-				"Puutteellisesti täytetty/<br> &nbsp väärä huoltoseloste", 1));
+				"Puutteellisesti täytetty/<br> väärä huoltoseloste", 1));
 		options14.add(new MultipleChoiceOption("Ei saada ollenkaan <br> &nbsp",
 				0));
 		q33.setOptions(options14);

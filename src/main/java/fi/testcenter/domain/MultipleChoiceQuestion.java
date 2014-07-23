@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Entity;
-
-@Entity
 public class MultipleChoiceQuestion extends Question implements Serializable {
 
 	private String question;
