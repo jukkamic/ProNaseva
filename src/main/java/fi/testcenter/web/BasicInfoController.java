@@ -95,6 +95,7 @@ public class BasicInfoController {
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
+		log.debug("\n\n\nJSP:N SYÖTETYT TIEDOT SIDOTTUINA REPORT-OLIOON: \n\n");
 		for (QuestionGroup group : report.getQuestionGroups()) {
 			for (Question question : group.getQuestions()) {
 
@@ -135,9 +136,12 @@ public class BasicInfoController {
 			System.out.println("SQLERROR: " + e.getMessage());
 		}
 
-		log.debug("\n \nVASTAUKSET: \n");
+		log.debug("\n \nTIETOKANNASTA HAETUT RAPORTIT: \n");
 
+		int i = 1;
 		for (Report loopReport : dbReports) {
+			log.debug("\n\n\n" + i++ + ".RAPORTTI\n\n");
+			log.debug("Maahantuoja: " + loopReport.getImporter().getName());
 			log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
 
 			for (QuestionGroup loopQuestionGroup : loopReport
