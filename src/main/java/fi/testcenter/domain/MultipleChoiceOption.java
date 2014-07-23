@@ -2,8 +2,8 @@ package fi.testcenter.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,14 +17,23 @@ public class MultipleChoiceOption implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer choiceID;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MULTIQ_ID")
-	private MultipleChoiceQuestion question;
+	private MultipleChoiceQuestion multiQuestion;
 
 	private String option;
+	private String radiobuttonText;
+
 	private int points;
 
 	public MultipleChoiceOption() {
+	}
+
+	public MultipleChoiceOption(String option, String radiobuttonText,
+			int points) {
+		this.option = option;
+		this.radiobuttonText = radiobuttonText;
+		this.points = points;
 	}
 
 	public MultipleChoiceOption(String option, int points) {
@@ -48,12 +57,12 @@ public class MultipleChoiceOption implements Serializable {
 		this.choiceID = choiceID;
 	}
 
-	public MultipleChoiceQuestion getQuestion() {
-		return question;
+	public MultipleChoiceQuestion getMultiQuestion() {
+		return multiQuestion;
 	}
 
-	public void setQuestion(MultipleChoiceQuestion question) {
-		this.question = question;
+	public void setMultiQuestion(MultipleChoiceQuestion multiQuestion) {
+		this.multiQuestion = multiQuestion;
 	}
 
 	public int getPoints() {
@@ -62,6 +71,14 @@ public class MultipleChoiceOption implements Serializable {
 
 	public void setPoints(int points) {
 		this.points = points;
+	}
+
+	public String getRadiobuttonText() {
+		return radiobuttonText;
+	}
+
+	public void setRadiobuttonText(String radiobuttonText) {
+		this.radiobuttonText = radiobuttonText;
 	}
 
 }

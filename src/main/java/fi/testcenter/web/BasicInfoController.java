@@ -23,7 +23,6 @@ import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
-import fi.testcenter.domain.TextfieldQuestion;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.BasicInfoService;
 import fi.testcenter.service.ImporterService;
@@ -98,48 +97,77 @@ public class BasicInfoController {
 
 		for (QuestionGroup group : report.getQuestionGroups()) {
 			for (Question question : group.getQuestions()) {
-				log.debug(question);
+
+				if (question instanceof MultipleChoiceQuestion) {
+					MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
+
+					if (mcq.getChosenOptionIndex() != -1) {
+						mcq.setChosenOption(mcq.getOptions().get(
+								mcq.getChosenOptionIndex()));
+						log.debug("Monivalintakysymys: " + mcq.getQuestion()
+								+ " - valinta: "
+								+ mcq.getChosenOption().getOption()
+								+ " - pisteet: "
+								+ mcq.getChosenOption().getPoints());
+					}
+
+					else
+						log.debug("Monivalintakysymys: " + mcq.getQuestion()
+								+ " - ei valintaa");
+				} else
+					log.debug(question);
 			}
 		}
 
 		try {
 			rs.saveReport(report);
 		} catch (Exception e) {
-			System.out.println("SQLERROR: " + e.getMessage());
+			e.printStackTrace();
 		}
 
+		Collection<Report> dbReports = new ArrayList<Report>();
 		try {
 
-			log.debug("\n \nHAETAAN RAPORTIT \n \n");
-			Collection<Report> dbReports = rs.findAllReports();
-
-			log.debug("\n \nVASTAUKSIA: ");
-
-			for (Report loopReport : dbReports) {
-				log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
-
-				log.debug("Kysymysryhmä: "
-						+ loopReport.getQuestionGroups().get(0).getTitle());
-
-				TextfieldQuestion textfieldTest = (TextfieldQuestion) loopReport
-						.getQuestionGroups().get(0).getQuestions().get(0);
-				log.debug("Auton merkki: " + textfieldTest.getAnswer());
-
-				MultipleChoiceQuestion multiChoiceTest = (MultipleChoiceQuestion) loopReport
-						.getQuestionGroups().get(1).getQuestions().get(0);
-				log.debug("Tarkastuskohteet - jäähdytysjärjestelmä - pisteet: "
-						+ multiChoiceTest.getChosenOption());
-
-				log.debug("Tarkastuskohteet - jäähdytysjärjestelmä - huomiot: "
-						+ multiChoiceTest.getRemarks());
-
-			}
+			log.debug("\n \nHAETAAN RAPORTIT \n ");
+			dbReports = rs.findAllReports();
 
 		} catch (Exception e) {
 			System.out.println("SQLERROR: " + e.getMessage());
 		}
 
+		log.debug("\n \nVASTAUKSET: \n");
+
+		for (Report loopReport : dbReports) {
+			log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
+
+			for (QuestionGroup loopQuestionGroup : loopReport
+					.getQuestionGroups()) {
+				for (Question loopQuestion : loopQuestionGroup.getQuestions()) {
+					if (loopQuestion instanceof MultipleChoiceQuestion) {
+
+						MultipleChoiceQuestion loopMcq = (MultipleChoiceQuestion) loopQuestion;
+						if (loopMcq.getChosenOption() != null) {
+							log.debug("Monivalintakysymys: "
+									+ loopMcq.getQuestion() + " - valinta: "
+									+ loopMcq.getChosenOption().getOption()
+									+ " - pisteet: "
+									+ loopMcq.getChosenOption().getPoints());
+						}
+
+						else {
+							log.debug("Monivalintakysymys: "
+									+ loopMcq.getQuestion() + " - ei valintaa");
+						}
+					}
+
+					else
+						log.debug(loopQuestion);
+
+				}
+			}
+
+		}
+
 		return "redirect:/";
 	}
-
 }

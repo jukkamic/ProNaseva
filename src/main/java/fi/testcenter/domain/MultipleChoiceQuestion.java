@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class MultipleChoiceQuestion extends Question implements Serializable {
@@ -19,19 +20,37 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 	Integer multiChoiceId;
 	private String question;
 
-	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "multiQuestion", cascade = CascadeType.PERSIST)
 	private List<MultipleChoiceOption> options;
 
 	private MultipleChoiceOption chosenOption;
 	private String remarks;
-	private String chosenOptionName;
 
-	public String getChosenOptionName() {
-		return chosenOptionName;
+	@Transient
+	private int chosenOptionIndex;
+
+	public MultipleChoiceQuestion() {
+		this.chosenOptionIndex = -1;
 	}
 
-	public void setChosenOptionName(String chosenOptionName) {
-		this.chosenOptionName = chosenOptionName;
+	public Integer getMultiChoiceId() {
+		return multiChoiceId;
+	}
+
+	public void setMultiChoiceId(Integer multiChoiceId) {
+		this.multiChoiceId = multiChoiceId;
+	}
+
+	public int getChosenOptionIndex() {
+		return chosenOptionIndex;
+	}
+
+	public void setChosenOptionIndex(int chosenOptionIndex) {
+		this.chosenOptionIndex = chosenOptionIndex;
+	}
+
+	public void setOptions(List<MultipleChoiceOption> options) {
+		this.options = options;
 	}
 
 	public MultipleChoiceOption getChosenOption() {
@@ -64,12 +83,6 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
-	}
-
-	public String toString() {
-		return new String("Monivalintakysymys: " + this.question
-				+ " - valinta: " + this.chosenOptionName + " - huomiot: "
-				+ remarks);
 	}
 
 }

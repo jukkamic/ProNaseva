@@ -16,6 +16,13 @@ import fi.testcenter.domain.TextfieldQuestion;
  * KÄYTTÄMÄLLÄ VAIHTOEHDON TEKSTISSÄ <BR> 
  * JOTTA VAIHTOTEHTONAPEISTA EI TULE LIIAN LEVEITÄ
  * 
+ * MultipleChoiceOption-luokan olioitta on ominaisuudet option ja 
+ * radiobuttonText, joista jälkimmäistä voi käyttää määrittämään 
+ * radiobuttoneissa näkyvän tekstin ja option on valintaa kuvaava teksti
+ * muissa yhteyksissä. radiobuttonText-muuttujaan voi tarvittaessa 
+ * asettaa radiobuttonissa näkyvän tekstin niin että se on jaettu
+ * em. tavoin kahdelle riville.  
+ * 
  * Kaikkiin kyseisen monivalintakysymyksen vaihtoehtoihin voisi silloin
  * lisätä loppuun <BR> &NBSP  vaikka ne olisivat lyhyempiä jotta kaikki
  * napit ovat kahden rivin korkuisia. 
@@ -177,11 +184,13 @@ public class ReportDAOMockVolvo implements ReportDAO {
 		q27.setQuestion("Työmääräyksen läpikäynti");
 		options11
 				.add(new MultipleChoiceOption(
+						"Varmistetaan ajanvarauksessa sovitut asiat paperilta",
 						"Varmistetaan ajanvarauksessa <br> sovitut asiat paperilta",
 						2));
 		options11.add(new MultipleChoiceOption(
+				"Varmistetaan vain osittain/vain suullisesti",
 				"Varmistetaan vain osittain/ <br> vain suullisesti", 1));
-		options11.add(new MultipleChoiceOption(
+		options11.add(new MultipleChoiceOption("Ei varmisteta mitään",
 				"Ei varmisteta mitään <br> &nbsp", 0));
 		q27.setOptions(options11);
 		questionList3.add(q27);
@@ -208,11 +217,13 @@ public class ReportDAOMockVolvo implements ReportDAO {
 		MultipleChoiceQuestion q33 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options14 = new ArrayList<MultipleChoiceOption>();
 		q33.setQuestion("Huollon tarkastuslistan täyttö");
-		options14.add(new MultipleChoiceOption("Täydellisesti <br> &nbsp", 2));
+		options14.add(new MultipleChoiceOption("Täydellisesti",
+				"Täydellisesti <br> &nbsp", 2));
 		options14.add(new MultipleChoiceOption(
+				"Puutteellisesti täytetty väärä huoltoseloste",
 				"Puutteellisesti täytetty/<br> väärä huoltoseloste", 1));
-		options14.add(new MultipleChoiceOption("Ei saada ollenkaan <br> &nbsp",
-				0));
+		options14.add(new MultipleChoiceOption("Ei saada ollenkaan",
+				"Ei saada ollenkaan <br> &nbsp", 0));
 		q33.setOptions(options14);
 		questionList3.add(q33);
 
@@ -240,8 +251,6 @@ public class ReportDAOMockVolvo implements ReportDAO {
 
 		questionGroup3.setQuestions(questionList3);
 		questionGroups.add(questionGroup3);
-
-		// Raportin toimitusosoite
 
 		Report report = new Report();
 		report.setQuestionGroups(questionGroups);
