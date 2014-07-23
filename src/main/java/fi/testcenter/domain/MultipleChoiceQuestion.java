@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 public class MultipleChoiceQuestion extends Question implements Serializable {
 
 	private String question;
+
 	private ArrayList<MultipleChoiceOption> options;
 	private MultipleChoiceOption chosenOption;
 	private String remarks;

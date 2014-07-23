@@ -99,6 +99,8 @@ public class BasicInfoController {
 			}
 		}
 
+		rs.saveReport(report);
+
 		return "newReport";
 	}
 

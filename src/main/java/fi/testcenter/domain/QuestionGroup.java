@@ -15,6 +15,7 @@ public class QuestionGroup {
 	Integer id;
 
 	private String title;
+
 	private ArrayList<Question> questions;
 
 	public String getTitle() {

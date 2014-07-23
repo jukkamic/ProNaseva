@@ -12,6 +12,15 @@ import fi.testcenter.domain.Report;
 import fi.testcenter.domain.TextareaQuestion;
 import fi.testcenter.domain.TextfieldQuestion;
 
+/* JAETAAN YLI 25 MERKKIÄ PITKÄT MONIVALINTAVAIHTOEHDOT KAHDELLE RIVILLE 
+ * KÄYTTÄMÄLLÄ VAIHTOEHDON TEKSTISSÄ <BR> &NBSP 
+ * JOTTA VAIHTOTEHTONAPEISTA EI TULE LIIAN LEVEITÄ
+ * 
+ * Kaikkiin kyseisen monivalintakysymyksen vaihtoehtoihin voisi silloin
+ * lisätä loppuun <br> &nbsp  vaikka ne olisivat lyhyempiä jotta kaikki
+ * napit ovat kahden rivin korkuisia. 
+ */
+
 @Repository
 public class ReportDAOMockVolvo implements ReportDAO {
 
@@ -166,11 +175,14 @@ public class ReportDAOMockVolvo implements ReportDAO {
 		MultipleChoiceQuestion q27 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options11 = new ArrayList<MultipleChoiceOption>();
 		q27.setQuestion("Työmääräyksen läpikäynti");
+		options11
+				.add(new MultipleChoiceOption(
+						"Varmistetaan ajanvarauksessa <br> sovitut asiat paperilta",
+						2));
 		options11.add(new MultipleChoiceOption(
-				"Varmistetaan ajanvarauksessa sovitut asiat paperilta", 2));
+				"Varmistetaan vain osittain/ <br> vain suullisesti", 1));
 		options11.add(new MultipleChoiceOption(
-				"Varmistetaan vain osittain/vain suullisesti", 1));
-		options11.add(new MultipleChoiceOption("Ei varmisteta mitään", 0));
+				"Ei varmisteta mitään <br> &nbsp", 0));
 		q27.setOptions(options11);
 		questionList3.add(q27);
 
@@ -196,10 +208,11 @@ public class ReportDAOMockVolvo implements ReportDAO {
 		MultipleChoiceQuestion q33 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options14 = new ArrayList<MultipleChoiceOption>();
 		q33.setQuestion("Huollon tarkastuslistan täyttö");
-		options14.add(new MultipleChoiceOption("Täydellisesti", 2));
+		options14.add(new MultipleChoiceOption("Täydellisesti <br> &nbsp", 2));
 		options14.add(new MultipleChoiceOption(
-				"Puutteellisesti täytetty/väärä huoltoseloste", 1));
-		options14.add(new MultipleChoiceOption("Ei saada ollenkaan", 0));
+				"Puutteellisesti täytetty/<br> &nbsp väärä huoltoseloste", 1));
+		options14.add(new MultipleChoiceOption("Ei saada ollenkaan <br> &nbsp",
+				0));
 		q33.setOptions(options14);
 		questionList3.add(q33);
 
