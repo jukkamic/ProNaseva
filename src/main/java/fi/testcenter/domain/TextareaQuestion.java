@@ -1,8 +1,10 @@
 package fi.testcenter.domain;
 
+import javax.persistence.Entity;
+
+@Entity
 public class TextareaQuestion extends Question {
 
-	long Id;
 	private String question;
 	private String answer;
 

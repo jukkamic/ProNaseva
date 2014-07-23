@@ -1,34 +1,25 @@
 package fi.testcenter.domain;
 
-public class Question {
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@Entity
+public class Question {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
-	private String question;
-	private String remark;
-	private Choice choice;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "QGROUP_ID")
+	private QuestionGroup questionGroup;
 
 	public Question() {
 
-	}
-
-	public Question(String question) {
-		this.question = question;
-	}
-
-	public String getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
 	}
 
 	public Integer getId() {
@@ -39,12 +30,12 @@ public class Question {
 		this.id = id;
 	}
 
-	public Choice getChoice() {
-		return choice;
+	public QuestionGroup getQuestionGroup() {
+		return questionGroup;
 	}
 
-	public void setChoice(Choice choice) {
-		this.choice = choice;
+	public void setQuestionGroup(QuestionGroup questionGroup) {
+		this.questionGroup = questionGroup;
 	}
 
 }

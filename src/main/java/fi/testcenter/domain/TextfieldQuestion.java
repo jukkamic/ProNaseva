@@ -1,5 +1,8 @@
 package fi.testcenter.domain;
 
+import javax.persistence.Entity;
+
+@Entity
 public class TextfieldQuestion extends Question {
 
 	private String question;

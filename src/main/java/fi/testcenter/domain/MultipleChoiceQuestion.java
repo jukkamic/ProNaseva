@@ -4,11 +4,24 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.OneToMany;
+
+@Entity
 public class MultipleChoiceQuestion extends Question implements Serializable {
 
+	@Column(name = "MULTIQ_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	Integer multiChoiceId;
 	private String question;
 
-	private ArrayList<MultipleChoiceOption> options;
+	@OneToMany(mappedBy = "question", cascade = CascadeType.PERSIST)
+	private List<MultipleChoiceOption> options;
+
 	private MultipleChoiceOption chosenOption;
 	private String remarks;
 	private String chosenOptionName;

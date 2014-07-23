@@ -1,24 +1,27 @@
 package fi.testcenter.domain;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
 
 @Entity
 public class QuestionGroup {
 
 	@Id
+	@Column(name = "QGROUP_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 
 	private String title;
 
-	@Transient
-	private ArrayList<Question> questions;
+	@OneToMany(mappedBy = "questionGroup", cascade = CascadeType.PERSIST)
+	private List<Question> questions;
 
 	public String getTitle() {
 		return title;
@@ -28,11 +31,11 @@ public class QuestionGroup {
 		this.title = title;
 	}
 
-	public ArrayList<Question> getQuestions() {
+	public List<Question> getQuestions() {
 		return questions;
 	}
 
-	public void setQuestions(ArrayList<Question> questions) {
+	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
 }

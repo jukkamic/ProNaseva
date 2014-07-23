@@ -11,16 +11,6 @@ import fi.testcenter.domain.TextareaQuestion;
 
 public class QuestionDAOMock implements QuestionDAO {
 
-	@Override
-	public List<Question> getQuestions() {
-
-		List<Question> questions = new ArrayList<Question>();
-		questions.add(new Question("eka kysymys"));
-		questions.add(new Question("toka kysymys"));
-
-		return questions;
-	}
-
 	public List<QuestionGroup> getQuestionGroups() {
 		ArrayList<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 

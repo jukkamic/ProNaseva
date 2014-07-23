@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.dao.ReportDAO;
 import fi.testcenter.dao.TestiDAO;
 import fi.testcenter.domain.Importer;
+import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
+import fi.testcenter.domain.TextfieldQuestion;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.BasicInfoService;
 import fi.testcenter.service.ImporterService;
@@ -107,13 +109,30 @@ public class BasicInfoController {
 		}
 
 		try {
+
+			log.debug("\n \nHAETAAN RAPORTIT \n \n");
 			Collection<Report> dbReports = rs.findAllReports();
+
+			log.debug("\n \nVASTAUKSIA: ");
 
 			for (Report loopReport : dbReports) {
 				log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
 
 				log.debug("Kysymysryhmä: "
 						+ loopReport.getQuestionGroups().get(0).getTitle());
+
+				TextfieldQuestion textfieldTest = (TextfieldQuestion) loopReport
+						.getQuestionGroups().get(0).getQuestions().get(0);
+				log.debug("Auton merkki: " + textfieldTest.getAnswer());
+
+				MultipleChoiceQuestion multiChoiceTest = (MultipleChoiceQuestion) loopReport
+						.getQuestionGroups().get(1).getQuestions().get(0);
+				log.debug("Tarkastuskohteet - jäähdytysjärjestelmä - pisteet: "
+						+ multiChoiceTest.getChosenOption());
+
+				log.debug("Tarkastuskohteet - jäähdytysjärjestelmä - huomiot: "
+						+ multiChoiceTest.getRemarks());
+
 			}
 
 		} catch (Exception e) {
