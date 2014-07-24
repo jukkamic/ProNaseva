@@ -1,7 +1,6 @@
 package fi.testcenter.web;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,20 +121,16 @@ public class BasicInfoController {
 			e.printStackTrace();
 		}
 
-		Collection<Report> dbReports = new ArrayList<Report>();
-		try {
+		List<Report> dbReports = new ArrayList<Report>();
 
-			log.debug("\n \nHAETAAN RAPORTIT \n ");
-			dbReports = rs.findAllReports();
-
-		} catch (Exception e) {
-			System.out.println("SQLERROR: " + e.getMessage());
-		}
+		dbReports = rs.findAllReports();
+		Report showReport = new Report();
 
 		log.debug("\n \nTIETOKANNASTA HAETUT RAPORTIT: \n");
 
 		int i = 1;
 		for (Report loopReport : dbReports) {
+			showReport = loopReport;
 			log.debug("\n\n\n" + i++ + ".RAPORTTI\n\n");
 			log.debug("Maahantuoja: " + loopReport.getImporter().getName());
 			log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
@@ -168,8 +163,7 @@ public class BasicInfoController {
 
 		}
 
-		Report showReport = (Report) dbReports.iterator().next();
-
-		return "redirect:/";
+		model.addAttribute("report", showReport);
+		return "showReport";
 	}
 }

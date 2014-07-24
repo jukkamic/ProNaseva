@@ -68,7 +68,7 @@
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
 																<c:choose>
-																	<c:when test="${option.chosenOptionIndex == optionsCounter.index}">
+																	<c:when test="${question.chosenOptionIndex == optionsCounter.index}">
 																		<button class="btn btn-large btn-primary" type="button">
 																			${option.radiobuttonText}
 																		</button>
@@ -82,7 +82,7 @@
 															</c:when>
 															<c:otherwise>
 																<c:choose>
-																	<c:when test="${option.chosenOptionIndex == optionsCounter.index}">
+																	<c:when test="${question.chosenOptionIndex == optionsCounter.index}">
 																		<button class="btn btn-large btn-primary" type="button">
 																			${option.option}
 																		</button>
@@ -100,7 +100,8 @@
 											</div>
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].remarks" />
+											<p>${question.remarks}</p>
+											
 											<br><br>
 										</c:if>
 
@@ -109,7 +110,7 @@
 											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer" />
+											<p>${question.answer}</p>
 										</c:if>
 										
 										<!-- Text field question -->
@@ -117,17 +118,17 @@
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer" />
+											<p>${question.answer}</p>
 										</c:if> 
 									</c:forEach>
 									</div>
 									</div>
-					
+					</div>
 					</c:forEach>
 				</div>
 				<br>
 
-				<a class="btn btn-primary" href="/ProNaseva/">Peruuta</a>
+				<a class="btn btn-primary" href="/ProNaseva/">Alkuun</a>
 				
 				<br><br>
 				<br>

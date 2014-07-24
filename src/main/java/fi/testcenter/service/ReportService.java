@@ -1,6 +1,6 @@
 package fi.testcenter.service;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,11 +32,16 @@ public class ReportService {
 	}
 
 	@Transactional
-	public Collection<Report> findAllReports() {
+	public List<Report> findAllReports() {
 
-		Query query = em.createQuery("SELECT r FROM Report r");
+		Query query = em.createQuery("SELECT r FROM Report r", Report.class);
 
-		return (Collection<Report>) query.getResultList();
+		return query.getResultList();
+	}
+
+	@Transactional
+	public Report findReportById(Integer id) {
+		return em.find(Report.class, id);
 	}
 
 }
