@@ -72,7 +72,7 @@
 																ei ole tägejä -->
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
-																<sf:radiobutton id="button" checked="checked" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
+																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
 																value="${optionsCounter.index}" /> ${option.radiobuttonText}
 															</c:when>
 															<c:otherwise>

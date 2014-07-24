@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.dao.ReportDAO;
-import fi.testcenter.dao.TestiDAO;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
@@ -43,9 +42,6 @@ public class BasicInfoController {
 
 	@Autowired
 	private ReportService rs;
-
-	@Autowired
-	TestiDAO tdao;
 
 	@Autowired
 	ReportDAO rdao;
