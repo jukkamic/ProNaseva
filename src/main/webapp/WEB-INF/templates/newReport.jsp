@@ -15,6 +15,12 @@
 			</div>
 			<br>
 			<br>
+			<div style="border-bottom: 1px solid #eee;">
+			<h4>Maahantuoja: ${report.importer.name}</h4>
+			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
+			<br>
+			</div>
+			<br><br>
 			<sf:form modelAttribute="report" action="submitReport" method="post">
 
 				<!-- QuestionGroup loop -->
@@ -115,5 +121,6 @@
 				<button class="btn btn-large btn-primary" action="submit">Valmis</button>
 				<br><br>
 				<br></sf:form>
+				
 		</div>
 		<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

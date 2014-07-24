@@ -14,10 +14,10 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 
-<link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+<link rel="stylesheet" href="resources/css/bootstrap.css" />
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="resources/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" href="resources/css/bootstrap-theme.css" />
 
 <!--  Stricky footer-template -->
 <link rel="stylesheet" href="resources/css/stickyfooter-template.css" />
@@ -25,6 +25,9 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+
+<!-- Accordion Menun siirto avattuun paneeliin -->
 
 <script type="text/javascript">
 
@@ -42,7 +45,6 @@
 				});
 	});
 </script>
-
 
 
 <link rel="stylesheet" href="resources/css/jquery-ui.css" />
