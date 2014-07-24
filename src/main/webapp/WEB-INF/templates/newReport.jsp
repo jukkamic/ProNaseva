@@ -121,7 +121,7 @@
 				<br>
 				
 				<button type="submit" class="btn btn-primary">Tallenna</button>
-				<a class="btn btn-primary" href="/ProNaseva/">Peruuta</a>
+				<a class="btn btn-primary" href="/ProNaseva/">Hylkää</a>
 				
 				<br><br>
 				<br></sf:form>

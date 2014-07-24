@@ -168,6 +168,8 @@ public class BasicInfoController {
 
 		}
 
+		Report showReport = (Report) dbReports.iterator().next();
+
 		return "redirect:/";
 	}
 }

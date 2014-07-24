@@ -33,7 +33,9 @@ public class ReportService {
 
 	@Transactional
 	public Collection<Report> findAllReports() {
+
 		Query query = em.createQuery("SELECT r FROM Report r");
+
 		return (Collection<Report>) query.getResultList();
 	}
 

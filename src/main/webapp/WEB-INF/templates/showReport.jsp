@@ -22,8 +22,6 @@
 			<br><br>
 			</div>
 			<br><br>
-			<sf:form modelAttribute="report" action="submitReport" method="post">
-
 				<!-- QuestionGroup loop -->
 				<div class="panel-group" id="accordion">
 					<c:forEach var="questionGroup" items="${report.questionGroups}"
@@ -62,16 +60,6 @@
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
 														
-														<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
-																raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
-														<c:choose>
-															<c:when test="${question.chosenOptionIndex == optionsCounter.index}">
-																<label class="btn btn-primary active">
-															</c:when>
-															<c:otherwise>
-																<label class="btn btn-primary">
-															</c:otherwise>
-														</c:choose> 
 														
 														<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
 																varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
@@ -79,15 +67,34 @@
 																ei ole tägejä -->
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
-																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
-																value="${optionsCounter.index}" /> ${option.radiobuttonText}
+																<c:choose>
+																	<c:when test="${option.chosenOptionIndex == optionsCounter.index}">
+																		<button class="btn btn-large btn-primary" type="button">
+																			${option.radiobuttonText}
+																		</button>
+																	</c:when>
+																	<c:otherwise>
+																		<button class="btn btn-large btn-primary" type="button" disabled>
+																			${option.radiobuttonText}
+																		</button>
+																	</c:otherwise>
+																</c:choose>
 															</c:when>
 															<c:otherwise>
-																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
-																value="${optionsCounter.index}" /> ${option.option}
+																<c:choose>
+																	<c:when test="${option.chosenOptionIndex == optionsCounter.index}">
+																		<button class="btn btn-large btn-primary" type="button">
+																			${option.option}
+																		</button>
+																	</c:when>
+																	<c:otherwise>
+																		<button class="btn btn-large btn-primary" type="button" disabled>
+																			${option.option}
+																		</button>
+																	</c:otherwise>
+																</c:choose>	
 															</c:otherwise>
-															</c:choose>
-														</label>
+														</c:choose>														
 													</c:forEach> 
 												</div>
 											</div>
@@ -111,20 +118,19 @@
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
 											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer" />
-										</c:if>
+										</c:if> 
 									</c:forEach>
 									</div>
 									</div>
-							</div>
+					
 					</c:forEach>
 				</div>
 				<br>
-				
-				<button type="submit" class="btn btn-primary">Tallenna</button>
+
 				<a class="btn btn-primary" href="/ProNaseva/">Peruuta</a>
 				
 				<br><br>
-				<br></sf:form>
+				<br>
 				
 		</div>
 		<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
