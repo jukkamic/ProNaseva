@@ -11,14 +11,14 @@
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<h1>Uusi raportti</h1>
+				<h1>Raportti</h1>
 			</div>
 			<br>
 			<br>
 			<div style="border-bottom: 1px solid #eee;">
 			<h4>Maahantuoja: ${report.importer.name}</h4>
 			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
-			<span class="label label-warning">Kesken</span>
+			<span class="label label-success">Valmis</span>
 			<br><br>
 			</div>
 			<br><br>
