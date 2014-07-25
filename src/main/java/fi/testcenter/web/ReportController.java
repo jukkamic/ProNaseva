@@ -28,7 +28,7 @@ import fi.testcenter.service.ReportService;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes(value = "report")
+@SessionAttributes(value = { "report", "dbReports" })
 public class ReportController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
