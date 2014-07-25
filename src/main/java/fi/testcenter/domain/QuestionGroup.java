@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +20,7 @@ public class QuestionGroup {
 
 	private String title;
 
-	@OneToMany(mappedBy = "questionGroup", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "questionGroup", cascade = CascadeType.ALL)
 	private List<Question> questions;
 
 	public String getTitle() {
