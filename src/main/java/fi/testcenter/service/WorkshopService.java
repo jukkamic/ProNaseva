@@ -9,7 +9,7 @@ import fi.testcenter.dao.WorkshopDAO;
 import fi.testcenter.domain.Workshop;
 
 @Service
-public class BasicInfoService {
+public class WorkshopService {
 
 	@Autowired
 	WorkshopDAO wd;

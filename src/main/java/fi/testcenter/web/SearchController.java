@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import fi.testcenter.dao.ReportDAO;
 import fi.testcenter.domain.Importer;
-import fi.testcenter.domain.MultipleChoiceQuestion;
-import fi.testcenter.domain.Question;
-import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.service.BasicInfoService;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
+import fi.testcenter.service.WorkshopService;
 
 @Controller
 public class SearchController {
@@ -31,7 +28,7 @@ public class SearchController {
 	private ImporterService is;
 
 	@Autowired
-	private BasicInfoService ws;
+	private WorkshopService ws;
 
 	@Autowired
 	private ReportService rs;
@@ -61,43 +58,6 @@ public class SearchController {
 		request.getSession().setAttribute("dbReports", dbReports);
 
 		model.addAttribute("dbReports", dbReports);
-
-		log.debug("\n \nHAKUTULOS JPS RAPORTIT: \n");
-
-		int i = 1;
-		for (Report loopReport : dbReports) {
-
-			log.debug("\n\n\n" + i++ + ".RAPORTTI\n\n");
-			log.debug("Maahantuoja: " + loopReport.getImporter().getName());
-			log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
-
-			for (QuestionGroup loopQuestionGroup : loopReport
-					.getQuestionGroups()) {
-				for (Question loopQuestion : loopQuestionGroup.getQuestions()) {
-					if (loopQuestion instanceof MultipleChoiceQuestion) {
-
-						MultipleChoiceQuestion loopMcq = (MultipleChoiceQuestion) loopQuestion;
-						if (loopMcq.getChosenOption() != null) {
-							log.debug("Monivalintakysymys: "
-									+ loopMcq.getQuestion() + " - valinta: "
-									+ loopMcq.getChosenOption().getOption()
-									+ " - pisteet: "
-									+ loopMcq.getChosenOption().getPoints());
-						}
-
-						else {
-							log.debug("Monivalintakysymys: "
-									+ loopMcq.getQuestion() + " - ei valintaa");
-						}
-					}
-
-					else
-						log.debug(loopQuestion);
-
-				}
-			}
-
-		}
 
 		return "searchResults";
 	}

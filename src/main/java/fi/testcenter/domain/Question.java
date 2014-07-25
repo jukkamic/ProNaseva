@@ -1,5 +1,6 @@
 package fi.testcenter.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +15,7 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "QGROUP_ID")
 	private QuestionGroup questionGroup;
 

@@ -22,7 +22,7 @@ import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.service.BasicInfoService;
+import fi.testcenter.service.WorkshopService;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 
@@ -37,7 +37,7 @@ public class ReportController {
 	private ImporterService is;
 
 	@Autowired
-	private BasicInfoService ws;
+	private WorkshopService ws;
 
 	@Autowired
 	private ReportService rs;

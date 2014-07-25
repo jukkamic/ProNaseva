@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -29,7 +30,7 @@ public class Report {
 	private String vehicleRegistrationDate;
 	private String vehicleMileage;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
 	public Integer getId() {

@@ -18,6 +18,8 @@
 			<div style="width: 70%;">
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Uusi raportti</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="searchReport">Hae raportti</a>
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="importers">Maahantuojat</a>
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="workshops">Korjaamot</a>
 			</div>
 
 		

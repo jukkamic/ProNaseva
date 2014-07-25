@@ -19,7 +19,7 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 	Integer multiChoiceId;
 	private String question;
 
-	@OneToMany(mappedBy = "multiQuestion", cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy = "multiQuestion", cascade = CascadeType.ALL)
 	private List<MultipleChoiceOption> options;
 
 	private MultipleChoiceOption chosenOption;
