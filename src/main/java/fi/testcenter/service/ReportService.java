@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,12 @@ public class ReportService {
 	}
 
 	@Transactional
-	public Report findReportById(Integer id) {
-		return em.find(Report.class, id);
+	public Report getReportById(Integer id) {
+		TypedQuery<Report> query = em.createQuery(
+				"SELECT r FROM Report r WHERE r.id = ?1", Report.class);
+		query.setParameter(1, id);
+		return query.getSingleResult();
+
 	}
 
 }

@@ -101,4 +101,16 @@ public class SearchController {
 
 		return "searchResults";
 	}
+
+	@RequestMapping(value = "/searchReportSelect", method = RequestMethod.GET)
+	public String showSelectedReport(HttpServletRequest request, Model model) {
+
+		Report selectedReport = rs.getReportById(Integer.parseInt(request
+				.getParameter("id")));
+		model.addAttribute("report", selectedReport);
+
+		return "showReport";
+
+	}
+
 }

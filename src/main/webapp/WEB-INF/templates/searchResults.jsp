@@ -18,7 +18,7 @@
 			<table class="table table-striped">
 				<c:forEach var="report" items="${dbReports}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;"href="searchReportSelect?id">
+							<td><a class="btn btn-primary" style="text-decoration: none;"href="searchReportSelect?id=${report.id}">
 								Valitse</a></td>
 							<td>[pvm]</td>
 							<td>Maahantuoja: ${report.importer.name}<br>
