@@ -17,7 +17,7 @@
 			<br><br><br><br>
 			<div style="width: 70%;">
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Uusi raportti</a>
-			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Hae raportti</a>
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="searchReport">Hae raportti</a>
 			</div>
 
 		

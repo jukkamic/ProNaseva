@@ -35,7 +35,5 @@
 		<property name="basename" value="locale/messages" />
 	</bean>
 
-	<bean name="importerDAO" class="fi.testcenter.dao.ImporterDAOMock" />
-	<bean name="questionDAO" class="fi.testcenter.dao.QuestionDAOMock" />
 
 </beans>

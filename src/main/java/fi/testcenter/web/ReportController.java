@@ -29,9 +29,9 @@ import fi.testcenter.service.ReportService;
 @Controller
 @RequestMapping("/")
 @SessionAttributes(value = "report")
-public class BasicInfoController {
+public class ReportController {
 
-	Logger log = Logger.getLogger("fi.testcenter.web.BasicInfoController");
+	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
 
 	@Autowired
 	private ImporterService is;
