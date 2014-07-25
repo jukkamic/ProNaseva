@@ -45,7 +45,6 @@ public class ReportService {
 				Report.class);
 		query.setParameter(1, id);
 		Report dbReport = (Report) query.getSingleResult();
-		em.refresh(dbReport);
 
 		return dbReport;
 
