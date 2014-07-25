@@ -11,48 +11,23 @@
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<h1>Alkutiedot</h1>
+				<h1>ProNaseva</h1>
 			</div>
 
-			<br>
-			<br>
+			<br><br><br><br>
+			<div style="width: 70%;">
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Uusi raportti</a>
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Hae raportti</a>
+			</div>
 
-			<sf:form modelAttribute="reportBasicInfo" action="submitBasicInfo"
-				method="post">
-
-				<label for="importerSelect">Maahantuoja: </label>
-				<br>
-				<sf:select style="width: auto; max-width: 100%" id="importerSelect" path="importer"
-					class="form-control">
-					<c:forEach var="importer" items="${importers}">
-						<option>${importer}</option>
-					</c:forEach>
-				</sf:select>
-				<br>
-				<br>
-				
-				<label for="workshopSelect">Korjaamo: </label>
-				<br>
-				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="workshop"
-					class="form-control">
-					<c:forEach var="workshop" items="${workshops}">
-						<option>${workshop}</option>
-					</c:forEach>
-				</sf:select>
-
-				<br>
-				<br>
-				<button class="btn btn-large btn-primary" action="submit">Seuraava</button>
-			</sf:form>
+		
 		</div>
 
 		<br>
 
-
-
-
 	<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
-
+	
+	
 
 	<!-- Le javascript
     ================================================== 

@@ -47,21 +47,27 @@ public class BasicInfoController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model) {
-		List<Workshop> workshops = new ArrayList<Workshop>();
-		workshops = ws.getWorkshops();
-		model.addAttribute("workshops", workshops);
-
-		List<Importer> importers = new ArrayList<Importer>();
-		importers = is.getImporters();
-		model.addAttribute("importers", importers);
-
-		model.addAttribute("reportBasicInfo", new ReportBasicInfo());
 
 		return "start";
 	}
 
-	@RequestMapping(value = "/submitBasicInfo", method = RequestMethod.POST)
-	public String submitWorkshopImporter(HttpServletRequest request,
+	@RequestMapping(value = "/addNewReport", method = RequestMethod.GET)
+	public String prepareNewReportBasicInfoForm(HttpServletRequest request,
+			Model model) {
+
+		List<Workshop> workshops = ws.getWorkshops();
+		model.addAttribute("workshops", workshops);
+
+		List<Importer> importers = is.getImporters();
+		model.addAttribute("importers", importers);
+
+		model.addAttribute("reportBasicInfo", new ReportBasicInfo());
+
+		return "newReportBasicInfo";
+	}
+
+	@RequestMapping(value = "/addNewReport", method = RequestMethod.POST)
+	public String submitNewReportBasicInfo(HttpServletRequest request,
 			Model model,
 			@ModelAttribute("reportBasicInfo") ReportBasicInfo reportInfo,
 			BindingResult result) {

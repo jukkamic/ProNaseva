@@ -38,7 +38,7 @@
 								</h4>
 							</div>
 
-								<!-- Ensimmäisen kysymysryhmän luokka on "collapse in" jotta javascript 
+								<!-- Ensimmäisen kysymysryhmän luokka on "collapse start" jotta javascript 
 									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
 								<c:choose>
 									<c:when test="${questionGroupCounter.count == 1}">
