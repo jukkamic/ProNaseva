@@ -6,9 +6,14 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,8 +24,8 @@ public class Report {
 	private Date date;
 
 	@Id
-	@GeneratedValue
-	Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 
 	private Importer importer;
 	private Workshop workshop;
@@ -29,14 +34,16 @@ public class Report {
 	private String vehicleRegistrationDate;
 	private String vehicleMileage;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "REPORT_QUESTIONGROUP", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"))
+	@OrderColumn(name = "INDEX")
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

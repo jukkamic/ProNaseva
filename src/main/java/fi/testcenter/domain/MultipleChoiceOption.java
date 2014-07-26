@@ -1,23 +1,17 @@
 package fi.testcenter.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class MultipleChoiceOption implements Serializable {
+public class MultipleChoiceOption {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer choiceID;
+	private long choiceID;
 
-	@ManyToOne
-	@JoinColumn(name = "MULTIQ_ID")
 	private MultipleChoiceQuestion multiQuestion;
 
 	private String option;
@@ -48,11 +42,11 @@ public class MultipleChoiceOption implements Serializable {
 		this.option = option;
 	}
 
-	public Integer getChoiceID() {
+	public long getChoiceID() {
 		return choiceID;
 	}
 
-	public void setChoiceID(Integer choiceID) {
+	public void setChoiceID(long choiceID) {
 		this.choiceID = choiceID;
 	}
 

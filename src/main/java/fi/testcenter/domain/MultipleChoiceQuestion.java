@@ -1,25 +1,24 @@
 package fi.testcenter.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
-public class MultipleChoiceQuestion extends Question implements Serializable {
+public class MultipleChoiceQuestion extends Question {
 
-	@Column(name = "MULTIQ_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer multiChoiceId;
 	private String question;
 
-	@OneToMany(mappedBy = "multiQuestion", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "MULTIPLECHOICEQ_OPTION", joinColumns = @JoinColumn(name = "MULTIPLECHOICEQ_ID"), inverseJoinColumns = @JoinColumn(name = "OPTION_ID"))
+	@OrderColumn(name = "INDEX")
 	private List<MultipleChoiceOption> options;
 
 	private MultipleChoiceOption chosenOption;
@@ -29,14 +28,6 @@ public class MultipleChoiceQuestion extends Question implements Serializable {
 
 	public MultipleChoiceQuestion() {
 		this.chosenOptionIndex = -1;
-	}
-
-	public Integer getMultiChoiceId() {
-		return multiChoiceId;
-	}
-
-	public void setMultiChoiceId(Integer multiChoiceId) {
-		this.multiChoiceId = multiChoiceId;
 	}
 
 	public int getChosenOptionIndex() {

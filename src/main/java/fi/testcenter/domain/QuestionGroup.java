@@ -3,24 +3,28 @@ package fi.testcenter.domain;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class QuestionGroup {
 
 	@Id
-	@Column(name = "QGROUP_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer id;
+	private long id;
 
 	private String title;
 
-	@OneToMany(mappedBy = "questionGroup", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "QUESTIONGROUP_QUESTION", joinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
+	@OrderColumn(name = "INDEX")
 	private List<Question> questions;
 
 	public String getTitle() {
@@ -29,6 +33,14 @@ public class QuestionGroup {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public List<Question> getQuestions() {
