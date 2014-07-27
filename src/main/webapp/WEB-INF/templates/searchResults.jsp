@@ -16,13 +16,13 @@
 			<br><br>
 			
 			<table class="table table-striped">
-				<c:forEach var="report" items="${dbReports}">
+				<c:forEach var="report" items="${reportSearchList}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;"href="searchReportSelect?id=${report.id}">
+							<td><a class="btn btn-primary" style="text-decoration: none;"href="searchReportSelect?id=${report[0]}">
 								Valitse</a></td>
 							<td>[pvm]</td>
-							<td>Maahantuoja: ${report.importer.name}<br>
-								Korjaamo: ${report.workshop.name}
+							<td>Maahantuoja: ${report[1].name}<br>
+								Korjaamo: ${report[2].name}
 							</td>
 						</tr>
 						

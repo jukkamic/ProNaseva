@@ -54,10 +54,10 @@ public class SearchController {
 	public String prepareNewReportBasicInfoForm(HttpServletRequest request,
 			Model model) {
 
-		List<Report> dbReports = rs.findAllReports();
-		request.getSession().setAttribute("dbReports", dbReports);
+		List reportSearchList = rs.getReportSearchList();
+		request.getSession().setAttribute("reportSearchList", reportSearchList);
 
-		model.addAttribute("dbReports", dbReports);
+		model.addAttribute("dbReports", reportSearchList);
 
 		return "searchResults";
 	}

@@ -40,6 +40,15 @@ public class ReportService {
 	}
 
 	@Transactional
+	public List getReportSearchList() {
+
+		Query query = em
+				.createQuery("SELECT r.id, r.workshop, r.importer FROM Report r");
+
+		return query.getResultList();
+	}
+
+	@Transactional
 	public Report getReportById(Integer id) {
 		Query query = em.createQuery("SELECT r FROM Report r WHERE r.id = ?1",
 				Report.class);
