@@ -24,24 +24,28 @@
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
- 		<property name="packagesToScan" value="fi.testcenter.domain" />
+		<property name="packagesToScan" value="fi.testcenter.domain" />
 		<property name="persistenceUnitName" value="ProNasevaPersistence" />
- 		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource" />
 		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter" />
+			<bean
+				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter" />
 		</property>
 	</bean>
 
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
-	
+
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.hsqldb.jdbc.JDBCDriver" />
-		<property name="url"
-			value="jdbc:hsqldb:hsql://localhost/ProNasevaDB" />
+		<property name="url" value="jdbc:hsqldb:hsql://localhost/ProNasevaDB" />
 		<property name="username" value="SA" />
 	</bean>
+
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+		<jdbc:script location="classpath:sql/init.sql" />
+	</jdbc:initialize-database>
 
 </beans>
