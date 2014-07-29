@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import fi.testcenter.dao.ReportDAO;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
@@ -28,9 +27,6 @@ public class ImporterWorkshopController {
 
 	@Autowired
 	private WorkshopService ws;
-
-	@Autowired
-	ReportDAO rdao;
 
 	@RequestMapping(value = "/importers", method = RequestMethod.GET)
 	public String setupImporterPage(HttpServletRequest request, Model model) {

@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.dao.ReportDAO;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.service.WorkshopService;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
+import fi.testcenter.service.WorkshopService;
 
 @Controller
 @RequestMapping("/")
@@ -41,9 +40,6 @@ public class ReportController {
 
 	@Autowired
 	private ReportService rs;
-
-	@Autowired
-	ReportDAO rdao;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model) {

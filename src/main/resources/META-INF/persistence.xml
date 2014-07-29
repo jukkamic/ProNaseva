@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1"
-	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-<!-- 	<persistence-unit name="ProNasevaPersistence"
-		transaction-type="RESOURCE_LOCAL">
-		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<exclude-unlisted-classes>false</exclude-unlisted-classes>
-		<properties>
-			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbc.JDBCDriver" />
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:hsqldb:hsql://localhost/ProNasevaDB/mydatabase" />
-			<property name="javax.persistence.jdbc.user" value="SA" />
-			<property name="javax.persistence.jdbc.password" value="" />
-
-			EclipseLink should create the database schema automatically
-			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
-			<property name="eclipselink.ddl-generation.output-mode"
-				value="database" />
-
-		</properties>
-	</persistence-unit>
- -->	
 	<persistence-unit name="ProNasevaPersistence" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>fi.testcenter.domain.Report</class>
+		<class>fi.testcenter.domain.Importer</class>
+		<class>fi.testcenter.domain.Workshop</class>
+		<class>fi.testcenter.domain.QuestionGroup</class>
+		<class>fi.testcenter.domain.Question</class>
+		<class>fi.testcenter.domain.TextareaQuestion</class>
+		<class>fi.testcenter.domain.TextfieldQuestion</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="showSql" value="true" />
@@ -31,12 +20,10 @@
 			<property name="eclipselink.ddl-generation.output-mode" value="database" />
 			<property name="eclipselink.weaving" value="false" />
 			<property name="eclipselink.logging.level" value="SEVERE" />
-			<property name="eclipselink.logging.level.sql" value="SEVERE"/>
-<!-- 			<property name="eclipselink.create-ddl-jdbc-file-name" value="ProNasevaDB.script"/>
- -->		</properties>
+			<property name="eclipselink.logging.level.sql" value="SEVERE" />
+			<!-- <property name="eclipselink.create-ddl-jdbc-file-name" value="ProNasevaDB.script"/> -->
+		</properties>
 	</persistence-unit>
-	
-
 
 </persistence>
 

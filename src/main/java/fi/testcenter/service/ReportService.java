@@ -2,61 +2,48 @@ package fi.testcenter.service;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fi.testcenter.dao.ReportDAOMockVolvo;
 import fi.testcenter.domain.Report;
+import fi.testcenter.repository.ReportRepository;
 
 @Service
 public class ReportService {
 
 	@Autowired
-	private ReportDAOMockVolvo rd;
+	private ReportRepository rr;
 
-	@PersistenceContext
-	EntityManager em;
+	@Autowired
+	private ReportTemplateService rts;
 
 	public Report getReportTemplate() {
-		return rd.getReportTemplate();
+		return rts.getReportTemplate("Volvo");
 	}
 
 	@Transactional
 	public void saveReport(Report report) {
-		em.persist(report);
+		rr.save(report);
 	}
 
 	@Transactional
 	public List<Report> findAllReports() {
-
-		Query query = em.createQuery("SELECT r FROM Report r", Report.class);
-
-		return query.getResultList();
+		return rr.findAll();
 	}
 
+	// @Transactional
+	// public List getReportSearchList() {
+	//
+	// Query query = em
+	// .createQuery("SELECT r.id, r.workshop, r.importer FROM Report r");
+	//
+	// return query.getResultList();
+	// }
+
 	@Transactional
-	public List getReportSearchList() {
-
-		Query query = em
-				.createQuery("SELECT r.id, r.workshop, r.importer FROM Report r");
-
-		return query.getResultList();
-	}
-
-	@Transactional
-	public Report getReportById(Integer id) {
-		Query query = em.createQuery("SELECT r FROM Report r WHERE r.id = ?1",
-				Report.class);
-		query.setParameter(1, id);
-		Report dbReport = (Report) query.getSingleResult();
-
-		return dbReport;
-
+	public Report getReportById(Long id) {
+		return rr.findOne(id);
 	}
 
 }

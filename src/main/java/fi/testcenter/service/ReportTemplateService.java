@@ -1,8 +1,8 @@
-package fi.testcenter.dao;
+package fi.testcenter.service;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import fi.testcenter.domain.MultipleChoiceOption;
 import fi.testcenter.domain.MultipleChoiceQuestion;
@@ -12,26 +12,14 @@ import fi.testcenter.domain.Report;
 import fi.testcenter.domain.TextareaQuestion;
 import fi.testcenter.domain.TextfieldQuestion;
 
-/* JAETAAN YLI 25 MERKKIÄ PITKÄT MONIVALINTAVAIHTOEHDOT KAHDELLE RIVILLE 
- * KÄYTTÄMÄLLÄ VAIHTOEHDON TEKSTISSÄ <BR> 
- * JOTTA VAIHTOTEHTONAPEISTA EI TULE LIIAN LEVEITÄ
- * 
- * MultipleChoiceOption-luokan olioitta on ominaisuudet option ja 
- * radiobuttonText, joista jälkimmäistä voi käyttää määrittämään 
- * radiobuttoneissa näkyvän tekstin ja option on valintaa kuvaava teksti
- * muissa yhteyksissä. radiobuttonText-muuttujaan voi tarvittaessa 
- * asettaa radiobuttonissa näkyvän tekstin niin että se on jaettu
- * em. tavoin kahdelle riville.  
- * 
- * Kaikkiin kyseisen monivalintakysymyksen vaihtoehtoihin voisi silloin
- * lisätä loppuun <BR> &NBSP  vaikka ne olisivat lyhyempiä jotta kaikki
- * napit ovat kahden rivin korkuisia. 
- */
+@Service
+public class ReportTemplateService {
 
-@Repository
-public class ReportDAOMockVolvo implements ReportDAO {
+	public Report getReportTemplate(String template) {
+		return getReportTemplateVolvo();
+	}
 
-	public Report getReportTemplate() {
+	private Report getReportTemplateVolvo() {
 
 		ArrayList<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
@@ -255,6 +243,6 @@ public class ReportDAOMockVolvo implements ReportDAO {
 		Report report = new Report();
 		report.setQuestionGroups(questionGroups);
 		return report;
-
 	}
+
 }

@@ -19,6 +19,9 @@
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
+	<!-- Sovelluksen repository-luokkien sijainti -->
+	<jpa:repositories base-package="fi.testcenter.repository" />
+
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
  		<property name="packagesToScan" value="fi.testcenter.domain" />

@@ -27,7 +27,7 @@ public class Report {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private Long id;
 
 	private Importer importer;
 	private Workshop workshop;
@@ -41,11 +41,11 @@ public class Report {
 	@OrderColumn(name = "INDEX")
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

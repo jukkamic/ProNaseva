@@ -2,7 +2,14 @@ package fi.testcenter.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Workshop implements Serializable {
+
+	@Id
+	private Long id;
 
 	private String name;
 	private String streetAddress;
@@ -10,6 +17,10 @@ public class Workshop implements Serializable {
 	private String zipCode;
 	private String email;
 	private String telNum;
+
+	public Workshop() {
+
+	}
 
 	public String getStreetAddress() {
 		return streetAddress;
