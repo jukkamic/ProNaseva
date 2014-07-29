@@ -5,18 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fi.testcenter.dao.WorkshopDAO;
 import fi.testcenter.domain.Workshop;
+import fi.testcenter.repository.WorkshopRepository;
 
 @Service
 public class WorkshopService {
 
 	@Autowired
-	WorkshopDAO wd;
-	
+	WorkshopRepository wr;
+
 	public List<Workshop> getWorkshops() {
-		
-		return wd.getWorkshops();
+		return wr.findAll();
 	}
 
 }
