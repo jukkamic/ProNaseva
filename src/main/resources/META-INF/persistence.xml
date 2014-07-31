@@ -13,6 +13,8 @@
 		<class>fi.testcenter.domain.Question</class>
 		<class>fi.testcenter.domain.TextareaQuestion</class>
 		<class>fi.testcenter.domain.TextfieldQuestion</class>
+		<class>fi.testcenter.domain.MultipleChoiceQuestion</class>
+		<class>fi.testcenter.domain.MultipleChoiceOption</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="showSql" value="true" />
