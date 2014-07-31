@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class MultipleChoiceOption {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long choiceID;
 
 	private MultipleChoiceQuestion multiQuestion;

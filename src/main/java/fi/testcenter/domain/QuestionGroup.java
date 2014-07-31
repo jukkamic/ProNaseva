@@ -17,7 +17,7 @@ import javax.persistence.OrderColumn;
 public class QuestionGroup {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long id;
 
 	private String title;
