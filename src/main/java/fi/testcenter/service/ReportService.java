@@ -18,6 +18,7 @@ public class ReportService {
 	@Autowired
 	private ReportTemplateService rts;
 
+	@Transactional(readOnly = true)
 	public Report getReportTemplate() {
 		return rts.getReportTemplate("Volvo");
 	}
