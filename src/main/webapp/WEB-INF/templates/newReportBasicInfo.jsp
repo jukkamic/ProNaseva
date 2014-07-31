@@ -21,10 +21,10 @@
 
 				<label for="importerSelect">Maahantuoja: </label>
 				<br>
-				<sf:select style="width: auto; max-width: 100%" id="importerSelect" path="importer"
+				<sf:select style="width: auto; max-width: 100%" id="importerSelect" path="importerID"
 					class="form-control">
 					<c:forEach var="importer" items="${importers}">
-						<option>${importer}</option>
+						<option value="${importer.id}">${importer}</option>
 					</c:forEach>
 				</sf:select>
 				<br>
@@ -32,10 +32,10 @@
 				
 				<label for="workshopSelect">Korjaamo: </label>
 				<br>
-				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="workshop"
+				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="workshopID"
 					class="form-control">
 					<c:forEach var="workshop" items="${workshops}">
-						<option>${workshop}</option>
+						<option value="${workshop.id}">${workshop}</option>
 					</c:forEach>
 				</sf:select>
 
@@ -43,6 +43,16 @@
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Seuraava</button>
 			</sf:form>
+			Eka workshopID:
+			${workshops[0].name} <br>
+			${workshops[0].id}
+			
+			<br>
+			Eka importerID:
+			${importers[0].name} <br>
+			${importers[0].id}
+			
+			
 		</div>
 
 		<br>

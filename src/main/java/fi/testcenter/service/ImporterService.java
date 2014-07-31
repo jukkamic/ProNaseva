@@ -20,4 +20,8 @@ public class ImporterService {
 		return importerRepository.findAll();
 	}
 
+	public Importer findImporter(Long importerID) {
+		return importerRepository.findOne(importerID);
+	}
+
 }

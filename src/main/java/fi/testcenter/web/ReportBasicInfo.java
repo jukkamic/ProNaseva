@@ -7,6 +7,8 @@ public class ReportBasicInfo {
 
 	private Workshop workshop;
 	private Importer importer;
+	private Long workshopID;
+	private Long importerID;
 
 	public Workshop getWorkshop() {
 		return workshop;
@@ -22,6 +24,22 @@ public class ReportBasicInfo {
 
 	public void setImporter(Importer importer) {
 		this.importer = importer;
+	}
+
+	public Long getWorkshopID() {
+		return workshopID;
+	}
+
+	public void setWorkshopID(Long workshopID) {
+		this.workshopID = workshopID;
+	}
+
+	public Long getImporterID() {
+		return importerID;
+	}
+
+	public void setImporterID(Long importerID) {
+		this.importerID = importerID;
 	}
 
 }

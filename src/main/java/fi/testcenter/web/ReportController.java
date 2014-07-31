@@ -52,6 +52,8 @@ public class ReportController {
 			Model model) {
 
 		List<Workshop> workshops = ws.getWorkshops();
+		log.debug("report controller prepare new report basic info form, first workshop id: "
+				+ workshops.get(0).getId());
 		model.addAttribute("workshops", workshops);
 
 		List<Importer> importers = is.getImporters();
@@ -68,12 +70,14 @@ public class ReportController {
 			@ModelAttribute("reportBasicInfo") ReportBasicInfo reportInfo,
 			BindingResult result) {
 
-		log.debug("Maahantuoja: " + reportInfo.getImporter());
-		log.debug("Korjaamo: " + reportInfo.getWorkshop());
-
 		Report report = rs.getReportTemplate();
-		report.setWorkshop(reportInfo.getWorkshop());
-		report.setImporter(reportInfo.getImporter());
+		log.debug("reportInfo workshop ID: " + reportInfo.getWorkshopID());
+		Workshop workshop = ws.findWorkshop(reportInfo.getWorkshopID());
+		Importer importer = is.findImporter(reportInfo.getImporterID());
+		report.setWorkshop(workshop);
+		report.setImporter(importer);
+		report.setWorkshopId(reportInfo.getWorkshopID());
+		report.setImporterId(reportInfo.getImporterID());
 
 		model.addAttribute("report", report);
 

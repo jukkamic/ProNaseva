@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Report {
@@ -34,9 +35,15 @@ public class Report {
 			CascadeType.REMOVE })
 	private Importer importer;
 
+	@Transient
+	private Long importerId;
+
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REMOVE })
 	private Workshop workshop;
+
+	@Transient
+	private Long workshopId;
 
 	private String vehicleModel;
 	private String vehicleRegistrationNumber;
@@ -122,6 +129,22 @@ public class Report {
 
 	public Report() {
 		this.date = new Date();
+	}
+
+	public Long getImporterId() {
+		return importerId;
+	}
+
+	public void setImporterId(Long importerId) {
+		this.importerId = importerId;
+	}
+
+	public Long getWorkshopId() {
+		return workshopId;
+	}
+
+	public void setWorkshopId(Long workshopId) {
+		this.workshopId = workshopId;
 	}
 
 }
