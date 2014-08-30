@@ -24,6 +24,7 @@ import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.WorkshopService;
+import fi.testcenter.web.form.ReportBasicInfo;
 
 @Controller
 @RequestMapping("/")
@@ -71,11 +72,6 @@ public class ReportController {
 			BindingResult result) {
 
 		Report report = rs.getReportTemplate();
-		log.debug("reportInfo workshop ID: " + reportInfo.getWorkshopID());
-		Workshop workshop = ws.findWorkshop(reportInfo.getWorkshopID());
-		Importer importer = is.findImporter(reportInfo.getImporterID());
-		report.setWorkshop(workshop);
-		report.setImporter(importer);
 		report.setWorkshopId(reportInfo.getWorkshopID());
 		report.setImporterId(reportInfo.getImporterID());
 

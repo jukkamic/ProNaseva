@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Report;
-import fi.testcenter.domain.Workshop;
+import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.ReportRepository;
 import fi.testcenter.repository.WorkshopRepository;
@@ -33,20 +32,12 @@ public class ReportService {
 	private ReportTemplateService rts;
 
 	@Transactional(readOnly = true)
-	public Report getReportTemplate() {
+	public ReportTemplate getReportTemplate() {
 		return rts.getReportTemplate("Volvo");
 	}
 
 	@Transactional
 	public void saveReport(Report report) {
-		log.debug("report workshop id: " + report.getWorkshop().getId());
-		Workshop workshop = wr.findOne(report.getWorkshopId());
-		log.debug("workshop ID: " + workshop.getId());
-		report.setWorkshop(workshop);
-
-		Importer importer = ir.findOne(report.getImporterId());
-		report.setImporter(importer);
-
 		rr.save(report);
 	}
 

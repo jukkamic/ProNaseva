@@ -4,21 +4,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 public class Report {
@@ -31,18 +23,7 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE })
-	private Importer importer;
-
-	@Transient
 	private Long importerId;
-
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE })
-	private Workshop workshop;
-
-	@Transient
 	private Long workshopId;
 
 	private String vehicleModel;
@@ -50,10 +31,7 @@ public class Report {
 	private String vehicleRegistrationDate;
 	private String vehicleMileage;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORT_QUESTIONGROUP", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"))
-	@OrderColumn(name = "INDEX")
-	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
+	private List<Long> questionGroupIds = new ArrayList<Long>();
 
 	public Long getId() {
 		return id;
@@ -95,28 +73,12 @@ public class Report {
 		this.vehicleMileage = vehicleMileage;
 	}
 
-	public Importer getImporter() {
-		return importer;
+	public List<Long> getQuestionGroupIds() {
+		return questionGroupIds;
 	}
 
-	public void setImporter(Importer importer) {
-		this.importer = importer;
-	}
-
-	public Workshop getWorkshop() {
-		return workshop;
-	}
-
-	public void setWorkshop(Workshop workshop) {
-		this.workshop = workshop;
-	}
-
-	public List<QuestionGroup> getQuestionGroups() {
-		return questionGroups;
-	}
-
-	public void setQuestionGroups(List<QuestionGroup> questionGroups) {
-		this.questionGroups = questionGroups;
+	public void setQuestionGroupIds(List<Long> questionGroupIds) {
+		this.questionGroupIds = questionGroupIds;
 	}
 
 	public Date getDate() {

@@ -1,25 +1,39 @@
 package fi.testcenter.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.MultipleChoiceOption;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
-import fi.testcenter.domain.Report;
+import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.domain.TextareaQuestion;
 import fi.testcenter.domain.TextfieldQuestion;
+import fi.testcenter.repository.QuestionGroupRepository;
+import fi.testcenter.repository.ReportTemplateRepository;
+import fi.testcenter.util.Constants;
 
 @Service
 public class ReportTemplateService {
 
-	public Report getReportTemplate(String template) {
-		return getReportTemplateVolvo();
+	@Autowired
+	private ReportTemplateRepository rtr;
+
+	@Autowired
+	private QuestionGroupRepository qgr;
+
+	@Transactional(readOnly = true)
+	public ReportTemplate getReportTemplate(String template) {
+		// päättele oikea
+		return rtr.findOne(Constants.VOLVO_TEMPLATE_ID);
 	}
 
-	private Report getReportTemplateVolvo() {
+	public void createReportTemplateVolvo() {
 
 		ArrayList<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
@@ -55,6 +69,8 @@ public class ReportTemplateService {
 
 		questionGroup1.setQuestions(questionList1);
 		questionGroups.add(questionGroup1);
+
+		QuestionGroup QGTestiautonTiedot = qgr.save(questionGroup1);
 
 		// 2. Tarkastuskohteet
 
@@ -124,6 +140,8 @@ public class ReportTemplateService {
 
 		questionGroup2.setQuestions(questionList2);
 		questionGroups.add(questionGroup2);
+
+		QuestionGroup QGTarkastuskohteet = qgr.save(questionGroup2);
 
 		// 3. Palvelun pisteet
 
@@ -238,11 +256,18 @@ public class ReportTemplateService {
 		questionList3.add(q38);
 
 		questionGroup3.setQuestions(questionList3);
-		questionGroups.add(questionGroup3);
 
-		Report report = new Report();
-		report.setQuestionGroups(questionGroups);
-		return report;
+		QuestionGroup QGPalvelunPisteet = qgr.save(questionGroup3);
+
+		ReportTemplate rt = new ReportTemplate();
+		rt.setId(Constants.VOLVO_TEMPLATE_ID);
+		List<Long> questionGroupIds = new ArrayList<Long>();
+		questionGroupIds.add(QGTestiautonTiedot.getId());
+		questionGroupIds.add(QGTarkastuskohteet.getId());
+		questionGroupIds.add(QGPalvelunPisteet.getId());
+		rt.setQuestionGroupIds(questionGroupIds);
+
+		rtr.save(rt);
 	}
 
 }

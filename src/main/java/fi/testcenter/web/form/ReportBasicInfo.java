@@ -1,4 +1,4 @@
-package fi.testcenter.web;
+package fi.testcenter.web.form;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
