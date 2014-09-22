@@ -2,6 +2,7 @@ package fi.testcenter.web;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fi.testcenter.domain.Answer;
 import fi.testcenter.domain.Importer;
+import fi.testcenter.domain.MultipleChoiceAnswer;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
@@ -98,14 +101,18 @@ public class ReportController {
 
 		log.debug("\n\n\nJSP:N SYÖTETYT TIEDOT SIDOTTUINA REPORT-OLIOON: \n\n");
 		for (QuestionGroup group : report.getQuestionGroups()) {
-			for (Question question : group.getQuestions()) {
+			for (Map.Entry<Question, Answer> entry : group
+					.getQuestionsAnswers().entrySet()) {
+
+				Question question = entry.getKey();
 
 				if (question instanceof MultipleChoiceQuestion) {
 					MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
-
-					if (mcq.getChosenOptionIndex() != -1) {
+					MultipleChoiceAnswer answer = (MultipleChoiceAnswer) entry
+							.getValue();
+					if (answer.getChosenOption() != null) {
 						mcq.setChosenOption(mcq.getOptions().get(
-								mcq.getChosenOptionIndex()));
+								answer.getChosenOptionIndex()));
 						log.debug("Monivalintakysymys: " + mcq.getQuestion()
 								+ " - valinta: "
 								+ mcq.getChosenOption().getOption()
@@ -143,16 +150,21 @@ public class ReportController {
 
 			for (QuestionGroup loopQuestionGroup : loopReport
 					.getQuestionGroups()) {
-				for (Question loopQuestion : loopQuestionGroup.getQuestions()) {
-					if (loopQuestion instanceof MultipleChoiceQuestion) {
+				for (Map.Entry<Question, Answer> entry : loopQuestionGroup
+						.getQuestionsAnswers().entrySet()) {
+					Question question = entry.getKey();
 
-						MultipleChoiceQuestion loopMcq = (MultipleChoiceQuestion) loopQuestion;
-						if (loopMcq.getChosenOption() != null) {
+					if (question instanceof MultipleChoiceQuestion) {
+
+						MultipleChoiceQuestion loopMcq = (MultipleChoiceQuestion) question;
+						MultipleChoiceAnswer loopAnswer = (MultipleChoiceAnswer) entry
+								.getValue();
+						if (loopAnswer.getChosenOption() != null) {
 							log.debug("Monivalintakysymys: "
 									+ loopMcq.getQuestion() + " - valinta: "
-									+ loopMcq.getChosenOption().getOption()
+									+ loopAnswer.getChosenOption().getOption()
 									+ " - pisteet: "
-									+ loopMcq.getChosenOption().getPoints());
+									+ loopAnswer.getChosenOption().getPoints());
 						}
 
 						else {
@@ -162,7 +174,7 @@ public class ReportController {
 					}
 
 					else
-						log.debug(loopQuestion);
+						log.debug(question);
 
 				}
 			}

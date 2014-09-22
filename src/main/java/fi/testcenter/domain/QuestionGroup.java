@@ -1,17 +1,12 @@
 package fi.testcenter.domain;
 
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 
 @Entity
 public class QuestionGroup {
@@ -22,10 +17,7 @@ public class QuestionGroup {
 
 	private String title;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "QUESTIONGROUP_QUESTION", joinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
-	@OrderColumn(name = "INDEX")
-	private List<Question> questions;
+	private LinkedHashMap<Question, Answer> questionsAnswers;
 
 	public String getTitle() {
 		return title;
@@ -43,11 +35,12 @@ public class QuestionGroup {
 		this.id = id;
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
+	public Map<Question, Answer> getQuestionsAnswers() {
+		return questionsAnswers;
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setQuestionsAnswers(
+			LinkedHashMap<Question, Answer> questionsAnswers) {
+		this.questionsAnswers = questionsAnswers;
 	}
 }
