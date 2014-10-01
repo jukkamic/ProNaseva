@@ -49,7 +49,7 @@
 
 <link rel="stylesheet" href="resources/css/jquery-ui.css" />
 <link rel="stylesheet" href="resources/css/jquery-ui.theme.css" />
-
+</head>
 
 
 

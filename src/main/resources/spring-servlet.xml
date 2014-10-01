@@ -15,5 +15,5 @@
 
 	<!-- Staattiset resurssit -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-	
+		
 </beans>

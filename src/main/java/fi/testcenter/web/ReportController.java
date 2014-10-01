@@ -1,8 +1,6 @@
 package fi.testcenter.web;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,12 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.domain.Answer;
 import fi.testcenter.domain.Importer;
-import fi.testcenter.domain.MultipleChoiceAnswer;
-import fi.testcenter.domain.MultipleChoiceQuestion;
-import fi.testcenter.domain.Question;
-import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
@@ -55,8 +48,7 @@ public class ReportController {
 			Model model) {
 
 		List<Workshop> workshops = ws.getWorkshops();
-		log.debug("report controller prepare new report basic info form, first workshop id: "
-				+ workshops.get(0).getId());
+
 		model.addAttribute("workshops", workshops);
 
 		List<Importer> importers = is.getImporters();
@@ -74,7 +66,7 @@ public class ReportController {
 			BindingResult result) {
 
 		Report report = rs.getReportTemplate();
-		log.debug("reportInfo workshop ID: " + reportInfo.getWorkshopID());
+
 		Workshop workshop = ws.findWorkshop(reportInfo.getWorkshopID());
 		Importer importer = is.findImporter(reportInfo.getImporterID());
 		report.setWorkshop(workshop);
@@ -99,89 +91,26 @@ public class ReportController {
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
-		log.debug("\n\n\nJSP:N SYÖTETYT TIEDOT SIDOTTUINA REPORT-OLIOON: \n\n");
-		for (QuestionGroup group : report.getQuestionGroups()) {
-			for (Map.Entry<Question, Answer> entry : group
-					.getQuestionsAnswers().entrySet()) {
+		/*
+		 * try { rs.saveReport(report); } catch (Exception e) {
+		 * e.printStackTrace(); }
+		 */
 
-				Question question = entry.getKey();
+		model.addAttribute("report", report);
+		return "showReport";
+	}
 
-				if (question instanceof MultipleChoiceQuestion) {
-					MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
-					MultipleChoiceAnswer answer = (MultipleChoiceAnswer) entry
-							.getValue();
-					if (answer.getChosenOption() != null) {
-						mcq.setChosenOption(mcq.getOptions().get(
-								answer.getChosenOptionIndex()));
-						log.debug("Monivalintakysymys: " + mcq.getQuestion()
-								+ " - valinta: "
-								+ mcq.getChosenOption().getOption()
-								+ " - pisteet: "
-								+ mcq.getChosenOption().getPoints());
-					}
+	@RequestMapping(value = "/printReport")
+	public String printReport(HttpServletRequest request, Model model,
+			@ModelAttribute("report") Report report) {
+		model.addAttribute("report", report);
+		return "printReport";
+	}
 
-					else
-						log.debug("Monivalintakysymys: " + mcq.getQuestion()
-								+ " - ei valintaa");
-				} else
-					log.debug(question);
-			}
-		}
-
-		try {
-			rs.saveReport(report);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		List<Report> dbReports = new ArrayList<Report>();
-
-		dbReports = rs.findAllReports();
-		Report showReport = new Report();
-
-		log.debug("\n \nTIETOKANNASTA HAETUT RAPORTIT: \n");
-
-		int i = 1;
-		for (Report loopReport : dbReports) {
-			showReport = loopReport;
-			log.debug("\n\n\n" + i++ + ".RAPORTTI\n\n");
-			log.debug("Maahantuoja: " + loopReport.getImporter().getName());
-			log.debug("Korjaamo: " + loopReport.getWorkshop().getName());
-
-			for (QuestionGroup loopQuestionGroup : loopReport
-					.getQuestionGroups()) {
-				for (Map.Entry<Question, Answer> entry : loopQuestionGroup
-						.getQuestionsAnswers().entrySet()) {
-					Question question = entry.getKey();
-
-					if (question instanceof MultipleChoiceQuestion) {
-
-						MultipleChoiceQuestion loopMcq = (MultipleChoiceQuestion) question;
-						MultipleChoiceAnswer loopAnswer = (MultipleChoiceAnswer) entry
-								.getValue();
-						if (loopAnswer.getChosenOption() != null) {
-							log.debug("Monivalintakysymys: "
-									+ loopMcq.getQuestion() + " - valinta: "
-									+ loopAnswer.getChosenOption().getOption()
-									+ " - pisteet: "
-									+ loopAnswer.getChosenOption().getPoints());
-						}
-
-						else {
-							log.debug("Monivalintakysymys: "
-									+ loopMcq.getQuestion() + " - ei valintaa");
-						}
-					}
-
-					else
-						log.debug(question);
-
-				}
-			}
-
-		}
-
-		model.addAttribute("report", showReport);
+	@RequestMapping(value = "/printDone")
+	public String printDone(HttpServletRequest request, Model model,
+			@ModelAttribute("report") Report report) {
+		model.addAttribute("report", report);
 		return "showReport";
 	}
 }

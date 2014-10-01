@@ -4,14 +4,15 @@
 <jsp:include page="/WEB-INF/templates/includes/header.jsp" />
 
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <body>
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<h1>ProNaseva</h1>
+				<h1>Test-Center</h1>
 			</div>
 
 			<br><br><br><br>
@@ -20,6 +21,9 @@
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="searchReport">Hae raportti</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="importers">Maahantuojat</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="workshops">Korjaamot</a>
+			<security:authorize access="hasRole('ROLE_ADMIN')">
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="admin">Käyttäjätilit</a>
+			</security:authorize>
 			</div>
 
 		

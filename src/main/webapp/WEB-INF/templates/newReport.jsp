@@ -26,6 +26,7 @@
 
 				<!-- QuestionGroup loop -->
 				<div class="panel-group" id="accordion">
+	
 					<c:forEach var="questionGroup" items="${report.questionGroups}"
 						varStatus="questionGroupCounter">
 						<div class="panel panel-default">
@@ -50,13 +51,15 @@
 							</c:choose>
 								<div class="panel-body">
 								
+								
 									<!-- Questions loop -->
-									<c:forEach var="question" items="${questionGroup.questions}"
-										varStatus="questionCounter">
-
+									
+									<c:forEach var="question" items="${questionGroup.questions}" varStatus="questionCounter">
+										
+										
 										<!-- Multiple choice question -->
-										<c:if
-											test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+										
+										<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
@@ -65,7 +68,7 @@
 														<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 																raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
 														<c:choose>
-															<c:when test="${question.chosenOptionIndex == optionsCounter.index}">
+															<c:when test="${question.answer.chosenOptionIndex == optionsCounter.index}">
 																<label class="btn btn-primary active">
 															</c:when>
 															<c:otherwise>
@@ -79,11 +82,11 @@
 																ei ole tägejä -->
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
-																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
+																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenOptionIndex" 
 																value="${optionsCounter.index}" /> ${option.radiobuttonText}
 															</c:when>
 															<c:otherwise>
-																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].chosenOptionIndex" 
+																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenOptionIndex"
 																value="${optionsCounter.index}" /> ${option.option}
 															</c:otherwise>
 															</c:choose>
@@ -91,9 +94,10 @@
 													</c:forEach> 
 												</div>
 											</div>
+											
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].remarks" />
+											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.remarks" />
 											<br><br>
 										</c:if>
 
@@ -102,7 +106,7 @@
 											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer" />
+											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" />
 										</c:if>
 										
 										<!-- Text field question -->
@@ -110,14 +114,20 @@
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer" />
+											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" /> 
 										</c:if>
-									</c:forEach>
+										
+										
+									</c:forEach> <!-- Questions loppu -->
 									</div>
 									</div>
-							</div>
-					</c:forEach>
-				</div>
+									</div>
+									
+												
+					</c:forEach> <!-- PanelGroup loppu -->
+					</div>
+										
+					
 				<br>
 				
 				<button type="submit" class="btn btn-primary">Tallenna</button>

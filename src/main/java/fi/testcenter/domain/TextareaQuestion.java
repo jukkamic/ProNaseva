@@ -1,12 +1,23 @@
 package fi.testcenter.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class TextareaQuestion extends Question {
 
 	private String question;
-	private String answer;
+
+	@OneToOne
+	private TextAnswer answer = new TextAnswer();
+
+	public TextAnswer getAnswer() {
+		return answer;
+	}
+
+	public void setAnswer(TextAnswer answer) {
+		this.answer = answer;
+	}
 
 	public String getQuestion() {
 		return question;
@@ -14,19 +25,6 @@ public class TextareaQuestion extends Question {
 
 	public void setQuestion(String question) {
 		this.question = question;
-	}
-
-	public String getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
-	}
-
-	public String toString() {
-		return new String("Kysymys: " + this.question + " - vastaus: "
-				+ this.answer);
 	}
 
 }

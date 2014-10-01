@@ -21,7 +21,7 @@ public class WorkshopService {
 	@Transactional(readOnly = true)
 	public List<Workshop> getWorkshops() {
 		List<Workshop> workshops = wr.findAll();
-		log.debug("first workshop id: " + workshops.get(0).getId());
+
 		return workshops;
 	}
 

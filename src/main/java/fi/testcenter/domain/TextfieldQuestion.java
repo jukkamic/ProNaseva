@@ -1,12 +1,15 @@
 package fi.testcenter.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class TextfieldQuestion extends Question {
 
 	private String question;
-	private String answer;
+
+	@OneToOne
+	private TextAnswer answer = new TextAnswer();
 
 	public String getQuestion() {
 		return question;
@@ -16,16 +19,12 @@ public class TextfieldQuestion extends Question {
 		this.question = question;
 	}
 
-	public String getAnswer() {
+	public TextAnswer getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(String answer) {
+	public void setAnswer(TextAnswer answer) {
 		this.answer = answer;
 	}
 
-	public String toString() {
-		return new String("Kysymys: " + this.question + " - vastaus: "
-				+ this.answer);
-	}
 }

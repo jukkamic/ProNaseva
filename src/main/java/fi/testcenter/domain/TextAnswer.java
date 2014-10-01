@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 @Entity
 public class TextAnswer extends Answer {
 
-	String answer;
+	String answer = "";
 
 	public String getAnswer() {
 		return answer;
@@ -13,6 +13,10 @@ public class TextAnswer extends Answer {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+
+	public String toString() {
+		return answer;
 	}
 
 }

@@ -1,16 +1,13 @@
 package fi.testcenter.service;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fi.testcenter.domain.Answer;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
-import fi.testcenter.domain.TextAnswer;
 import fi.testcenter.domain.TextfieldQuestion;
 import fi.testcenter.repository.QuestionGroupRepository;
 
@@ -26,34 +23,34 @@ public class QuestionGroupService {
 		// 1. Testiauton tiedot
 
 		QuestionGroup questionGroup1 = new QuestionGroup();
-		LinkedHashMap<Question, Answer> questionAnswer1 = new LinkedHashMap<Question, Answer>();
+		ArrayList<Question> questions1 = new ArrayList<Question>();
 		questionGroup1.setTitle("Testiauton tiedot");
 
 		TextfieldQuestion q1 = new TextfieldQuestion();
 		q1.setQuestion("Ajoneuvon merkki");
-		questionAnswer1.put(q1, new TextAnswer());
+		questions1.add(q1);
 
 		TextfieldQuestion q2 = new TextfieldQuestion();
 		q2.setQuestion("Ajoneuvon malli");
-		questionAnswer1.put(q2, new TextAnswer());
+		questions1.add(q2);
 
 		TextfieldQuestion q3 = new TextfieldQuestion();
 		q3.setQuestion("Rekisteritunnus");
-		questionAnswer1.put(q3, new TextAnswer());
+		questions1.add(q3);
 
 		TextfieldQuestion q4 = new TextfieldQuestion();
 		q4.setQuestion("Rekisteröinnin päivämäärä");
-		questionAnswer1.put(q4, new TextAnswer());
+		questions1.add(q4);
 
 		TextfieldQuestion q5 = new TextfieldQuestion();
 		q5.setQuestion("Ajoneuvon malli");
-		questionAnswer1.put(q5, new TextAnswer());
+		questions1.add(q5);
 
 		TextfieldQuestion q6 = new TextfieldQuestion();
 		q6.setQuestion("Maksettu palkkio");
-		questionAnswer1.put(q6, new TextAnswer());
+		questions1.add(q6);
 
-		questionGroup1.setQuestionsAnswers(questionAnswer1);
+		questionGroup1.setQuestions(questions1);
 		questionGroups.add(questionGroup1);
 
 		/*

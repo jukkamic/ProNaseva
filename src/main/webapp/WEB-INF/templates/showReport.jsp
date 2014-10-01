@@ -49,6 +49,7 @@
 								<div class="panel-body">
 								
 									<!-- Questions loop -->
+									
 									<c:forEach var="question" items="${questionGroup.questions}"
 										varStatus="questionCounter">
 
@@ -100,7 +101,7 @@
 											</div>
 											<br>
 											<h4>Huomioita:</h4>
-											<p>${question.remarks}</p>
+											<p>${question.answer.remarks}</p>
 											
 											<br><br>
 										</c:if>
@@ -129,6 +130,7 @@
 				<br>
 
 				<a class="btn btn-primary" href="/ProNaseva/">Alkuun</a>
+				<a class="btn btn-primary" href="/ProNaseva/printReport/">Tulosta</a>
 				
 				<br><br>
 				<br>

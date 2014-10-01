@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 
 @Entity
@@ -21,8 +22,8 @@ public class MultipleChoiceQuestion extends Question {
 	@OrderColumn(name = "INDEX")
 	private List<MultipleChoiceOption> options;
 
-	private MultipleChoiceOption chosenOption;
-	private String remarks;
+	@OneToOne
+	private MultipleChoiceAnswer answer = new MultipleChoiceAnswer();
 
 	private int chosenOptionIndex;
 
@@ -42,14 +43,6 @@ public class MultipleChoiceQuestion extends Question {
 		this.options = options;
 	}
 
-	public MultipleChoiceOption getChosenOption() {
-		return chosenOption;
-	}
-
-	public void setChosenOption(MultipleChoiceOption chosenOption) {
-		this.chosenOption = chosenOption;
-	}
-
 	public List<MultipleChoiceOption> getOptions() {
 		return options;
 	}
@@ -66,12 +59,12 @@ public class MultipleChoiceQuestion extends Question {
 		this.question = question;
 	}
 
-	public String getRemarks() {
-		return remarks;
+	public MultipleChoiceAnswer getAnswer() {
+		return answer;
 	}
 
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
+	public void setAnswer(MultipleChoiceAnswer answer) {
+		this.answer = answer;
 	}
 
 }

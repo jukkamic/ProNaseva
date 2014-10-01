@@ -1,21 +1,26 @@
 package fi.testcenter.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class MultipleChoiceAnswer extends Answer {
 
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REMOVE })
 	private MultipleChoiceOption chosenOption;
+
 	private int chosenOptionIndex;
 
-	private String comments;
+	private String remarks = "";
 
-	public String getComments() {
-		return comments;
+	public String getRemarks() {
+		return remarks;
 	}
 
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	public MultipleChoiceOption getChosenOption() {

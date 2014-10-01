@@ -43,21 +43,9 @@
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Seuraava</button>
 			</sf:form>
-			Eka workshopID:
-			${workshops[0].name} <br>
-			${workshops[0].id}
-			
-			<br>
-			Eka importerID:
-			${importers[0].name} <br>
-			${importers[0].id}
-			
 			
 		</div>
 
 		<br>
-
-
-
 
 	<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
