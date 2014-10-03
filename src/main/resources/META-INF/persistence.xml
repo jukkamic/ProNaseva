@@ -18,10 +18,11 @@
 		<class>fi.testcenter.domain.Answer</class>
 		<class>fi.testcenter.domain.TextAnswer</class>
 		<class>fi.testcenter.domain.MultipleChoiceAnswer</class>
+		<class>fi.testcenter.domain.User</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="showSql" value="true" />
-			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
 			<property name="eclipselink.ddl-generation.output-mode" value="database" />
 			<property name="eclipselink.weaving" value="false" />
 			<property name="eclipselink.logging.level" value="SEVERE" />

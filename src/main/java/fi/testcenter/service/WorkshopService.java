@@ -29,4 +29,8 @@ public class WorkshopService {
 		return wr.findOne(workshopID);
 	}
 
+	public void saveWorkshop(Workshop workshop) {
+		wr.save(workshop);
+	}
+
 }

@@ -15,8 +15,6 @@
 
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 
-
-
 <link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.css' />"/>
 
 <!-- Optional theme -->

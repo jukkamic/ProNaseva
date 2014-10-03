@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -45,4 +47,23 @@ public class ImporterWorkshopController {
 
 		return "workshopAdmin";
 	}
+
+	@RequestMapping(value = "/newWorkshop", method = RequestMethod.GET)
+	public String prepareNewWorkshopForm(HttpServletRequest request, Model model) {
+
+		model.addAttribute("workshop", new Workshop());
+
+		return "newWorkshop";
+	}
+
+	@RequestMapping(value = "/newWorkshop", method = RequestMethod.POST)
+	public String processNewWorkshopForm(HttpServletRequest request,
+			Model model, @ModelAttribute("workshop") Workshop workshop,
+			BindingResult result) {
+
+		ws.saveWorkshop(workshop);
+
+		return "redirect:/workshops";
+	}
+
 }

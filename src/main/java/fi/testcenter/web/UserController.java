@@ -15,19 +15,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.testcenter.domain.User;
-import fi.testcenter.service.WorkshopService;
+import fi.testcenter.service.UserAccountService;
 
 @Controller
 public class UserController {
 
 	@Autowired
-	WorkshopService ws;
+	UserAccountService us;
 
 	Logger log = Logger.getLogger("fi.testcenter.web.UserController");
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String showUserAdminPage(HttpServletRequest request, Model model) {
 
+		model.addAttribute("users", us.getUserList());
 		return "userAdmin";
 	}
 
@@ -48,12 +49,15 @@ public class UserController {
 
 	@RequestMapping(value = "/newUser", method = RequestMethod.POST)
 	public String processForm(HttpServletRequest request, Model model,
-			@ModelAttribute("reportBasicInfo") ReportBasicInfo reportInfo,
+			@ModelAttribute("user") User user,
 			@RequestParam("confirmPassword") String confirmPassword,
 			BindingResult result) {
 
 		log.debug(confirmPassword);
-		return "redirect:/";
+
+		us.saveUser(user);
+
+		return "redirect:/user";
 	}
 
 }

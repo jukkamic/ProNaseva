@@ -44,8 +44,8 @@
 		<property name="username" value="SA" />
 	</bean>
 
-	<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+	<!--  <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 		<jdbc:script location="classpath:sql/init.sql" />
-	</jdbc:initialize-database>
+	</jdbc:initialize-database> -->
 
 </beans>

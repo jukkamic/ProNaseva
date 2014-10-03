@@ -51,7 +51,7 @@
 				<input type="password" style="width: 15em; max-width: 100%" id="confirmPassword" name="confirmPassword" /> 
 				<br><br>
 				
-				<label for="role">Käyttäjäryhmä: </label>
+				<label for="role">Käyttöoikeudet: </label>
 				<br>				
 				<sf:select style="width: auto; max-width: 100%" id="role" path="role"
 					class="form-control">
@@ -63,7 +63,7 @@
 		
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Tallenna</button>
-				<a class="btn btn-large btn-primary" href="/ProNaseva">Hylkää</a>
+				<a class="btn btn-large btn-primary" href="user">Hylkää</a>
 			</sf:form>
 		</div>
 		<br>

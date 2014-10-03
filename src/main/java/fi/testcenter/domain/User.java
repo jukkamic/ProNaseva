@@ -1,5 +1,11 @@
 package fi.testcenter.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 
 	private String firstName;
@@ -9,6 +15,10 @@ public class User {
 	private String email;
 
 	private String role;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 
 	public String getFirstName() {
 		return firstName;
@@ -56,6 +66,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

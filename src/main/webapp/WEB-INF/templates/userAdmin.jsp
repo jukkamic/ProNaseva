@@ -17,26 +17,39 @@
 			</div>
 			<br><br>
 			
-			<!-- 
+			
 			<table class="table table-striped">
-				<c:forEach var="report" items="${dbReports}">
+				<tr>
+					<th />
+					<th>Sukunimi</th>
+					<th>Etunimi</th>
+					<th>Käyttöoikeudet</th>
+				</tr>						
+				<c:forEach var="user" items="${users}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;"href="searchReportSelect?id=${report.id}">
+							<td><a class="btn btn-primary" style="text-decoration: none;" href="selectUser?id=${user.id}">
 								Valitse</a></td>
-							<td>[pvm]</td>
-							<td>Maahantuoja: ${report.importer.name}<br>
-								Korjaamo: ${report.workshop.name}
-							</td>
+							<td>${user.lastName}</td>
+							<td>${user.firstName}</td>
+							<td>
+								<c:choose>
+									<c:when test="${user.role == 'ROLE_ADMIN'}">
+									Admin
+									</c:when>
+									<c:when test="${user.role == 'ROLE_TESTER'}">
+									Testaaja
+									</c:when>
+									<c:when test="${user.role == 'ROLE_ADMIN'}">
+									Asiakas
+									</c:when>
+								</c:choose>
 						</tr>
-						
 				</c:forEach>
 			</table>
-			 -->
-			 
 			
-		<br>
+		<br><br>
 		
-		<a class="btn btn-primary" href="newUser/">Lisää käyttäjä</a>
+		<a class="btn btn-primary" href="newUser">Lisää käyttäjä</a>
 		
 		</div>
 		<br>
