@@ -13,15 +13,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="resources/css/bootstrap.css" />
+
+<link rel="stylesheet" href="<c:url value='/resources/css/bootstrap.css' />"/>
 
 <!-- Optional theme -->
-<link rel="stylesheet" href="resources/css/bootstrap-theme.css" />
+<link rel="stylesheet" href="<c:url value='/resources/css/bootstrap-theme.css' />"/>
 
 <!--  Stricky footer-template -->
-<link rel="stylesheet" href="resources/css/stickyfooter-template.css" />
+<link rel="stylesheet" href="<c:url value='/resources/css/stickyfooter-template.css' />"/>
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

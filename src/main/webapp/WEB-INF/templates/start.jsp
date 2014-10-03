@@ -12,17 +12,9 @@
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<security:authentication property="principal.username" var="loginId" scope="request" />
-				<div style="float: right; font-size: 1.3em">
-				<p style="color: #8C8C8C; display: inline;">${loginId}</p>
-				&nbsp;
-				<a class="btn btn-default" style="text-decoration: none" href="j_spring_security_logout">Kirjaudu ulos</a>
-				 
-				</div>
-				<br><br><br>
+				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
 				<h1>Test-Center</h1>
-			</div>
-
+				</div>
 			<br><br><br><br>
 			<div style="width: 70%;">
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Uusi raportti</a>
@@ -30,7 +22,7 @@
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="importers">Maahantuojat</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="workshops">Korjaamot</a>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
-			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="admin">Käyttäjätilit</a>
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="user">Käyttäjätilit</a>
 			</security:authorize>
 			</div>
 

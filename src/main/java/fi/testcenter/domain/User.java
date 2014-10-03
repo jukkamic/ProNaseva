@@ -7,7 +7,7 @@ public class User {
 	private String userName;
 	private String password;
 	private String email;
-	private Importer importer;
+
 	private String role;
 
 	public String getFirstName() {
@@ -34,14 +34,6 @@ public class User {
 		this.email = email;
 	}
 
-	public Importer getImporter() {
-		return importer;
-	}
-
-	public void setImporter(Importer importer) {
-		this.importer = importer;
-	}
-
 	public String getRole() {
 		return role;
 	}
@@ -56,6 +48,14 @@ public class User {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

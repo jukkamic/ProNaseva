@@ -12,14 +12,7 @@
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<security:authentication property="principal.username" var="loginId" scope="request" />
-				<div style="float: right; font-size: 1.3em">
-				${loginId}
-				&nbsp;
-				<a class="btn btn-default" style="text-decoration: none" href="j_spring_security_logout">Kirjaudu ulos</a>
-				 
-				</div>
-				<br><br><br>
+				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
 				<h1>Uusi raportti</h1>
 			</div>
 			<br>
@@ -127,13 +120,13 @@
 										</c:if>
 										
 										
-									</c:forEach> <!-- Questions loppu -->
+									</c:forEach> <!-- Questions end -->
 									</div>
 									</div>
 									</div>
 									
 												
-					</c:forEach> <!-- PanelGroup loppu -->
+					</c:forEach> <!-- PanelGroup end -->
 					</div>
 										
 					

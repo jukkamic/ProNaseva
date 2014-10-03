@@ -13,10 +13,11 @@
 		<div class="container">
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
-				<h1>Korjaamot</h1>
+				<h1>Käyttäjätilit</h1>
 			</div>
 			<br><br>
 			
+			<!-- 
 			<table class="table table-striped">
 				<c:forEach var="report" items="${dbReports}">
 						<tr>
@@ -30,10 +31,16 @@
 						
 				</c:forEach>
 			</table>
+			 -->
+			 
 			
 		<br>
-		<a class="btn btn-primary" href="/ProNaseva/" style="margin-left: 6px">Alkuun</a>
+		
+		<a class="btn btn-primary" href="newUser/">Lisää käyttäjä</a>
+		
 		</div>
 		<br>
+		
+		 
 	
 <jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

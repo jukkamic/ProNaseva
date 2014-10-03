@@ -11,12 +11,15 @@
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<h1>Kirjaudu</h1>
+				<h1>Test-Center</h1>
 			</div>
 
 			<br>
 			<br>
-
+			
+			<h2>Kirjaudu</h2>
+			
+			<br><br>
 			<form method="post" action="/ProNaseva/j_spring_security_check">
 
 				<label for="userName">Käyttäjätunnus: </label>
@@ -29,9 +32,9 @@
 				<br><br><br>
 				<input class="btn btn-large btn-primary" type="submit" value="Kirjaudu" />
 			</form>
-			
+						
 		</div>
-
+		
 		<br>
 
 	<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

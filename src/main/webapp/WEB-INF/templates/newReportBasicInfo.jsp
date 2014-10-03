@@ -12,14 +12,7 @@
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
-				<security:authentication property="principal.username" var="loginId" scope="request" />
-				<div style="float: right; font-size: 1.3em">
-				${loginId}
-				&nbsp;
-				<a class="btn btn-default" style="text-decoration: none" href="j_spring_security_logout">Kirjaudu ulos</a>
-				 
-				</div>
-				<br><br><br>
+				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
 				<h1>Alkutiedot</h1>
 			</div>
 
