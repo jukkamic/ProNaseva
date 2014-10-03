@@ -3,7 +3,6 @@
 
 <jsp:include page="/WEB-INF/templates/includes/header.jsp" />
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -18,22 +17,28 @@
 			<br><br>
 			
 			<table class="table table-striped">
-				<c:forEach var="report" items="${dbReports}">
+				<tr>
+					<th />
+					<th>Nimi</th>
+					<th>Osoite</th>
+				</tr>						
+				<c:forEach var="importer" items="${importers}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;"href="searchReportSelect?id=${report.id}">
+							<td><a class="btn btn-primary" style="text-decoration: none;" href="selectImporter?id=${importer.id}">
 								Valitse</a></td>
-							<td>[pvm]</td>
-							<td>Maahantuoja: ${report.importer.name}<br>
-								Korjaamo: ${report.workshop.name}
-							</td>
+							<td>${importer.name}</td>
+							<td>${importer.streetAddress}</td>
+
 						</tr>
-						
 				</c:forEach>
 			</table>
-			
-		<br>
-		<a class="btn btn-primary" href="/ProNaseva/" style="margin-left: 6px">Alkuun</a>
+		<br><br>
+		
+		<a class="btn btn-primary" href="newImporter">Lisää maahantuoja</a>
+		
 		</div>
 		<br>
+		
+		 
 	
-<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />>
+<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

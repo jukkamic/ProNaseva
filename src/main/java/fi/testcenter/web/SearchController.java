@@ -46,17 +46,19 @@ public class SearchController {
 		return "searchReport";
 	}
 
-	// @RequestMapping(value = "/searchReport", method = RequestMethod.POST)
-	// public String prepareNewReportBasicInfoForm(HttpServletRequest request,
-	// Model model) {
-	//
-	// List reportSearchList = rs.getReportSearchList();
-	// request.getSession().setAttribute("reportSearchList", reportSearchList);
-	//
-	// model.addAttribute("dbReports", reportSearchList);
-	//
-	// return "searchResults";
-	// }
+	@RequestMapping(value = "/searchReport", method = RequestMethod.POST)
+	public String prepareNewReportBasicInfoForm(HttpServletRequest request,
+			Model model) {
+		/*
+		 * List reportSearchList = rs.getReportSearchList();
+		 * request.getSession().setAttribute("reportSearchList",
+		 * reportSearchList);
+		 * 
+		 * model.addAttribute("dbReports", reportSearchList);
+		 */
+
+		return "redirect:/";
+	}
 
 	@RequestMapping(value = "/searchReportSelect", method = RequestMethod.GET)
 	public String showSelectedReport(HttpServletRequest request, Model model) {

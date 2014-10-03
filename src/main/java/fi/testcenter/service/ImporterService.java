@@ -13,15 +13,19 @@ import fi.testcenter.repository.ImporterRepository;
 public class ImporterService {
 
 	@Autowired
-	private ImporterRepository importerRepository;
+	private ImporterRepository ir;
 
 	@Transactional(readOnly = true)
 	public List<Importer> getImporters() {
-		return importerRepository.findAll();
+		return ir.findAll();
 	}
 
 	public Importer findImporter(Long importerID) {
-		return importerRepository.findOne(importerID);
+		return ir.findOne(importerID);
+	}
+
+	public void saveImporter(Importer importer) {
+		ir.save(importer);
 	}
 
 }

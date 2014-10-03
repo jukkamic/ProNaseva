@@ -31,7 +31,7 @@ public class ImporterWorkshopController {
 	private WorkshopService ws;
 
 	@RequestMapping(value = "/importers", method = RequestMethod.GET)
-	public String setupImporterPage(HttpServletRequest request, Model model) {
+	public String prepareImporterPage(HttpServletRequest request, Model model) {
 
 		List<Importer> importers = is.getImporters();
 		model.addAttribute("importers", importers);
@@ -39,8 +39,26 @@ public class ImporterWorkshopController {
 		return "importerAdmin";
 	}
 
+	@RequestMapping(value = "/newImporter", method = RequestMethod.GET)
+	public String prepareNewImporterForm(HttpServletRequest request, Model model) {
+
+		model.addAttribute("importer", new Importer());
+
+		return "newImporter";
+	}
+
+	@RequestMapping(value = "/newImporter", method = RequestMethod.POST)
+	public String processNewImporterForm(HttpServletRequest request,
+			Model model, @ModelAttribute("importer") Importer importer,
+			BindingResult result) {
+
+		is.saveImporter(importer);
+
+		return "redirect:/importers";
+	}
+
 	@RequestMapping(value = "/workshops", method = RequestMethod.GET)
-	public String setupWorkshopPage(HttpServletRequest request, Model model) {
+	public String prepareWorkshopPage(HttpServletRequest request, Model model) {
 
 		List<Workshop> workshops = ws.getWorkshops();
 		model.addAttribute("workshops", workshops);
