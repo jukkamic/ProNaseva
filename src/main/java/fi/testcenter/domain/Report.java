@@ -43,6 +43,9 @@ public class Report {
 	@Transient
 	private Long workshopId;
 
+	@ManyToOne
+	private User user;
+
 	private String vehicleModel;
 	private String vehicleRegistrationNumber;
 	private String vehicleRegistrationDate;
@@ -143,6 +146,14 @@ public class Report {
 
 	public void setWorkshopId(Long workshopId) {
 		this.workshopId = workshopId;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

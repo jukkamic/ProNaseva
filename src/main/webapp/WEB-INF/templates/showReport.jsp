@@ -162,8 +162,12 @@
 				</div>
 				<br>
 
-				<a class="btn btn-primary" href="/ProNaseva/">Alkuun</a>
+				<a class="btn btn-primary" href="editReport">Muokkaa</a>
 				<a class="btn btn-primary" href="/ProNaseva/printReport/">Tulosta</a>
+				
+				<c:if test="${edit == 'TRUE'}">
+					<a class="btn btn-large btn btn-danger" href="deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+				</c:if>
 				
 				<br><br>
 				<br>

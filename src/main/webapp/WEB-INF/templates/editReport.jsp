@@ -13,7 +13,7 @@
 		<div class="container">
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
-				<h1>Uusi raportti</h1>
+				<h1>Raportti</h1>
 			</div>
 			<br>
 			<br>
@@ -100,7 +100,8 @@
 											
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.remarks" />
+											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.remarks" 
+												value="${question.answer.remarks}" />
 											<br><br>
 										</c:if>
 
@@ -109,7 +110,8 @@
 											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" />
+											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" 
+												value="${question.answer.answer}" />
 										</c:if>
 										
 										<!-- Text field question -->
@@ -117,7 +119,8 @@
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" /> 
+											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" 
+												value="${question.answer.answer}" /> 
 										</c:if>
 										
 										
@@ -134,7 +137,11 @@
 				<br>
 				
 				<button type="submit" class="btn btn-primary">Tallenna</button>
-				<a class="btn btn-primary" href="/ProNaseva/">Hylkää</a>
+				<a class="btn btn-primary" href="/ProNaseva/">Hylkää muutokset</a>
+				
+				<c:if test="${edit == 'TRUE'}">
+					<a class="btn btn-large btn btn-danger" href="deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+				</c:if>
 				
 				<br><br>
 				<br></sf:form>

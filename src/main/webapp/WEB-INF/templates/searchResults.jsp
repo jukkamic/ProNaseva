@@ -18,13 +18,37 @@
 			<br><br>
 			
 			<table class="table table-striped">
+			
+				<tr>
+					<th></th>
+					<th>
+						Pvm
+					</th>
+					<th>
+						Maahantuoja
+					</th>
+					<th>
+						Korjaamo
+					</th>
+					<th>
+						Tarkastaja
+					</th>
+				</tr>
 				<c:forEach var="report" items="${reportSearchList}">
 						<tr>
 							<td><a class="btn btn-primary" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
-								Valitse</a></td>
-							<td>[pvm]</td>
-							<td>Id: ${report.id}<br>
-								
+								Valitse</a>
+							</td>
+							<td>
+								[pvm]
+							</td>
+							<td>${report.importer.name}
+							</td>
+							<td>
+								${report.workshop.name}
+							</td>
+							<td>
+								${report.user.lastName}, ${report.user.firstName}								
 							</td>
 						</tr>
 						

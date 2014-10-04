@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Report;
@@ -19,6 +20,7 @@ import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.WorkshopService;
 
+@SessionAttributes("report")
 @Controller
 public class SearchController {
 
@@ -61,7 +63,9 @@ public class SearchController {
 			@RequestParam("id") Integer id) {
 
 		Report selectedReport = rs.getReportById(id.longValue());
+
 		model.addAttribute("report", selectedReport);
+		model.addAttribute("edit", "TRUE");
 
 		return "showReport";
 

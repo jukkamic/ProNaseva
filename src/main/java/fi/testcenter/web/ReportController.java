@@ -23,7 +23,7 @@ import fi.testcenter.service.WorkshopService;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes(value = { "report", "dbReports" })
+@SessionAttributes(value = { "report" })
 public class ReportController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
@@ -84,7 +84,7 @@ public class ReportController {
 			@ModelAttribute("report") Report report, BindingResult result) {
 
 		model.addAttribute("report", report);
-		return "newReport";
+		return "editReport";
 	}
 
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
@@ -111,7 +111,28 @@ public class ReportController {
 	@RequestMapping(value = "/printDone")
 	public String printDone(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report) {
+
 		model.addAttribute("report", report);
 		return "showReport";
 	}
+
+	@RequestMapping(value = "editReport")
+	public String editReport(HttpServletRequest request, Model model,
+			@ModelAttribute("report") Report report) {
+
+		model.addAttribute("edit", "TRUE");
+
+		return "editReport";
+	}
+
+	@RequestMapping(value = "deleteReport")
+	public String editReport(HttpServletRequest request,
+			@ModelAttribute("report") Report report) {
+
+		rs.deleteReport(report);
+
+		return "start";
+
+	}
+
 }

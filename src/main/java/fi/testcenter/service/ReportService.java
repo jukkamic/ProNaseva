@@ -46,18 +46,15 @@ public class ReportService {
 		return rr.findAll();
 	}
 
-	// @Transactional
-	// public List getReportSearchList() {
-	//
-	// Query query = em
-	// .createQuery("SELECT r.id, r.workshop, r.importer FROM Report r");
-	//
-	// return query.getResultList();
-	// }
-
 	@Transactional
 	public Report getReportById(Long id) {
 		return rr.findOne(id);
+	}
+
+	@Transactional
+	public void deleteReport(Report report) {
+
+		rr.delete(report);
 	}
 
 }

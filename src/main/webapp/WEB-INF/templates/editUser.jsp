@@ -71,10 +71,11 @@
 		
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Tallenna</button>
+				<button class="btn btn-large btn-primary" action="/admin/user">Hylkää muutokset</button>
+				
 				<c:if test="${edit == 'TRUE'}">
-					<button class="btn btn-large btn-primary" action="/admin/user">Hylkää</button>
+					<a class="btn btn-large btn btn-danger" href="deleteUser"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 				</c:if>
-				<a class="btn btn-large btn btn-danger" href="deleteUser?${user.id}"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 			</sf:form>
 		</div>
 		<br>
