@@ -26,8 +26,16 @@
 			<br><br>
 				<!-- QuestionGroup loop -->
 				<div class="panel-group" id="accordion">
+									
 					<c:forEach var="questionGroup" items="${report.questionGroups}"
 						varStatus="questionGroupCounter">
+						
+						<!-- Muuttujat monivalintakysymysten kysymysryhmäkohtaiseen pisteytykseen -->
+						<c:set var="maxTotalScore" value="0" />
+						<c:set var="totalScore" value="0" />
+						<c:set var="scoredQuestions" value="FALSE" />
+						
+						
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
@@ -58,11 +66,19 @@
 										<!-- Multiple choice question -->
 										<c:if
 											test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+																		
+											<c:set var="maxPointsForQuestion" value="0" />	
+											<c:set var="scoredQuestions" value="TRUE" />			
+
+											
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
-														
+																																																											
+														<c:if test="${option.points > maxPointsForQuestion}">
+																<c:set var="maxPointsForQuestion" value="${option.points}" />
+														</c:if>
 														
 														<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
 																varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
@@ -71,9 +87,12 @@
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
 																<c:choose>
-																	<c:when test="${question.chosenOptionIndex == optionsCounter.index}">
+																	<c:when test="${question.answer.chosenOptionIndex == optionsCounter.index}">
 																		<button class="btn btn-large btn-primary" type="button">
 																			${option.radiobuttonText}
+																																						
+																			<c:set var="totalScore" value="${totalScore + option.points}" />
+																																																								
 																		</button>
 																	</c:when>
 																	<c:otherwise>
@@ -85,9 +104,11 @@
 															</c:when>
 															<c:otherwise>
 																<c:choose>
-																	<c:when test="${question.chosenOptionIndex == optionsCounter.index}">
+																	<c:when test="${question.answer.chosenOptionIndex == optionsCounter.index}">
 																		<button class="btn btn-large btn-primary" type="button">
 																			${option.option}
+																			<c:set var="totalScore" value="${totalScore + option.points}" />
+																			
 																		</button>
 																	</c:when>
 																	<c:otherwise>
@@ -99,6 +120,9 @@
 															</c:otherwise>
 														</c:choose>														
 													</c:forEach> 
+													
+													<c:set var="maxTotalScore" value="${maxTotalScore + maxPointsForQuestion}" />
+																											
 												</div>
 											</div>
 											<br>
@@ -124,10 +148,17 @@
 											<p>${question.answer}</p>
 										</c:if> 
 									</c:forEach>
+									
+									<c:if test="${scoredQuestions == 'TRUE'}">
+									<br>
+									<h4 style="float: right; font-weight: bold;">Pisteet: ${totalScore}/${maxTotalScore}</h4>
+									
+									</c:if>
 									</div>
 									</div>
 					</div>
 					</c:forEach>
+										
 				</div>
 				<br>
 

@@ -11,7 +11,7 @@ public class MultipleChoiceAnswer extends Answer {
 			CascadeType.REMOVE })
 	private MultipleChoiceOption chosenOption;
 
-	private int chosenOptionIndex;
+	private int chosenOptionIndex = -1;
 
 	private String remarks = "";
 

@@ -62,6 +62,7 @@
 										<!-- Multiple choice question -->
 										
 										<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+																				
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
