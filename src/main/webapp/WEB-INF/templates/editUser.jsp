@@ -13,7 +13,7 @@
 		<div class="container">
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
-				<h1>Uusi käyttäjä</h1>
+				<h1>Käyttäjätiedot</h1>
 			</div>
 
 			<br>
@@ -23,32 +23,32 @@
 
 				<label for="firstName">Etunimi: </label>
 				<br>
-				<sf:input type="text" style="width: 15em; max-width: 100%" id="firstName" path="firstName" /> 
+				<sf:input type="text" style="width: 15em; max-width: 100%" id="firstName" path="firstName" value="${user.firstName}"/> 
 				<br><br>
 								
 				<label for="lastName">Sukunimi: </label>
 				<br>
-				<sf:input type="text" style="width: 15em; max-width: 100%" id="lastName" path="lastName" /> 
+				<sf:input type="text" style="width: 15em; max-width: 100%" id="lastName" path="lastName" value="${user.lastName}"/> 
 				<br><br>
 				
 				<label for="email">Sähköposti: </label>
 				<br>
-				<sf:input type="text" style="width: 15em; max-width: 100%" id="email" path="email" /> 
+				<sf:input type="text" style="width: 15em; max-width: 100%" id="email" path="email" value="${user.email}"/> 
 				<br><br>
 				
 				<label for="userName">Käyttäjätunnus: </label>
 				<br>
-				<sf:input type="text" style="width: 15em; max-width: 100%" id="userName" path="userName" /> 
+				<sf:input type="text" style="width: 15em; max-width: 100%" id="userName" path="userName" value="${user.userName}" /> 
 				<br><br>
 				
 				<label for="password">Salasana: </label>
 				<br>
-				<sf:input type="password" style="width: 15em; max-width: 100%" id="password" path="password" /> 
+				<sf:input type="password" style="width: 15em; max-width: 100%" id="password" path="password" value="${user.password}"/> 
 				<br><br>
 				
 				<label for="confirmPassword">Vahvista salasana: </label>
 				<br>
-				<input type="password" style="width: 15em; max-width: 100%" id="confirmPassword" name="confirmPassword" /> 
+				<input type="password" style="width: 15em; max-width: 100%" id="confirmPassword" name="confirmPassword" value="${user.password}"/> 
 				<br><br>
 				
 				<label for="role">Käyttöoikeudet: </label>
@@ -56,14 +56,25 @@
 				<sf:select style="width: auto; max-width: 100%" id="role" path="role"
 					class="form-control">
 					<c:forEach var="role" items="${roles}">
-						<option value="${role.value}">${role.key}</option>
+						<c:choose>
+							<c:when test="${user.role == role.value}">
+								<option value="${role.value}" selected="selected">${role.key}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${role.value}">${role.key}</option>
+							</c:otherwise>
+						</c:choose>
+						
 					</c:forEach>
 				</sf:select>
 				<br><br>
 		
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Tallenna</button>
-				<a class="btn btn-large btn-primary" href="user">Hylkää</a>
+				<c:if test="${edit == 'TRUE'}">
+					<button class="btn btn-large btn-primary" action="/admin/user">Hylkää</button>
+				</c:if>
+				<a class="btn btn-large btn btn-danger" href="deleteUser?${user.id}"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 			</sf:form>
 		</div>
 		<br>

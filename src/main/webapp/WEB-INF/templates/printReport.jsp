@@ -8,8 +8,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 <body>
-			
-			
+					
 			<h1>Test-Center raportti</h1>
 			
 			<br>

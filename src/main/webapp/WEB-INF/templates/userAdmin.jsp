@@ -21,16 +21,16 @@
 			<table class="table table-striped">
 				<tr>
 					<th />
-					<th>Sukunimi</th>
-					<th>Etunimi</th>
+					<th>Nimi</th>
+					<th>Käyttäjänimi</th>
 					<th>Käyttöoikeudet</th>
 				</tr>						
 				<c:forEach var="user" items="${users}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;" href="selectUser?id=${user.id}">
+							<td><a class="btn btn-primary" style="text-decoration: none;" href="editUser?id=${user.id}">
 								Valitse</a></td>
-							<td>${user.lastName}</td>
-							<td>${user.firstName}</td>
+							<td>${user.lastName}, ${user.firstName}</td>
+							<td>${user.userName}</td>
 							<td>
 								<c:choose>
 									<c:when test="${user.role == 'ROLE_ADMIN'}">
@@ -39,10 +39,11 @@
 									<c:when test="${user.role == 'ROLE_TESTER'}">
 									Testaaja
 									</c:when>
-									<c:when test="${user.role == 'ROLE_ADMIN'}">
+									<c:when test="${user.role == 'ROLE_CLIENT'}">
 									Asiakas
 									</c:when>
 								</c:choose>
+							</td>
 						</tr>
 				</c:forEach>
 			</table>

@@ -1,5 +1,6 @@
 package fi.testcenter.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -24,8 +25,22 @@ public class UserAccountService {
 		ur.save(user);
 	}
 
+	@Transactional
 	public List<User> getUserList() {
 		return ur.findAll();
+	}
+
+	@Transactional
+	public User getUserById(Integer id) {
+		return ur.findOne(id.longValue());
+	}
+
+	@Transactional
+	public void deleteUser(User user) {
+
+		ArrayList<User> deleteUser = new ArrayList<User>();
+		deleteUser.add(user);
+		ur.deleteInBatch(deleteUser);
 	}
 
 }
