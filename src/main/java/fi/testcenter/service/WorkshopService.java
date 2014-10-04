@@ -33,4 +33,12 @@ public class WorkshopService {
 		wr.save(workshop);
 	}
 
+	public Workshop getWorkshopById(Long id) {
+		return wr.findOne(id);
+	}
+
+	public void deleteWorkshop(Workshop workshop) {
+		wr.delete(workshop);
+	}
+
 }

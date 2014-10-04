@@ -12,12 +12,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.WorkshopService;
 
+@SessionAttributes(value = { "workshop", "importer" })
 @Controller
 public class ImporterWorkshopController {
 
@@ -71,7 +74,7 @@ public class ImporterWorkshopController {
 
 		model.addAttribute("workshop", new Workshop());
 
-		return "newWorkshop";
+		return "editWorkshop";
 	}
 
 	@RequestMapping(value = "/newWorkshop", method = RequestMethod.POST)
@@ -82,6 +85,62 @@ public class ImporterWorkshopController {
 		ws.saveWorkshop(workshop);
 
 		return "redirect:/workshops";
+	}
+
+	@RequestMapping(value = "/editWorkshop", method = RequestMethod.GET)
+	public String prepareEditWorkshopForm(HttpServletRequest request,
+			Model model, @RequestParam("id") Integer id) {
+
+		model.addAttribute("workshop", ws.getWorkshopById(id.longValue()));
+		model.addAttribute("edit", "TRUE");
+
+		return "editWorkshop";
+	}
+
+	@RequestMapping(value = "/editWorkshop", method = RequestMethod.POST)
+	public String processEditWorkshopForm(HttpServletRequest request,
+			Model model, @ModelAttribute("workshop") Workshop workshop,
+			BindingResult result) {
+
+		ws.saveWorkshop(workshop);
+
+		return "redirect:/workshops";
+	}
+
+	@RequestMapping(value = "/deleteWorkshop")
+	public String deleteWorkshop(HttpServletRequest request,
+			@ModelAttribute("workshop") Workshop workshop) {
+
+		ws.deleteWorkshop(workshop);
+		return "redirect:/workshops";
+	}
+
+	@RequestMapping(value = "/editImporter", method = RequestMethod.GET)
+	public String prepareEditImporterForm(HttpServletRequest request,
+			Model model, @RequestParam("id") Integer id) {
+
+		model.addAttribute("importer", is.getImporterById(id.longValue()));
+		model.addAttribute("edit", "TRUE");
+
+		return "editImporter";
+	}
+
+	@RequestMapping(value = "/editImporter", method = RequestMethod.POST)
+	public String processEditImporterForm(HttpServletRequest request,
+			Model model, @ModelAttribute("importer") Importer importer,
+			BindingResult result) {
+
+		is.saveImporter(importer);
+
+		return "redirect:/importers";
+	}
+
+	@RequestMapping(value = "/deleteImporter")
+	public String deleteImporter(HttpServletRequest request,
+			@ModelAttribute("importer") Importer importer) {
+
+		is.deleteImporter(importer);
+		return "redirect:/importers";
 	}
 
 }

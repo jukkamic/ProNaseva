@@ -69,9 +69,8 @@
 				</sf:select>
 				<br><br>
 	
-				<br>
-				<button class="btn btn-large btn-primary" action="submit">Tallenna</button>
-				<a class="btn btn-large btn-primary" style="text-decoration: none" href="user">Hylkää muutokset</a>
+				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Tallenna</button>
+				<a class="btn btn-large btn-primary" style="text-decoration: none" href="user"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
 					<a class="btn btn-large btn btn-danger" href="deleteUser"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>

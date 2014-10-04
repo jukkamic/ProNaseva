@@ -24,7 +24,7 @@
 				</tr>						
 				<c:forEach var="workshop" items="${workshops}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;" href="selectWorkshop?id=${workshop.id}">
+							<td><a class="btn btn-primary" style="text-decoration: none;" href="editWorkshop?id=${workshop.id}">
 								Valitse</a></td>
 							<td>${workshop.name}</td>
 							<td>${workshop.streetAddress}</td>
@@ -34,7 +34,7 @@
 			</table>
 		<br><br>
 		
-		<a class="btn btn-primary" href="newWorkshop">Lisää korjaamo</a>
+		<a class="btn btn-primary" href="newWorkshop"><span class="glyphicon glyphicon-plus" style="text-decoration: none;"></span> Lisää korjaamo</a>
 		
 		</div>
 		<br>

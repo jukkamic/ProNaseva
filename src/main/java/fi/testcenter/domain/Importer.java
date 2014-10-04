@@ -23,7 +23,10 @@ public class Importer implements Serializable {
 	private String email;
 	private String telNum;
 
+	private boolean active;
+
 	public Importer() {
+		active = true;
 
 	}
 
@@ -89,6 +92,14 @@ public class Importer implements Serializable {
 
 	public String toString() {
 		return this.name;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

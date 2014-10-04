@@ -109,7 +109,7 @@
 	<br><br>
 </body>
 				
-<!-- 	<script>
+ 	<script>
 		window.print();
 		window.location = "/ProNaseva/printDone"
-		</script> --> 
+		</script>

@@ -16,9 +16,23 @@ public class User {
 
 	private String role;
 
+	private boolean active;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
+
+	public void user() {
+		active = true;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 
 	public String getFirstName() {
 		return firstName;

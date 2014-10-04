@@ -50,7 +50,7 @@
 			
 		<br><br>
 		
-		<a class="btn btn-primary" href="newUser">Lisää käyttäjä</a>
+		<a class="btn btn-primary" href="newUser"><span class="glyphicon glyphicon-plus" style="text-decoration: none;"></span> Lisää käyttäjä</a>
 		
 		</div>
 		<br>

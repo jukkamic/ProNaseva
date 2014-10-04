@@ -19,8 +19,11 @@ public class Workshop {
 	private String email;
 	private String telNum;
 
+	private boolean active;
+
 	public Workshop() {
 
+		active = true;
 	}
 
 	public String getStreetAddress() {
@@ -81,6 +84,14 @@ public class Workshop {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public String toString() {

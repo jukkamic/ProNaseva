@@ -147,8 +147,8 @@
 					
 				<br>
 				
-				<button type="submit" class="btn btn-primary">Tallenna</button>
-				<a class="btn btn-primary" href="/ProNaseva/">Hylkää muutokset</a>
+				<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Tallenna</button>
+				<a class="btn btn-primary" href="/ProNaseva/"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
 					<a class="btn btn-large btn btn-danger" href="deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>

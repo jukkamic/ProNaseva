@@ -24,7 +24,7 @@
 				</tr>						
 				<c:forEach var="importer" items="${importers}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;" href="selectImporter?id=${importer.id}">
+							<td><a class="btn btn-primary" style="text-decoration: none;" href="editImporter?id=${importer.id}">
 								Valitse</a></td>
 							<td>${importer.name}</td>
 							<td>${importer.streetAddress}</td>
@@ -34,7 +34,7 @@
 			</table>
 		<br><br>
 		
-		<a class="btn btn-primary" href="newImporter">Lisää maahantuoja</a>
+		<a class="btn btn-primary" href="newImporter"><span class="glyphicon glyphicon-plus" style="text-decoration: none;"></span> Lisää maahantuoja</a>
 		
 		</div>
 		<br>

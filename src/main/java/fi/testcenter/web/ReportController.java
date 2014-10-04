@@ -68,7 +68,7 @@ public class ReportController {
 		Report report = rs.getReportTemplate();
 
 		Workshop workshop = ws.findWorkshop(reportInfo.getWorkshopID());
-		Importer importer = is.findImporter(reportInfo.getImporterID());
+		Importer importer = is.getImporterById(reportInfo.getImporterID());
 		report.setWorkshop(workshop);
 		report.setImporter(importer);
 		report.setWorkshopId(reportInfo.getWorkshopID());
