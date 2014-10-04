@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
@@ -31,15 +30,18 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE })
+	// @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+	// CascadeType.REMOVE })
+	@Transient
 	private Importer importer;
 
 	@Transient
 	private Long importerId;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REMOVE })
+	// @ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+	// CascadeType.REMOVE })
+
+	@Transient
 	private Workshop workshop;
 
 	@Transient

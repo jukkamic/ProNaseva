@@ -22,7 +22,7 @@ public class MultipleChoiceQuestion extends Question {
 	@OrderColumn(name = "INDEX")
 	private List<MultipleChoiceOption> options;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private MultipleChoiceAnswer answer = new MultipleChoiceAnswer();
 
 	private int chosenOptionIndex;

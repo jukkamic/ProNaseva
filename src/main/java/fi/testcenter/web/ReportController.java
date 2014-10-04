@@ -91,10 +91,11 @@ public class ReportController {
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
-		/*
-		 * try { rs.saveReport(report); } catch (Exception e) {
-		 * e.printStackTrace(); }
-		 */
+		try {
+			rs.saveReport(report);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		model.addAttribute("report", report);
 		return "showReport";

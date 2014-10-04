@@ -12,11 +12,13 @@
     	
         <intercept-url pattern="/login" access="hasAnyRole('ROLE_ADMIN','ROLE_TESTER','ROLE_GUEST')" />
         <intercept-url pattern="/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_TESTER')" />
+        <intercept-url pattern="/admin/*" access="hasRole('ROLE_ADMIN')" />
         
         <form-login login-page="/login" 
         			authentication-failure-url="/login" />
         <anonymous username="guest" granted-authority="ROLE_GUEST" />
     </http>
+    
     <authentication-manager>
     <authentication-provider>
     <user-service id="userService">

@@ -22,7 +22,7 @@
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="importers">Maahantuojat</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="workshops">Korjaamot</a>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
-			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="user">Käyttäjätilit</a>
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="admin/user">Käyttäjätilit</a>
 			</security:authorize>
 			</div>
 

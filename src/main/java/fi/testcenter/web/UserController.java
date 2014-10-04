@@ -25,14 +25,14 @@ public class UserController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.UserController");
 
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/user", method = RequestMethod.GET)
 	public String showUserAdminPage(HttpServletRequest request, Model model) {
 
 		model.addAttribute("users", us.getUserList());
 		return "userAdmin";
 	}
 
-	@RequestMapping(value = "/newUser", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/newUser", method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model) {
 
 		LinkedHashMap<String, String> roles = new LinkedHashMap<String, String>();
@@ -47,7 +47,7 @@ public class UserController {
 		return "newUser";
 	}
 
-	@RequestMapping(value = "/newUser", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/newUser", method = RequestMethod.POST)
 	public String processForm(HttpServletRequest request, Model model,
 			@ModelAttribute("user") User user,
 			@RequestParam("confirmPassword") String confirmPassword,
@@ -57,7 +57,7 @@ public class UserController {
 
 		us.saveUser(user);
 
-		return "redirect:/user";
+		return "redirect:/admin/user";
 	}
 
 }

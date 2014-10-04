@@ -20,11 +20,11 @@
 			<table class="table table-striped">
 				<c:forEach var="report" items="${reportSearchList}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;"href="searchReportSelect?id=${report[0]}">
+							<td><a class="btn btn-primary" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
 								Valitse</a></td>
 							<td>[pvm]</td>
-							<td>Maahantuoja: ${report[1].name}<br>
-								Korjaamo: ${report[2].name}
+							<td>Id: ${report.id}<br>
+								
 							</td>
 						</tr>
 						

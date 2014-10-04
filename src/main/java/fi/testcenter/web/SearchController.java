@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Report;
@@ -49,22 +50,17 @@ public class SearchController {
 	@RequestMapping(value = "/searchReport", method = RequestMethod.POST)
 	public String prepareNewReportBasicInfoForm(HttpServletRequest request,
 			Model model) {
-		/*
-		 * List reportSearchList = rs.getReportSearchList();
-		 * request.getSession().setAttribute("reportSearchList",
-		 * reportSearchList);
-		 * 
-		 * model.addAttribute("dbReports", reportSearchList);
-		 */
 
-		return "redirect:/";
+		model.addAttribute("reportSearchList", rs.findAllReports());
+
+		return "searchResults";
 	}
 
 	@RequestMapping(value = "/searchReportSelect", method = RequestMethod.GET)
-	public String showSelectedReport(HttpServletRequest request, Model model) {
+	public String showSelectedReport(HttpServletRequest request, Model model,
+			@RequestParam("id") Integer id) {
 
-		Report selectedReport = rs.getReportById(Long.parseLong(request
-				.getParameter("id")));
+		Report selectedReport = rs.getReportById(id.longValue());
 		model.addAttribute("report", selectedReport);
 
 		return "showReport";

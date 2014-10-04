@@ -1,6 +1,8 @@
 package fi.testcenter.domain;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -8,7 +10,7 @@ public class TextareaQuestion extends Question {
 
 	private String question;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private TextAnswer answer = new TextAnswer();
 
 	public TextAnswer getAnswer() {

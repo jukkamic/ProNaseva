@@ -12,7 +12,7 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	String question;
+	// String question;
 
 	public Question() {
 
@@ -26,12 +26,12 @@ public class Question {
 		this.id = id;
 	}
 
-	public String getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
-	}
+	// public String getQuestion() {
+	// return question;
+	// }
+	//
+	// public void setQuestion(String question) {
+	// this.question = question;
+	// }
 
 }
