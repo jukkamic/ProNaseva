@@ -68,10 +68,10 @@
 					</c:forEach>
 				</sf:select>
 				<br><br>
-		
+	
 				<br>
 				<button class="btn btn-large btn-primary" action="submit">Tallenna</button>
-				<button class="btn btn-large btn-primary" action="/admin/user">Hylkää muutokset</button>
+				<a class="btn btn-large btn-primary" style="text-decoration: none" href="user">Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
 					<a class="btn btn-large btn btn-danger" href="deleteUser"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>

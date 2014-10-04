@@ -20,7 +20,18 @@
 			<div style="border-bottom: 1px solid #eee;">
 			<h4>Maahantuoja: ${report.importer.name}</h4>
 			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
-			<span class="label label-warning">Kesken</span>
+			
+							
+				<c:choose>
+					<c:when test="${edit == 'TRUE'}">
+						<span class="label label-warning">Muokkaus</span>
+					</c:when>
+					<c:otherwise>
+						<span class="label label-warning">Kesken</span>
+					</c:otherwise>
+					
+				</c:choose>
+						
 			<br><br>
 			</div>
 			<br><br>

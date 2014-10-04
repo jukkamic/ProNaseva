@@ -13,7 +13,7 @@
 		<div class="container">
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
-				<h1>Hakutulos</h1>
+				<h1>Raportit</h1>
 			</div>
 			<br><br>
 			
