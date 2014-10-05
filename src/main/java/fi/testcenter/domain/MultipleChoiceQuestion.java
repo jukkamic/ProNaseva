@@ -27,6 +27,8 @@ public class MultipleChoiceQuestion extends Question {
 
 	private int chosenOptionIndex;
 
+	private boolean multipleSelectionsAllowed = false;
+
 	public MultipleChoiceQuestion() {
 		this.chosenOptionIndex = -1;
 	}
@@ -65,6 +67,14 @@ public class MultipleChoiceQuestion extends Question {
 
 	public void setAnswer(MultipleChoiceAnswer answer) {
 		this.answer = answer;
+	}
+
+	public boolean isMultipleSelectionsAllowed() {
+		return multipleSelectionsAllowed;
+	}
+
+	public void setMultipleSelectionsAllowed(boolean multipleSelectionAllowed) {
+		this.multipleSelectionsAllowed = multipleSelectionAllowed;
 	}
 
 }

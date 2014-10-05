@@ -74,4 +74,8 @@ public class MultipleChoiceOption {
 		this.radiobuttonText = radiobuttonText;
 	}
 
+	public String toString() {
+		return this.option;
+	}
+
 }

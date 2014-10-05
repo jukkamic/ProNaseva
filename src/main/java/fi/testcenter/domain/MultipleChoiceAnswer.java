@@ -11,6 +11,8 @@ public class MultipleChoiceAnswer extends Answer {
 			CascadeType.REMOVE })
 	private MultipleChoiceOption chosenOption;
 
+	private String[] chosenSelections;
+
 	private int chosenOptionIndex = -1;
 
 	private String remarks = "";
@@ -37,6 +39,14 @@ public class MultipleChoiceAnswer extends Answer {
 
 	public void setChosenOptionIndex(int chosenOptionIndex) {
 		this.chosenOptionIndex = chosenOptionIndex;
+	}
+
+	public String[] getChosenSelections() {
+		return chosenSelections;
+	}
+
+	public void setChosenSelections(String[] chosenSelections) {
+		this.chosenSelections = chosenSelections;
 	}
 
 }

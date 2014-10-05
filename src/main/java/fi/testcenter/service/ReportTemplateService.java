@@ -37,6 +37,16 @@ public class ReportTemplateService {
 		ArrayList<Question> questions1 = new ArrayList<Question>();
 		questionGroup1.setTitle("Testiauton tiedot");
 
+		MultipleChoiceQuestion q80 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options80 = new ArrayList<MultipleChoiceOption>();
+		q80.setQuestion("Varapyörän ilmanpaineen tarkastus");
+		options80.add(new MultipleChoiceOption("0 p", 0));
+		options80.add(new MultipleChoiceOption("1 p", 1));
+		options80.add(new MultipleChoiceOption("2 p", 2));
+		q80.setOptions(options80);
+		q80.setMultipleSelectionsAllowed(true);
+		questions1.add(q80);
+
 		TextfieldQuestion q1 = new TextfieldQuestion();
 		q1.setQuestion("Ajoneuvon merkki");
 		questions1.add(q1);

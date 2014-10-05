@@ -84,7 +84,13 @@
 										<!-- Multiple choice question -->
 										
 										<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
-																				
+											<c:choose>
+												<c:when test="${question.multipleSelectionsAllowed == true}">
+														<h3>${questionCounter.count}. ${question.question}</h3>
+														<sf:checkboxes path="${question.answer.chosenSelections}" itemValue="option" items="${question.options}" />
+										
+												</c:when>
+												<c:otherwise>
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
@@ -119,6 +125,9 @@
 													</c:forEach> 
 												</div>
 											</div>
+											
+											</c:otherwise>
+											</c:choose>
 											
 											<br>
 											<h4>Huomioita:</h4>
