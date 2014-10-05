@@ -58,7 +58,7 @@
 									<a
 										style="font-size: 1.5em; text-decoration: none; display: block;"
 										data-toggle="collapse" data-parent="#accordion"
-										href="#${bootstrapPanelCounter}">${questionGroup.title}
+										href="#panel${bootstrapPanelCounter}">${questionGroup.title}
 									</a>
 								</h4>
 							</div>
@@ -67,10 +67,10 @@
 									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
 								<c:choose>
 									<c:when test="${questionGroupCounter.count == 1 and reportPartCounter.count == 1}">
-										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start">
+										<div id="panel${bootstrapPanelCounter}" class="panel-collapse collapse start">
 									</c:when>
 									<c:otherwise>
-										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse">
+										<div id="panel${bootstrapPanelCounter}" class="panel-collapse collapse">
 								</c:otherwise>
 							</c:choose>
 								<div class="panel-body">
@@ -85,12 +85,21 @@
 										
 										<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 											<c:choose>
+
 												<c:when test="${question.multipleSelectionsAllowed == true}">
 														<h3>${questionCounter.count}. ${question.question}</h3>
-														<sf:checkboxes path="${question.answer.chosenSelections}" itemValue="option" items="${question.options}" />
+														<c:forEach var="option" items="${question.options}">
+															<sf:checkbox value="${option.option}" 
+																path="reportParts[${reportPartCounter.index}].questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenSelections" 
+																label="${option.option}" />
+															<br>
+														</c:forEach>
+														
 										
 												</c:when>
-												<c:otherwise>
+												
+												
+										<c:otherwise>
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
@@ -125,9 +134,9 @@
 													</c:forEach> 
 												</div>
 											</div>
-											
 											</c:otherwise>
 											</c:choose>
+	
 											
 											<br>
 											<h4>Huomioita:</h4>
