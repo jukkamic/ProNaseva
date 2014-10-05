@@ -47,7 +47,7 @@ public class ImporterWorkshopController {
 
 		model.addAttribute("importer", new Importer());
 
-		return "newImporter";
+		return "editImporter";
 	}
 
 	@RequestMapping(value = "/newImporter", method = RequestMethod.POST)

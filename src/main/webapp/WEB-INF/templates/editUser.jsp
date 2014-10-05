@@ -53,6 +53,7 @@
 				
 				<label for="role">Käyttöoikeudet: </label>
 				<br>				
+
 				<sf:select style="width: auto; max-width: 100%" id="role" path="role"
 					class="form-control">
 					<c:forEach var="role" items="${roles}">
@@ -73,10 +74,37 @@
 				<a class="btn btn-large btn-primary" style="text-decoration: none" href="user"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
-					<a class="btn btn-large btn btn-danger" href="deleteUser"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+					<a href="#" class="btn btn-large btn-danger deleteAlert" style="text-decoration: none"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+
 				</c:if>
+					
 			</sf:form>
 		</div>
 		<br>
+		
+		<script>
+        $(document).on("click", ".deleteAlert", function(e) {
+            bootbox.dialog({
+          	  message: "Poista käyttäjä?",
+          	  title: "Vahvista",
+          	  buttons: {
+          	    cancel: {
+          	      label: "Peruuta",
+          	      className: "btn-primary",
+          	      callback: function() {
+          	        
+          	      }
+          	    },
+          	    confirm: {
+          	      label: "Poista",
+          	      className: "btn-danger",
+          	      callback: function() {
+          	    	window.location.href = "deleteUser"
+          	      }
+          	    }
+          	  }
+          	});
+            });
+       </script>
 			
 <jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

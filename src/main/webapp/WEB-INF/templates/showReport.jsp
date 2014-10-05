@@ -166,11 +166,37 @@
 				<a class="btn btn-primary" href="/ProNaseva/printReport/"><span class="glyphicon glyphicon-print" style="text-decoration: none;"></span> Tulosta</a>
 				
 				<c:if test="${edit == 'TRUE'}">
-					<a class="btn btn-large btn btn-danger" href="deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+					<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 				</c:if>
 				
 				<br><br>
 				<br>
 				
 		</div>
+				
+		<script>
+        $(document).on("click", ".deleteReport", function(e) {
+            bootbox.dialog({
+          	  message: "Poista raportti?",
+          	  title: "Vahvista",
+          	  buttons: {
+          	    cancel: {
+          	      label: "Peruuta",
+          	      className: "btn-primary",
+          	      callback: function() {
+          	        
+          	      }
+          	    },
+          	    confirm: {
+          	      label: "Poista",
+          	      className: "btn-danger",
+          	      callback: function() {
+          	    	window.location.href = "deleteReport"
+          	      }
+          	    }
+          	  }
+          	});
+            });
+       </script>
+		
 		<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

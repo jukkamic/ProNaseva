@@ -56,10 +56,34 @@
 				<a class="btn btn-large btn-primary" href="workshops"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
-					<a class="btn btn-large btn btn-danger" href="deleteWorkshop"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+					<a href="#" class="btn btn-large btn btn-danger deleteWorkshop"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 				</c:if>
 			</sf:form>
 		</div>
 		<br>
-			
+
+		<script>
+        $(document).on("click", ".deleteWorkshop", function(e) {
+            bootbox.dialog({
+          	  message: "Poista korjaamo?",
+          	  title: "Vahvista",
+          	  buttons: {
+          	    cancel: {
+          	      label: "Peruuta",
+          	      className: "btn-primary",
+          	      callback: function() {
+          	        
+          	      }
+          	    },
+          	    confirm: {
+          	      label: "Poista",
+          	      className: "btn-danger",
+          	      callback: function() {
+          	    	window.location.href = "deleteWorkshop"
+          	      }
+          	    }
+          	  }
+          	});
+            });
+       </script>
 <jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
