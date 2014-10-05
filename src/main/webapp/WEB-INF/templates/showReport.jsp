@@ -176,19 +176,16 @@
 					
 					</c:forEach> <!-- Question group loop end -->
 					
-					<br><<br>
+					<br><br>
 					</c:forEach> <!-- Report part loop end -->
 					</div>			
 				
-				<br>
-
+				
 				<a class="btn btn-primary" href="editReport"><span class="glyphicon glyphicon-pencil" style="text-decoration: none;"></span> Muokkaa</a>
 				<a class="btn btn-primary" href="/ProNaseva/printReport/"><span class="glyphicon glyphicon-print" style="text-decoration: none;"></span> Tulosta</a>
 				
-				<c:if test="${edit == 'TRUE'}">
-					<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
-				</c:if>
-				
+				<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+								
 				<br><br>
 				<br>
 				
