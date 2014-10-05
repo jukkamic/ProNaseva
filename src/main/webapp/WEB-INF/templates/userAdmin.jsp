@@ -27,7 +27,7 @@
 				</tr>						
 				<c:forEach var="user" items="${users}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;" href="editUser?id=${user.id}">
+							<td><a class="btn btn-default" style="text-decoration: none;" href="editUser?id=${user.id}">
 								Valitse</a></td>
 							<td>${user.lastName}, ${user.firstName}</td>
 							<td>${user.userName}</td>

@@ -36,7 +36,7 @@
 				</tr>
 				<c:forEach var="report" items="${reportSearchList}">
 						<tr>
-							<td><a class="btn btn-primary" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
+							<td><a class="btn btn-default" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
 								Valitse</a>
 							</td>
 							<td>
@@ -56,7 +56,7 @@
 			</table>
 			
 		<br>
-		<a class="btn btn-primary" href="/ProNaseva/" style="margin-left: 6px">Alkuun</a>
+
 		</div>
 		<br>
 	

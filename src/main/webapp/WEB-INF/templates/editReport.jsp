@@ -141,7 +141,7 @@
 									</div>
 									
 												
-					</c:forEach> <!-- PanelGroup end -->
+					</c:forEach> <!-- QuestionGroup end -->
 					</div>
 										
 					

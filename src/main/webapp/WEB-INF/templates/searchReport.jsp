@@ -32,7 +32,7 @@
 				<br>
 				<br>
 				
-				<button class="btn btn-large btn-primary" action="submit">Hae</button>
+				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-search" style="text-decoration: none;"></span> Hae</button>
 			</sf:form>
 		</div>
 

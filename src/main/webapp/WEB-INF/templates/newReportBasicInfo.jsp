@@ -43,7 +43,7 @@
 
 				<br>
 				<br>
-				<button class="btn btn-large btn-primary" action="submit">Seuraava</button>
+				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-arrow-right" style="text-decoration: none;"></span> Seuraava</button>
 			</sf:form>
 			
 		</div>
