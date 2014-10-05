@@ -52,9 +52,9 @@ public class Report {
 	private String vehicleMileage;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORT_QUESTIONGROUP", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"))
+	@JoinTable(name = "REPORT_REPORTPART", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTPART_ID"))
 	@OrderColumn(name = "INDEX")
-	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
+	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
 
 	public Long getId() {
 		return id;
@@ -112,12 +112,12 @@ public class Report {
 		this.workshop = workshop;
 	}
 
-	public List<QuestionGroup> getQuestionGroups() {
-		return questionGroups;
+	public List<ReportPart> getReportParts() {
+		return reportParts;
 	}
 
-	public void setQuestionGroups(List<QuestionGroup> questionGroups) {
-		this.questionGroups = questionGroups;
+	public void setReportParts(List<ReportPart> reportParts) {
+		this.reportParts = reportParts;
 	}
 
 	public Date getDate() {

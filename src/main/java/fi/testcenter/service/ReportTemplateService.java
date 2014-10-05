@@ -9,6 +9,7 @@ import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
+import fi.testcenter.domain.ReportPart;
 import fi.testcenter.domain.TextareaQuestion;
 import fi.testcenter.domain.TextfieldQuestion;
 
@@ -21,8 +22,15 @@ public class ReportTemplateService {
 
 	private Report getReportTemplateVolvo() {
 
+		Report report = new Report();
+		ArrayList<ReportPart> reportParts = new ArrayList<ReportPart>();
+
+		ReportPart reportPart1 = new ReportPart();
+		reportPart1.setTitle("Osa A - Yhteenveto");
+
 		ArrayList<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
+		// Osa A. Yhteenveto
 		// 1. Testiauton tiedot
 
 		QuestionGroup questionGroup1 = new QuestionGroup();
@@ -63,9 +71,35 @@ public class ReportTemplateService {
 
 		ArrayList<Question> questionList2 = new ArrayList<Question>();
 
+		MultipleChoiceQuestion q40 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options17 = new ArrayList<MultipleChoiceOption>();
+		q40.setQuestion("Varapyörän ilmanpaineen tarkastus");
+		options17.add(new MultipleChoiceOption("0 p", 0));
+		options17.add(new MultipleChoiceOption("1 p", 1));
+		options17.add(new MultipleChoiceOption("2 p", 2));
+		q40.setOptions(options17);
+		questionList2.add(q40);
+
+		MultipleChoiceQuestion q41 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options18 = new ArrayList<MultipleChoiceOption>();
+		q41.setQuestion("Akun tarkastus");
+		options18.add(new MultipleChoiceOption("0 p", 0));
+		options18.add(new MultipleChoiceOption("1 p", 1));
+		options18.add(new MultipleChoiceOption("2 p", 2));
+		q41.setOptions(options18);
+		questionList2.add(q41);
+
+		MultipleChoiceQuestion q42 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options19 = new ArrayList<MultipleChoiceOption>();
+		q42.setQuestion("Seisontavalon tarkastus");
+		options19.add(new MultipleChoiceOption("0 p", 0));
+		options19.add(new MultipleChoiceOption("1 p", 1));
+		options19.add(new MultipleChoiceOption("2 p", 2));
+		q42.setOptions(options19);
+		questionList2.add(q42);
+
 		MultipleChoiceQuestion q7 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options1 = new ArrayList<MultipleChoiceOption>();
-
 		q7.setQuestion("Jäähdytysnestemäärän tarkastus");
 		options1.add(new MultipleChoiceOption("0 p", 0));
 		options1.add(new MultipleChoiceOption("1 p", 1));
@@ -75,48 +109,53 @@ public class ReportTemplateService {
 
 		MultipleChoiceQuestion q9 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options2 = new ArrayList<MultipleChoiceOption>();
-		q9.setQuestion("Rengaspaineiden tarkastus");
+		q9.setQuestion("Muu vika");
 		options2.add(new MultipleChoiceOption("0 p", 0));
 		options2.add(new MultipleChoiceOption("1 p", 1));
 		options2.add(new MultipleChoiceOption("2 p", 2));
 		q9.setOptions(options2);
 		questionList2.add(q9);
 
-		MultipleChoiceQuestion q11 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options3 = new ArrayList<MultipleChoiceOption>();
-		q11.setQuestion("Tuulilasinpyyhkimien kunnon tarkastus");
-		options3.add(new MultipleChoiceOption("0 p", 0));
-		options3.add(new MultipleChoiceOption("1 p", 1));
-		options3.add(new MultipleChoiceOption("2 p", 2));
-		q11.setOptions(options3);
-		questionList2.add(q11);
-
-		MultipleChoiceQuestion q13 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options4 = new ArrayList<MultipleChoiceOption>();
-		q13.setQuestion("Ajovalojen suuntauksen tarkastus");
-		options4.add(new MultipleChoiceOption("0 p", 0));
-		options4.add(new MultipleChoiceOption("1 p", 1));
-		options4.add(new MultipleChoiceOption("2 p", 2));
-		q13.setOptions(options4);
-		questionList2.add(q13);
-
-		MultipleChoiceQuestion q15 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options5 = new ArrayList<MultipleChoiceOption>();
-		q15.setQuestion("Äänimerkin toiminnan tarkastus");
-		options5.add(new MultipleChoiceOption("0 p", 0));
-		options5.add(new MultipleChoiceOption("1 p", 1));
-		options5.add(new MultipleChoiceOption("2 p", 2));
-		q15.setOptions(options5);
-		questionList2.add(q15);
-
-		MultipleChoiceQuestion q17 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options6 = new ArrayList<MultipleChoiceOption>();
-		q17.setQuestion("Oliko Service 2.0 hengari ripustettu peiliin");
-		options6.add(new MultipleChoiceOption("0 p", 0));
-		options6.add(new MultipleChoiceOption("1 p", 1));
-		options6.add(new MultipleChoiceOption("2 p", 2));
-		q17.setOptions(options6);
-		questionList2.add(q17);
+		//
+		// MultipleChoiceQuestion q11 = new MultipleChoiceQuestion();
+		// ArrayList<MultipleChoiceOption> options3 = new
+		// ArrayList<MultipleChoiceOption>();
+		// q11.setQuestion("Tuulilasinpyyhkimien kunnon tarkastus");
+		// options3.add(new MultipleChoiceOption("0 p", 0));
+		// options3.add(new MultipleChoiceOption("1 p", 1));
+		// options3.add(new MultipleChoiceOption("2 p", 2));
+		// q11.setOptions(options3);
+		// questionList2.add(q11);
+		//
+		// MultipleChoiceQuestion q13 = new MultipleChoiceQuestion();
+		// ArrayList<MultipleChoiceOption> options4 = new
+		// ArrayList<MultipleChoiceOption>();
+		// q13.setQuestion("Ajovalojen suuntauksen tarkastus");
+		// options4.add(new MultipleChoiceOption("0 p", 0));
+		// options4.add(new MultipleChoiceOption("1 p", 1));
+		// options4.add(new MultipleChoiceOption("2 p", 2));
+		// q13.setOptions(options4);
+		// questionList2.add(q13);
+		//
+		// MultipleChoiceQuestion q15 = new MultipleChoiceQuestion();
+		// ArrayList<MultipleChoiceOption> options5 = new
+		// ArrayList<MultipleChoiceOption>();
+		// q15.setQuestion("Äänimerkin toiminnan tarkastus");
+		// options5.add(new MultipleChoiceOption("0 p", 0));
+		// options5.add(new MultipleChoiceOption("1 p", 1));
+		// options5.add(new MultipleChoiceOption("2 p", 2));
+		// q15.setOptions(options5);
+		// questionList2.add(q15);
+		//
+		// MultipleChoiceQuestion q17 = new MultipleChoiceQuestion();
+		// ArrayList<MultipleChoiceOption> options6 = new
+		// ArrayList<MultipleChoiceOption>();
+		// q17.setQuestion("Oliko Service 2.0 hengari ripustettu peiliin");
+		// options6.add(new MultipleChoiceOption("0 p", 0));
+		// options6.add(new MultipleChoiceOption("1 p", 1));
+		// options6.add(new MultipleChoiceOption("2 p", 2));
+		// q17.setOptions(options6);
+		// questionList2.add(q17);
 
 		TextareaQuestion q18 = new TextareaQuestion();
 		q18.setQuestion("Muita huomioita");
@@ -240,8 +279,40 @@ public class ReportTemplateService {
 		questionGroup3.setQuestions(questionList3);
 		questionGroups.add(questionGroup3);
 
-		Report report = new Report();
-		report.setQuestionGroups(questionGroups);
+		reportPart1.setQuestionGroups(questionGroups);
+		reportParts.add(reportPart1);
+
+		// RAPORTIN OSA B - TYÖN VASTAANOTTO
+
+		ReportPart reportPart2 = new ReportPart();
+		reportPart2.setTitle("Osa B - Työn vastaanotto");
+
+		ArrayList<QuestionGroup> questionGroups2 = new ArrayList<QuestionGroup>();
+		QuestionGroup questionGroup4 = new QuestionGroup();
+
+		questionGroup4.setTitle("Palvelu työn vastaanotossa");
+		ArrayList<Question> questionList4 = new ArrayList<Question>();
+
+		TextfieldQuestion q44 = new TextfieldQuestion();
+		q44.setQuestion("Päivämäärä, jolle huolto on varattu");
+		questionList4.add(q44);
+
+		MultipleChoiceQuestion q43 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options20 = new ArrayList<MultipleChoiceOption>();
+		q43.setQuestion("Löytyikö korjaamon pihalta vapaa asiakaspysäköintipaikka?");
+		options20.add(new MultipleChoiceOption("Kyllä", 2));
+
+		options20.add(new MultipleChoiceOption("Ei", 0));
+
+		q43.setOptions(options20);
+		questionList4.add(q43);
+		questionGroup4.setQuestions(questionList4);
+		questionGroups2.add(questionGroup4);
+		reportPart2.setQuestionGroups(questionGroups2);
+		reportParts.add(reportPart2);
+
+		report.setReportParts(reportParts);
+
 		return report;
 	}
 }

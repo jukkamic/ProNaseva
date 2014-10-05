@@ -20,46 +20,59 @@
 			<div style="border-bottom: 1px solid #eee;">
 			<h4>Maahantuoja: ${report.importer.name}</h4>
 			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
-			
-							
-				<c:choose>
-					<c:when test="${edit == 'TRUE'}">
-						<span class="label label-warning">Muokkaus</span>
-					</c:when>
-					<c:otherwise>
-						<span class="label label-warning">Kesken</span>
-					</c:otherwise>
-					
-				</c:choose>
+			<c:choose>
+				<c:when test="${edit == 'TRUE'}">
+					<span class="label label-warning">Muokkaus</span>
+				</c:when>
+				<c:otherwise>
+					<span class="label label-warning">Kesken</span>
+				</c:otherwise>
+			</c:choose>
 						
 			<br><br>
 			</div>
 			<br><br>
 			<sf:form modelAttribute="report" action="submitReport" method="post">
 
+			<!-- Report part loop -->
+			
+			<c:set var="bootstrapPanelCounter" value="0" />
+			
+			<div class="panel-group" id="accordion">
+			
+			<c:forEach var="reportPart" items="${report.reportParts}" varStatus="reportPartCounter">
+			<h3>${reportPart.title}</h3>
+			<br>			
+
 				<!-- QuestionGroup loop -->
-				<div class="panel-group" id="accordion">
+				
+			
+				
 	
-					<c:forEach var="questionGroup" items="${report.questionGroups}"
+					<c:forEach var="questionGroup" items="${reportPart.questionGroups}"
 						varStatus="questionGroupCounter">
+						
+						<c:set var="bootstrapPanelCounter" value="${bootstrapPanelCounter + 1}" />
+						
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a
 										style="font-size: 1.5em; text-decoration: none; display: block;"
 										data-toggle="collapse" data-parent="#accordion"
-										href="#${questionGroupCounter.count}">${questionGroup.title}</a>
+										href="#${bootstrapPanelCounter}">${questionGroup.title}
+									</a>
 								</h4>
 							</div>
 
 								<!-- Ensimmäisen kysymysryhmän luokka on "collapse start" jotta javascript 
 									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
 								<c:choose>
-									<c:when test="${questionGroupCounter.count == 1}">
-										<div id="${questionGroupCounter.count}" class="panel-collapse collapse start">
+									<c:when test="${questionGroupCounter.count == 1 and reportPartCounter.count == 1}">
+										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start">
 									</c:when>
 									<c:otherwise>
-										<div id="${questionGroupCounter.count}" class="panel-collapse collapse">
+										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse">
 								</c:otherwise>
 							</c:choose>
 								<div class="panel-body">
@@ -96,11 +109,11 @@
 																ei ole tägejä -->
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
-																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenOptionIndex" 
+																<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenOptionIndex" 
 																value="${optionsCounter.index}" /> ${option.radiobuttonText}
 															</c:when>
 															<c:otherwise>
-																<sf:radiobutton id="button" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenOptionIndex"
+																<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenOptionIndex"
 																value="${optionsCounter.index}" /> ${option.option}
 															</c:otherwise>
 															</c:choose>
@@ -111,7 +124,7 @@
 											
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.remarks" 
+											<sf:textarea rows="5" style="width:100%;" path="reportParts[${reportPartCounter.index}].questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.remarks" 
 												value="${question.answer.remarks}" />
 											<br><br>
 										</c:if>
@@ -121,7 +134,7 @@
 											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:textarea rows="5" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" 
+											<sf:textarea rows="5" style="width:100%;" path="reportParts[${reportPartCounter.index}].questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" 
 												value="${question.answer.answer}" />
 										</c:if>
 										
@@ -130,7 +143,7 @@
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:input type="text" style="width:100%;" path="questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" 
+											<sf:input type="text" style="width:100%;" path="reportParts[${reportPartCounter.index}].questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.answer" 
 												value="${question.answer.answer}" /> 
 										</c:if>
 										
@@ -142,10 +155,13 @@
 									
 												
 					</c:forEach> <!-- QuestionGroup end -->
-					</div>
-										
 					
-				<br>
+					
+					
+					<br><br>
+					</c:forEach> <!-- Report part end -->
+					
+				</div>
 				
 				<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Tallenna</button>
 				<a class="btn btn-primary" href="/ProNaseva/"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
