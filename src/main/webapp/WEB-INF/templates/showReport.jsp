@@ -24,11 +24,26 @@
 			<br><br>
 			</div>
 			<br><br>
-				<!-- QuestionGroup loop -->
-				<div class="panel-group" id="accordion">
-									
-					<c:forEach var="questionGroup" items="${report.questionGroups}"
+			
+			
+			<!-- Report part loop -->
+			
+			<c:set var="bootstrapPanelCounter" value="0" />
+			
+			<div class="panel-group" id="accordion">
+			
+			<c:forEach var="reportPart" items="${report.reportParts}" varStatus="reportPartCounter">
+			<h3>${reportPart.title}</h3>
+			<br>			
+			
+						
+								
+					<!-- QuestionGroup loop -->
+					
+					<c:forEach var="questionGroup" items="${reportPart.questionGroups}"
 						varStatus="questionGroupCounter">
+						
+						<c:set var="bootstrapPanelCounter" value="${bootstrapPanelCounter + 1}" />
 						
 						<!-- Muuttujat monivalintakysymysten kysymysryhmäkohtaiseen pisteytykseen -->
 						<c:set var="maxTotalScore" value="0" />
@@ -42,18 +57,19 @@
 									<a
 										style="font-size: 1.5em; text-decoration: none; display: block;"
 										data-toggle="collapse" data-parent="#accordion"
-										href="#${questionGroupCounter.count}">${questionGroup.title}</a>
+										href="#${bootstrapPanelCounter}">${questionGroup.title}
+									</a>
 								</h4>
 							</div>
 
 								<!-- Ensimmäisen kysymysryhmän luokka on "collapse in" jotta javascript 
 									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
 								<c:choose>
-									<c:when test="${questionGroupCounter.count == 1}">
-										<div id="${questionGroupCounter.count}" class="panel-collapse collapse start">
+									<c:when test="${questionGroupCounter.count == 1 and reportPartCounter.count == 1}">
+										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start">
 									</c:when>
 									<c:otherwise>
-										<div id="${questionGroupCounter.count}" class="panel-collapse collapse">
+										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse">
 								</c:otherwise>
 							</c:choose>
 								<div class="panel-body">
@@ -127,7 +143,7 @@
 											</div>
 											<br>
 											<h4>Huomioita:</h4>
-											<p>${question.answer.remarks}</p>
+											<p style="font-size: 1.2em;">${question.answer.remarks}</p>
 											
 											<br><br>
 										</c:if>
@@ -137,7 +153,7 @@
 											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<p>${question.answer}</p>
+											<p style="font-size: 1.2em;">${question.answer}</p>
 										</c:if>
 										
 										<!-- Text field question -->
@@ -145,21 +161,25 @@
 											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<p>${question.answer}</p>
+											<p style="font-size: 1.2em;">${question.answer}</p>
 										</c:if> 
-									</c:forEach>
+										
+									</c:forEach> <!-- Questions loop end -->
 									
 									<c:if test="${scoredQuestions == 'TRUE'}">
 									<br>
 									<h4 style="float: right; font-weight: bold;">Pisteet: ${totalScore}/${maxTotalScore}</h4>
 									
 									</c:if>
-									</div>
-									</div>
-					</div>
-					</c:forEach>
-										
-				</div>
+									
+									</div></div></div>
+					
+					</c:forEach> <!-- Question group loop end -->
+					
+					<br><<br>
+					</c:forEach> <!-- Report part loop end -->
+					</div>			
+				
 				<br>
 
 				<a class="btn btn-primary" href="editReport"><span class="glyphicon glyphicon-pencil" style="text-decoration: none;"></span> Muokkaa</a>

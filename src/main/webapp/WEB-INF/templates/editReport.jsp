@@ -45,9 +45,7 @@
 			<br>			
 
 				<!-- QuestionGroup loop -->
-				
-			
-				
+						
 	
 					<c:forEach var="questionGroup" items="${reportPart.questionGroups}"
 						varStatus="questionGroupCounter">
