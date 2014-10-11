@@ -45,10 +45,7 @@ margin: 0;
 
 }
 
-@page:last {
-    @bottom-center {
-        content: "sdfsdfsdfsfsdfsfs";
-    }
+
 </style>
 
 </head>
@@ -116,13 +113,7 @@ margin: 0;
 	<p>xx</p>
 	<p>xx</p>
 		<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
+
 	<p>xx</p>
 		<p>xx</p>
 	<p>xx</p>

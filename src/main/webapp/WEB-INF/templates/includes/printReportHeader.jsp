@@ -8,53 +8,58 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-
 <title>Test-Center</title>
 
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 
 
 
 <style>
 
-.newpage {
-  page-break-before: always;
-  
-}
-
-body
-    {
-        background-image:url('../resources/images/printBackground.png');
-        background-repeat:no-repeat;
-        background-position: right left;
-        background-attachment:fixed;
-        background-size:40%;
-        -webkit-print-color-adjust:exact;
-   
-    }
-    
-
-
-@media print {
-body
-    {
-        background-image:url('../resources/images/printBackground.png');
-        background-repeat:no-repeat;
-        background-position: right left;
-        background-attachment:fixed;
-        background-size:40%;
-        -webkit-print-color-adjust:exact;
-    }
+body {
+background-image: url('../resources/images/printBackground.png');
 }
 
 </style>
 
+<style media="print">
+
+body {
+background-image: url('../resources/images/printBackground.png');
+-webkit-print-color-adjust:exact;
+background-repeat:repeat-y;
+background-position: left top;
+background-attachment:fixed;
+
+background-size: 100% 100%; 
+
+background-color: white;
+
+ }
+tfoot { display: table-footer-group; 
+}
+
+thead { display: table-header-group;
+}
 
 
+@page {
+size: A4;
+margin: 0;
+}
+.newpage {
+  page-break-before: always;
+
+
+}
+
+
+</style>
 
 </head>
-
 
 
 
