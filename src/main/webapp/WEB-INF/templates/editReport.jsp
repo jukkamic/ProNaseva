@@ -17,6 +17,8 @@
 			</div>
 			<br>
 			<br>
+			
+	
 			<div style="border-bottom: 1px solid #eee;">
 			<h4>Maahantuoja: ${report.importer.name}</h4>
 			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
@@ -89,9 +91,11 @@
 												<c:when test="${question.multipleSelectionsAllowed == true}">
 														<h3>${questionCounter.count}. ${question.question}</h3>
 														<c:forEach var="option" items="${question.options}">
+															<label class="checkbox" style="">											
 															<sf:checkbox value="${option.option}" 
 																path="reportParts[${reportPartCounter.index}].questionGroups[${questionGroupCounter.index}].questions[${questionCounter.index}].answer.chosenSelections" 
 																label="${option.option}" />
+															</label>
 															<br>
 														</c:forEach>
 														
@@ -180,7 +184,7 @@
 				</div>
 				
 				<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Tallenna</button>
-				<a class="btn btn-primary" href="/ProNaseva/"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
+				<a class="btn btn-primary remove" href="#"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
 					<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
@@ -214,6 +218,32 @@
           	  }
           	});
             });
+
+        $(document).on("click", ".remove", function(e) {
+            bootbox.dialog({
+          	  message: "Hylkää muutokset?",
+          	  title: "Vahvista",
+          	  buttons: {
+          	    cancel: {
+          	      label: "Peruuta",
+          	      className: "btn-primary",
+          	      callback: function() {
+          	        
+          	      }
+          	    },
+          	    confirm: {
+          	      label: "Hylkää muutokset",
+          	      className: "btn-danger",
+          	      callback: function() {
+          	    	window.location.href = "/ProNaseva/"
+          	      }
+          	    }
+          	  }
+          	});
+            });
+        
        </script>
-			
+		
+
+		
 		<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

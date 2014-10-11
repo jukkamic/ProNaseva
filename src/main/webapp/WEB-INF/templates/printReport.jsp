@@ -11,6 +11,8 @@
 					
 			<h1>Test-Center raportti</h1>
 			
+			<img src="../../resources/images/lataus.jpg" />
+			
 			<br>
 			<br>
 			<div style="border-bottom: 1px solid #eee;">
@@ -108,6 +110,7 @@
 
 	<br><br>
 </body>
+
 				
  	<script>
 		window.print();

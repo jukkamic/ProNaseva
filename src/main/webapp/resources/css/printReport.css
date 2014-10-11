@@ -1,8 +1,12 @@
 @CHARSET "ISO-8859-1";
 
-body {
-margin: 100pt;
-font-size: 20px;
+<style type="text/css">
+    body
+    {
+        background-image:url('../resources/images/lataus.jpg');
+         background-color: #cccccc;
 
-}
+    }
+</style>
+
 

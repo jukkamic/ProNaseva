@@ -105,7 +105,7 @@ public class ReportController {
 	public String printReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report) {
 		model.addAttribute("report", report);
-		return "printReport";
+		return "printTest";
 	}
 
 	@RequestMapping(value = "/printDone")

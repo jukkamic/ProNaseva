@@ -11,6 +11,33 @@
 <div style="float: right; font-size: 1.3em">
 		<p style="color: #8C8C8C; display: inline;">${loginId}</p>
 		&nbsp;
-		<a class="btn btn-default" style="text-decoration: none" href="<c:url value='/j_spring_security_logout' />">Kirjaudu ulos</a>
+		<a class="btn btn-default logout" style="text-decoration: none" href="#">Kirjaudu ulos</a>
 </div>
+
+
 <br><br><br>
+
+		<script>
+        $(document).on("click", ".logout", function(e) {
+            bootbox.dialog({
+          	  message: "Kirjaudu ulos?",
+          	  title: "Vahvista",
+          	  buttons: {
+          	    cancel: {
+          	      label: "Peruuta",
+          	      className: "btn-primary",
+          	      callback: function() {
+          	        
+          	      }
+          	    },
+          	    confirm: {
+          	      label: "Vahvista",
+          	      className: "btn-danger",
+          	      callback: function() {
+          	    	window.location.href = "<c:url value='/j_spring_security_logout' />"
+          	      }
+          	    }
+          	  }
+          	});
+            });
+       </script>

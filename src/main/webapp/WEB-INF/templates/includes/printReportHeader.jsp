@@ -16,41 +16,42 @@
 
 
 
-<link rel="stylesheet" href="resources/css/printReport.css" />
 <style>
-body {
-	margin: 50pt 100pt 50pt 100pt;
-	font-size: 12pt;
 
-}
 .newpage {
   page-break-before: always;
   
 }
 
-h2 {
-	padding-top: 50pt;
-	padding-bottom: 20pt;
-	margin-top: 0;
-	margin-bottom: 0;
-}
+body
+    {
+        background-image:url('../resources/images/printBackground.png');
+        background-repeat:no-repeat;
+        background-position: right left;
+        background-attachment:fixed;
+        background-size:40%;
+        -webkit-print-color-adjust:exact;
+   
+    }
+    
 
-h3 {
-	padding-top: 18pt;
-	padding-bottom: 0pt;	
-	margin-top: 0;
-	margin-bottom: 0;	
-}
 
-p {
-	padding-top: 3pt;
-	padding-bottom: 10pt;
-	padding-left: 12pt;
-	margin-top: 0;
-	margin-bottom: 0;
+@media print {
+body
+    {
+        background-image:url('../resources/images/printBackground.png');
+        background-repeat:no-repeat;
+        background-position: right left;
+        background-attachment:fixed;
+        background-size:40%;
+        -webkit-print-color-adjust:exact;
+    }
 }
 
 </style>
+
+
+
 
 </head>
 
