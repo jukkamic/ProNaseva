@@ -6,18 +6,25 @@
 
 <title>Test-Center</title>
 
+<style>
 
+body {
+background-image: url('../resources/images/printBackground.png');
+}
+
+</style>
 
 <style media="print">
 
-
 body {
-background-image: url('../resources/images/lataus.jpg');
+background-image: url('../resources/images/printBackground.png');
 -webkit-print-color-adjust:exact;
 background-repeat:repeat-y;
 background-position: left top;
 background-attachment:fixed;
-background-size: 99.867%; 
+
+background-size: 100% 100%; 
+
 background-color: white;
 
  }
@@ -38,7 +45,6 @@ margin: 0;
 
 }
 
-
 @page:last {
     @bottom-center {
         content: "sdfsdfsdfsfsdfsfs";
@@ -49,13 +55,12 @@ margin: 0;
 
 <body>
 
-
+<p></p>
 <table>
-   <thead><tr><td>Your header goes here</td></tr></thead>
+   <thead><tr><td><div style="margin-bottom: 10em;"></div></td></tr></thead>
    <tbody>
     <tr><td>
-	
-	
+		
 	<p>xx</p>
 	<p>xx</p>
 	<p>xx</p>
@@ -74,7 +79,7 @@ margin: 0;
 	<p>xx7</p>
 	<p>xx8</p>
 	<p>xx9</p>
-		<p>xx1</p>
+	<p>xx1</p>
 	<p>xx2</p>
 	<p>xx3</p>
 	<p>xx4</p>
@@ -83,7 +88,7 @@ margin: 0;
 	<p>xx7</p>
 	<p>xx8</p>
 	<p>xx9</p>
-		<p>xx</p>
+	<p>xx</p>
 	<p>xx</p>
 	<p>xx</p>
 	<p>xx</p>
@@ -141,7 +146,7 @@ margin: 0;
 	   
     </td></tr>
     
-      <tfoot><tr><td><p style="margin-top: 5em;">Your footer goes here</td></tr></tfoot>
+      <tfoot><tr><td><div style="margin-top: 7em;"></div></td></tr></tfoot>
     </tbody></table>
     
     
