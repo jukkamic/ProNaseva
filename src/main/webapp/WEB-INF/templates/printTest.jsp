@@ -27,7 +27,7 @@ font-family: 'Arial';
 
 body {
 font-family: 'Arial';
-background-image: url('../resources/images/printBackground.png');
+background-image: url('../resources/images/printReportBackground.jpg');
 -webkit-print-color-adjust:exact;
 background-repeat:repeat-y;
 background-position: left top;
@@ -91,7 +91,7 @@ margin: 0;
 				<br>
 				<div style="border-bottom: 1px solid #eee;">
 					<h2>${report.importer.name}</h2>
-					<h2>pvm</h2>
+					<h2>[pvm]</h2>
 					<br><br>
 					
 				</div>
@@ -178,7 +178,7 @@ margin: 0;
 		 
 	    </td></tr>
 	    
-	      <tfoot><tr><td><div style="margin-top: 7em;"><p>FOOTER</p></div></td></tr></tfoot>
+	      <tfoot><tr><td><div style="margin-top: 7em;"></div></td></tr></tfoot>
 	    </tbody></table>
 	      
 	    
