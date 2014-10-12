@@ -176,7 +176,7 @@
 											<c:set var="mainQuestionIndex" value="${questionCounter.index}" scope="request" />
 											<c:set var="mainQuestion" value="${question}" scope="request" />
 											<div style="margin-left: 3em;">
-												<jsp:include page="/WEB-INF/templates/ShowReportSubQuestions.jsp" />
+												<jsp:include page="/WEB-INF/templates/EditReportSubQuestions.jsp" />
 											</div>				
 										</c:if>
 										

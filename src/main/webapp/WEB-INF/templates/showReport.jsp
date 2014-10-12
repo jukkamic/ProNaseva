@@ -46,9 +46,9 @@
 						<c:set var="bootstrapPanelCounter" value="${bootstrapPanelCounter + 1}" />
 						
 						<!-- Muuttujat monivalintakysymysten kysymysryhmäkohtaiseen pisteytykseen -->
-						<c:set var="maxTotalScore" value="0" />
-						<c:set var="totalScore" value="0" />
-						<c:set var="scoredQuestions" value="FALSE" />
+						<c:set var="maxTotalScore" value="0" scope="request"/>
+						<c:set var="totalScore" value="0" scope="request"/>
+						<c:set var="scoredQuestions" value="FALSE" scope="request"/>
 						
 						
 						<div class="panel panel-default">
@@ -163,6 +163,18 @@
 											<br>
 											<p style="font-size: 1.2em;">${question.answer}</p>
 										</c:if> 
+										
+										<!-- Show subquestions -->
+										
+										<c:if test="${not empty question.subQuestions}">
+											<c:set var="mainQuestion" value="${question}" scope="request" />
+											<div style="margin-left: 3em;">
+												<jsp:include page="/WEB-INF/templates/showReportSubQuestions.jsp" />
+											</div>				
+										</c:if>
+																				
+										
+										
 										
 									</c:forEach> <!-- Questions loop end -->
 									

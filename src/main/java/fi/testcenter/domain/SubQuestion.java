@@ -6,7 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class SubQuestion {
@@ -15,10 +15,8 @@ public class SubQuestion {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Question question;
-
-	private TextAnswer answer = new TextAnswer();
 
 	public Long getId() {
 		return id;
@@ -26,14 +24,6 @@ public class SubQuestion {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public TextAnswer getAnswer() {
-		return answer;
-	}
-
-	public void setAnswer(TextAnswer answer) {
-		this.answer = answer;
 	}
 
 	public Question getQuestion() {

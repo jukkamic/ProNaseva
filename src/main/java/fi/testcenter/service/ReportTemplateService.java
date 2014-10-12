@@ -47,6 +47,25 @@ public class ReportTemplateService {
 		question60.setQuestion("Eka ikinä alakysymys");
 		subQ1.setQuestion(question60);
 		subQuestionList1.add(subQ1);
+
+		ArrayList<MultipleChoiceOption> options40 = new ArrayList<MultipleChoiceOption>();
+		SubQuestion subQ2 = new SubQuestion();
+		MultipleChoiceQuestion question61 = new MultipleChoiceQuestion();
+		question61.setQuestion("Toimiiko Jarnon monivalinta-alakysymykset?");
+		options40.add(new MultipleChoiceOption("Varmasti toimii kysymys", 2));
+		options40.add(new MultipleChoiceOption("Hyvin todennäköistä", 1));
+		options40.add(new MultipleChoiceOption("Vähän epäilyttää kyllä", 2));
+		question61.setOptions(options40);
+		subQ2.setQuestion(question61);
+		subQuestionList1.add(subQ2);
+
+		SubQuestion subQ3 = new SubQuestion();
+		TextareaQuestion question62 = new TextareaQuestion();
+		question62
+				.setQuestion("Tuleeko ProNasevasta seuraava suomalainen menestystarina?");
+		subQ3.setQuestion(question62);
+		subQuestionList1.add(subQ3);
+
 		q1.setSubQuestions(subQuestionList1);
 
 		questions1.add(q1);

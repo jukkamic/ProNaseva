@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
 
 
 	
@@ -24,7 +24,7 @@
 					<c:forEach var="option" items="${subQuestion.options}">
 						<label class="checkbox" style="">											
 						<sf:checkbox value="${option.option}" 
-							path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].answer.chosenSelections" 
+							path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.chosenSelections" 
 							label="${option.option}" />
 						</label>
 						<br>
@@ -53,11 +53,11 @@
 							ei ole tägejä -->
 					<c:choose>
 						<c:when test="${option.radiobuttonText != null }">
-							<sf:radiobutton id="button" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].answer.chosenOptionIndex" 
+							<sf:radiobutton id="button" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.chosenOptionIndex" 
 							value="${optionsCounter.index}" /> ${option.radiobuttonText}
 						</c:when>
 						<c:otherwise>
-							<sf:radiobutton id="button" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].answer.chosenOptionIndex"
+							<sf:radiobutton id="button" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.chosenOptionIndex"
 							value="${optionsCounter.index}" /> ${option.option}
 						</c:otherwise>
 						</c:choose>
@@ -70,8 +70,8 @@
 	
 		<br>
 		<h4>Huomioita:</h4>
-		<sf:textarea rows="5" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].answer.remarks" 
-			value="${question.answer.remarks}" />
+		<sf:textarea rows="5" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.remarks" 
+			value="${Subquestion.answer.remarks}" />
 		<br><br>
 	</c:if>
 
@@ -80,7 +80,7 @@
 		test="${subQuestion.class == 'class fi.testcenter.domain.TextareaQuestion'}">
 		<h3>${subQuestion.question}</h3>
 		<br>
-		<sf:textarea rows="5" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].answer.answer" 
+		<sf:textarea rows="5" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.answer" 
 			value="${question.answer.answer}" />
 	</c:if>
 	
@@ -89,6 +89,6 @@
 		test="${subQuestion.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
 		<h3>${subQuestion.question}</h3>
 		<br>
-		<sf:input type="text" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].answer.answer" />  
+		<sf:input type="text" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.answer" />  
 	</c:if>
 </c:forEach>
