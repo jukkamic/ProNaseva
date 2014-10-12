@@ -9,7 +9,6 @@
 
 <p>SubQuestions</p>
 
-
 <c:forEach var="listedSubQuestion" items="${mainQuestion.subQuestions}" varStatus="subQuestionCounter">
 <c:set var="subQuestion" value="${listedSubQuestion.question}" />
 	

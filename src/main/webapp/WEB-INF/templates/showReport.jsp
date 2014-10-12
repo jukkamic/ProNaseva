@@ -172,9 +172,6 @@
 												<jsp:include page="/WEB-INF/templates/showReportSubQuestions.jsp" />
 											</div>				
 										</c:if>
-																				
-										
-										
 										
 									</c:forEach> <!-- Questions loop end -->
 									

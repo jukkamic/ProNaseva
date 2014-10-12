@@ -171,6 +171,7 @@ margin: 0;
 												<td style="padding-left: 1.5em;">
 												&#9744;
 												&nbsp;
+												</td>
 											</c:otherwise>
 										</c:choose>
 										
@@ -201,7 +202,6 @@ margin: 0;
 						<div class="noPageBreak">
 					
 						<h3>${questionCounter.count}. ${question.question}</h3>
-						<br>
 						<p>${question.answer.answer}</p>
 						
 						</div>
@@ -216,6 +216,13 @@ margin: 0;
 							<p>${question.answer.answer}</p> 
 						</div>
 						
+					</c:if>
+					
+					<c:if test="${not empty question.subQuestions}">
+						<c:set var="mainQuestion" value="${question}" scope="request" />
+						<div style="margin-left: 3em;">
+							<jsp:include page="/WEB-INF/templates/printReportSubQuestions.jsp" />
+						</div>				
 					</c:if>
 					
 				</c:forEach> <!-- Question loop end -->
