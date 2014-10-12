@@ -17,6 +17,8 @@ tulostavan virheellisesti mutta pdf tulostuu oikein -->
 
 body {
 background-image: url('../resources/images/printBackground.png');
+font-family: 'Arial';
+ 
 }
 
 </style>
@@ -24,6 +26,7 @@ background-image: url('../resources/images/printBackground.png');
 <style media="print">
 
 body {
+font-family: 'Arial';
 background-image: url('../resources/images/printBackground.png');
 -webkit-print-color-adjust:exact;
 background-repeat:repeat-y;
@@ -59,100 +62,130 @@ margin: 0;
 
 <body>
 
-<p></p>
-<table>
-   <thead><tr><td><div style="margin-bottom: 10em;"></div></td></tr></thead>
-   <tbody>
-    <tr><td>
-		
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx1</p>
-	<p>xx2</p>
-	<p>xx3</p>
-	<p>xx4</p>
-	<p>xx5</p>
-	<p>xx6/p>
-	<p>xx7</p>
-	<p>xx8</p>
-	<p>xx9</p>
-	<p>xx1</p>
-	<p>xx2</p>
-	<p>xx3</p>
-	<p>xx4</p>
-	<p>xx5</p>
-	<p>xx6</p>
-	<p>xx7</p>
-	<p>xx8</p>
-	<p>xx9</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-		<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-		<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-		<p>xx</p>
+<div style="margin-left: 3.5em; margin-right: 2em;">
 
-	<p>xx</p>
-		<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-		<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
-	<p>xx</p>
+
+	<table>
+	   <thead >
+	   		<tr>
+	   			<td style="width:595pt; height: 10em; margin-top:0; padding-top:0;">
+	   						
+							<div style="float: right; width: 70%; border: bottom; height: 5em;">
+								<div style="text-align:left; margin: 0em 0em 0em 0em; padding-top:0;">
+									<h2 style="margin-top:0; padding-top:0; padding-bottom:0; margin-bottom:0;">Test Center Tiililä Oy</h2>
+									<h3 style="margin-top:0; padding-top:0.5em; margin-top:0;">[Raportin osa]</h3>
+								</div>
+								<p style="text-align:right; margin-top:0; padding-top:0;">Sivu X</p>
+							</div>
+							
+				</td>
+	   		</tr>
+	   	</thead>
+
+	   <tbody>
+	    <tr><td>
+			
+			<div style="margin-top: 5em; margin-left: 7em;">
+			<h1>Test Center Tiililä raportti</h1>
+				<br>
+				<br>
+				<div style="border-bottom: 1px solid #eee;">
+					<h2>${report.importer.name}</h2>
+					<h2>pvm</h2>
+					<br><br>
+					
+				</div>
+				<div class="newpage"></div>		
+			</div>
 		
-	   
-    </td></tr>
-    
-      <tfoot><tr><td><div style="margin-top: 7em;"></div></td></tr></tfoot>
-    </tbody></table>
-    
-    
-    
-    <div class="newpage" style="height:100%;"></div> 
+		
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx1</p>
+		<p>xx2</p>
+		<p class="newpage">xx3</p>
+		<p>xx4</p>
+		<p>xx5</p>
+		<p>xx6/p>
+		<p>xx7</p>
+		<p>xx8</p>
+		<p>xx9</p>
+		<p>xx1</p>
+		<p>xx2</p>
+		<p>xx3</p>
+		<p>xx4</p>
+		<p>xx5</p>
+		<p>xx6</p>
+		<p>xx7</p>
+		<p>xx8</p>
+		<p>xx9</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+			<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+			<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+			<p>xx</p>
+	
+		<p>xx</p>
+			<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+			<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+		<p>xx</p>
+			
+		 
+	    </td></tr>
+	    
+	      <tfoot><tr><td><div style="margin-top: 7em;"><p>FOOTER</p></div></td></tr></tfoot>
+	    </tbody></table>
+	      
+	    
+	    
 	
 	
-
+</div>
 
 </body>
 
