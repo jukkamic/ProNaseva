@@ -168,6 +168,19 @@
 										</c:if>
 										
 										
+										<!-- Show subquestions -->
+										
+										<c:if test="${not empty question.subQuestions}">
+											<c:set var="mainReportPartIndex" value="${reportPartCounter.index}" scope="request" />										
+											<c:set var="mainQuestionGroupIndex" value="${questionGroupCounter.index}" scope="request" />
+											<c:set var="mainQuestionIndex" value="${questionCounter.index}" scope="request" />
+											<c:set var="mainQuestion" value="${question}" scope="request" />
+											<div style="margin-left: 3em;">
+												<jsp:include page="/WEB-INF/templates/ShowReportSubQuestions.jsp" />
+											</div>				
+										</c:if>
+										
+										
 									</c:forEach> <!-- Questions end -->
 									</div>
 									</div>
