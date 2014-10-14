@@ -1429,7 +1429,7 @@ public class ReportTemplateService {
 
 		reportParts.add(reportPart4);
 
-		// Osa C - Auton luovutus
+		// Osa D
 
 		ReportPart reportPart5 = new ReportPart();
 		reportPart5.setTitle("Osa D");
@@ -1562,8 +1562,370 @@ public class ReportTemplateService {
 		d4.setOptions(optionsD4);
 		questionList14.add(d4);
 
-		reportPart5.setQuestionGroups(questionGroups5);
-		reportParts.add(reportPart5);
+		questionGroup14.setQuestions(questionList14);
+		questionGroups5.add(questionGroup14);
+
+		// D - 4 - Asiakkaan neuvonta
+
+		QuestionGroup questionGroup15 = new QuestionGroup();
+
+		questionGroup15.setTitle("Asiakkaan neuvonta");
+
+		ArrayList<Question> questionList15 = new ArrayList<Question>();
+
+		MultipleChoiceQuestion d5 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD5 = new ArrayList<MultipleChoiceOption>();
+		d5.setQuestion("Kerrottiinko seuraavan huollon ajankohdasta?");
+		optionsD5.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD5.add(new MultipleChoiceOption("Ei", 0));
+
+		d5.setOptions(optionsD5);
+		questionList15.add(d5);
+
+		MultipleChoiceQuestion d6 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD6 = new ArrayList<MultipleChoiceOption>();
+		d6.setQuestion("Kerrottinko seuraavaan huoltoon liittyvistä lisätöistä?");
+		optionsD6.add(new MultipleChoiceOption("Kyllä kaikista", 2));
+		optionsD6.add(new MultipleChoiceOption("Kyllä osasta", 1));
+		optionsD6.add(new MultipleChoiceOption("Ei", 0));
+		optionsD6.add(new MultipleChoiceOption("Ei tarpeellista", -1));
+		d6.setOptions(optionsD6);
+		questionList15.add(d6);
+
+		MultipleChoiceQuestion d7 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD7 = new ArrayList<MultipleChoiceOption>();
+		d7.setQuestion("Kerrottinko seuraavaan huoltoon liittyvistä korjaustarpeista?");
+		optionsD7.add(new MultipleChoiceOption("Kyllä kaikista", 2));
+		optionsD7.add(new MultipleChoiceOption("Kyllä osasta", 1));
+		optionsD7.add(new MultipleChoiceOption("Ei", 0));
+		optionsD7.add(new MultipleChoiceOption("Ei tarpeellista", -1));
+		d7.setOptions(optionsD7);
+		questionList15.add(d7);
+
+		MultipleChoiceQuestion d8 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD8 = new ArrayList<MultipleChoiceOption>();
+		d8.setQuestion("Annettiinko huollon tarkastuslista?");
+		optionsD8.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD8.add(new MultipleChoiceOption("Ei", 0));
+		d8.setOptions(optionsD8);
+		questionList15.add(d8);
+
+		MultipleChoiceQuestion d9 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD9 = new ArrayList<MultipleChoiceOption>();
+		d9.setQuestion("Esiteltiinkö huollon tarkastuslistan merkintöjä?");
+		optionsD9.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD9.add(new MultipleChoiceOption("Ei", 0));
+		d9.setOptions(optionsD9);
+		questionList15.add(d9);
+
+		MultipleChoiceQuestion d10 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD10 = new ArrayList<MultipleChoiceOption>();
+		d10.setQuestion("Kerrottiinko huolletun auton sijainti pysäköintialueella?");
+		optionsD10.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD10.add(new MultipleChoiceOption("Ei", 0));
+		optionsD10.add(new MultipleChoiceOption("Ei tarpeellista", -1));
+		d10.setOptions(optionsD10);
+		questionList15.add(d10);
+
+		MultipleChoiceQuestion d11 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD11 = new ArrayList<MultipleChoiceOption>();
+		d11.setQuestion("Ehdittiinkö korjaamolla tekemään kaikki sovitut työt?");
+		optionsD11.add(new MultipleChoiceOption("Kyllä", 4));
+		optionsD11.add(new MultipleChoiceOption("Ei", 0));
+		d11.setOptions(optionsD11);
+		questionList15.add(d11);
+
+		MultipleChoiceQuestion d12 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD12 = new ArrayList<MultipleChoiceOption>();
+		d12.setQuestion("Jos korjaamolla havaittiin korjausta vaativia vikoja, mutta ei ehditty tekemään/"
+				+ "ei ollut tarvittavia osia, tarjottiinko uutta aikaa?");
+		optionsD12.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD12.add(new MultipleChoiceOption("Ei", 0));
+		d12.setOptions(optionsD12);
+		questionList15.add(d12);
+
+		questionGroup15.setQuestions(questionList15);
+		questionGroups5.add(questionGroup15);
+
+		// D 5 - Asiakaspalveluhenkinen toiminta
+
+		QuestionGroup questionGroup16 = new QuestionGroup();
+
+		questionGroup16.setTitle("Asiakaspalveluhenkinen toiminta");
+
+		ArrayList<Question> questionList16 = new ArrayList<Question>();
+
+		MultipleChoiceQuestion d13 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD13 = new ArrayList<MultipleChoiceOption>();
+		d13.setQuestion("Asiakkaalle jäänyt tunne korjaamon toiminnasta");
+		optionsD13.add(new MultipleChoiceOption("Hyvä", 8));
+		optionsD13.add(new MultipleChoiceOption("Tyydyttävä", 3));
+		optionsD13.add(new MultipleChoiceOption("Tyydyttävä", 0));
+		d13.setOptions(optionsD13);
+		questionList16.add(d13);
+
+		questionGroup16.setQuestions(questionList16);
+		questionGroups5.add(questionGroup16);
+
+		// Osa E Korjaamon yhteistyö
+
+		ReportPart reportPart6 = new ReportPart();
+		reportPart6.setTitle("Osa E - Korjaamon yhteistyö");
+
+		ArrayList<QuestionGroup> questionGroups6 = new ArrayList<QuestionGroup>();
+
+		QuestionGroup questionGroup17 = new QuestionGroup();
+
+		questionGroup17.setTitle("Asiakaspalveluhenkinen toiminta");
+
+		ArrayList<Question> questionList17 = new ArrayList<Question>();
+
+		MultipleChoiceQuestion d14 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD14 = new ArrayList<MultipleChoiceOption>();
+		d14.setQuestion("Työmääräykseen kirjattu asiakkaalle luvattu valmistumisaika");
+		optionsD14.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsD14.add(new MultipleChoiceOption("Ei", -1));
+		optionsD14.add(new MultipleChoiceOption("Ei sovittua valmistumisaikaa",
+				-1));
+		d14.setOptions(optionsD14);
+		questionList17.add(d14);
+
+		MultipleChoiceQuestion d15 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD15 = new ArrayList<MultipleChoiceOption>();
+		d15.setQuestion("Asiakkaan nimi ja puhelinnumero kirjattu");
+		optionsD15.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsD15.add(new MultipleChoiceOption("Ei", -1));
+		d15.setOptions(optionsD15);
+		questionList17.add(d15);
+
+		MultipleChoiceQuestion d16 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD16 = new ArrayList<MultipleChoiceOption>();
+		d16.setQuestion("Asiakkaan nimi ja puhelinnumero kirjattu");
+		optionsD16.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsD16.add(new MultipleChoiceOption("Ei", -1));
+		d16.setOptions(optionsD16);
+		questionList17.add(d16);
+
+		MultipleChoiceQuestion d17 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD17 = new ArrayList<MultipleChoiceOption>();
+		d17.setQuestion("Työn vastaanottaneen henkilön nimi työmääräyksessä");
+		optionsD17.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsD17.add(new MultipleChoiceOption("Ei", -1));
+		d17.setOptions(optionsD17);
+		questionList17.add(d17);
+
+		MultipleChoiceQuestion d18 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD18 = new ArrayList<MultipleChoiceOption>();
+		d18.setQuestion("Asiakkaan nimi ja puhelinnumero kirjattu");
+		optionsD18.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsD18.add(new MultipleChoiceOption("Ei", -1));
+		optionsD18.add(new MultipleChoiceOption("Ei tarvetta yhteydenottoon",
+				-1));
+		d18.setOptions(optionsD18);
+		questionList17.add(d18);
+
+		questionGroup17.setQuestions(questionList17);
+		questionGroups6.add(questionGroup17);
+
+		// E 2 - Mekaanikon tekninen suoritus
+
+		QuestionGroup questionGroup18 = new QuestionGroup();
+
+		questionGroup18.setTitle("Mekaanikon tekninen suoritus");
+
+		ArrayList<Question> questionList18 = new ArrayList<Question>();
+
+		TextfieldQuestion e0 = new TextfieldQuestion();
+		e0.setQuestion("Mekaanikon nimi:");
+		questionList18.add(e0);
+
+		MultipleChoiceQuestion e1 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE1 = new ArrayList<MultipleChoiceOption>();
+		e1.setQuestion("Huollon tarkastuslista täytetty oikein");
+		optionsE1.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE1.add(new MultipleChoiceOption("Ei", -1));
+		e1.setOptions(optionsE1);
+		questionList18.add(e1);
+
+		MultipleChoiceQuestion e2 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE2 = new ArrayList<MultipleChoiceOption>();
+		e2.setQuestion("Työmääräykseen merkitty todelliset ajokilometrit");
+		optionsE2.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE2.add(new MultipleChoiceOption("Ei", -1));
+		e2.setOptions(optionsE2);
+		questionList18.add(e2);
+
+		MultipleChoiceQuestion e3 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE3 = new ArrayList<MultipleChoiceOption>();
+		e3.setQuestion("Tarvittavat huollon asiakirjat työmääräyksen mukana");
+		optionsE3.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE3.add(new MultipleChoiceOption("Ei", -1));
+		e3.setOptions(optionsE3);
+		questionList18.add(e3);
+
+		MultipleChoiceQuestion e4 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE4 = new ArrayList<MultipleChoiceOption>();
+		e4.setQuestion("Huomautukset/lisätyöt merkitty selvällä käsialalla");
+		optionsE4.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE4.add(new MultipleChoiceOption("Ei", -1));
+		e4.setOptions(optionsE4);
+		questionList18.add(e4);
+
+		MultipleChoiceQuestion e5 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE5 = new ArrayList<MultipleChoiceOption>();
+		e5.setQuestion("Huomautukset/lisätyöt merkitty ymmärrettävästi");
+		optionsE5.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE5.add(new MultipleChoiceOption("Ei", -1));
+		e5.setOptions(optionsE5);
+		questionList18.add(e5);
+
+		MultipleChoiceQuestion e6 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE6 = new ArrayList<MultipleChoiceOption>();
+		e6.setQuestion("Tarpeelliset huomautukset kerrottu asiakkaalle");
+		optionsE6.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE6.add(new MultipleChoiceOption("Ei", -1));
+		optionsE6.add(new MultipleChoiceOption(
+				"Ei asiakkaalle kerrottavia huomautuksia", -1));
+		e6.setOptions(optionsE6);
+		questionList18.add(e6);
+
+		MultipleChoiceQuestion e7 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE7 = new ArrayList<MultipleChoiceOption>();
+		e7.setQuestion("Lisätöissä/korjauksissa käytetyt varaosat merkitty laskulle");
+		optionsE7.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE7.add(new MultipleChoiceOption("Ei", -1));
+		optionsE7.add(new MultipleChoiceOption(
+				"Ei varaosia vaativia lisätöitä/korjauksia", -1));
+		e7.setOptions(optionsE7);
+		questionList18.add(e7);
+
+		MultipleChoiceQuestion e8 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE8 = new ArrayList<MultipleChoiceOption>();
+		e8.setQuestion("Huolletun auton sijainti merkitty paikoitusalueella");
+		optionsE8.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE8.add(new MultipleChoiceOption("Ei", -1));
+		optionsE8.add(new MultipleChoiceOption("Ei tarpeellista", -1));
+		e8.setOptions(optionsE8);
+		questionList18.add(e8);
+
+		questionGroup18.setQuestions(questionList18);
+		questionGroups6.add(questionGroup18);
+
+		// E 3 - Varaosapalvelun toimivuus
+
+		QuestionGroup questionGroup19 = new QuestionGroup();
+
+		questionGroup19.setTitle("Varaosapalvelun toimivuus");
+
+		ArrayList<Question> questionList19 = new ArrayList<Question>();
+
+		MultipleChoiceQuestion e9 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE9 = new ArrayList<MultipleChoiceOption>();
+		e9.setQuestion("Tarvittavat osat oli kerätty valmiiksi");
+		optionsE9.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE9.add(new MultipleChoiceOption("Ei", -1));
+		optionsE9.add(new MultipleChoiceOption("Varaosia ei kerätä", -1));
+		e9.setOptions(optionsE9);
+		questionList19.add(e9);
+
+		MultipleChoiceQuestion e10 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE10 = new ArrayList<MultipleChoiceOption>();
+		e10.setQuestion("Huoltoon tarvittavat varaosat olivat oikeat");
+		optionsE10.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE10.add(new MultipleChoiceOption("Ei", -1));
+		e10.setOptions(optionsE10);
+		questionList19.add(e10);
+
+		MultipleChoiceQuestion e11 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE11 = new ArrayList<MultipleChoiceOption>();
+		e11.setQuestion("Ennalta tilattuihin lisätöihin tarvittavat osat olivat saatavilla");
+		optionsE11.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE11.add(new MultipleChoiceOption("Ei", -1));
+		optionsE11.add(new MultipleChoiceOption(
+				"Ei ennalta tilattuja varaosia vaativia lisätöitä", -1));
+		e11.setOptions(optionsE11);
+		questionList19.add(e11);
+
+		MultipleChoiceQuestion e12 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE12 = new ArrayList<MultipleChoiceOption>();
+		e12.setQuestion("Huollon aikana tulleisiin lisätöihin tarvittavat osat olivat saatavilla");
+		optionsE12.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE12.add(new MultipleChoiceOption("Ei", -1));
+		optionsE12.add(new MultipleChoiceOption("Ei tarvetta varaosille", -1));
+		e12.setOptions(optionsE12);
+		questionList19.add(e12);
+
+		MultipleChoiceQuestion e13 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE13 = new ArrayList<MultipleChoiceOption>();
+		e13.setQuestion("Tarvittavien varaosien palvelunopeus riittävä");
+		optionsE13.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE13.add(new MultipleChoiceOption("Ei", -1));
+		optionsE13.add(new MultipleChoiceOption(
+				"Ei tarvetta asioida varaosissa", -1));
+		e13.setOptions(optionsE13);
+		questionList19.add(e13);
+
+		questionGroup19.setQuestions(questionList19);
+		questionGroups6.add(questionGroup19);
+
+		// E 3 - Varaosapalvelun toimivuus
+
+		QuestionGroup questionGroup20 = new QuestionGroup();
+
+		questionGroup20
+				.setTitle("Huoltoneuvojan ja mekaanikon yhteistyön toimivuus");
+
+		ArrayList<Question> questionList20 = new ArrayList<Question>();
+
+		MultipleChoiceQuestion e14 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE14 = new ArrayList<MultipleChoiceOption>();
+		e14.setQuestion("Pääsikö mekaanikko heti asioimaan huoltoneuvojan kanssa");
+		optionsE14.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE14.add(new MultipleChoiceOption("Ei", -1));
+		optionsE14.add(new MultipleChoiceOption(
+				"Ei tarvetta asioida huoltoneuvojan kanssa", -1));
+		e14.setOptions(optionsE14);
+		questionList20.add(e14);
+
+		MultipleChoiceQuestion e15 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE15 = new ArrayList<MultipleChoiceOption>();
+		e15.setQuestion("Löytyikö auto työmääräykseen/avaimenperälappuun merkitystä paikasta");
+		optionsE15.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE15.add(new MultipleChoiceOption("Ei", -1));
+		optionsE15.add(new MultipleChoiceOption(
+				"Ei tarpeellista kysyä auton sijaintia asiakkaalta", -1));
+		e15.setOptions(optionsE15);
+		questionList20.add(e15);
+
+		MultipleChoiceQuestion e16 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE16 = new ArrayList<MultipleChoiceOption>();
+		e16.setQuestion("Oliko työmääräyksen teksti ymmärrettävässä muodossa");
+		optionsE16.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE16.add(new MultipleChoiceOption("Ei", -1));
+		e16.setOptions(optionsE16);
+		questionList20.add(e16);
+
+		MultipleChoiceQuestion e17 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE17 = new ArrayList<MultipleChoiceOption>();
+		e17.setQuestion("Oliko työmääräyksessä riittävästi tietoa");
+		optionsE17.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE17.add(new MultipleChoiceOption("Ei", -1));
+		e17.setOptions(optionsE17);
+		questionList20.add(e17);
+
+		MultipleChoiceQuestion e18 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE18 = new ArrayList<MultipleChoiceOption>();
+		e18.setQuestion("Oliko työmääräykseen merkitty kaikki tilatut työt");
+		optionsE18.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE18.add(new MultipleChoiceOption("Ei", -1));
+		e18.setOptions(optionsE18);
+		questionList20.add(e18);
+
+		questionGroup20.setQuestions(questionList20);
+		questionGroups6.add(questionGroup20);
+
+		reportPart6.setQuestionGroups(questionGroups6);
+		reportParts.add(reportPart6);
 
 		report.setReportParts(reportParts);
 
