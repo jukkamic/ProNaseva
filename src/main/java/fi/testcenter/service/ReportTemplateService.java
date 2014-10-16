@@ -573,6 +573,7 @@ public class ReportTemplateService {
 		optionsA38.add(new MultipleChoiceOption("Taksikuljetus", -1));
 		optionsA38
 				.add(new MultipleChoiceOption("Julkiset liikennevälineet", -1));
+		a38.setOptions(optionsA38);
 
 		ArrayList<SubQuestion> subQListA38 = new ArrayList<SubQuestion>();
 		SubQuestion subQa38 = new SubQuestion();
@@ -1519,6 +1520,8 @@ public class ReportTemplateService {
 		QuestionGroup questionGroup14 = new QuestionGroup();
 		ArrayList<Question> questionList14 = new ArrayList<Question>();
 
+		questionGroup14.setTitle("Lasku");
+
 		MultipleChoiceQuestion d1 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsD1 = new ArrayList<MultipleChoiceOption>();
 		d1.setQuestion("Oliko lasku valmiina asiakkaan saapuessa?");
@@ -1666,6 +1669,8 @@ public class ReportTemplateService {
 
 		questionGroup16.setQuestions(questionList16);
 		questionGroups5.add(questionGroup16);
+		reportPart5.setQuestionGroups(questionGroups5);
+		reportParts.add(reportPart5);
 
 		// Osa E Korjaamon yhteistyö
 

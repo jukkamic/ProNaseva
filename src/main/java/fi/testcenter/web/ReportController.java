@@ -15,7 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
+import fi.testcenter.domain.MultipleChoiceOption;
+import fi.testcenter.domain.MultipleChoiceQuestion;
+import fi.testcenter.domain.Question;
+import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
+import fi.testcenter.domain.ReportPart;
+import fi.testcenter.domain.SubQuestion;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
@@ -90,6 +96,112 @@ public class ReportController {
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
+
+		for (ReportPart reportPart : report.getReportParts()) {
+			int reportPartScore = 0;
+			int reportPartMaxScore = 0;
+			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
+				int questionGroupMaxScore = 0;
+				int questionGroupScore = 0;
+				for (Question question : questionGroup.getQuestions()) {
+					for (SubQuestion loopSubQuestion : question
+							.getSubQuestions()) {
+						Question subQuestion = loopSubQuestion.getQuestion();
+
+						// SubQuestion score
+
+						if (subQuestion instanceof MultipleChoiceQuestion) {
+							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
+
+							int maxScore = 0;
+							for (MultipleChoiceOption option : mcq.getOptions()) {
+								if (option.getPoints() != -1
+										&& option.getPoints() > maxScore) {
+									maxScore = option.getPoints();
+									mcq.getAnswer().setShowScore(true);
+									questionGroup.setShowScore(true);
+								}
+							}
+
+							questionGroupMaxScore = questionGroupMaxScore
+									+ maxScore;
+							mcq.getAnswer().setMaxScore(maxScore);
+
+							if (mcq.getAnswer().getChosenOptionIndex() != -1) {
+								mcq.getAnswer()
+										.setScore(
+												mcq.getOptions()
+														.get(mcq.getAnswer()
+																.getChosenOptionIndex())
+														.getPoints());
+								questionGroupScore = questionGroupScore
+										+ mcq.getOptions()
+												.get(mcq.getAnswer()
+														.getChosenOptionIndex())
+												.getPoints();
+							}
+							log.debug("Multiple choice subquestion score : "
+									+ mcq.getAnswer().getScore() + " / "
+									+ mcq.getAnswer().getMaxScore());
+						}
+
+					}
+
+					// Question score
+
+					if (question instanceof MultipleChoiceQuestion) {
+						MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
+
+						int maxScore = 0;
+						for (MultipleChoiceOption option : mcq.getOptions()) {
+							if (option.getPoints() != -1
+									&& option.getPoints() > maxScore) {
+								maxScore = option.getPoints();
+								mcq.getAnswer().setShowScore(true);
+								questionGroup.setShowScore(true);
+							}
+						}
+
+						questionGroupMaxScore = questionGroupMaxScore
+								+ maxScore;
+						mcq.getAnswer().setMaxScore(maxScore);
+
+						if (mcq.getAnswer().getChosenOptionIndex() != -1) {
+							mcq.getAnswer().setScore(
+									mcq.getOptions()
+											.get(mcq.getAnswer()
+													.getChosenOptionIndex())
+											.getPoints());
+							questionGroupScore = questionGroupScore
+									+ mcq.getOptions()
+											.get(mcq.getAnswer()
+													.getChosenOptionIndex())
+											.getPoints();
+						}
+						log.debug("Multiple choice question score : "
+								+ mcq.getAnswer().getScore() + " / "
+								+ mcq.getAnswer().getMaxScore());
+					}
+				}
+				reportPartMaxScore = reportPartMaxScore + questionGroupMaxScore;
+				reportPartScore = reportPartScore + questionGroupScore;
+
+				questionGroup.setMaxScore(questionGroupMaxScore);
+				questionGroup.setScore(questionGroupScore);
+
+				log.debug("Question group score : " + questionGroup.getScore()
+						+ " / " + questionGroup.getMaxScore());
+			}
+			if (reportPartMaxScore > 0) {
+				reportPart.setShowScorePercentage(true);
+
+				reportPart.setScorePercentage((int) Math
+						.round((double) reportPartScore
+								/ (double) reportPartMaxScore * 100));
+				log.debug("Report part score : "
+						+ reportPart.getScorePercentage() + " % ");
+			}
+		}
 
 		try {
 			rs.saveReport(report);

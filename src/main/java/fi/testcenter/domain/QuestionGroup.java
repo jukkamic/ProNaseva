@@ -28,6 +28,13 @@ public class QuestionGroup {
 	@OrderColumn(name = "INDEX")
 	private List<Question> questions = new ArrayList<Question>();
 
+	private boolean showScore;
+	private int score;
+	private int maxScore;
+
+	private boolean showStarCount;
+	private int starCount;
+
 	public String getTitle() {
 		return title;
 	}
@@ -50,6 +57,46 @@ public class QuestionGroup {
 
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
+	}
+
+	public boolean isShowScore() {
+		return showScore;
+	}
+
+	public void setShowScore(boolean showScore) {
+		this.showScore = showScore;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(int maxScore) {
+		this.maxScore = maxScore;
+	}
+
+	public boolean isShowStarCount() {
+		return showStarCount;
+	}
+
+	public void setShowStarCount(boolean showStarCount) {
+		this.showStarCount = showStarCount;
+	}
+
+	public int getStarCount() {
+		return starCount;
+	}
+
+	public void setStarCount(int starCount) {
+		this.starCount = starCount;
 	}
 
 }

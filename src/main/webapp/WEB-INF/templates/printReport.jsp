@@ -107,17 +107,101 @@ margin: 0;
 	   <tbody>
 	    <tr><td>
 			<div style="margin-top: 5em; margin-left: 7em;">
-			<h1>Test Center Tiililä raportti</h1>
+			<h1>Autoasi</h1>
+			<h1>Korjaamotestiraporttiraportti</h1>
 				<br>
 				<br>
 				<div style="border-bottom: 1px solid #eee;">
 					<h2>${report.importer.name}</h2>
-					<h2>[pvm]</h2>
+					<h2>16.10.2014</h2>
 					<br><br>
 					
 				</div>
-				<div class="newpage"></div>		
+				<br><br>
+			<h2>Yleisarvosana : 
+			<span class="glyphicon glyphicon-star"></span>
+			<span class="glyphicon glyphicon-star-empty"></span>
+			<span class="glyphicon glyphicon-star-empty"></span>
+			<span class="glyphicon glyphicon-star-empty"></span>
+			</h2>
 			</div>
+				<div class="newpage"></div>	
+				
+			<div style="margin-top: 5em; margin-left: 7em;">
+						
+			<table>
+				<tr>
+					<th>
+					Tulosten yhteenveto>
+					</th>
+				</tr> 
+				<tr>
+				<td width="15em">
+					Osa A - Ajanvaraus korjaamolle
+				</td>
+				<td>
+					56 %
+				</td>
+				<td>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					Osa B - Työnvastaanotto
+				</td>
+				<td>
+					68 %
+				</td>
+				<td>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+				</td>
+				</tr>
+				<tr>
+				
+				<td>
+					80 %
+				</td>
+				
+				<td>
+					Osa C - Auton luovutus
+				</td>
+				<td>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+				</td>
+				</tr>
+				<tr>
+				<td>
+					80 %
+				</td>
+				
+				<td>
+					Osa D 
+				</td>
+				<td>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+					<span class="glyphicon glyphicon-star-empty"></span>
+				</td>
+				</tr>
+				</table>
+
+			</div>	
+			
 			
 	<!-- PRINT REPORT CONTENT -->
 	<!-- Report part loop -->	

@@ -27,6 +27,12 @@ public class ReportPart {
 	@OrderColumn(name = "INDEX")
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
+	boolean showScorePercentage;
+	private int scorePercentage;
+
+	private boolean showStars;
+	private int starCount;
+
 	public String getTitle() {
 		return title;
 	}
@@ -41,6 +47,46 @@ public class ReportPart {
 
 	public void setQuestionGroups(List<QuestionGroup> questionGroups) {
 		this.questionGroups = questionGroups;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isShowScorePercentage() {
+		return showScorePercentage;
+	}
+
+	public void setShowScorePercentage(boolean showScorePercentage) {
+		this.showScorePercentage = showScorePercentage;
+	}
+
+	public int getScorePercentage() {
+		return scorePercentage;
+	}
+
+	public void setScorePercentage(int scorePercentage) {
+		this.scorePercentage = scorePercentage;
+	}
+
+	public boolean isShowStars() {
+		return showStars;
+	}
+
+	public void setShowStars(boolean showStars) {
+		this.showStars = showStars;
+	}
+
+	public int getStarCount() {
+		return starCount;
+	}
+
+	public void setStarCount(int starCount) {
+		this.starCount = starCount;
 	}
 
 }
