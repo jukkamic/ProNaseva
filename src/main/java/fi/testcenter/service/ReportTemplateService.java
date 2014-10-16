@@ -504,7 +504,7 @@ public class ReportTemplateService {
 		questionGroup6.setTitle("Tilattava huolto");
 
 		TextfieldQuestion a31 = new TextfieldQuestion();
-		a31.setQuestion("Tilattu huolto (esim 60000 km");
+		a31.setQuestion("Tilattu huolto (esim 60000 km)");
 		questionList6.add(a31);
 
 		TextfieldQuestion a32 = new TextfieldQuestion();
@@ -557,7 +557,7 @@ public class ReportTemplateService {
 		a37.setQuestion("Tarjottiinko vaihtoehtoista kulkumuotoa?");
 		optionsA37
 				.add(new MultipleChoiceOption("Kyllä", "Kyllä <br> &nbsp", 2));
-		optionsA37.add(new MultipleChoiceOption("Ei", "Kyllä <br> &nbsp", 0));
+		optionsA37.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
 		optionsA37.add(new MultipleChoiceOption("Asiakas kertoi odottavansa",
 				"Asiakas kertoi<br>odottavansa", -1));
 		a37.setOptions(optionsA37);
@@ -1288,7 +1288,7 @@ public class ReportTemplateService {
 		questionGroup11.setQuestions(questionList11);
 		questionGroups3.add(questionGroup11);
 
-		reportPart3.setQuestionGroups(questionGroups2);
+		reportPart3.setQuestionGroups(questionGroups3);
 
 		reportParts.add(reportPart3);
 

@@ -56,6 +56,8 @@ public class Report {
 	@OrderColumn(name = "INDEX")
 	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
 
+	private int totalScorePercentage;
+
 	public Long getId() {
 		return id;
 	}
@@ -154,6 +156,14 @@ public class Report {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public int getTotalScorePercentage() {
+		return totalScorePercentage;
+	}
+
+	public void setTotalScorePercentage(int totalScorePercentage) {
+		this.totalScorePercentage = totalScorePercentage;
 	}
 
 }

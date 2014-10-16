@@ -15,24 +15,22 @@
 <!-- Multiple choice question -->
 <c:if
 	test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
-								
-	<c:set var="maxPointsForQuestion" value="0" />	
-	<c:set var="scoredQuestions" value="TRUE" />			
 
 	<div class="noPageBreak">
 	<h3>${subQuestion.question}</h3>
+	<c:if test="${subQuestion.answer.showScore == true}">
+		<h3 style="display: inline; float:right;">${subQuestion.answer.score}/${subQuestion.answer.maxScore}</h3>
+	</c:if>
 						<table>
 							<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
-								<c:if test="${option.points > maxPointsForQuestion}">
-									<c:set var="maxPointsForQuestion" value="${option.points}" />
-								</c:if>
+
 								<tr>
 								<c:choose>
 										<c:when test="${subQuestion.answer.chosenOptionIndex == optionsCounter.index}">
 											<td>
 												&#9745;
 												&nbsp;
-												<c:set var="totalScore" value="${totalScore + option.points}" />
+										
 											</td>
 										</c:when>
 										<c:otherwise>
@@ -51,14 +49,14 @@
 							</c:forEach> 
 							</table>
 			
-			<c:set var="maxTotalScore" value="${maxTotalScore + maxPointsForQuestion}" />
-
 	</div>
 	
-	<div class="noPageBreak">
-	<h4 style="padding-left: 0;">Huomioita:</h4>
-	<p style="padding-left: 0;">${subQuestion.answer.remarks}</p>
-	</div>
+	<c:if test="${subQuestion.answer.remarks !='' and subQuestion.answer.remarks != null}"> 
+		<div class="noPageBreak">
+		<h4 style="padding-left: 0;">Huomioita:</h4>
+		<p style="padding-left: 0;">${subQuestion.answer.remarks}</p>
+		</div>
+	</c:if>
 	
 </c:if>
 

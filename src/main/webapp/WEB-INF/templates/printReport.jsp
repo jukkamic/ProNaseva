@@ -78,10 +78,12 @@ margin: 0;
 	page-break-inside: avoid;
 }
 
+
+}
+
 </style>
 
-<link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.css' />"/>
-<link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.theme.css' />"/>
+
 
 
 </head>
@@ -108,94 +110,185 @@ margin: 0;
 	    <tr><td>
 			<div style="margin-top: 5em; margin-left: 7em;">
 			<h1>Autoasi</h1>
-			<h1>Korjaamotestiraporttiraportti</h1>
+			<h1>Korjaamotestiraportti</h1>
 				<br>
 				<br>
 				<div style="border-bottom: 1px solid #eee;">
-					<h2>${report.importer.name}</h2>
+					<h2>${report.workshop.name}</h2>
 					<h2>16.10.2014</h2>
 					<br><br>
 					
 				</div>
 				<br><br>
 			<h2>Yleisarvosana : 
-			<span class="glyphicon glyphicon-star"></span>
-			<span class="glyphicon glyphicon-star-empty"></span>
-			<span class="glyphicon glyphicon-star-empty"></span>
-			<span class="glyphicon glyphicon-star-empty"></span>
+			&#9733;
+			&#9733;
+			&#9734;
+			&#9734;
+			&#9734;
 			</h2>
 			</div>
 				<div class="newpage"></div>	
 				
-			<div style="margin-top: 5em; margin-left: 7em;">
-						
-			<table>
+			<div style="width: 100%; margin-top: 5em; margin-left: 7em;">
+				
+			<table class="summaryTable">
 				<tr>
-					<th>
-					Tulosten yhteenveto>
+					<th align="left" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+						Tulosten yhteenveto
 					</th>
-				</tr> 
+					<th style="padding-top: 0.5em; padding-bottom: 0.5em;">Pisteet</th>
+					<th style="padding-top: 0.5em; padding-bottom: 0.5em;">Tähdet</th>
+				</tr>
+				
+				
+				<tr><td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;"><b>Palvelun yhteenveto</b></td>
+				<td></td>
+				<td></td>
+				</tr>
+				
 				<tr>
-				<td width="15em">
-					Osa A - Ajanvaraus korjaamolle
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					Tarkastuskohteet
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					${report.reportParts[0].questionGroups[1].score} / ${report.reportParts[0].questionGroups[1].maxScore}
 				</td>
 				<td>
-					56 %
-				</td>
-				<td>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
+					&#9733;
+					&#9733;
+					&#9734;
+					&#9734;
+					&#9734;
 				</td>
 				</tr>
+
 				<tr>
-				<td>
-					Osa B - Työnvastaanotto
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em; padding-right: 5em;">
+					TCT-Palvelupisteet
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em; ">
+					${report.reportParts[0].questionGroups[2].score} / ${report.reportParts[0].questionGroups[2].maxScore}
 				</td>
 				<td>
-					68 %
+					&#9733;
+					&#9733;
+					&#9733;
+					&#9734;
+					&#9734;
+				</td>
+				</tr>				
+								
+				<tr><td width="15em" style="padding-top: 0.5em; padding-bottom: 2em;"><b>Yhteensä</b></td>
+				<c:set var="tarkastuskohteet" value="${report.reportParts[0].questionGroups[1].score}" />
+				<c:set var="palvelu" value="${report.reportParts[0].questionGroups[2].score}" />
+				<c:set var="tarkastuskohteetMax" value="${report.reportParts[0].questionGroups[1].maxScore}" />
+				<c:set var="palveluMax" value="${report.reportParts[0].questionGroups[2].maxScore}" />
+				
+				<td>${tarkastuskohteet + palvelu} / ${tarkastuskohteetMax + palveluMax}</td>
+				<td></td>
+				</tr>
+				
+				
+				 
+				<tr>
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					${report.reportParts[1].title}
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em; ">
+					<c:if test='${report.reportParts[1].showScorePercentage == true}' >
+					${report.reportParts[1].scorePercentage} %
+					</c:if>
 				</td>
 				<td>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
+					&#9733;
+					&#9733;
+					&#9734;
+					&#9734;
+					&#9734;
 				</td>
 				</tr>
+				
 				<tr>
-				
-				<td>
-					80 %
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					${report.reportParts[2].title}
 				</td>
-				
-				<td>
-					Osa C - Auton luovutus
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					<c:if test='${report.reportParts[2].showScorePercentage == true}' >
+					${report.reportParts[2].scorePercentage} %
+					</c:if>
 				</td>
-				<td>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					&#9733;
+					&#9733;
+					&#9734;
+					&#9734;
+					&#9734;
 				</td>
 				</tr>
-				<tr>
-				<td>
-					80 %
-				</td>
 				
-				<td>
-					Osa D 
+				<tr>
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					${report.reportParts[3].title}
 				</td>
-				<td>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
-					<span class="glyphicon glyphicon-star-empty"></span>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					<c:if test='${report.reportParts[3].showScorePercentage == true}' >
+					${report.reportParts[3].scorePercentage} %
+					</c:if>
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					&#9733;
+					&#9733;
+					&#9733;
+					&#9734;
+					&#9734;
+				</td>
+				</tr>
+				
+				<tr>
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					${report.reportParts[4].title}
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					<c:if test='${report.reportParts[4].showScorePercentage == true}' >
+					${report.reportParts[4].scorePercentage} %
+					</c:if>
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					&#9733;
+					&#9733;
+					&#9733;
+					&#9734;
+					&#9734;
+				</td>
+				</tr>
+				
+								<tr>
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					${report.reportParts[5].title}
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					<c:if test='${report.reportParts[5].showScorePercentage == true}' >
+					${report.reportParts[5].scorePercentage} %
+					</c:if>
+				</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+					&#9733;
+					&#9733;
+					&#9734;
+					&#9734;
+					&#9734;
+				</td>
+				</tr>
+				
+				
+				
+				<tfoot>
+				<tr>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;"><b>Yhteensä:</b></td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">${report.totalScorePercentage} %</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+
 				</td>
 				</tr>
 				</table>
@@ -207,6 +300,7 @@ margin: 0;
 	<!-- Report part loop -->	
 	
 	<c:forEach var="reportPart" items="${report.reportParts}" varStatus="reportPartCounter">
+	<h1 class="newpage" style="border-bottom: 1px solid #eee;">${reportPart.title}</h1>
 
 				<!-- QuestionGroup loop -->
 				
@@ -217,8 +311,14 @@ margin: 0;
 				<c:set var="maxTotalScore" value="0" />
 				<c:set var="totalScore" value="0" />
 				<c:set var="scoredQuestions" value="FALSE" />
-				
-				<h2 class="newpage" style="border-bottom: 1px solid #eee;">${questionGroup.title}</h2>
+				<c:choose>
+					<c:when test="${questionGroupCounter.count == 1}">
+						<h2 style="border-bottom: 1px solid #eee;">${questionGroup.title}</h2>
+					</c:when>
+					<c:otherwise>
+						<h2 class="newpage" style="border-bottom: 1px solid #eee;">${questionGroup.title}</h2>
+					</c:otherwise>
+				</c:choose>
 				
 								
 				<!-- Questions loop -->
@@ -233,7 +333,11 @@ margin: 0;
 						
 						<div class="noPageBreak">
 						
+						
 						<h3>${questionCounter.count}. ${question.question}</h3>
+						<c:if test="${question.answer.showScore == true}">
+						<h3 style="display: inline; float:right;">${question.answer.score}/${question.answer.maxScore}</h3>
+						</c:if>
 						
 						<table>
 							<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
@@ -311,8 +415,8 @@ margin: 0;
 					
 				</c:forEach> <!-- Question loop end -->
 																	
-				<c:if test="${scoredQuestions == 'TRUE'}">
-					<h4 style="font-weight: bold; float: right; padding-right: 2em; padding-bottom: 2em; padding-top: 2em;">Pisteet: ${totalScore}/${maxTotalScore}</h4>
+				<c:if test="${questionGroup.showScore == true}">
+					<h4 style="font-weight: bold; float: right; padding-right: 2em; padding-bottom: 2em; padding-top: 2em;">Pisteet: ${questionGroup.score}/${questionGroup.maxScore}</h4>
 				</c:if>
 					
 		</c:forEach> <!-- Question group loop end -->

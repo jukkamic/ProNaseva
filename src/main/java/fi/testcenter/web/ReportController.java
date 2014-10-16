@@ -97,6 +97,8 @@ public class ReportController {
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
+		int reportTotalScore = 0;
+		int scoredReportParts = 0;
 		for (ReportPart reportPart : report.getReportParts()) {
 			int reportPartScore = 0;
 			int reportPartMaxScore = 0;
@@ -127,7 +129,11 @@ public class ReportController {
 									+ maxScore;
 							mcq.getAnswer().setMaxScore(maxScore);
 
-							if (mcq.getAnswer().getChosenOptionIndex() != -1) {
+							if (mcq.getAnswer().getChosenOptionIndex() != -1
+									&& mcq.getOptions()
+											.get(mcq.getAnswer()
+													.getChosenOptionIndex())
+											.getPoints() != -1) {
 								mcq.getAnswer()
 										.setScore(
 												mcq.getOptions()
@@ -166,7 +172,11 @@ public class ReportController {
 								+ maxScore;
 						mcq.getAnswer().setMaxScore(maxScore);
 
-						if (mcq.getAnswer().getChosenOptionIndex() != -1) {
+						if (mcq.getAnswer().getChosenOptionIndex() != -1
+								&& mcq.getOptions()
+										.get(mcq.getAnswer()
+												.getChosenOptionIndex())
+										.getPoints() != -1) {
 							mcq.getAnswer().setScore(
 									mcq.getOptions()
 											.get(mcq.getAnswer()
@@ -193,6 +203,9 @@ public class ReportController {
 						+ " / " + questionGroup.getMaxScore());
 			}
 			if (reportPartMaxScore > 0) {
+				scoredReportParts = scoredReportParts + 1;
+				reportTotalScore = reportTotalScore + reportPartScore;
+
 				reportPart.setShowScorePercentage(true);
 
 				reportPart.setScorePercentage((int) Math
@@ -202,6 +215,9 @@ public class ReportController {
 						+ reportPart.getScorePercentage() + " % ");
 			}
 		}
+
+		report.setTotalScorePercentage((int) Math
+				.round((double) reportTotalScore / (double) scoredReportParts));
 
 		try {
 			rs.saveReport(report);
