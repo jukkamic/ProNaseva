@@ -1,21 +1,15 @@
 package fi.testcenter.domain;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -23,13 +17,24 @@ import javax.persistence.Transient;
 @Entity
 public class Report {
 
-	@Column
-	@Temporal(TemporalType.DATE)
-	private Date date;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
+
+	private ReportTemplate reportTemplate;
+	@Transient
+	private Map<Question, Answer> questionAnswerMap = new LinkedHashMap<Question, Answer>();
+
+	private int totalScorePercentage;
+
+	private String vehicleModel;
+	private String vehicleRegistrationNumber;
+	private String vehicleRegistrationDate;
+	private String vehicleMileage;
+
+	@Column
+	@Temporal(TemporalType.DATE)
+	private Date date;
 
 	@ManyToOne
 	private Importer importer;
@@ -46,17 +51,10 @@ public class Report {
 	@ManyToOne
 	private User user;
 
-	private String vehicleModel;
-	private String vehicleRegistrationNumber;
-	private String vehicleRegistrationDate;
-	private String vehicleMileage;
+	public Report() {
+		this.date = new Date();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORT_REPORTPART", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTPART_ID"))
-	@OrderColumn(name = "INDEX")
-	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
-
-	private int totalScorePercentage;
+	}
 
 	public Long getId() {
 		return id;
@@ -64,6 +62,30 @@ public class Report {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public ReportTemplate getReportTemplate() {
+		return reportTemplate;
+	}
+
+	public void setReportTemplate(ReportTemplate reportTemplate) {
+		this.reportTemplate = reportTemplate;
+	}
+
+	public Map<Question, Answer> getQuestionAnswerMap() {
+		return questionAnswerMap;
+	}
+
+	public void setQuestionAnswerMap(Map<Question, Answer> questionAnswerMap) {
+		this.questionAnswerMap = questionAnswerMap;
+	}
+
+	public int getTotalScorePercentage() {
+		return totalScorePercentage;
+	}
+
+	public void setTotalScorePercentage(int totalScorePercentage) {
+		this.totalScorePercentage = totalScorePercentage;
 	}
 
 	public String getVehicleModel() {
@@ -78,8 +100,8 @@ public class Report {
 		return vehicleRegistrationNumber;
 	}
 
-	public void setVehicleRegistrationNumber(String vehicleRegistration) {
-		this.vehicleRegistrationNumber = vehicleRegistration;
+	public void setVehicleRegistrationNumber(String vehicleRegistrationNumber) {
+		this.vehicleRegistrationNumber = vehicleRegistrationNumber;
 	}
 
 	public String getVehicleRegistrationDate() {
@@ -98,30 +120,6 @@ public class Report {
 		this.vehicleMileage = vehicleMileage;
 	}
 
-	public Importer getImporter() {
-		return importer;
-	}
-
-	public void setImporter(Importer importer) {
-		this.importer = importer;
-	}
-
-	public Workshop getWorkshop() {
-		return workshop;
-	}
-
-	public void setWorkshop(Workshop workshop) {
-		this.workshop = workshop;
-	}
-
-	public List<ReportPart> getReportParts() {
-		return reportParts;
-	}
-
-	public void setReportParts(List<ReportPart> reportParts) {
-		this.reportParts = reportParts;
-	}
-
 	public Date getDate() {
 		return date;
 	}
@@ -130,8 +128,12 @@ public class Report {
 		this.date = date;
 	}
 
-	public Report() {
-		this.date = new Date();
+	public Importer getImporter() {
+		return importer;
+	}
+
+	public void setImporter(Importer importer) {
+		this.importer = importer;
 	}
 
 	public Long getImporterId() {
@@ -140,6 +142,14 @@ public class Report {
 
 	public void setImporterId(Long importerId) {
 		this.importerId = importerId;
+	}
+
+	public Workshop getWorkshop() {
+		return workshop;
+	}
+
+	public void setWorkshop(Workshop workshop) {
+		this.workshop = workshop;
 	}
 
 	public Long getWorkshopId() {
@@ -156,14 +166,6 @@ public class Report {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public int getTotalScorePercentage() {
-		return totalScorePercentage;
-	}
-
-	public void setTotalScorePercentage(int totalScorePercentage) {
-		this.totalScorePercentage = totalScorePercentage;
 	}
 
 }
