@@ -85,11 +85,9 @@ margin: 0;
 
 
 
-
 </head>
 
 <body>
-
 
 
 <div style="margin-left: 3.5em; margin-right: 2em;">
@@ -120,13 +118,10 @@ margin: 0;
 					
 				</div>
 				<br><br>
-			<h2>Yleisarvosana : 
-			&#9733;
-			&#9733;
-			&#9734;
-			&#9734;
-			&#9734;
-			</h2>
+			
+			<h2 style="display: inline;">Yleisarvosana : </h2>
+				<p style="display: inline; font-size: 3em;"> &#128530;</p>
+			
 			</div>
 				<div class="newpage"></div>	
 				
@@ -137,45 +132,32 @@ margin: 0;
 					<th align="left" style="padding-top: 0.5em; padding-bottom: 0.5em;">
 						Tulosten yhteenveto
 					</th>
-					<th style="padding-top: 0.5em; padding-bottom: 0.5em;">Pisteet</th>
-					<th style="padding-top: 0.5em; padding-bottom: 0.5em;">Tähdet</th>
+					<th style="padding-top: 0.5em; padding-bottom: 0.5em;" align = "left">Pisteet</th>
+					<th style="padding-top: 0.5em; padding-bottom: 0.5em; " align = "left">Arvosana</th>
 				</tr>
 				
-				
-				<tr><td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;"><b>Palvelun yhteenveto</b></td>
-				<td></td>
-				<td></td>
-				</tr>
 				
 				<tr>
-				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
 					Tarkastuskohteet
 				</td>
-				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em" align = "left">
 					${report.reportParts[0].questionGroups[1].score} / ${report.reportParts[0].questionGroups[1].maxScore}
 				</td>
 				<td>
-					&#9733;
-					&#9733;
-					&#9734;
-					&#9734;
-					&#9734;
+					<p>&#128530;</p> <!-- Frown -->
 				</td>
 				</tr>
 
 				<tr>
-				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em; padding-right: 5em;">
+				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em; padding-right: 9em" align = "left">
 					TCT-Palvelupisteet
 				</td>
-				<td style="padding-top: 0.5em; padding-bottom: 0.5em; ">
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em; padding-right: 4em" align = "left">
 					${report.reportParts[0].questionGroups[2].score} / ${report.reportParts[0].questionGroups[2].maxScore}
 				</td>
 				<td>
-					&#9733;
-					&#9733;
-					&#9733;
-					&#9734;
-					&#9734;
+					<p>&#128528;</p> <!-- Neutral -->
 				</td>
 				</tr>				
 								
@@ -185,7 +167,7 @@ margin: 0;
 				<c:set var="tarkastuskohteetMax" value="${report.reportParts[0].questionGroups[1].maxScore}" />
 				<c:set var="palveluMax" value="${report.reportParts[0].questionGroups[2].maxScore}" />
 				
-				<td>${tarkastuskohteet + palvelu} / ${tarkastuskohteetMax + palveluMax}</td>
+				<td style="padding-top: 0.5em; padding-bottom: 2em;">${tarkastuskohteet + palvelu} / ${tarkastuskohteetMax + palveluMax}</td>
 				<td></td>
 				</tr>
 				
@@ -201,11 +183,8 @@ margin: 0;
 					</c:if>
 				</td>
 				<td>
-					&#9733;
-					&#9733;
-					&#9734;
-					&#9734;
-					&#9734;
+
+					<p>&#128530;</p> <!-- Frown -->
 				</td>
 				</tr>
 				
@@ -219,11 +198,7 @@ margin: 0;
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					&#9733;
-					&#9733;
-					&#9734;
-					&#9734;
-					&#9734;
+					<p>&#128530;</p> <!-- Frown -->
 				</td>
 				</tr>
 				
@@ -237,11 +212,7 @@ margin: 0;
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					&#9733;
-					&#9733;
-					&#9733;
-					&#9734;
-					&#9734;
+					<p>&#128528;</p> <!-- Neutral -->
 				</td>
 				</tr>
 				
@@ -255,33 +226,9 @@ margin: 0;
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					&#9733;
-					&#9733;
-					&#9733;
-					&#9734;
-					&#9734;
+					<p>&#128530;</p> <!-- Frown -->
 				</td>
 				</tr>
-				
-								<tr>
-				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					${report.reportParts[5].title}
-				</td>
-				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					<c:if test='${report.reportParts[5].showScorePercentage == true}' >
-					${report.reportParts[5].scorePercentage} %
-					</c:if>
-				</td>
-				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					&#9733;
-					&#9733;
-					&#9734;
-					&#9734;
-					&#9734;
-				</td>
-				</tr>
-				
-				
 				
 				<tfoot>
 				<tr>
@@ -294,6 +241,292 @@ margin: 0;
 				</table>
 
 			</div>	
+			
+			
+			
+			
+			<div class="newpage"></div>	
+								
+			<h1>Keskeiset  huomiot</h1>
+
+		
+			
+							<!-- Osio A kysymys 3c -->
+						
+						<h3>Saiko asiakas mielestään huoltoajan kohtuullisen ajan sisällä?</h3>
+						<h3 style="display: inline; float:right;">0/2</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Kyllä
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei									
+								</td>
+							</tr>
+						</table>
+						<h4>Huomioita:</h4>
+						<p>Tarjottu aika ensimmäinen vapaa aika, normaali huoltoon jono 8 päivää, yli viikko (5 arkipäivää).</p>
+			
+						<!-- Osio B kysymys 2a -->
+						
+						<h3>Kävikö palvelleen huoltoneuvojan nimi ilmi?</h3>
+						<h3 style="display: inline; float:right;">0/2</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Kyllä
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei
+								</td>
+							</tr>
+						</table>
+						<h4>Huomioita:</h4>
+						<p>Ei nimikylttiä.</p>
+
+						<!-- Osio B kysymys 2b -->
+						
+						<h3>Varmistettiinko ajanvarauksessa sovitut asiat? (Huolto, tilatut lisätyöt, hinta- ja aika-arvio)</h3>
+						<h3 style="display: inline; float:right;">0/2</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Kyllä
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei
+								</td>
+							</tr>
+						</table>
+						<h4>Huomioita:</h4>
+						<p>Huolto tiedossa. Ajanvarauksessa annettua kustannusarviota ei varmistettu.</p>
+
+						<!-- Osio B kysymys 2c -->
+						<br><br>
+						<h3>Oliko asiakkaalla huoltokirja mukana saapuessaan työnvastaanottoon?</h3>
+						<h3 style="display: inline; float:right;">0/2</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Asiakasta pyydettiin ottamaan huoltokirja
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Asiakas otti huoltokirjan pyytämättä
+								</td>
+								
+								
+							</tr>
+						</table>
+								
+						<h3>Jos ei: kysyikö korjaamon edustaja luvan ottaa se autosta?</h3>
+						<h3 style="display: inline; float:right;">0/2</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Kyllä
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei
+								</td>
+								</tr>
+								</table>
+						<h4>Huomioita:</h4>
+						<p>Asiakas jätti huoltokirjan autoon. Ei puhetta huoltokirjasta. Ei muistutuskylttiä.</p>
+							
+							
+						
+
+						<h3>Tarjottiinko kopiota työmääräyksestä?</h3>
+						<h3 style="display: inline; float:right;">0/2</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Kyllä
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Työnvastaanotossa ohje, jossa kerrotaan, että saa pyydettäessä.
+								</td>
+							</tr>
+						</table>
+
+				<!-- Osa C kysymys 3 c -->
+
+						<h3>Vastasiko lasku annettua kustannusarviota huomioiden sovitut lisätyöt:</h3>
+						<h3 style="display: inline; float:right;">8/8</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Tarkasti (+/- 10eur)
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Alitti enemmän kuin 10eur
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ylitti yli 10eur, mutta alle 15 %
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ylitti yli 15 %
+								</td>
+								</tr>
+								<tr>
+								
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei saatu vaikka kysyttiin
+								</td>
+								</tr>
+								<tr>
+								
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei kysytty
+								</td>
+								</tr>
+								<tr>
+								
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Huolto-/leasingsopimus
+								</td>
+														
+								
+							</tr>
+						</table>
+						
+						<h3>Kerrottiinko seuraavan huollon ajankohdasta?</h3>
+						<h3 style="display: inline; float:right;">0/2</h3>
+						<table>
+							<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9744;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Kyllä
+								</td>
+								</tr>
+								<tr>
+								<td	style="padding-left: 1.5em;">
+									&#9745;
+									&nbsp;
+								</td>
+								<td style="padding-right: 2em;">	
+									Ei
+								</td>
+								</tr>
+								</table>
+
+
 			
 			
 	<!-- PRINT REPORT CONTENT -->

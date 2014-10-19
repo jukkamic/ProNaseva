@@ -11,7 +11,6 @@ import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.ReportPart;
 import fi.testcenter.domain.SubQuestion;
-import fi.testcenter.domain.TextareaQuestion;
 import fi.testcenter.domain.TextfieldQuestion;
 
 @Service
@@ -40,39 +39,6 @@ public class ReportTemplateService {
 
 		TextfieldQuestion q1 = new TextfieldQuestion();
 		q1.setQuestion("Ajoneuvon merkki");
-
-		// // ArrayList<SubQuestion> subQuestionList1 = new
-		// ArrayList<SubQuestion>();
-		// // SubQuestion subQ1 = new SubQuestion();
-		// // TextfieldQuestion question60 = new TextfieldQuestion();
-		// // question60.setQuestion("Eka ikinä alakysymys");
-		// // subQ1.setQuestion(question60);
-		// // subQuestionList1.add(subQ1);
-		// //
-		// // ArrayList<MultipleChoiceOption> options40 = new
-		// ArrayList<MultipleChoiceOption>();
-		// // SubQuestion subQ2 = new SubQuestion();
-		// // MultipleChoiceQuestion question61 = new MultipleChoiceQuestion();
-		// //
-		// question61.setQuestion("Toimiiko Jarnon monivalinta-alakysymykset?");
-		// // options40.add(new MultipleChoiceOption("Varmasti toimii kysymys",
-		// 2));
-		// // options40.add(new MultipleChoiceOption("Hyvin todennäköistä", 1));
-		// // options40.add(new MultipleChoiceOption("Vähän epäilyttää kyllä",
-		// 2));
-		// // question61.setOptions(options40);
-		// // subQ2.setQuestion(question61);
-		// // subQuestionList1.add(subQ2);
-		// //
-		// // SubQuestion subQ3 = new SubQuestion();
-		// // TextareaQuestion question62 = new TextareaQuestion();
-		// // question62
-		// //
-		// .setQuestion("Tuleeko ProNasevasta seuraava suomalainen menestystarina?");
-		// // subQ3.setQuestion(question62);
-		// // subQuestionList1.add(subQ3);
-		//
-		// q1.setSubQuestions(subQuestionList1);
 
 		questions1.add(q1);
 
@@ -154,10 +120,6 @@ public class ReportTemplateService {
 		options2.add(new MultipleChoiceOption("2 p", 2));
 		q9.setOptions(options2);
 		questionList2.add(q9);
-
-		TextareaQuestion q18 = new TextareaQuestion();
-		q18.setQuestion("Muita huomioita");
-		questionList2.add(q18);
 
 		questionGroup2.setQuestions(questionList2);
 		questionGroups.add(questionGroup2);
@@ -270,10 +232,6 @@ public class ReportTemplateService {
 		q37.setOptions(options16);
 		questionList3.add(q37);
 
-		TextareaQuestion q38 = new TextareaQuestion();
-		q38.setQuestion("Muita huomioita");
-		questionList3.add(q38);
-
 		questionGroup3.setQuestions(questionList3);
 		questionGroups.add(questionGroup3);
 
@@ -332,17 +290,6 @@ public class ReportTemplateService {
 		a6.setOptions(optionsA6);
 
 		ArrayList<SubQuestion> subQListA6 = new ArrayList<SubQuestion>();
-
-		ArrayList<MultipleChoiceOption> optionsA7 = new ArrayList<MultipleChoiceOption>();
-		SubQuestion subQa7 = new SubQuestion();
-
-		MultipleChoiceQuestion a7 = new MultipleChoiceQuestion();
-		a7.setQuestion("Onnistuiko ajanvaraus ensimmäisellä yrityksellä?");
-		optionsA7.add(new MultipleChoiceOption("Kyllä", 2));
-		optionsA7.add(new MultipleChoiceOption("Ei", 0));
-		a7.setOptions(optionsA7);
-		subQa7.setQuestion(a7);
-		subQListA6.add(subQa7);
 
 		SubQuestion subQa8 = new SubQuestion();
 		MultipleChoiceQuestion a8 = new MultipleChoiceQuestion();
@@ -408,8 +355,8 @@ public class ReportTemplateService {
 		MultipleChoiceQuestion a13 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA13 = new ArrayList<MultipleChoiceOption>();
 		a13.setQuestion("Jos kyllä: varmistettiinko puhelinnumero?");
-		optionsA13.add(new MultipleChoiceOption("Kyllä", -1));
-		optionsA13.add(new MultipleChoiceOption("Ei", -1));
+		optionsA13.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsA13.add(new MultipleChoiceOption("Ei", 0));
 		a13.setOptions(optionsA13);
 		subQa13.setQuestion(a13);
 		subQListA12.add(subQa13);
@@ -418,8 +365,8 @@ public class ReportTemplateService {
 		MultipleChoiceQuestion a14 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA14 = new ArrayList<MultipleChoiceOption>();
 		a14.setQuestion("Jos kyllä: tunnistettiinko auto rekisterinumerolla?");
-		optionsA14.add(new MultipleChoiceOption("Kyllä", -1));
-		optionsA14.add(new MultipleChoiceOption("Ei", -1));
+		optionsA14.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsA14.add(new MultipleChoiceOption("Ei", 0));
 		a14.setOptions(optionsA14);
 		subQa14.setQuestion(a14);
 		subQListA12.add(subQa14);
@@ -429,14 +376,14 @@ public class ReportTemplateService {
 		ArrayList<MultipleChoiceOption> optionsA15 = new ArrayList<MultipleChoiceOption>();
 		a15.setQuestion("Jos kyllä: kysyttiinkö/varmistettiinko sähköpostiosoite?");
 		optionsA15
-				.add(new MultipleChoiceOption("Kyllä", "Kyllä <br> &nbsp", -1));
-		optionsA15.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", -1));
+				.add(new MultipleChoiceOption("Kyllä", "Kyllä <br> &nbsp", 2));
+		optionsA15.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
 		optionsA15.add(new MultipleChoiceOption(
 				"Kyllä, mutta asiakkaalla ei ole sähköpostiosoitetta",
-				"Kyllä, mutta asiakkaalla<br>ei ole sähköpostiosoitetta", -1));
+				"Kyllä, mutta asiakkaalla<br>ei ole sähköpostiosoitetta", 2));
 		optionsA15.add(new MultipleChoiceOption(
 				"Kyllä, mutta asiakas ei halunnut antaa osoitetta",
-				"Kyllä, mutta asiakas ei<br>halunnut antaa osoitetta", -1));
+				"Kyllä, mutta asiakas ei<br>halunnut antaa osoitetta", 2));
 		a15.setOptions(optionsA15);
 		subQa15.setQuestion(a15);
 		subQListA12.add(subQa15);
@@ -520,20 +467,22 @@ public class ReportTemplateService {
 		a34.setQuestion("Kysyttiinkö asikkaalta ajokilometrimäärä?");
 		optionsA34
 				.add(new MultipleChoiceOption("Kyllä", "Kyllä <br> &nbsp", 2));
-		optionsA34.add(new MultipleChoiceOption("Ei", "Kyllä <br> &nbsp", 0));
+		optionsA34.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
 		optionsA34.add(new MultipleChoiceOption("Asiakas kertoi kysymättä",
 				"Asiakas kertoi<br>kysymättä", -1));
 		a34.setOptions(optionsA34);
+		questionList6.add(a34);
 
 		MultipleChoiceQuestion a35 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA35 = new ArrayList<MultipleChoiceOption>();
 		a35.setQuestion("Kysyttiinkö asiakkaalta onko autossa jotain lisätöitä (korjauksia)?");
 		optionsA35
 				.add(new MultipleChoiceOption("Kyllä", "Kyllä <br> &nbsp", 2));
-		optionsA35.add(new MultipleChoiceOption("Ei", "Kyllä <br> &nbsp", 0));
+		optionsA35.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
 		optionsA35.add(new MultipleChoiceOption("Asiakas kertoi kysymättä",
 				"Asiakas kertoi<br>kysymättä", -1));
 		a35.setOptions(optionsA35);
+		questionList6.add(a35);
 
 		MultipleChoiceQuestion a36 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA36 = new ArrayList<MultipleChoiceOption>();
@@ -541,6 +490,7 @@ public class ReportTemplateService {
 		optionsA36.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA36.add(new MultipleChoiceOption("Ei", 0));
 		a36.setOptions(optionsA36);
+		questionList6.add(a36);
 
 		questionGroup6.setQuestions(questionList6);
 		questionGroups2.add(questionGroup6);
@@ -597,13 +547,13 @@ public class ReportTemplateService {
 
 		questionGroup8.setTitle("Asiakkaan informoiminen");
 
-		MultipleChoiceQuestion a40 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> optionsA40 = new ArrayList<MultipleChoiceOption>();
-		a40.setQuestion("Muistutettiinko asiakasta ottamaan huoltokirja mukaan?");
-		optionsA40.add(new MultipleChoiceOption("Kyllä", 2));
-		optionsA40.add(new MultipleChoiceOption("Ei", 0));
-		a40.setOptions(optionsA40);
-		questionList8.add(q40);
+		MultipleChoiceQuestion a555 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsA555 = new ArrayList<MultipleChoiceOption>();
+		a555.setQuestion("Muistutettiinko asiakasta ottamaan huoltokirja mukaan?");
+		optionsA555.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsA555.add(new MultipleChoiceOption("Ei", 0));
+		a555.setOptions(optionsA555);
+		questionList8.add(a555);
 
 		MultipleChoiceQuestion a41 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA41 = new ArrayList<MultipleChoiceOption>();
@@ -655,7 +605,7 @@ public class ReportTemplateService {
 		SubQuestion subQa46 = new SubQuestion();
 		MultipleChoiceQuestion a46 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA46 = new ArrayList<MultipleChoiceOption>();
-		a46.setQuestion("Kysyikö asiakas kustannusarvion??");
+		a46.setQuestion("Kysyikö asiakas kustannusarvion?");
 		optionsA46.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsA46.add(new MultipleChoiceOption("Ei", -1));
 		a46.setOptions(optionsA46);
@@ -945,7 +895,7 @@ public class ReportTemplateService {
 		b14.setQuestion("Onnistuiko keskustelu häiriöittä?");
 		optionsB14.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB14.add(new MultipleChoiceOption("Ei", 0));
-		b13.setOptions(optionsB13);
+		b14.setOptions(optionsB13);
 
 		SubQuestion subQb14 = new SubQuestion();
 
@@ -963,9 +913,9 @@ public class ReportTemplateService {
 		b15.setOptions(optionsB15);
 		subQb14.setQuestion(b15);
 		subQListb14.add(subQb14);
-		b13.setSubQuestions(subQListb14);
+		b14.setSubQuestions(subQListb14);
 
-		questionList10.add(b13);
+		questionList10.add(b14);
 
 		questionGroup10.setQuestions(questionList10);
 		questionGroups3.add(questionGroup10);
@@ -1064,7 +1014,7 @@ public class ReportTemplateService {
 		optionsB23.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsB23.add(new MultipleChoiceOption("Ei", -1));
 		b23.setOptions(optionsB23);
-		questionList11.add(b22);
+		questionList11.add(b23);
 
 		TextfieldQuestion b24 = new TextfieldQuestion();
 		b24.setQuestion("Tilatut lisätyöt (autoa jätettäessä mainitut):");
@@ -1116,8 +1066,8 @@ public class ReportTemplateService {
 		optionsB29.add(new MultipleChoiceOption("Ei", 0));
 		optionsB29.add(new MultipleChoiceOption("Ei kaikkia", 1));
 		b29.setOptions(optionsB29);
-		subQb28.setQuestion(b28);
-		subQListB27.add(subQb27);
+		subQb28.setQuestion(b29);
+		subQListB27.add(subQb28);
 
 		SubQuestion subQb30 = new SubQuestion();
 		MultipleChoiceQuestion b30 = new MultipleChoiceQuestion();
@@ -1128,7 +1078,7 @@ public class ReportTemplateService {
 		optionsB30.add(new MultipleChoiceOption("Ei tarpeellista", -1));
 		b30.setOptions(optionsB30);
 		subQb30.setQuestion(b30);
-		subQListB27.add(subQb27);
+		subQListB27.add(subQb30);
 
 		b27.setSubQuestions(subQListB27);
 
@@ -1295,7 +1245,7 @@ public class ReportTemplateService {
 		// Osa C - Auton luovutus
 
 		ReportPart reportPart4 = new ReportPart();
-		reportPart4.setTitle("Osa C - Auton luovutus");
+		reportPart4.setTitle("Osa C - Yhteydenotto huollon aikana");
 
 		ArrayList<QuestionGroup> questionGroups4 = new ArrayList<QuestionGroup>();
 
@@ -1310,7 +1260,6 @@ public class ReportTemplateService {
 		optionsC1.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsC1.add(new MultipleChoiceOption("Ei", -1));
 		c1.setOptions(optionsC1);
-		questionList12.add(c1);
 
 		ArrayList<SubQuestion> subQListC1 = new ArrayList<SubQuestion>();
 
@@ -1338,7 +1287,15 @@ public class ReportTemplateService {
 		TextfieldQuestion c4 = new TextfieldQuestion();
 		c4.setQuestion("Huoltoneuvojan nimi:");
 		subQc3.setQuestion(c4);
+
 		subQListC1.add(subQc3);
+
+		SubQuestion subQc4 = new SubQuestion();
+
+		TextfieldQuestion c41 = new TextfieldQuestion();
+		c41.setQuestion("Korjausta vaativat viat:");
+		subQc4.setQuestion(c41);
+		subQListC1.add(subQc4);
 
 		c1.setSubQuestions(subQListC1);
 
@@ -1378,7 +1335,7 @@ public class ReportTemplateService {
 
 		MultipleChoiceQuestion c8 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsC8 = new ArrayList<MultipleChoiceOption>();
-		c5.setQuestion("Jos hyväksyi, kerrottiinko korjauksen valmistumisajankohta?");
+		c8.setQuestion("Jos hyväksyi, kerrottiinko korjauksen valmistumisajankohta?");
 		optionsC8.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsC8.add(new MultipleChoiceOption("Ei", 0));
 		optionsC8.add(new MultipleChoiceOption("Ei vaikuta valmistumisaikaan",
@@ -1430,10 +1387,10 @@ public class ReportTemplateService {
 
 		reportParts.add(reportPart4);
 
-		// Osa D
+		// Osa D - Auton luovutus
 
 		ReportPart reportPart5 = new ReportPart();
-		reportPart5.setTitle("Osa D");
+		reportPart5.setTitle("Osa D - Auton luovutus");
 
 		ArrayList<QuestionGroup> questionGroups5 = new ArrayList<QuestionGroup>();
 
@@ -1621,6 +1578,24 @@ public class ReportTemplateService {
 		d9.setOptions(optionsD9);
 		questionList15.add(d9);
 
+		MultipleChoiceQuestion d90 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD90 = new ArrayList<MultipleChoiceOption>();
+		d90.setQuestion("Esiteltiinkö huoltokirjan leima?");
+		optionsD90.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD90.add(new MultipleChoiceOption("Ei", 0));
+		optionsD90.add(new MultipleChoiceOption("Ei leimattu", -1));
+		d90.setOptions(optionsD90);
+		questionList15.add(d90);
+
+		MultipleChoiceQuestion d100 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD100 = new ArrayList<MultipleChoiceOption>();
+		d100.setQuestion("Kerrottiinko huolletun auton sijainti pysäköintialueella?");
+		optionsD100.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD100.add(new MultipleChoiceOption("Ei", 0));
+		optionsD100.add(new MultipleChoiceOption("Ei tarpeellista", -1));
+		d100.setOptions(optionsD100);
+		questionList15.add(d100);
+
 		MultipleChoiceQuestion d10 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsD10 = new ArrayList<MultipleChoiceOption>();
 		d10.setQuestion("Kerrottiinko huolletun auton sijainti pysäköintialueella?");
@@ -1663,7 +1638,7 @@ public class ReportTemplateService {
 		d13.setQuestion("Asiakkaalle jäänyt tunne korjaamon toiminnasta");
 		optionsD13.add(new MultipleChoiceOption("Hyvä", 8));
 		optionsD13.add(new MultipleChoiceOption("Tyydyttävä", 3));
-		optionsD13.add(new MultipleChoiceOption("Tyydyttävä", 0));
+		optionsD13.add(new MultipleChoiceOption("Heikko", 0));
 		d13.setOptions(optionsD13);
 		questionList16.add(d13);
 
@@ -1705,7 +1680,7 @@ public class ReportTemplateService {
 
 		MultipleChoiceQuestion d16 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsD16 = new ArrayList<MultipleChoiceOption>();
-		d16.setQuestion("Asiakkaan nimi ja puhelinnumero kirjattu");
+		d16.setQuestion("Asiakkaan allekirjoitus löytyy");
 		optionsD16.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsD16.add(new MultipleChoiceOption("Ei", -1));
 		d16.setOptions(optionsD16);
@@ -1721,7 +1696,7 @@ public class ReportTemplateService {
 
 		MultipleChoiceQuestion d18 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsD18 = new ArrayList<MultipleChoiceOption>();
-		d18.setQuestion("Asiakkaan nimi ja puhelinnumero kirjattu");
+		d18.setQuestion("Onko yhteydenotosta asiakkaaseen tehty merkintä");
 		optionsD18.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsD18.add(new MultipleChoiceOption("Ei", -1));
 		optionsD18.add(new MultipleChoiceOption("Ei tarvetta yhteydenottoon",

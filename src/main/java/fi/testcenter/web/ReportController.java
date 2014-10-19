@@ -98,7 +98,8 @@ public class ReportController {
 			@ModelAttribute("report") Report report, BindingResult result) {
 
 		int reportTotalScore = 0;
-		int scoredReportParts = 0;
+
+		int reportMaxScore = 0;
 		for (ReportPart reportPart : report.getReportParts()) {
 			int reportPartScore = 0;
 			int reportPartMaxScore = 0;
@@ -120,13 +121,10 @@ public class ReportController {
 								if (option.getPoints() != -1
 										&& option.getPoints() > maxScore) {
 									maxScore = option.getPoints();
-									mcq.getAnswer().setShowScore(true);
-									questionGroup.setShowScore(true);
+
 								}
 							}
 
-							questionGroupMaxScore = questionGroupMaxScore
-									+ maxScore;
 							mcq.getAnswer().setMaxScore(maxScore);
 
 							if (mcq.getAnswer().getChosenOptionIndex() != -1
@@ -134,6 +132,10 @@ public class ReportController {
 											.get(mcq.getAnswer()
 													.getChosenOptionIndex())
 											.getPoints() != -1) {
+								questionGroupMaxScore = questionGroupMaxScore
+										+ maxScore;
+								mcq.getAnswer().setShowScore(true);
+								questionGroup.setShowScore(true);
 								mcq.getAnswer()
 										.setScore(
 												mcq.getOptions()
@@ -163,13 +165,10 @@ public class ReportController {
 							if (option.getPoints() != -1
 									&& option.getPoints() > maxScore) {
 								maxScore = option.getPoints();
-								mcq.getAnswer().setShowScore(true);
-								questionGroup.setShowScore(true);
+
 							}
 						}
 
-						questionGroupMaxScore = questionGroupMaxScore
-								+ maxScore;
 						mcq.getAnswer().setMaxScore(maxScore);
 
 						if (mcq.getAnswer().getChosenOptionIndex() != -1
@@ -177,6 +176,11 @@ public class ReportController {
 										.get(mcq.getAnswer()
 												.getChosenOptionIndex())
 										.getPoints() != -1) {
+							questionGroupMaxScore = questionGroupMaxScore
+									+ maxScore;
+							mcq.getAnswer().setShowScore(true);
+							questionGroup.setShowScore(true);
+
 							mcq.getAnswer().setScore(
 									mcq.getOptions()
 											.get(mcq.getAnswer()
@@ -202,8 +206,9 @@ public class ReportController {
 				log.debug("Question group score : " + questionGroup.getScore()
 						+ " / " + questionGroup.getMaxScore());
 			}
+
 			if (reportPartMaxScore > 0) {
-				scoredReportParts = scoredReportParts + 1;
+
 				reportTotalScore = reportTotalScore + reportPartScore;
 
 				reportPart.setShowScorePercentage(true);
@@ -214,10 +219,15 @@ public class ReportController {
 				log.debug("Report part score : "
 						+ reportPart.getScorePercentage() + " % ");
 			}
+			reportMaxScore = reportMaxScore + reportPartMaxScore;
 		}
 
+		log.debug("report max score : " + reportMaxScore);
+		log.debug("report total score : " + reportTotalScore);
+
 		report.setTotalScorePercentage((int) Math
-				.round((double) reportTotalScore / (double) scoredReportParts));
+				.round((double) reportTotalScore / (double) reportMaxScore
+						* 100));
 
 		try {
 			rs.saveReport(report);
