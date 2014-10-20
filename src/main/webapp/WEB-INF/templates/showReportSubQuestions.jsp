@@ -33,7 +33,7 @@
 				<c:choose>
 					<c:when test="${option.radiobuttonText != null }">
 						<c:choose>
-							<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}">
+							<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
 								<button class="btn btn-large btn-primary" type="button">
 									${option.radiobuttonText}
 																																											
@@ -48,7 +48,7 @@
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}">
+							<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
 								<button class="btn btn-large btn-primary" type="button">
 									${option.option}
 								

@@ -114,7 +114,7 @@
 														<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 																raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
  														<c:choose>
-															<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}"> 
+															<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}"> 
 																<label class="btn btn-primary active">
  															</c:when>
 															<c:otherwise>
