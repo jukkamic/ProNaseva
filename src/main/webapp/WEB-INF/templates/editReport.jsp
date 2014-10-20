@@ -34,16 +34,16 @@
 			<br><br>
 			</div>
 			<br><br>
-			<sf:form modelAttribute="formAnswers" action="submitReport" method="post">
+			<form modelAttribute="report" action="submitReport" method="post">
 
 			<!-- Report part loop -->
 			
 			<c:set var="bootstrapPanelCounter" value="0" />
 			
-			
-			<c:set var="textAnswerCounter" value="0" />
-			<c:set var="multipleChoiceAnswerCounter" value="0" />
-			<c:forEach var="reportPart" items="${reportTemplate.reportParts}" varStatus="reportPartCounter">
+			<div class="panel-group" id="accordion">
+		
+			<c:set var="answerIndexCounter" value="0" />
+			<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
 			<h3>${reportPart.title}</h3>
 			<br>			
 
@@ -53,7 +53,9 @@
 					<c:forEach var="questionGroup" items="${reportPart.questionGroups}" varStatus="questionGroupCounter">
 						
 						<c:set var="bootstrapPanelCounter" value="${bootstrapPanelCounter + 1}" />
-
+						
+						<div class="panel panel-default">
+							<div class="panel-heading">
 								<h4 class="panel-title">
 									<a
 										style="font-size: 1.5em; text-decoration: none; display: block;"
@@ -61,28 +63,123 @@
 										href="#panel${bootstrapPanelCounter}">${questionGroup.title}
 									</a>
 								</h4>
-						
+							</div>
 
 								<!-- Ensimmäisen kysymysryhmän luokka on "collapse start" jotta javascript 
 									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
+									
+								<c:choose>
+									<c:when test="${questionGroupCounter.count == 1 and reportPartCounter.count == 1}">
+										<div id="panel${bootstrapPanelCounter}" class="panel-collapse collapse start">
+									</c:when>
+									<c:otherwise>
+										<div id="panel${bootstrapPanelCounter}" class="panel-collapse collapse">
+								</c:otherwise>
+							</c:choose>
+								<div class="panel-body">
 								
 								
 									<!-- Questions loop -->
 									
 									<c:forEach var="question" items="${questionGroup.questions}" varStatus="questionCounter">
-													
-										<c:set var="formAnswerListIndex" value="${(reportPartCounter.count * questionGroupCounter.count * questionCounter.count) - 1}" />							
 										
-										<!-- Text field question -->
-										<c:if test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
+										
+										<!-- Multiple choice question -->
+										
+										<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+										
+											<c:choose>
+
+												<c:when test="${question.multipleSelectionsAllowed == true}">
+														<h3>${questionCounter.count}. ${question.question}</h3>
+														<c:forEach var="option" items="${question.options}">
+															
+															<label class="checkbox" style="">											
+															<sf:checkbox value="${option.option}" 
+																path="report.answers[${answerIndexCounter}].chosenSelections" label="${option.option}" />
+															</label>
+															<br>
+														</c:forEach>
+														
+										
+												</c:when>
+												
+												
+										<c:otherwise>
+											<h3>${questionCounter.count}. ${question.question}</h3>
+											<div class="Demo-boot" style="padding-top: 15px;">
+												<div class="btn-group" data-toggle="buttons">
+													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
+														
+														<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
+																raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
+ 														<c:choose>
+															<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}"> 
+																<label class="btn btn-primary active">
+ 															</c:when>
+															<c:otherwise>
+																<label class="btn btn-primary">
+															</c:otherwise>
+														</c:choose>   
+														
+														<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
+																varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
+																riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
+																ei ole tägejä -->
+														<c:choose>
+															<c:when test="${option.radiobuttonText != null }">
+																<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex" 
+																value="${optionsCounter.index}" /> ${option.radiobuttonText}
+															</c:when>
+															<c:otherwise>
+																<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex"
+																value="${optionsCounter.index}" /> ${option.option}
+															</c:otherwise>
+															</c:choose>
+														</label>
+													</c:forEach> 
+												</div>
+											</div>
+											</c:otherwise>
+											</c:choose> 
+	
+											
+											<br>
+											<h4>Huomioita:</h4>
+											<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].remarks" 
+												value="report.answers[${answerIndexCounter}].remarks}" />
+											<br><br>
+										</c:if> 
+										
+										<!-- Text question -->
+										<c:if test="${question.class == 'class fi.testcenter.domain.TextQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<sf:input path="formTextAnswers[${textAnswerCounter}].answer" />
-											<c:set var="textAnswerCounter" value="${textAnswerCounter + 1}" />
+											<c:choose>
+												<c:when test="${question.textAreaInput == true }">
+													<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].answer" />
+												</c:when>
+												<c:otherwise>
+													<sf:input path="report.answers[${answerIndexCounter}].answer" />
+												</c:otherwise>
+											</c:choose>
+											
 										</c:if>
 										
-
 										
+										<!-- Show subquestions 
+										
+										<c:if test="${not empty question.subQuestions}">
+											<c:set var="mainReportPartIndex" value="${reportPartCounter.index}" scope="request" />										
+											<c:set var="mainQuestionGroupIndex" value="${questionGroupCounter.index}" scope="request" />
+											<c:set var="mainQuestionIndex" value="${questionCounter.index}" scope="request" />
+											<c:set var="mainQuestion" value="${question}" scope="request" />
+											<div style="margin-left: 3em;">
+												<jsp:include page="/WEB-INF/templates/EditReportSubQuestions.jsp" />
+											</div>				
+										</c:if> -->
+										
+										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" />
 									</c:forEach> <!-- Questions end -->
 									</div>
 									</div>
@@ -106,7 +203,7 @@
 				</c:if>
 				
 				<br><br>
-				<br></sf:form>
+				<br></form>
 				
 		</div>
 		

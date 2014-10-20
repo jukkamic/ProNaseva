@@ -1,8 +1,8 @@
 package fi.testcenter.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class Report {
 
 	private ReportTemplate reportTemplate;
 	@Transient
-	private Map<Question, Answer> questionAnswerMap = new LinkedHashMap<Question, Answer>();
+	private List<Answer> answers = new ArrayList<Answer>();
 
 	private int totalScorePercentage;
 
@@ -70,14 +70,6 @@ public class Report {
 
 	public void setReportTemplate(ReportTemplate reportTemplate) {
 		this.reportTemplate = reportTemplate;
-	}
-
-	public Map<Question, Answer> getQuestionAnswerMap() {
-		return questionAnswerMap;
-	}
-
-	public void setQuestionAnswerMap(Map<Question, Answer> questionAnswerMap) {
-		this.questionAnswerMap = questionAnswerMap;
 	}
 
 	public int getTotalScorePercentage() {
@@ -166,6 +158,14 @@ public class Report {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<Answer> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
 
 }

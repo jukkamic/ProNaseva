@@ -11,8 +11,7 @@
 		<class>fi.testcenter.domain.Workshop</class>
 		<class>fi.testcenter.domain.QuestionGroup</class>
 		<class>fi.testcenter.domain.Question</class>
-		<class>fi.testcenter.domain.TextareaQuestion</class>
-		<class>fi.testcenter.domain.TextfieldQuestion</class>
+		<class>fi.testcenter.domain.TextQuestion</class>
 		<class>fi.testcenter.domain.MultipleChoiceQuestion</class>
 		<class>fi.testcenter.domain.MultipleChoiceOption</class>
 		<class>fi.testcenter.domain.Answer</class>

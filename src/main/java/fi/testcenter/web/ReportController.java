@@ -2,7 +2,6 @@ package fi.testcenter.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Answer;
-import fi.testcenter.domain.EditReportAnswers;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.MultipleChoiceAnswer;
 import fi.testcenter.domain.MultipleChoiceOption;
@@ -27,9 +25,8 @@ import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.ReportPart;
 import fi.testcenter.domain.ReportTemplate;
-import fi.testcenter.domain.SubQuestion;
 import fi.testcenter.domain.TextAnswer;
-import fi.testcenter.domain.TextfieldQuestion;
+import fi.testcenter.domain.TextQuestion;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
@@ -80,9 +77,7 @@ public class ReportController {
 			BindingResult result) {
 
 		Report report = new Report();
-		ReportTemplate reportTemplate = rs.getReportTemplate();
-		log.debug("Report template"
-				+ reportTemplate.getReportParts().get(0).getTitle());
+		report.setReportTemplate(rs.getReportTemplate());
 
 		Workshop workshop = ws.findWorkshop(reportInfo.getWorkshopID());
 		Importer importer = is.getImporterById(reportInfo.getImporterID());
@@ -91,7 +86,6 @@ public class ReportController {
 		report.setWorkshopId(reportInfo.getWorkshopID());
 		report.setImporterId(reportInfo.getImporterID());
 
-		model.addAttribute("reportTemplate", reportTemplate);
 		model.addAttribute("report", report);
 
 		return "redirect:/prepareReport";
@@ -99,26 +93,25 @@ public class ReportController {
 
 	@RequestMapping(value = "/prepareReport")
 	public String prepareForm(HttpServletRequest request, Model model,
-			@ModelAttribute("reportTemplate") ReportTemplate reportTemplate,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
-		model.addAttribute("reportTemplate", reportTemplate);
 		model.addAttribute("report", report);
 
-		EditReportAnswers reportAnswers = new EditReportAnswers();
-		List<Answer> formTextAnswers = new ArrayList<Answer>();
-		TextAnswer answer = new TextAnswer();
-		formTextAnswers.add(answer);
-		TextAnswer answer2 = (TextAnswer) formTextAnswers.get(0);
-		log.debug("Eka testi : " + answer2);
+		List<Answer> answers = new ArrayList<Answer>();
 
-		List<MultipleChoiceAnswer> formMultipleChoiceAnswers = new ArrayList<MultipleChoiceAnswer>();
-		for (ReportPart reportPart : reportTemplate.getReportParts()) {
+		for (ReportPart reportPart : report.getReportTemplate()
+				.getReportParts()) {
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
 				for (Question question : questionGroup.getQuestions()) {
-					if (question instanceof TextfieldQuestion) {
-						TextAnswer textAnswer = new TextAnswer();
-						formTextAnswers.add(textAnswer);
+					if (question instanceof TextQuestion) {
+						Answer answer = new TextAnswer();
+						answers.add(answer);
+
+					}
+
+					if (question instanceof MultipleChoiceQuestion) {
+						Answer answer = new MultipleChoiceAnswer();
+						answers.add(answer);
 
 					}
 
@@ -135,42 +128,19 @@ public class ReportController {
 				}
 			}
 		}
-		reportAnswers.setFormTextAnswers(formTextAnswers);
-		TextAnswer testitekstivastaus = (TextAnswer) reportAnswers
-				.getFormTextAnswers().get(0);
-		log.debug("Toka testi : " + testitekstivastaus);
+		report.setAnswers(answers);
 
-		model.addAttribute("formAnswers", reportAnswers);
 		return "editReport";
 	}
 
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
-			@ModelAttribute("report") Report report,
-			@ModelAttribute("formAnswers") EditReportAnswers formAnswers,
-			@ModelAttribute("reportTemplate") ReportTemplate reportTemplate) {
-
-		int textAnswerCounter = 0;
-		for (ReportPart reportPart : reportTemplate.getReportParts()) {
-			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
-				for (Question question : questionGroup.getQuestions()) {
-					if (question instanceof TextfieldQuestion) {
-
-						Map<Question, Answer> reportQuestionAnswerMap = report
-								.getQuestionAnswerMap();
-
-						Answer givenAnswer = formAnswers.getFormTextAnswers()
-								.get(textAnswerCounter++);
-
-						reportQuestionAnswerMap.put(question, givenAnswer);
-
-						TextAnswer testaa = (TextAnswer) givenAnswer;
-						log.debug("\n Vastaus : " + testaa.getAnswer());
-
-					}
-				}
-			}
-		}
+			@ModelAttribute("report") Report report) {
+		TextQuestion question = (TextQuestion) report.getReportTemplate()
+				.getReportParts().get(0).getQuestionGroups().get(0)
+				.getQuestions().get(0);
+		log.debug("Eka kysymys" + question.getQuestion());
+		log.debug("Vastaus" + report.getAnswers().get(0));
 
 		// try {
 		// rs.saveReport(report);
@@ -178,7 +148,6 @@ public class ReportController {
 		// e.printStackTrace();
 		// }
 
-		model.addAttribute("report", report);
 		return "redirect:start";
 	}
 
@@ -217,7 +186,7 @@ public class ReportController {
 	}
 
 	public static void countReportScore(Report report,
-			ReportTemplate reportTemplate, EditReportAnswers formAnswers) {
+			ReportTemplate reportTemplate) {
 		int reportTotalScore = 0;
 
 		int reportMaxScore = 0;
@@ -232,10 +201,7 @@ public class ReportController {
 				int questionGroupScore = 0;
 
 				for (Question question : questionGroup.getQuestions()) {
-					for (SubQuestion loopSubQuestion : question
-							.getSubQuestions()) {
-
-						Question subQuestion = loopSubQuestion.getQuestion();
+					for (Question subQuestion : question.getSubQuestions()) {
 
 						// SubQuestion score
 

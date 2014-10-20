@@ -24,7 +24,10 @@ public class Question {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "QUESTION_SUBQUESTION", joinColumns = @JoinColumn(name = "QUESTION_ID"), inverseJoinColumns = @JoinColumn(name = "SUBQUESTION_ID"))
 	@OrderColumn(name = "INDEX")
-	List<SubQuestion> subQuestions = new ArrayList<SubQuestion>();
+	List<Question> subQuestions = new ArrayList<Question>();
+
+	// Main question for subquestions
+	Question mainQuestion;
 
 	public Question() {
 
@@ -38,12 +41,20 @@ public class Question {
 		this.id = id;
 	}
 
-	public List<SubQuestion> getSubQuestions() {
+	public List<Question> getSubQuestions() {
 		return subQuestions;
 	}
 
-	public void setSubQuestions(List<SubQuestion> subQuestions) {
+	public void setSubQuestions(List<Question> subQuestions) {
 		this.subQuestions = subQuestions;
+	}
+
+	public Question getMainQuestion() {
+		return mainQuestion;
+	}
+
+	public void setMainQuestion(Question mainQuestion) {
+		this.mainQuestion = mainQuestion;
 	}
 
 }

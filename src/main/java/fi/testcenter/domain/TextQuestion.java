@@ -6,9 +6,10 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 
 @Entity
-public class TextfieldQuestion extends Question {
+public class TextQuestion extends Question {
 
 	private String question;
+	private boolean textAreaInput;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private TextAnswer answer = new TextAnswer();
@@ -27,6 +28,14 @@ public class TextfieldQuestion extends Question {
 
 	public void setAnswer(TextAnswer answer) {
 		this.answer = answer;
+	}
+
+	public boolean isTextAreaInput() {
+		return textAreaInput;
+	}
+
+	public void setTextAreaInput(boolean textAreaInput) {
+		this.textAreaInput = textAreaInput;
 	}
 
 }

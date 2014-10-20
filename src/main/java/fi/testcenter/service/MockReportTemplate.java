@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import fi.testcenter.domain.MultipleChoiceOption;
+import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.ReportPart;
 import fi.testcenter.domain.ReportTemplate;
-import fi.testcenter.domain.TextfieldQuestion;
+import fi.testcenter.domain.TextQuestion;
 
 @Service
 public class MockReportTemplate {
@@ -34,99 +36,97 @@ public class MockReportTemplate {
 		ArrayList<Question> questions1 = new ArrayList<Question>();
 		questionGroup1.setTitle("Testiauton tiedot");
 
-		TextfieldQuestion q1 = new TextfieldQuestion();
+		TextQuestion q1 = new TextQuestion();
 		q1.setQuestion("Ajoneuvon merkki");
 
 		questions1.add(q1);
 
-		TextfieldQuestion q2 = new TextfieldQuestion();
+		TextQuestion q2 = new TextQuestion();
 		q2.setQuestion("Ajoneuvon malli");
 		questions1.add(q2);
 
-		TextfieldQuestion q3 = new TextfieldQuestion();
+		TextQuestion q3 = new TextQuestion();
 		q3.setQuestion("Rekisteritunnus");
 		questions1.add(q3);
 
-		TextfieldQuestion q4 = new TextfieldQuestion();
+		TextQuestion q4 = new TextQuestion();
 		q4.setQuestion("Rekisteröinnin päivämäärä");
 		questions1.add(q4);
 
-		TextfieldQuestion q5 = new TextfieldQuestion();
+		TextQuestion q5 = new TextQuestion();
 		q5.setQuestion("Mittarilukema");
 		questions1.add(q5);
 
-		TextfieldQuestion q6 = new TextfieldQuestion();
+		TextQuestion q6 = new TextQuestion();
 		q6.setQuestion("Maksettu palkkio");
 		questions1.add(q6);
 
-		TextfieldQuestion q50 = new TextfieldQuestion();
+		TextQuestion q50 = new TextQuestion();
 		q50.setQuestion("Raportin toimitusosoite");
 		questions1.add(q50);
 
 		questionGroup1.setQuestions(questions1);
 		questionGroups.add(questionGroup1);
-		reportPart1.setQuestionGroups(questionGroups);
-		reportParts.add(reportPart1);
 
 		// Yhteenveto - Tarkastuskohteet
 
-		// QuestionGroup questionGroup2 = new QuestionGroup();
-		// questionGroup2.setTitle("Tarkastuskohteet");
-		//
-		// ArrayList<Question> questionList2 = new ArrayList<Question>();
-		//
-		// MultipleChoiceQuestion q40 = new MultipleChoiceQuestion();
-		// ArrayList<MultipleChoiceOption> options17 = new
-		// ArrayList<MultipleChoiceOption>();
-		// q40.setQuestion("Varapyörän ilmanpaineen tarkastus");
-		// options17.add(new MultipleChoiceOption("0 p", 0));
-		// options17.add(new MultipleChoiceOption("1 p", 1));
-		// options17.add(new MultipleChoiceOption("2 p", 2));
-		// q40.setOptions(options17);
-		// questionList2.add(q40);
-		//
-		// MultipleChoiceQuestion q41 = new MultipleChoiceQuestion();
-		// ArrayList<MultipleChoiceOption> options18 = new
-		// ArrayList<MultipleChoiceOption>();
-		// q41.setQuestion("Akun tarkastus");
-		// options18.add(new MultipleChoiceOption("0 p", 0));
-		// options18.add(new MultipleChoiceOption("1 p", 1));
-		// options18.add(new MultipleChoiceOption("2 p", 2));
-		// q41.setOptions(options18);
-		// questionList2.add(q41);
-		//
-		// MultipleChoiceQuestion q42 = new MultipleChoiceQuestion();
-		// ArrayList<MultipleChoiceOption> options19 = new
-		// ArrayList<MultipleChoiceOption>();
-		// q42.setQuestion("Seisontavalon tarkastus");
-		// options19.add(new MultipleChoiceOption("0 p", 0));
-		// options19.add(new MultipleChoiceOption("1 p", 1));
-		// options19.add(new MultipleChoiceOption("2 p", 2));
-		// q42.setOptions(options19);
-		// questionList2.add(q42);
-		//
-		// MultipleChoiceQuestion q7 = new MultipleChoiceQuestion();
-		// ArrayList<MultipleChoiceOption> options1 = new
-		// ArrayList<MultipleChoiceOption>();
-		// q7.setQuestion("Jäähdytysnestemäärän tarkastus");
-		// options1.add(new MultipleChoiceOption("0 p", 0));
-		// options1.add(new MultipleChoiceOption("1 p", 1));
-		// options1.add(new MultipleChoiceOption("2 p", 2));
-		// q7.setOptions(options1);
-		// questionList2.add(q7);
-		//
-		// MultipleChoiceQuestion q9 = new MultipleChoiceQuestion();
-		// ArrayList<MultipleChoiceOption> options2 = new
-		// ArrayList<MultipleChoiceOption>();
-		// q9.setQuestion("Muu vika");
-		// options2.add(new MultipleChoiceOption("0 p", 0));
-		// options2.add(new MultipleChoiceOption("1 p", 1));
-		// options2.add(new MultipleChoiceOption("2 p", 2));
-		// q9.setOptions(options2);
-		// questionList2.add(q9);
-		//
-		// questionGroup2.setQuestions(questionList2);
-		// questionGroups.add(questionGroup2);
+		QuestionGroup questionGroup2 = new QuestionGroup();
+		questionGroup2.setTitle("Tarkastuskohteet");
+
+		ArrayList<Question> questionList2 = new ArrayList<Question>();
+
+		MultipleChoiceQuestion q40 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options17 = new ArrayList<MultipleChoiceOption>();
+		q40.setQuestion("Varapyörän ilmanpaineen tarkastus");
+		options17.add(new MultipleChoiceOption("0 p", 0));
+		options17.add(new MultipleChoiceOption("1 p", 1));
+		options17.add(new MultipleChoiceOption("2 p", 2));
+		q40.setOptions(options17);
+		questionList2.add(q40);
+
+		MultipleChoiceQuestion q41 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options18 = new ArrayList<MultipleChoiceOption>();
+		q41.setQuestion("Akun tarkastus");
+		options18.add(new MultipleChoiceOption("0 p", 0));
+		options18.add(new MultipleChoiceOption("1 p", 1));
+		options18.add(new MultipleChoiceOption("2 p", 2));
+		q41.setOptions(options18);
+		questionList2.add(q41);
+
+		MultipleChoiceQuestion q42 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options19 = new ArrayList<MultipleChoiceOption>();
+		q42.setQuestion("Seisontavalon tarkastus");
+		options19.add(new MultipleChoiceOption("0 p", 0));
+		options19.add(new MultipleChoiceOption("1 p", 1));
+		options19.add(new MultipleChoiceOption("2 p", 2));
+		q42.setOptions(options19);
+		questionList2.add(q42);
+
+		MultipleChoiceQuestion q7 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options1 = new ArrayList<MultipleChoiceOption>();
+		q7.setQuestion("Jäähdytysnestemäärän tarkastus");
+		options1.add(new MultipleChoiceOption("0 p", 0));
+		options1.add(new MultipleChoiceOption("1 p", 1));
+		options1.add(new MultipleChoiceOption("2 p", 2));
+		q7.setOptions(options1);
+		questionList2.add(q7);
+
+		MultipleChoiceQuestion q9 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options2 = new ArrayList<MultipleChoiceOption>();
+		q9.setQuestion("Muu vika");
+		options2.add(new MultipleChoiceOption("0 p", 0));
+		options2.add(new MultipleChoiceOption("1 p", 1));
+		options2.add(new MultipleChoiceOption("2 p", 2));
+		q9.setOptions(options2);
+		questionList2.add(q9);
+
+		questionGroup2.setQuestions(questionList2);
+
+		questionGroups.add(questionGroup2);
+		reportPart1.setQuestionGroups(questionGroups);
+		reportParts.add(reportPart1);
+
+		questionGroups.add(questionGroup2);
 		//
 		// // Yhteenveto - Palvelun pisteet
 		//
@@ -266,11 +266,11 @@ public class MockReportTemplate {
 		// questionGroup4.setTitle("Ajanvaraus korjaamolle");
 		// ArrayList<Question> questionList4 = new ArrayList<Question>();
 		//
-		// TextfieldQuestion q44 = new TextfieldQuestion();
+		// TextQuestion q44 = new TextQuestion();
 		// q44.setQuestion("Ajanvarauksen päivämäärä");
 		// questionList4.add(q44);
 		//
-		// TextfieldQuestion a2 = new TextfieldQuestion();
+		// TextQuestion a2 = new TextQuestion();
 		// a2.setQuestion("Ajanvarauksen kellonaika");
 		// questionList4.add(a2);
 		//
@@ -284,7 +284,7 @@ public class MockReportTemplate {
 		// a3.setOptions(optionsA3);
 		// questionList4.add(a3);
 		//
-		// TextfieldQuestion a4 = new TextfieldQuestion();
+		// TextQuestion a4 = new TextQuestion();
 		// a4.setQuestion("Jos ajanvaraus tapahtui puhelimitse, mistä tietolähteestä korjaamon numero katsottiin?");
 		//
 		// SubQuestion subQa5 = new SubQuestion();
@@ -482,15 +482,15 @@ public class MockReportTemplate {
 		//
 		// questionGroup6.setTitle("Tilattava huolto");
 		//
-		// TextfieldQuestion a31 = new TextfieldQuestion();
+		// TextQuestion a31 = new TextQuestion();
 		// a31.setQuestion("Tilattu huolto (esim 60000 km)");
 		// questionList6.add(a31);
 		//
-		// TextfieldQuestion a32 = new TextfieldQuestion();
+		// TextQuestion a32 = new TextQuestion();
 		// a32.setQuestion("Huollon päivämäärä");
 		// questionList6.add(a32);
 		//
-		// TextfieldQuestion a33 = new TextfieldQuestion();
+		// TextQuestion a33 = new TextQuestion();
 		// a33.setQuestion("Kellonaika");
 		// questionList6.add(a33);
 		//
@@ -565,7 +565,7 @@ public class MockReportTemplate {
 		// ArrayList<SubQuestion> subQListA38 = new ArrayList<SubQuestion>();
 		// SubQuestion subQa38 = new SubQuestion();
 		//
-		// TextfieldQuestion a39 = new TextfieldQuestion();
+		// TextQuestion a39 = new TextQuestion();
 		// a39.setQuestion("Jokin muu, mikä?");
 		// subQa38.setQuestion(a39);
 		//
@@ -605,7 +605,7 @@ public class MockReportTemplate {
 		// ArrayList<SubQuestion> subQListA41 = new ArrayList<SubQuestion>();
 		//
 		// SubQuestion subQa42 = new SubQuestion();
-		// TextfieldQuestion a42 = new TextfieldQuestion();
+		// TextQuestion a42 = new TextQuestion();
 		// a42.setQuestion("Huoltoneuvojan nimi?");
 		// subQa42.setQuestion(a42);
 		// subQListA41.add(subQa42);
@@ -668,7 +668,7 @@ public class MockReportTemplate {
 		// subQListA44.add(subQa47);
 		//
 		// SubQuestion subQa48 = new SubQuestion();
-		// TextfieldQuestion a48 = new TextfieldQuestion();
+		// TextQuestion a48 = new TextQuestion();
 		// a48.setQuestion("Kustannusarvio huollolle?");
 		// subQa48.setQuestion(a48);
 		// subQListA44.add(subQa48);
@@ -711,7 +711,7 @@ public class MockReportTemplate {
 		// subQListA49.add(subQa50);
 		//
 		// SubQuestion subQa51 = new SubQuestion();
-		// TextfieldQuestion a52 = new TextfieldQuestion();
+		// TextQuestion a52 = new TextQuestion();
 		// a52.setQuestion("Luvattu valmistumisaika (auto noudettavissa) kello");
 		// subQa51.setQuestion(a52);
 		// subQListA49.add(subQa51);
@@ -732,7 +732,7 @@ public class MockReportTemplate {
 		//
 		// SubQuestion subQa54 = new SubQuestion();
 		//
-		// TextfieldQuestion q54 = new TextfieldQuestion();
+		// TextQuestion q54 = new TextQuestion();
 		// q54.setQuestion("Tilatut lisätyöt:");
 		// subQa54.setQuestion(q54);
 		// subQListA53.add(subQa54);
@@ -811,15 +811,15 @@ public class MockReportTemplate {
 		// questionGroup9.setTitle("Työnvastaanotossa");
 		// ArrayList<Question> questionList9 = new ArrayList<Question>();
 		//
-		// TextfieldQuestion b1 = new TextfieldQuestion();
+		// TextQuestion b1 = new TextQuestion();
 		// b1.setQuestion("Päivämäärä, jolle huolto on varattu:");
 		// questionList9.add(b1);
 		//
-		// TextfieldQuestion b2 = new TextfieldQuestion();
+		// TextQuestion b2 = new TextQuestion();
 		// b2.setQuestion("Kellonaika, jolle huolto on varattu:");
 		// questionList9.add(b2);
 		//
-		// TextfieldQuestion b3 = new TextfieldQuestion();
+		// TextQuestion b3 = new TextQuestion();
 		// b3.setQuestion("Kellonaika, jolloin asiakas saapui työnvastaanottoon:");
 		// questionList9.add(b3);
 		//
@@ -905,7 +905,7 @@ public class MockReportTemplate {
 		// SubQuestion subQb9 = new SubQuestion();
 		// ArrayList<SubQuestion> subQListb9 = new ArrayList<SubQuestion>();
 		//
-		// TextfieldQuestion b10 = new TextfieldQuestion();
+		// TextQuestion b10 = new TextQuestion();
 		// b10.setQuestion("Huoltoneuvojan nimi:");
 		// subQb9.setQuestion(b10);
 		// subQListb9.add(subQb9);
@@ -1049,7 +1049,7 @@ public class MockReportTemplate {
 		//
 		// ArrayList<SubQuestion> subQListB19 = new ArrayList<SubQuestion>();
 		//
-		// TextfieldQuestion b20 = new TextfieldQuestion();
+		// TextQuestion b20 = new TextQuestion();
 		// b20.setQuestion("Jos ei / ei kaikkia mahdollisia: mitä ei tarjottu?");
 		// subQb19.setQuestion(b20);
 		// subQListB19.add(subQb19);
@@ -1091,7 +1091,7 @@ public class MockReportTemplate {
 		// b23.setOptions(optionsB23);
 		// questionList11.add(b23);
 		//
-		// TextfieldQuestion b24 = new TextfieldQuestion();
+		// TextQuestion b24 = new TextQuestion();
 		// b24.setQuestion("Tilatut lisätyöt (autoa jätettäessä mainitut):");
 		// questionList11.add(b24);
 		//
@@ -1269,7 +1269,7 @@ public class MockReportTemplate {
 		// subQListb37.add(subQb38);
 		//
 		// SubQuestion subQb39 = new SubQuestion();
-		// TextfieldQuestion b40 = new TextfieldQuestion();
+		// TextQuestion b40 = new TextQuestion();
 		// b40.setQuestion("Kustannusarvio huollolle:");
 		// subQb39.setQuestion(b40);
 		// subQListb37.add(subQb39);
@@ -1316,7 +1316,7 @@ public class MockReportTemplate {
 		//
 		// questionList11.add(b41);
 		//
-		// TextfieldQuestion b44 = new TextfieldQuestion();
+		// TextQuestion b44 = new TextQuestion();
 		// b44.setQuestion("Luvattu valmistumisaika (auto noudettavissa) kello: ");
 		// questionList11.add(b44);
 		//
@@ -1381,7 +1381,7 @@ public class MockReportTemplate {
 		//
 		// SubQuestion subQc3 = new SubQuestion();
 		//
-		// TextfieldQuestion c4 = new TextfieldQuestion();
+		// TextQuestion c4 = new TextQuestion();
 		// c4.setQuestion("Huoltoneuvojan nimi:");
 		// subQc3.setQuestion(c4);
 		//
@@ -1389,7 +1389,7 @@ public class MockReportTemplate {
 		//
 		// SubQuestion subQc4 = new SubQuestion();
 		//
-		// TextfieldQuestion c41 = new TextfieldQuestion();
+		// TextQuestion c41 = new TextQuestion();
 		// c41.setQuestion("Korjausta vaativat viat:");
 		// subQc4.setQuestion(c41);
 		// subQListC1.add(subQc4);
@@ -1411,7 +1411,7 @@ public class MockReportTemplate {
 		//
 		// SubQuestion subQc5 = new SubQuestion();
 		//
-		// TextfieldQuestion c6 = new TextfieldQuestion();
+		// TextQuestion c6 = new TextQuestion();
 		// c6.setQuestion("Kerrottu hinta:");
 		// subQc5.setQuestion(c6);
 		// subQListC5.add(subQc5);
@@ -1448,7 +1448,7 @@ public class MockReportTemplate {
 		//
 		// SubQuestion subQc8 = new SubQuestion();
 		//
-		// TextfieldQuestion c9 = new TextfieldQuestion();
+		// TextQuestion c9 = new TextQuestion();
 		// c9.setQuestion("Kellonaika jolloin auton voi noutaa:");
 		// subQc8.setQuestion(c9);
 		// subQListC7.add(subQc8);
@@ -1504,11 +1504,11 @@ public class MockReportTemplate {
 		//
 		// questionGroup13.setTitle("Työnvastaanotossa auton luovutus");
 		//
-		// TextfieldQuestion c12 = new TextfieldQuestion();
+		// TextQuestion c12 = new TextQuestion();
 		// c12.setQuestion("Luvattu valmistumisaika");
 		// questionList13.add(c12);
 		//
-		// TextfieldQuestion c13 = new TextfieldQuestion();
+		// TextQuestion c13 = new TextQuestion();
 		// c13.setQuestion("Asiakas saapui työnvastaanottoon");
 		// questionList13.add(c13);
 		//
@@ -1571,7 +1571,7 @@ public class MockReportTemplate {
 		// subQListC15.add(subQc17);
 		//
 		// SubQuestion subQc18 = new SubQuestion();
-		// TextfieldQuestion c18 = new TextfieldQuestion();
+		// TextQuestion c18 = new TextQuestion();
 		// c18.setQuestion("Huoltoneuvojan nimi:");
 		// subQc18.setQuestion(c18);
 		// subQListC15.add(subQc18);
@@ -1852,7 +1852,7 @@ public class MockReportTemplate {
 		//
 		// ArrayList<Question> questionList18 = new ArrayList<Question>();
 		//
-		// TextfieldQuestion e0 = new TextfieldQuestion();
+		// TextQuestion e0 = new TextQuestion();
 		// e0.setQuestion("Mekaanikon nimi:");
 		// questionList18.add(e0);
 		//
