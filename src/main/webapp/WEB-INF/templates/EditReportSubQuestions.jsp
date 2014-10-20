@@ -24,7 +24,7 @@
 					<c:forEach var="option" items="${subQuestion.options}">
 						<label class="checkbox" style="">											
 						<sf:checkbox value="${option.option}" 
-							path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.chosenSelections" 
+							path="report.answers[${answerIndexCounter}].chosenSelections" 
 							label="${option.option}" />
 						</label>
 						<br>
@@ -39,7 +39,7 @@
 					<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 							raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
 					<c:choose>
-						<c:when test="${subQuestion.answer.chosenOptionIndex == optionsCounter.index}">
+						<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}">
 							<label class="btn btn-primary active">
 						</c:when>
 						<c:otherwise>
@@ -53,11 +53,11 @@
 							ei ole tägejä -->
 					<c:choose>
 						<c:when test="${option.radiobuttonText != null }">
-							<sf:radiobutton id="button" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.chosenOptionIndex" 
+							<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex" 
 							value="${optionsCounter.index}" /> ${option.radiobuttonText}
 						</c:when>
 						<c:otherwise>
-							<sf:radiobutton id="button" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.chosenOptionIndex"
+							<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex"
 							value="${optionsCounter.index}" /> ${option.option}
 						</c:otherwise>
 						</c:choose>
@@ -70,25 +70,26 @@
 	
 		<br>
 		<h4>Huomioita:</h4>
-		<sf:textarea rows="5" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.remarks" 
-			value="${Subquestion.answer.remarks}" />
+		<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].remarks" 
+			value="report.answers[${answerIndexCounter}].remarks}" />
 		<br><br>
 	</c:if>
 
-	<!--  Text area question -->
+
+
+	<!-- Text question -->
 	<c:if
-		test="${subQuestion.class == 'class fi.testcenter.domain.TextareaQuestion'}">
+		test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
 		<h3>${subQuestion.question}</h3>
 		<br>
-		<sf:textarea rows="5" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.answer" 
-			value="${question.answer.answer}" />
-	</c:if>
-	
-	<!-- Text field question -->
-	<c:if
-		test="${subQuestion.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
-		<h3>${subQuestion.question}</h3>
-		<br>
+		<c:choose>
+				<c:when test="${subQuestion.textAreaInput == true }">
+					<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].answer" />
+				</c:when>
+				<c:otherwise>
+					<sf:input path="report.answers[${answerIndexCounter}].answer" />
+				</c:otherwise>
+		</c:choose>
 		<sf:input type="text" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.answer" />  
 	</c:if>
 </c:forEach>

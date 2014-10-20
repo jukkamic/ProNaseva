@@ -7,7 +7,6 @@
 	
 <!-- Questions loop -->
 
-<p>SubQuestions</p>
 
 <c:forEach var="listedSubQuestion" items="${mainQuestion.subQuestions}" varStatus="subQuestionCounter">
 <c:set var="subQuestion" value="${listedSubQuestion.question}" />
@@ -16,9 +15,6 @@
 <!-- Multiple choice question -->
 <c:if
 	test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
-								
-	<c:set var="maxPointsForQuestion" value="0" />	
-	<c:set var="scoredQuestions" value="TRUE" />			
 
 	
 	<h3>${subQuestion.question}</h3>
@@ -27,7 +23,7 @@
 			<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
 																																																	
 				<c:if test="${option.points > maxPointsForQuestion}">
-						<c:set var="maxPointsForQuestion" value="${option.points}" />
+						
 				</c:if>
 				
 				<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
@@ -37,12 +33,10 @@
 				<c:choose>
 					<c:when test="${option.radiobuttonText != null }">
 						<c:choose>
-							<c:when test="${subQuestion.answer.chosenOptionIndex == optionsCounter.index}">
+							<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}">
 								<button class="btn btn-large btn-primary" type="button">
 									${option.radiobuttonText}
-																												
-									<c:set var="totalScore" value="${totalScore + option.points}" />
-																																														
+																																											
 								</button>
 							</c:when>
 							<c:otherwise>
@@ -54,11 +48,10 @@
 					</c:when>
 					<c:otherwise>
 						<c:choose>
-							<c:when test="${subQuestion.answer.chosenOptionIndex == optionsCounter.index}">
+							<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}">
 								<button class="btn btn-large btn-primary" type="button">
 									${option.option}
-									<c:set var="totalScore" value="${totalScore + option.points}" />
-									
+								
 								</button>
 							</c:when>
 							<c:otherwise>
@@ -70,32 +63,23 @@
 					</c:otherwise>
 				</c:choose>														
 			</c:forEach> 
-			
-			<c:set var="maxTotalScore" value="${maxTotalScore + maxPointsForQuestion}" />
-																	
+															
 		</div>
 	</div>
 	<br>
 	<h4>Huomioita:</h4>
-	<p style="font-size: 1.2em;">${subQuestion.answer.remarks}</p>
+	<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
 	
 	<br><br>
 </c:if>
 
-<!--  Text area question -->
+<!--  Text question -->
 <c:if
-	test="${subQuestion.class == 'class fi.testcenter.domain.TextareaQuestion'}">
+	test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
 	<h3>${subQuestion.question}</h3>
 	<br>
-	<p style="font-size: 1.2em;">${subQuestion.answer}</p>
+	<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
 </c:if>
 
-<!-- Text field question -->
-<c:if
-	test="${subQuestion.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
-	<h3>${subQuestion.question}</h3>
-	<br>
-	<p style="font-size: 1.2em;">${subQuestion.answer}</p>
-</c:if> 
 
 </c:forEach>

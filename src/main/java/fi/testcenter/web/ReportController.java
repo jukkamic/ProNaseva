@@ -115,16 +115,6 @@ public class ReportController {
 
 					}
 
-					// if (question instanceof MultipleChoiceQuestion) {
-					// formMultipleChoiceAnswers
-					// .add(new MultipleChoiceAnswer());
-					// }
-					//
-					// if (question instanceof TextareaQuestion) {
-					// TextAnswer textAnswer = new TextAnswer();
-					// formTextAnswers.add(textAnswer);
-					// }
-
 				}
 			}
 		}
@@ -148,7 +138,7 @@ public class ReportController {
 		// e.printStackTrace();
 		// }
 
-		return "redirect:start";
+		return "showReport";
 	}
 
 	@RequestMapping(value = "/printReport")

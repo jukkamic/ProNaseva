@@ -42,7 +42,7 @@
 			
 			<div class="panel-group" id="accordion">
 		
-			<c:set var="answerIndexCounter" value="0" />
+			<c:set var="answerIndexCounter" value="0" scope="request" />
 			<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
 			<h3>${reportPart.title}</h3>
 			<br>			
@@ -167,7 +167,7 @@
 										</c:if>
 										
 										
-										<!-- Show subquestions 
+										<!-- Show subquestions --> 
 										
 										<c:if test="${not empty question.subQuestions}">
 											<c:set var="mainReportPartIndex" value="${reportPartCounter.index}" scope="request" />										
@@ -177,7 +177,7 @@
 											<div style="margin-left: 3em;">
 												<jsp:include page="/WEB-INF/templates/EditReportSubQuestions.jsp" />
 											</div>				
-										</c:if> -->
+										</c:if>
 										
 										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" />
 									</c:forEach> <!-- Questions end -->

@@ -32,11 +32,11 @@
 			
 			<div class="panel-group" id="accordion">
 			
-			<c:forEach var="reportPart" items="${report.reportParts}" varStatus="reportPartCounter">
+			<c:set var="answerIndexCounter" value="0" scope="request" />
+			<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
 			<h3>${reportPart.title}</h3>
 			<br>			
-			
-						
+								
 								
 					<!-- QuestionGroup loop -->
 					
@@ -83,18 +83,11 @@
 										<c:if
 											test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 																		
-											<c:set var="maxPointsForQuestion" value="0" />	
-											<c:set var="scoredQuestions" value="TRUE" />			
-
-											
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
-																																																											
-														<c:if test="${option.points > maxPointsForQuestion}">
-																<c:set var="maxPointsForQuestion" value="${option.points}" />
-														</c:if>
+
 														
 														<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
 																varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
@@ -103,12 +96,10 @@
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
 																<c:choose>
-																	<c:when test="${question.answer.chosenOptionIndex == optionsCounter.index}">
+																	<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}">
 																		<button class="btn btn-large btn-primary" type="button">
 																			${option.radiobuttonText}
-																																						
-																			<c:set var="totalScore" value="${totalScore + option.points}" />
-																																																								
+																																																			
 																		</button>
 																	</c:when>
 																	<c:otherwise>
@@ -120,10 +111,9 @@
 															</c:when>
 															<c:otherwise>
 																<c:choose>
-																	<c:when test="${question.answer.chosenOptionIndex == optionsCounter.index}">
+																	<c:when test="report.answers[${answerIndexCounter}].chosenOptionIndex == optionsCounter.index}">
 																		<button class="btn btn-large btn-primary" type="button">
 																			${option.option}
-																			<c:set var="totalScore" value="${totalScore + option.points}" />
 																			
 																		</button>
 																	</c:when>
@@ -137,34 +127,24 @@
 														</c:choose>														
 													</c:forEach> 
 													
-													<c:set var="maxTotalScore" value="${maxTotalScore + maxPointsForQuestion}" />
-																											
+																								
 												</div>
 											</div>
 											<br>
 											<h4>Huomioita:</h4>
-											<p style="font-size: 1.2em;">${question.answer.remarks}</p>
+											<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
 											
 											<br><br>
 										</c:if>
 
-										<!--  Text area question -->
-										<c:if
-											test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
+										<!--  Text question -->
+										<c:if test="${question.class == 'class fi.testcenter.domain.TextQuestion'}">
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<br>
-											<p style="font-size: 1.2em;">${question.answer}</p>
+											<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
 										</c:if>
 										
-										<!-- Text field question -->
-										<c:if
-											test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
-											<h3>${questionCounter.count}. ${question.question}</h3>
-											<br>
-											<p style="font-size: 1.2em;">${question.answer}</p>
-										</c:if> 
-										
-										<!-- Show subquestions -->
+											<!-- Show subquestions -->
 										
 										<c:if test="${not empty question.subQuestions}">
 											<c:set var="mainQuestion" value="${question}" scope="request" />
@@ -173,15 +153,17 @@
 											</div>				
 										</c:if>
 										
+										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" />
 									</c:forEach> <!-- Questions loop end -->
 									
 									<c:if test="${scoredQuestions == 'TRUE'}">
 									<br>
-									<h4 style="float: right; font-weight: bold;">Pisteet: ${totalScore}/${maxTotalScore}</h4>
+									<h4 style="float: right; font-weight: bold;">Pisteet: </h4>
 									
 									</c:if>
 									
 									</div></div></div>
+					
 					
 					</c:forEach> <!-- Question group loop end -->
 					
