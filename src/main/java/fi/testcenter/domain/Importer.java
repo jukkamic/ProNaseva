@@ -1,16 +1,12 @@
 package fi.testcenter.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Importer implements Serializable {
-
-	private static final long serialVersionUID = -7225695584605007676L;
+public class Importer {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -84,10 +80,6 @@ public class Importer implements Serializable {
 
 	public void setTelNum(String telNum) {
 		this.telNum = telNum;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public String toString() {

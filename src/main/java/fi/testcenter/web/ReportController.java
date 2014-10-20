@@ -132,11 +132,11 @@ public class ReportController {
 		log.debug("Eka kysymys" + question.getQuestion());
 		log.debug("Vastaus" + report.getAnswers().get(0));
 
-		// try {
-		// rs.saveReport(report);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		try {
+			rs.saveReport(report);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return "showReport";
 	}
@@ -158,7 +158,7 @@ public class ReportController {
 
 	@RequestMapping(value = "editReport")
 	public String editReport(HttpServletRequest request, Model model,
-			@ModelAttribute("report") ReportTemplate report) {
+			@ModelAttribute("report") Report report) {
 
 		model.addAttribute("edit", "TRUE");
 
