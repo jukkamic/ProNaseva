@@ -103,7 +103,9 @@ public class ReportController {
 				.getReportParts()) {
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
 				for (Question question : questionGroup.getQuestions()) {
+					log.debug("Kysymys: " + question);
 					if (question instanceof TextQuestion) {
+
 						Answer answer = new TextAnswer();
 						answers.add(answer);
 
@@ -113,6 +115,21 @@ public class ReportController {
 						Answer answer = new MultipleChoiceAnswer();
 						answers.add(answer);
 
+					}
+					if (!question.getSubQuestions().isEmpty()) {
+						for (Question subQuestion : question.getSubQuestions()) {
+							if (subQuestion instanceof TextQuestion) {
+								Answer answer = new TextAnswer();
+								answers.add(answer);
+
+							}
+
+							if (subQuestion instanceof MultipleChoiceQuestion) {
+								Answer answer = new MultipleChoiceAnswer();
+								answers.add(answer);
+
+							}
+						}
 					}
 
 				}

@@ -165,21 +165,22 @@
 											</c:choose>
 											
 										</c:if>
+										<p>${answerIndexCounter}</p>
 										
 										
 										<!-- Show subquestions --> 
 										
+										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
+										
 										<c:if test="${not empty question.subQuestions}">
-											<c:set var="mainReportPartIndex" value="${reportPartCounter.index}" scope="request" />										
-											<c:set var="mainQuestionGroupIndex" value="${questionGroupCounter.index}" scope="request" />
-											<c:set var="mainQuestionIndex" value="${questionCounter.index}" scope="request" />
+											
 											<c:set var="mainQuestion" value="${question}" scope="request" />
 											<div style="margin-left: 3em;">
-												<jsp:include page="/WEB-INF/templates/EditReportSubQuestions.jsp" />
+												<jsp:include page="/WEB-INF/templates/editReportSubQuestions.jsp" />
 											</div>				
 										</c:if>
 										
-										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" />
+										
 									</c:forEach> <!-- Questions end -->
 									</div>
 									</div>

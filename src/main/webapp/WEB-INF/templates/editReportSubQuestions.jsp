@@ -11,13 +11,13 @@
 
 
 
-<c:forEach var="listedSubQuestion" items="${mainQuestion.subQuestions}" varStatus="subQuestionCounter">
-<c:set var="subQuestion" value="${listedSubQuestion.question}" />
-	
+<c:forEach var="subQuestion" items="${mainQuestion.subQuestions}" varStatus="subQuestionCounter">
+	<p>${answerIndexCounter}</p>
 	
 	<!-- Multiple choice question -->
-	
+	<p>subquestionloop</p>
 	<c:if test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+		
 		<c:choose>
 			<c:when test="${subQuestion.multipleSelectionsAllowed == true}">
 					<h3>${subQuestion.question}</h3>
@@ -81,6 +81,7 @@
 	<c:if
 		test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
 		<h3>${subQuestion.question}</h3>
+		
 		<br>
 		<c:choose>
 				<c:when test="${subQuestion.textAreaInput == true }">
@@ -90,6 +91,7 @@
 					<sf:input path="report.answers[${answerIndexCounter}].answer" />
 				</c:otherwise>
 		</c:choose>
-		<sf:input type="text" style="width:100%;" path="reportParts[${mainReportPartIndex}].questionGroups[${mainQuestionGroupIndex}].questions[${mainQuestionIndex}].subQuestions[${subQuestionCounter.index}].question.answer.answer" />  
+		
 	</c:if>
+	<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 </c:forEach>

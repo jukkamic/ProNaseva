@@ -388,13 +388,14 @@ public class MockReportTemplate {
 
 		ArrayList<Question> subQListA17 = new ArrayList<Question>();
 
-		MultipleChoiceQuestion a18 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> optionsA18 = new ArrayList<MultipleChoiceOption>();
-		a18.setQuestion("Kysyttiinkö puhelinnumero?");
-		optionsA18.add(new MultipleChoiceOption("Kyllä", 2));
-		optionsA18.add(new MultipleChoiceOption("Ei", 0));
-		a18.setOptions(optionsA18);
-		subQListA17.add(a18);
+		// MultipleChoiceQuestion a18 = new MultipleChoiceQuestion();
+		// ArrayList<MultipleChoiceOption> optionsA18 = new
+		// ArrayList<MultipleChoiceOption>();
+		// a18.setQuestion("Kysyttiinkö puhelinnumero?");
+		// optionsA18.add(new MultipleChoiceOption("Kyllä", 2));
+		// optionsA18.add(new MultipleChoiceOption("Ei", 0));
+		// a18.setOptions(optionsA18);
+		// subQListA17.add(a18);
 
 		MultipleChoiceQuestion a19 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA19 = new ArrayList<MultipleChoiceOption>();
