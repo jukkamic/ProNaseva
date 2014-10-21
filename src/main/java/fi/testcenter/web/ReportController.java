@@ -22,8 +22,10 @@ import fi.testcenter.domain.MultipleChoiceOption;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
+import fi.testcenter.domain.QuestionGroupScore;
 import fi.testcenter.domain.Report;
 import fi.testcenter.domain.ReportPart;
+import fi.testcenter.domain.ReportPartScore;
 import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.domain.TextAnswer;
 import fi.testcenter.domain.TextQuestion;
@@ -103,7 +105,7 @@ public class ReportController {
 				.getReportParts()) {
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
 				for (Question question : questionGroup.getQuestions()) {
-					log.debug("Kysymys: " + question);
+
 					if (question instanceof TextQuestion) {
 
 						Answer answer = new TextAnswer();
@@ -143,11 +145,8 @@ public class ReportController {
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report) {
-		TextQuestion question = (TextQuestion) report.getReportTemplate()
-				.getReportParts().get(0).getQuestionGroups().get(0)
-				.getQuestions().get(0);
-		log.debug("Eka kysymys" + question.getQuestion());
-		log.debug("Vastaus" + report.getAnswers().get(0));
+
+		countReportScore(report);
 
 		try {
 			rs.saveReport(report);
@@ -160,7 +159,7 @@ public class ReportController {
 
 	@RequestMapping(value = "/printReport")
 	public String printReport(HttpServletRequest request, Model model,
-			@ModelAttribute("report") ReportTemplate report) {
+			@ModelAttribute("report") Report report) {
 		model.addAttribute("report", report);
 		return "printReport";
 	}
@@ -192,69 +191,28 @@ public class ReportController {
 
 	}
 
-	public static void countReportScore(Report report,
-			ReportTemplate reportTemplate) {
+	public static void countReportScore(Report report) {
 		int reportTotalScore = 0;
-
 		int reportMaxScore = 0;
-
-		for (ReportPart reportPart : reportTemplate.getReportParts()) {
+		int answerIndexCounter = 0;
+		for (ReportPart reportPart : report.getReportTemplate()
+				.getReportParts()) {
 
 			int reportPartScore = 0;
-
 			int reportPartMaxScore = 0;
+			ReportPartScore reportPartScoreObject = new ReportPartScore();
+
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
 				int questionGroupMaxScore = 0;
 				int questionGroupScore = 0;
+				QuestionGroupScore questionGroupScoreObject = new QuestionGroupScore();
 
 				for (Question question : questionGroup.getQuestions()) {
-					for (Question subQuestion : question.getSubQuestions()) {
-
-						// SubQuestion score
-
-						if (subQuestion instanceof MultipleChoiceQuestion) {
-							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
-
-							int maxScore = 0;
-							for (MultipleChoiceOption option : mcq.getOptions()) {
-								if (option.getPoints() != -1
-										&& option.getPoints() > maxScore) {
-									maxScore = option.getPoints();
-								}
-							}
-
-							mcq.getAnswer().setMaxScore(maxScore);
-
-							if (mcq.getAnswer().getChosenOptionIndex() != -1
-									&& mcq.getOptions()
-											.get(mcq.getAnswer()
-													.getChosenOptionIndex())
-											.getPoints() != -1) {
-								questionGroupMaxScore = questionGroupMaxScore
-										+ maxScore;
-								mcq.getAnswer().setShowScore(true);
-								questionGroup.setShowScore(true);
-								mcq.getAnswer()
-										.setScore(
-												mcq.getOptions()
-														.get(mcq.getAnswer()
-																.getChosenOptionIndex())
-														.getPoints());
-								questionGroupScore = questionGroupScore
-										+ mcq.getOptions()
-												.get(mcq.getAnswer()
-														.getChosenOptionIndex())
-												.getPoints();
-							}
-
-						}
-
-					}
-
-					// Question score
 
 					if (question instanceof MultipleChoiceQuestion) {
 						MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
+						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) report
+								.getAnswers().get(answerIndexCounter);
 
 						int maxScore = 0;
 						for (MultipleChoiceOption option : mcq.getOptions()) {
@@ -265,52 +223,140 @@ public class ReportController {
 							}
 						}
 
-						mcq.getAnswer().setMaxScore(maxScore);
+						mca.setMaxScore(maxScore); // Asetetaan
+													// monivalintakysymyksen
+													// maksimipistemäärä
 
-						if (mcq.getAnswer().getChosenOptionIndex() != -1
+						// Lasketaan pisteet jos käyttäjä on tehnyt valinnan ja
+						// monivalinta ei ole sellainen, jota ei pisteytetä
+						// (pistemäärä -1)
+
+						if (mca.getChosenOptionIndex() != -1
 								&& mcq.getOptions()
-										.get(mcq.getAnswer()
-												.getChosenOptionIndex())
+										.get(mca.getChosenOptionIndex())
 										.getPoints() != -1) {
-							questionGroupMaxScore = questionGroupMaxScore
-									+ maxScore;
-							mcq.getAnswer().setShowScore(true);
-							questionGroup.setShowScore(true);
 
-							mcq.getAnswer().setScore(
-									mcq.getOptions()
-											.get(mcq.getAnswer()
-													.getChosenOptionIndex())
-											.getPoints());
-							questionGroupScore = questionGroupScore
-									+ mcq.getOptions()
-											.get(mcq.getAnswer()
-													.getChosenOptionIndex())
-											.getPoints();
+							mca.setShowScore(true);
+							mca.setScore(mcq.getOptions()
+									.get(mca.getChosenOptionIndex())
+									.getPoints());
+
+							// Lisätään kysymysryhmän pisteisiin ja asetetaan
+							// kysymysryhmän pisteet näkyviksi raportissa
+
+							questionGroupScoreObject.setShowScore(true);
+							questionGroupScoreObject
+									.setMaxScore(questionGroupScoreObject
+											.getMaxScore() + maxScore);
+
+							questionGroupScoreObject
+									.setScore(questionGroupScoreObject
+											.getScore()
+											+ mcq.getOptions()
+													.get(mca.getChosenOptionIndex())
+													.getPoints());
+
+							reportPartScoreObject.setShowScore(true);
 						}
 
 					}
+
+					answerIndexCounter++;
+
+					// subQuestions loop
+
+					for (Question subQuestion : question.getSubQuestions()) {
+
+						if (subQuestion instanceof MultipleChoiceQuestion) {
+							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
+							MultipleChoiceAnswer mca = (MultipleChoiceAnswer) report
+									.getAnswers().get(answerIndexCounter);
+
+							// Lasketan maksimipisteet
+
+							int maxScore = 0;
+							for (MultipleChoiceOption option : mcq.getOptions()) {
+								if (option.getPoints() != -1
+										&& option.getPoints() > maxScore) {
+									maxScore = option.getPoints();
+								}
+							}
+
+							mca.setMaxScore(maxScore);
+
+							// Lasketaan pisteet jos käyttäjä on tehnyt valinnan
+							// ja
+							// monivalinta ei ole sellainen, jota ei pisteytetä
+							// (pistemäärä -1)
+
+							if (mca.getChosenOptionIndex() != -1
+									&& mcq.getOptions()
+											.get(mca.getChosenOptionIndex())
+											.getPoints() != -1) {
+
+								mca.setShowScore(true);
+								mca.setScore(mcq.getOptions()
+										.get(mca.getChosenOptionIndex())
+										.getPoints());
+
+								// Lisätään kysymysryhmän pisteisiin ja
+								// asetetaan
+								// kysymysryhmän ja raportin osan pisteet
+								// näkyviksi raportissa
+
+								questionGroupScoreObject.setShowScore(true);
+								questionGroupScoreObject
+										.setMaxScore(questionGroupScoreObject
+												.getMaxScore() + maxScore);
+
+								questionGroupScoreObject
+										.setScore(questionGroupScoreObject
+												.getScore()
+												+ mcq.getOptions()
+														.get(mca.getChosenOptionIndex())
+														.getPoints());
+
+								reportPartScoreObject.setShowScore(true);
+
+							}
+
+						}
+
+						answerIndexCounter++;
+					}
+
 				}
-				reportPartMaxScore = reportPartMaxScore + questionGroupMaxScore;
-				reportPartScore = reportPartScore + questionGroupScore;
 
-				questionGroup.setMaxScore(questionGroupMaxScore);
-				questionGroup.setScore(questionGroupScore);
+				// Lisätään kysymysryhmän pisteet Report-luokan olioon.
+
+				questionGroupScoreObject.calculateScorePercentage();
+				List questionGroupScoreList = report.getQuestionGroupScore();
+				questionGroupScoreList.add(questionGroupScoreObject);
+				report.setQuestionGroupScore(questionGroupScoreList);
+
+				// Lisätään kysymysryhmän pisteet ja maksimipisteet raportin
+				// osan pisteisiin
+
+				reportPartScoreObject.setScore(reportPartScoreObject.getScore()
+						+ questionGroupScoreObject.getScore());
+				reportPartScoreObject
+						.setMaxScore(reportPartScoreObject.getMaxScore()
+								+ questionGroupScoreObject.getMaxScore());
 
 			}
 
-			if (reportPartMaxScore > 0) {
+			// Lisätään raportin osan pisteet Report-luokan olioon.
 
-				reportTotalScore = reportTotalScore + reportPartScore;
+			reportPartScoreObject.calculateScorePercentage();
+			List reportPartScoreList = report.getReportPartScore();
+			reportPartScoreList.add(reportPartScoreObject);
+			report.setReportPartScore(reportPartScoreList);
 
-				reportPart.setShowScorePercentage(true);
+			reportTotalScore = reportTotalScore
+					+ reportPartScoreObject.getScore();
+			reportMaxScore = reportMaxScore
+					+ reportPartScoreObject.getMaxScore();
 
-				reportPart.setScorePercentage((int) Math
-						.round((double) reportPartScore
-								/ (double) reportPartMaxScore * 100));
-
-			}
-			reportMaxScore = reportMaxScore + reportPartMaxScore;
 		}
 
 		report.setTotalScorePercentage((int) Math
@@ -318,5 +364,4 @@ public class ReportController {
 						* 100));
 
 	}
-
 }

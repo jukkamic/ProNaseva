@@ -12,10 +12,9 @@
 
 
 <c:forEach var="subQuestion" items="${mainQuestion.subQuestions}" varStatus="subQuestionCounter">
-	<p>${answerIndexCounter}</p>
 	
 	<!-- Multiple choice question -->
-	<p>subquestionloop</p>
+
 	<c:if test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 		
 		<c:choose>

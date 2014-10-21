@@ -8,8 +8,8 @@
 <!-- Questions loop -->
 
 
-<c:forEach var="listedSubQuestion" items="${mainQuestion.subQuestions}" varStatus="subQuestionCounter">
-<c:set var="subQuestion" value="${listedSubQuestion.question}" />
+<c:forEach var="subQuestion" items="${mainQuestion.subQuestions}" varStatus="subQuestionCounter">
+
 	
 
 <!-- Multiple choice question -->
@@ -21,10 +21,7 @@
 	<div class="Demo-boot" style="padding-top: 15px;">
 		<div class="btn-group" data-toggle="buttons">
 			<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
-																																																	
-				<c:if test="${option.points > maxPointsForQuestion}">
-						
-				</c:if>
+		
 				
 				<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
 						varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
@@ -81,5 +78,6 @@
 	<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
 </c:if>
 
+<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 
 </c:forEach>

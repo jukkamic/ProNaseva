@@ -33,6 +33,7 @@
 			<div class="panel-group" id="accordion">
 			
 			<c:set var="answerIndexCounter" value="0" scope="request" />
+			<c:set var="questionGroupScoreIndexCounter" value="0" scope="request" />
 			<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
 			<h3>${reportPart.title}</h3>
 			<br>			
@@ -144,6 +145,8 @@
 											<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
 										</c:if>
 										
+										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
+										
 											<!-- Show subquestions -->
 										
 										<c:if test="${not empty question.subQuestions}">
@@ -153,18 +156,19 @@
 											</div>				
 										</c:if>
 										
-										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" />
+										
 									</c:forEach> <!-- Questions loop end -->
 									
-									<c:if test="${scoredQuestions == 'TRUE'}">
+									<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
 									<br>
-									<h4 style="float: right; font-weight: bold;">Pisteet: </h4>
+									<h4 style="float: right; font-weight: bold;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
+										${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore} </h4>
 									
 									</c:if>
 									
 									</div></div></div>
 					
-					
+						<c:set var="questionGroupScoreIndexCounter" value="${questionGroupScoreIndexCounter + 1}" scope="request" />
 					</c:forEach> <!-- Question group loop end -->
 					
 					<br><br>

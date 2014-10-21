@@ -165,8 +165,6 @@
 											</c:choose>
 											
 										</c:if>
-										<p>${answerIndexCounter}</p>
-										
 										
 										<!-- Show subquestions --> 
 										

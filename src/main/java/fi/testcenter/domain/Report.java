@@ -68,6 +68,16 @@ public class Report {
 	@OrderColumn(name = "ORDERINDEX")
 	private User user;
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "REPORT_QUESTIONGROUPSCORE", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTIONGROUPSCORE_ID"))
+	@OrderColumn(name = "ORDERINDEX")
+	List<QuestionGroupScore> questionGroupScore = new ArrayList<QuestionGroupScore>();
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "REPORT_REPORTPARTSCORE", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTPARTSCORE_ID"))
+	@OrderColumn(name = "ORDERINDEX")
+	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
+
 	public Report() {
 		this.date = new Date();
 
@@ -183,6 +193,22 @@ public class Report {
 
 	public void setAnswers(List<Answer> answers) {
 		this.answers = answers;
+	}
+
+	public List getQuestionGroupScore() {
+		return questionGroupScore;
+	}
+
+	public void setQuestionGroupScore(List questionGroupScore) {
+		this.questionGroupScore = questionGroupScore;
+	}
+
+	public List getReportPartScore() {
+		return reportPartScore;
+	}
+
+	public void setReportPartScore(List reportPartScore) {
+		this.reportPartScore = reportPartScore;
 	}
 
 }

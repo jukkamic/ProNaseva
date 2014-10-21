@@ -142,7 +142,7 @@ margin: 0;
 					Tarkastuskohteet
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em" align = "left">
-					${report.reportParts[0].questionGroups[1].score} / ${report.reportParts[0].questionGroups[1].maxScore}
+					${report.questionGroupScore[1].score} / ${report.questionGroupScore[1].maxScore}
 				</td>
 				<td>
 					<p>&#128530;</p> <!-- Frown -->
@@ -154,7 +154,7 @@ margin: 0;
 					TCT-Palvelupisteet
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em; padding-right: 4em" align = "left">
-					${report.reportParts[0].questionGroups[2].score} / ${report.reportParts[0].questionGroups[2].maxScore}
+					${report.questionGroupScore[2].score} / ${report.questionGroupScore[2].maxScore}
 				</td>
 				<td>
 					<p>&#128528;</p> <!-- Neutral -->
@@ -162,10 +162,10 @@ margin: 0;
 				</tr>				
 								
 				<tr><td width="15em" style="padding-top: 0.5em; padding-bottom: 2em;"><b>Yhteensä</b></td>
-				<c:set var="tarkastuskohteet" value="${report.reportParts[0].questionGroups[1].score}" />
-				<c:set var="palvelu" value="${report.reportParts[0].questionGroups[2].score}" />
-				<c:set var="tarkastuskohteetMax" value="${report.reportParts[0].questionGroups[1].maxScore}" />
-				<c:set var="palveluMax" value="${report.reportParts[0].questionGroups[2].maxScore}" />
+				<c:set var="tarkastuskohteet" value="${report.questionGroupScore[1].score}" />
+				<c:set var="palvelu" value="${report.questionGroupScore[2].score}" />
+				<c:set var="tarkastuskohteetMax" value="${report.questionGroupScore[1].maxScore}" />
+				<c:set var="palveluMax" value="${report.questionGroupScore[2].maxScore}" />
 				
 				<td style="padding-top: 0.5em; padding-bottom: 2em;">${tarkastuskohteet + palvelu} / ${tarkastuskohteetMax + palveluMax}</td>
 				<td></td>
@@ -175,11 +175,11 @@ margin: 0;
 				 
 				<tr>
 				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					${report.reportParts[1].title}
+					${report.reportTemplate.reportParts[1].title}
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em; ">
-					<c:if test='${report.reportParts[1].showScorePercentage == true}' >
-					${report.reportParts[1].scorePercentage} %
+					<c:if test="${report.reportPartScore[1].showScore == true}" >
+					${report.reportPartScore[1].scorePercentage} %
 					</c:if>
 				</td>
 				<td>
@@ -190,11 +190,11 @@ margin: 0;
 				
 				<tr>
 				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					${report.reportParts[2].title}
+					${report.reportTemplate.reportParts[2].title}
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					<c:if test='${report.reportParts[2].showScorePercentage == true}' >
-					${report.reportParts[2].scorePercentage} %
+					<c:if test='${report.reportPartScore[2].showScore == true}' >
+					${report.reportPartScore[2].scorePercentage} %
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
@@ -204,11 +204,11 @@ margin: 0;
 				
 				<tr>
 				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					${report.reportParts[3].title}
+					${report.reportTemplate.reportParts[3].title}
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					<c:if test='${report.reportParts[3].showScorePercentage == true}' >
-					${report.reportParts[3].scorePercentage} %
+					<c:if test='${report.reportPartScore[3].showScore == true}' >
+					${report.reportPartScore[3].scorePercentage} %
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
@@ -218,11 +218,11 @@ margin: 0;
 				
 				<tr>
 				<td width="15em" style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					${report.reportParts[4].title}
+					${report.reportTemplate.reportParts[4].title}
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					<c:if test='${report.reportParts[4].showScorePercentage == true}' >
-					${report.reportParts[4].scorePercentage} %
+					<c:if test='${report.reportPartScore[4].showScore == true}' >
+					${report.reportPartScore[4].scorePercentage} %
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
@@ -532,7 +532,10 @@ margin: 0;
 	<!-- PRINT REPORT CONTENT -->
 	<!-- Report part loop -->	
 	
-	<c:forEach var="reportPart" items="${report.reportParts}" varStatus="reportPartCounter">
+	<c:set var="answerIndexCounter" value="0" scope="request" />
+	<c:set var="questionGroupScoreIndexCounter" value="0" scope="request" />
+	
+	<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
 	<h1 class="newpage" style="border-bottom: 1px solid #eee;">${reportPart.title}</h1>
 
 				<!-- QuestionGroup loop -->
@@ -561,31 +564,26 @@ margin: 0;
 				
 				<!-- Multiple choice question -->
 					<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
-						<c:set var="maxPointsForQuestion" value="0" />	
-						<c:set var="scoredQuestions" value="TRUE" />			
-						
+				
 						<div class="noPageBreak">
 						
 						
 						<h3>${questionCounter.count}. ${question.question}</h3>
-						<c:if test="${question.answer.showScore == true}">
-						<h3 style="display: inline; float:right;">${question.answer.score}/${question.answer.maxScore}</h3>
+						<c:if test="${report.answers[answerIndexCounter].showScore == true}">
+						<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
 						</c:if>
 						
 						<table>
 							<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
-								<c:if test="${option.points > maxPointsForQuestion}">
-									<c:set var="maxPointsForQuestion" value="${option.points}" />
-								</c:if>
 								
 									<tr>
 															
 										<c:choose>
-											<c:when test="${question.answer.chosenOptionIndex == optionsCounter.index}">
+											<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
 												<td	style="padding-left: 1.5em;">
 												&#9745;
 												&nbsp;
-												<c:set var="totalScore" value="${totalScore + option.points}" />
+												
 												</td>
 											</c:when>
 											<c:otherwise>
@@ -603,41 +601,31 @@ margin: 0;
 									</tr>
 							</c:forEach> 
 							</table>
-							
-							<c:set var="maxTotalScore" value="${maxTotalScore + maxPointsForQuestion}" />
-														
+												
 							</div> <!-- Page break ok -->
-							<c:if test="${question.answer.remarks !='' and question.answer.remarks != null}"> 
+							<c:if test="${report.answers[answerIndexCounter].remarks !='' and question.answer.remarks != null}"> 
 								<div class="noPageBreak">
 									<h4>Huomioita:</h4>
-									<p>${question.answer.remarks}</p>
+									<p>${report.answers[answerIndexCounter].remarks}</p>
 								</div>
 							</c:if>
 							
 					</c:if>
 
-					<!--  Text area question -->
-					
-					<c:if test="${question.class == 'class fi.testcenter.domain.TextareaQuestion'}">
-					
-						<div class="noPageBreak">
-					
-						<h3>${questionCounter.count}. ${question.question}</h3>
-						<p>${question.answer.answer}</p>
-						
-						</div>
-					</c:if>
 										
 					<!-- Text field question -->
-					<c:if test="${question.class == 'class fi.testcenter.domain.TextfieldQuestion'}">
+					<c:if test="${question.class == 'class fi.testcenter.domain.TextQuestion'}">
 					
 						<div class="noPageBreak">
 						
 							<h3>${questionCounter.count}. ${question.question}</h3>
-							<p>${question.answer.answer}</p> 
+							<p>${report.answers[answerIndexCounter].answer}</p> 
 						</div>
 						
 					</c:if>
+					
+					
+					<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 					
 					<c:if test="${not empty question.subQuestions}">
 						<c:set var="mainQuestion" value="${question}" scope="request" />
@@ -647,11 +635,15 @@ margin: 0;
 					</c:if>
 					
 				</c:forEach> <!-- Question loop end -->
-																	
-				<c:if test="${questionGroup.showScore == true}">
-					<h4 style="font-weight: bold; float: right; padding-right: 2em; padding-bottom: 2em; padding-top: 2em;">Pisteet: ${questionGroup.score}/${questionGroup.maxScore}</h4>
+										
+											
+				<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
+					<h4 style="font-weight: bold; float: right; padding-right: 2em; padding-bottom: 2em; padding-top: 2em;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
+					${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore}</h4>
 				</c:if>
-					
+		
+		<c:set var="questionGroupScoreIndexCounter" value="${questionGroupScoreIndexCounter + 1}" scope="request" />
+		
 		</c:forEach> <!-- Question group loop end -->
 		
 	</c:forEach> <!-- Report part loop end -->
