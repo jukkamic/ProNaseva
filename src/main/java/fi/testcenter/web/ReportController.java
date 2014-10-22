@@ -161,6 +161,9 @@ public class ReportController {
 	public String printReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report) {
 		model.addAttribute("report", report);
+		log.debug("question group score : "
+				+ report.getQuestionGroupScore().get(1).getScore());
+
 		return "printReport";
 	}
 
@@ -195,16 +198,16 @@ public class ReportController {
 		int reportTotalScore = 0;
 		int reportMaxScore = 0;
 		int answerIndexCounter = 0;
+		List<QuestionGroupScore> questionGroupScoreList = new ArrayList<QuestionGroupScore>();
+		List<ReportPartScore> reportPartScoreList = new ArrayList<ReportPartScore>();
+
 		for (ReportPart reportPart : report.getReportTemplate()
 				.getReportParts()) {
 
-			int reportPartScore = 0;
-			int reportPartMaxScore = 0;
 			ReportPartScore reportPartScoreObject = new ReportPartScore();
 
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
-				int questionGroupMaxScore = 0;
-				int questionGroupScore = 0;
+
 				QuestionGroupScore questionGroupScoreObject = new QuestionGroupScore();
 
 				for (Question question : questionGroup.getQuestions()) {
@@ -330,9 +333,9 @@ public class ReportController {
 				// Lisätään kysymysryhmän pisteet Report-luokan olioon.
 
 				questionGroupScoreObject.calculateScorePercentage();
-				List questionGroupScoreList = report.getQuestionGroupScore();
 				questionGroupScoreList.add(questionGroupScoreObject);
-				report.setQuestionGroupScore(questionGroupScoreList);
+
+				System.out.println(questionGroupScoreObject.getScore());
 
 				// Lisätään kysymysryhmän pisteet ja maksimipisteet raportin
 				// osan pisteisiin
@@ -342,15 +345,14 @@ public class ReportController {
 				reportPartScoreObject
 						.setMaxScore(reportPartScoreObject.getMaxScore()
 								+ questionGroupScoreObject.getMaxScore());
+				System.out.println(reportPartScoreObject.getScore());
 
 			}
 
 			// Lisätään raportin osan pisteet Report-luokan olioon.
 
 			reportPartScoreObject.calculateScorePercentage();
-			List reportPartScoreList = report.getReportPartScore();
 			reportPartScoreList.add(reportPartScoreObject);
-			report.setReportPartScore(reportPartScoreList);
 
 			reportTotalScore = reportTotalScore
 					+ reportPartScoreObject.getScore();
@@ -359,9 +361,17 @@ public class ReportController {
 
 		}
 
+		report.setQuestionGroupScore(questionGroupScoreList);
+		report.setReportPartScore(reportPartScoreList);
+
 		report.setTotalScorePercentage((int) Math
 				.round((double) reportTotalScore / (double) reportMaxScore
 						* 100));
+		System.out.println("Ensimmäinen kysymysryhmä : "
+				+ report.getQuestionGroupScore().get(1).getScore());
+
+		System.out.println("Ensimmäinen raportin osa: "
+				+ report.getReportPartScore().get(0).getScore());
 
 	}
 }

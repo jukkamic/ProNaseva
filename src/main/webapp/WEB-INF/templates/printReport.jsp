@@ -119,9 +119,16 @@ margin: 0;
 				</div>
 				<br><br>
 			
-			<h2 style="display: inline;">Yleisarvosana : </h2>
-				<p style="display: inline; font-size: 3em;"> &#128530;</p>
-			
+			<table>
+				<tr>
+					<td>
+						<h2 style="display: inline; padding-right: 3em;">Yleisarvosana : </h2>
+					</td>
+					<td>
+						<p style="display: inline; font-size: 8em; padding: 0; margin: 0"> &#128530;</p>
+					</td>
+				</tr>
+			</table>
 			</div>
 				<div class="newpage"></div>	
 				
@@ -145,7 +152,7 @@ margin: 0;
 					${report.questionGroupScore[1].score} / ${report.questionGroupScore[1].maxScore}
 				</td>
 				<td>
-					<p>&#128530;</p> <!-- Frown -->
+					<p style="font-size: 2em; padding: 0; margin: 0">&#128530;</p> <!-- Frown -->
 				</td>
 				</tr>
 
@@ -157,7 +164,7 @@ margin: 0;
 					${report.questionGroupScore[2].score} / ${report.questionGroupScore[2].maxScore}
 				</td>
 				<td>
-					<p>&#128528;</p> <!-- Neutral -->
+					<p style="font-size: 2em; padding: 0; margin: 0">&#128528;</p> <!-- Neutral -->
 				</td>
 				</tr>				
 								
@@ -184,7 +191,7 @@ margin: 0;
 				</td>
 				<td>
 
-					<p>&#128530;</p> <!-- Frown -->
+					<p style="font-size: 2em; padding: 0; margin: 0">&#128530;</p> <!-- Frown -->
 				</td>
 				</tr>
 				
@@ -198,7 +205,7 @@ margin: 0;
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					<p>&#128530;</p> <!-- Frown -->
+					<p style="font-size: 2em; padding: 0; margin: 0">&#128528;</p> <!-- Frown -->
 				</td>
 				</tr>
 				
@@ -212,7 +219,7 @@ margin: 0;
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					<p>&#128528;</p> <!-- Neutral -->
+					<p style="font-size: 2em; padding: 0; margin: 0">&#128522;</p> <!-- Happy -->
 				</td>
 				</tr>
 				
@@ -226,14 +233,14 @@ margin: 0;
 					</c:if>
 				</td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
-					<p>&#128530;</p> <!-- Frown -->
+					<p style="font-size: 2em; padding: 0; margin: 0">&#128528;</p> <!-- Neutral -->
 				</td>
 				</tr>
 				
 				<tfoot>
 				<tr>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;"><b>Yhteensä:</b></td>
-				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">${report.totalScorePercentage} %</td>
+				<td style="padding-top: 0.5em; padding-bottom: 0.5em;"><b>${report.totalScorePercentage} %</b></td>
 				<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
 
 				</td>
@@ -252,8 +259,9 @@ margin: 0;
 		
 			
 							<!-- Osio A kysymys 3c -->
-						
-						<h3>Saiko asiakas mielestään huoltoajan kohtuullisen ajan sisällä?</h3>
+						<h2>Osa A - Ajanvaraus korjaamolle</h2>
+						<h3>3. Tilattava huolto</h3>
+						<h3>3.6. Saiko asiakas mielestään huoltoajan kohtuullisen ajan sisällä?</h3>
 						<h3 style="display: inline; float:right;">0/2</h3>
 						<table>
 							<tr>
@@ -278,9 +286,12 @@ margin: 0;
 						<h4>Huomioita:</h4>
 						<p>Tarjottu aika ensimmäinen vapaa aika, normaali huoltoon jono 8 päivää, yli viikko (5 arkipäivää).</p>
 			
+			
+						<br>
 						<!-- Osio B kysymys 2a -->
-						
-						<h3>Kävikö palvelleen huoltoneuvojan nimi ilmi?</h3>
+						<h2>Osa B - Työnvastaanotto</h2>
+						<h3>2. Keskustelu työnvastaanotossa</h3>
+						<h3>2.1. Kävikö palvelleen huoltoneuvojan nimi ilmi?</h3>
 						<h3 style="display: inline; float:right;">0/2</h3>
 						<table>
 							<tr>
@@ -305,9 +316,10 @@ margin: 0;
 						<h4>Huomioita:</h4>
 						<p>Ei nimikylttiä.</p>
 
+						<br>
 						<!-- Osio B kysymys 2b -->
 						
-						<h3>Varmistettiinko ajanvarauksessa sovitut asiat? (Huolto, tilatut lisätyöt, hinta- ja aika-arvio)</h3>
+						<h3>2.2. Varmistettiinko ajanvarauksessa sovitut asiat? (Huolto, tilatut lisätyöt, hinta- ja aika-arvio)</h3>
 						<h3 style="display: inline; float:right;">0/2</h3>
 						<table>
 							<tr>
@@ -333,8 +345,8 @@ margin: 0;
 						<p>Huolto tiedossa. Ajanvarauksessa annettua kustannusarviota ei varmistettu.</p>
 
 						<!-- Osio B kysymys 2c -->
-						<br><br>
-						<h3>Oliko asiakkaalla huoltokirja mukana saapuessaan työnvastaanottoon?</h3>
+						<br>
+						<h3>2.3. Pyydettiinkö asiakasta ottamaan huoltokirja mukaan saapuessaan työnvastaanottoon?</h3>
 						<h3 style="display: inline; float:right;">0/2</h3>
 						<table>
 							<tr>
@@ -368,7 +380,7 @@ margin: 0;
 							</tr>
 						</table>
 								
-						<h3>Jos ei: kysyikö korjaamon edustaja luvan ottaa se autosta?</h3>
+						<h3>2.3.1. Jos ei: kysyikö korjaamon edustaja luvan ottaa se autosta?</h3>
 						<h3 style="display: inline; float:right;">0/2</h3>
 						<table>
 							<tr>
@@ -393,10 +405,10 @@ margin: 0;
 						<h4>Huomioita:</h4>
 						<p>Asiakas jätti huoltokirjan autoon. Ei puhetta huoltokirjasta. Ei muistutuskylttiä.</p>
 							
-							
-						
-
-						<h3>Tarjottiinko kopiota työmääräyksestä?</h3>
+												
+					
+						<h3 class="newpage">3. Töiden kirjaaminen</h3>
+						<h3>3.14. Tarjottiinko kopiota työmääräyksestä?</h3>
 						<h3 style="display: inline; float:right;">0/2</h3>
 						<table>
 							<tr>
@@ -429,7 +441,8 @@ margin: 0;
 						</table>
 
 				<!-- Osa C kysymys 3 c -->
-
+						<h2>Osa D - Auton luovutus</h2>
+						<h3>2. Lasku</h3>
 						<h3>Vastasiko lasku annettua kustannusarviota huomioiden sovitut lisätyöt:</h3>
 						<h3 style="display: inline; float:right;">8/8</h3>
 						<table>
@@ -503,7 +516,8 @@ margin: 0;
 							</tr>
 						</table>
 						
-						<h3>Kerrottiinko seuraavan huollon ajankohdasta?</h3>
+						<h3>3. Asiakkaan neuvonta</h3>
+						<h3>3.1. Kerrottiinko seuraavan huollon ajankohdasta?</h3>
 						<h3 style="display: inline; float:right;">0/2</h3>
 						<table>
 							<tr>
@@ -549,10 +563,10 @@ margin: 0;
 				<c:set var="scoredQuestions" value="FALSE" />
 				<c:choose>
 					<c:when test="${questionGroupCounter.count == 1}">
-						<h2 style="border-bottom: 1px solid #eee;">${questionGroup.title}</h2>
+						<h2 style="border-bottom: 1px solid #eee;">${questionGroupCounter.count}. ${questionGroup.title}</h2>
 					</c:when>
 					<c:otherwise>
-						<h2 class="newpage" style="border-bottom: 1px solid #eee;">${questionGroup.title}</h2>
+						<h2 class="newpage" style="border-bottom: 1px solid #eee;">${questionGroupCounter.count}. ${questionGroup.title}</h2>
 					</c:otherwise>
 				</c:choose>
 				
@@ -568,7 +582,7 @@ margin: 0;
 						<div class="noPageBreak">
 						
 						
-						<h3>${questionCounter.count}. ${question.question}</h3>
+						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 						<c:if test="${report.answers[answerIndexCounter].showScore == true}">
 						<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
 						</c:if>
@@ -603,7 +617,8 @@ margin: 0;
 							</table>
 												
 							</div> <!-- Page break ok -->
-							<c:if test="${report.answers[answerIndexCounter].remarks !='' and question.answer.remarks != null}"> 
+							<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+							<c:if test="${remarks !='' and remarks != null}"> 
 								<div class="noPageBreak">
 									<h4>Huomioita:</h4>
 									<p>${report.answers[answerIndexCounter].remarks}</p>
@@ -618,7 +633,7 @@ margin: 0;
 					
 						<div class="noPageBreak">
 						
-							<h3>${questionCounter.count}. ${question.question}</h3>
+							<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 							<p>${report.answers[answerIndexCounter].answer}</p> 
 						</div>
 						
@@ -629,6 +644,8 @@ margin: 0;
 					
 					<c:if test="${not empty question.subQuestions}">
 						<c:set var="mainQuestion" value="${question}" scope="request" />
+						<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
+						<c:set var="mainQuestionNumber" value="${questionCounter.count}" scope="request" />
 						<div style="margin-left: 3em;">
 							<jsp:include page="/WEB-INF/templates/printReportSubQuestions.jsp" />
 						</div>				
@@ -638,8 +655,9 @@ margin: 0;
 										
 											
 				<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
-					<h4 style="font-weight: bold; float: right; padding-right: 2em; padding-bottom: 2em; padding-top: 2em;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
+					<h4 style="font-weight: bold; padding-right: 2em; padding-bottom: 2em; padding-top: 2em; text-align: right;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
 					${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore}</h4>
+					<br>
 				</c:if>
 		
 		<c:set var="questionGroupScoreIndexCounter" value="${questionGroupScoreIndexCounter + 1}" scope="request" />

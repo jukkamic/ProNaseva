@@ -16,7 +16,7 @@
 	test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 
 	<div class="noPageBreak">
-	<h3>${subQuestion.question}</h3>
+	<h3>${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
 	<c:if test="${report.answers[answerIndexCounter].showScore == true}">
 		<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
 	</c:if>
@@ -50,7 +50,8 @@
 			
 	</div>
 	
-	<c:if test="${report.answers[answerIndexCounter].remarks !='' and report.answers[answerIndexCounter].remarks != null}"> 
+		<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+			<c:if test="${remarks !='' and remarks != null}"> 
 		<div class="noPageBreak">
 		<h4 style="padding-left: 0;">Huomioita:</h4>
 		<p style="padding-left: 0;">${report.answers[answerIndexCounter].remarks}</p>
@@ -62,7 +63,7 @@
 <!-- Text question -->
 <c:if
 	test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
-	<h3 style="padding-left: 0;">${subQuestion.question}</h3>
+	<h3 style="padding-left: 0;">${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
 	<p style="padding-left: 0;">${report.answers[answerIndexCounter].answer}</p>
 </c:if> 
 

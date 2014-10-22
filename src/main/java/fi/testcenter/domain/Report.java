@@ -195,19 +195,20 @@ public class Report {
 		this.answers = answers;
 	}
 
-	public List getQuestionGroupScore() {
-		return questionGroupScore;
+	public List<QuestionGroupScore> getQuestionGroupScore() {
+		return this.questionGroupScore;
 	}
 
-	public void setQuestionGroupScore(List questionGroupScore) {
+	public void setQuestionGroupScore(
+			List<QuestionGroupScore> questionGroupScore) {
 		this.questionGroupScore = questionGroupScore;
 	}
 
-	public List getReportPartScore() {
+	public List<ReportPartScore> getReportPartScore() {
 		return reportPartScore;
 	}
 
-	public void setReportPartScore(List reportPartScore) {
+	public void setReportPartScore(List<ReportPartScore> reportPartScore) {
 		this.reportPartScore = reportPartScore;
 	}
 
