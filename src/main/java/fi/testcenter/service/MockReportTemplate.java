@@ -388,14 +388,13 @@ public class MockReportTemplate {
 
 		ArrayList<Question> subQListA17 = new ArrayList<Question>();
 
-		// MultipleChoiceQuestion a18 = new MultipleChoiceQuestion();
-		// ArrayList<MultipleChoiceOption> optionsA18 = new
-		// ArrayList<MultipleChoiceOption>();
-		// a18.setQuestion("Kysyttiinkö puhelinnumero?");
-		// optionsA18.add(new MultipleChoiceOption("Kyllä", 2));
-		// optionsA18.add(new MultipleChoiceOption("Ei", 0));
-		// a18.setOptions(optionsA18);
-		// subQListA17.add(a18);
+		MultipleChoiceQuestion a18 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsA18 = new ArrayList<MultipleChoiceOption>();
+		a18.setQuestion("Kysyttiinkö puhelinnumero?");
+		optionsA18.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsA18.add(new MultipleChoiceOption("Ei", 0));
+		a18.setOptions(optionsA18);
+		subQListA17.add(a18);
 
 		MultipleChoiceQuestion a19 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA19 = new ArrayList<MultipleChoiceOption>();
@@ -681,7 +680,7 @@ public class MockReportTemplate {
 
 		MultipleChoiceQuestion a58 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsA58 = new ArrayList<MultipleChoiceOption>();
-		a58.setQuestion("Saiko asiakas varmistuksen/muistustutuksen tilatuista lisätöistä?");
+		a58.setQuestion("Saiko asiakas varmistuksen/muistutuksen tilatuista lisätöistä?");
 		optionsA58.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA58.add(new MultipleChoiceOption("Ei", 0));
 		a58.setOptions(optionsA58);
@@ -872,7 +871,7 @@ public class MockReportTemplate {
 
 		MultipleChoiceQuestion b16 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsB16 = new ArrayList<MultipleChoiceOption>();
-		b16.setQuestion("Olikö työmääräys valmiina?");
+		b16.setQuestion("Oliko työmääräys valmiina?");
 		optionsB16.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB16.add(new MultipleChoiceOption("Ei", 0));
 		b16.setOptions(optionsB16);
@@ -965,7 +964,7 @@ public class MockReportTemplate {
 		MultipleChoiceQuestion b26 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsB26 = new ArrayList<MultipleChoiceOption>();
 		b26.setQuestion("Kysyikö huoltoneuvoja tarkentavia tietoja uusista lisätöistä? "
-				+ "Jäikö tunne, että asiakas otetaan tosissaan");
+				+ "Jäikö tunne, että asiakas otetaan tosissaan?");
 		optionsB26.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB26.add(new MultipleChoiceOption("Ei", 0));
 		optionsB26.add(new MultipleChoiceOption("Ei tarpeellista", -1));
@@ -1473,15 +1472,6 @@ public class MockReportTemplate {
 		d90.setOptions(optionsD90);
 		questionList15.add(d90);
 
-		MultipleChoiceQuestion d100 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> optionsD100 = new ArrayList<MultipleChoiceOption>();
-		d100.setQuestion("Kerrottiinko huolletun auton sijainti pysäköintialueella?");
-		optionsD100.add(new MultipleChoiceOption("Kyllä", 2));
-		optionsD100.add(new MultipleChoiceOption("Ei", 0));
-		optionsD100.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		d100.setOptions(optionsD100);
-		questionList15.add(d100);
-
 		MultipleChoiceQuestion d10 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsD10 = new ArrayList<MultipleChoiceOption>();
 		d10.setQuestion("Kerrottiinko huolletun auton sijainti pysäköintialueella?");
@@ -1634,6 +1624,7 @@ public class MockReportTemplate {
 		e4.setQuestion("Huomautukset/lisätyöt merkitty selvällä käsialalla");
 		optionsE4.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE4.add(new MultipleChoiceOption("Ei", -1));
+		optionsE4.add(new MultipleChoiceOption("Ei tarpeellista", -1));
 		e4.setOptions(optionsE4);
 		questionList18.add(e4);
 
@@ -1642,6 +1633,7 @@ public class MockReportTemplate {
 		e5.setQuestion("Huomautukset/lisätyöt merkitty ymmärrettävästi");
 		optionsE5.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE5.add(new MultipleChoiceOption("Ei", -1));
+		optionsE5.add(new MultipleChoiceOption("Ei tarpeellista", -1));
 		e5.setOptions(optionsE5);
 		questionList18.add(e5);
 

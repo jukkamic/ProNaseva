@@ -1,6 +1,7 @@
 package fi.testcenter.domain;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
@@ -15,6 +16,7 @@ public class MultipleChoiceAnswer extends Answer {
 
 	private int chosenOptionIndex = -1;
 
+	@Column(length = 1500)
 	private String remarks = "";
 
 	public String getRemarks() {
