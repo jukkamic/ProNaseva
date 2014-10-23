@@ -22,15 +22,18 @@
  	<jdbc-user-service id="userService"
  		data-source-ref="dataSource" 
  		users-by-username-query=
- 			"SELECT USERNAME, PASSWORD, TRUE FROM USER WHERE USERNAME=?"
+ 			"SELECT USERNAME, PASSWORD, ENABLED FROM USER WHERE USERNAME=?"
  		authorities-by-username-query=
  			"SELECT USERNAME, ROLE FROM USER WHERE USERNAME=?" />
+ 			
+ 	<!-- KÄYTTÄJÄ ENSIMMÄISTÄ KÄYNNISTYSTÄ VARTEN JA KAIKEN VARALLE -->
  			
  	<user-service id="xmlUserService">
  		<user name="hubbabubba" password="purukumi" authorities="ROLE_ADMIN" />
  	</user-service>
  		
-
+	
+	
 	<authentication-manager>
 		<authentication-provider user-service-ref="userService" />
 		<authentication-provider user-service-ref="xmlUserService" />

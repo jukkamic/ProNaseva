@@ -37,10 +37,10 @@
 				<c:forEach var="report" items="${reportSearchList}">
 						<tr>
 							<td><a class="btn btn-default" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
-								Valitse</a>
+								Näytä</a>
 							</td>
 							<td>
-								[pvm]
+								${report.reportDate}
 							</td>
 							<td>${report.importer.name}
 							</td>

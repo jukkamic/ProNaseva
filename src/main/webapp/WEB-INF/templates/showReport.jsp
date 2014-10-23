@@ -20,6 +20,7 @@
 			<div style="border-bottom: 1px solid #eee;">
 			<h4>Maahantuoja: ${report.importer.name}</h4>
 			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
+			<h4>Raportin päivämäärä: ${report.reportDate}</h4>
 			<span class="label label-success">Valmis</span>
 			<br><br>
 			</div>

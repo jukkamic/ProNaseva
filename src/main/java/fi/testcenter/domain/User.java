@@ -4,8 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQuery(name = "getLoginUser", query = "SELECT u FROM User u WHERE u.userName = :userName")
 public class User {
 
 	private String firstName;
@@ -16,22 +18,22 @@ public class User {
 
 	private String role;
 
-	private boolean active;
+	private boolean enabled = true;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
 	public void user() {
-		active = true;
+		this.enabled = true;
 	}
 
-	public boolean isActive() {
-		return active;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public String getFirstName() {

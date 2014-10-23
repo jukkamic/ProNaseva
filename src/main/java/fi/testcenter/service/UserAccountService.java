@@ -2,8 +2,13 @@ package fi.testcenter.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +20,9 @@ public class UserAccountService {
 
 	@Autowired
 	UserRepository ur;
+
+	@PersistenceContext()
+	EntityManager em;
 
 	private Logger log = Logger
 			.getLogger("fi.testcenter.service.ReportService");
@@ -36,8 +44,18 @@ public class UserAccountService {
 
 	@Transactional
 	public void deleteUser(User user) {
+		user.setEnabled(false);
+		ur.save(user);
+	}
 
-		ur.delete(user);
+	@Transactional
+	public User getLoginUser() {
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+
+		return em.createNamedQuery("getLoginUser", User.class)
+				.setParameter("userName", auth.getName()).getSingleResult();
+
 	}
 
 }

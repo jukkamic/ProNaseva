@@ -1,5 +1,6 @@
 package fi.testcenter.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,8 @@ public class Report {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 
+	private String reportDate;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "REPORT_IMPORTER", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "IMPORTER_ID"))
 	@OrderColumn(name = "ORDERINDEX")
@@ -57,7 +60,6 @@ public class Report {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "REPORT_WORKSHOP", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "WORKSHOP_ID"))
-	@OrderColumn(name = "ORDERINDEX")
 	private Workshop workshop;
 
 	@Transient
@@ -65,7 +67,6 @@ public class Report {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "REPORT_USER", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-	@OrderColumn(name = "ORDERINDEX")
 	private User user;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -79,7 +80,9 @@ public class Report {
 	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
 
 	public Report() {
-		this.date = new Date();
+
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+		this.reportDate = DATE_FORMAT.format(new Date());
 
 	}
 
@@ -210,6 +213,14 @@ public class Report {
 
 	public void setReportPartScore(List<ReportPartScore> reportPartScore) {
 		this.reportPartScore = reportPartScore;
+	}
+
+	public String getReportDate() {
+		return reportDate;
+	}
+
+	public void setReportDate(String reportDate) {
+		this.reportDate = reportDate;
 	}
 
 }

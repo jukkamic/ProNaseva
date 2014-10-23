@@ -32,6 +32,7 @@ import fi.testcenter.domain.TextQuestion;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
+import fi.testcenter.service.UserAccountService;
 import fi.testcenter.service.WorkshopService;
 
 @Controller
@@ -49,6 +50,9 @@ public class ReportController {
 
 	@Autowired
 	private ReportService rs;
+
+	@Autowired
+	private UserAccountService us;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model) {
@@ -80,6 +84,7 @@ public class ReportController {
 
 		Report report = new Report();
 		report.setReportTemplate(rs.getReportTemplate());
+		report.setUser(us.getLoginUser());
 
 		Workshop workshop = ws.findWorkshop(reportInfo.getWorkshopID());
 		Importer importer = is.getImporterById(reportInfo.getImporterID());
