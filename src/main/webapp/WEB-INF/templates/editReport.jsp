@@ -43,7 +43,14 @@
 				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="report.workshopId"
 					class="form-control">
 					<c:forEach var="workshop" items="${workshops}">
-						<option value="${workshop.id}">${workshop}</option>
+						<c:choose>
+							<c:when test='${workshop.id == report.workshop.id}'>
+								<option selected="selected" value="${workshop.id}">${workshop}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${workshop.id}">${workshop}</option>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 				</sf:select>
 			

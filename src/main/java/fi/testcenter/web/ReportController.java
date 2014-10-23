@@ -181,6 +181,10 @@ public class ReportController {
 	public String editReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report) {
 
+		List<Workshop> workshops = ws.getWorkshops();
+
+		model.addAttribute("workshops", workshops);
+
 		model.addAttribute("edit", "TRUE");
 
 		return "editReport";
