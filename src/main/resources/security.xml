@@ -19,18 +19,21 @@
         <anonymous username="guest" granted-authority="ROLE_GUEST" />
     </http>
     
-    <authentication-manager>
-    <authentication-provider>
-    <user-service id="userService">
-      <user name="jarno" password="salasana" 
-                     authorities="ROLE_TESTER,ROLE_ADMIN"/>
-      <user name="jukka" password="1234" 
-                     authorities="ROLE_TESTER"/>
-      <user name="artsi" password="password" 
-                     authorities="ROLE_ADMIN"/>
-    </user-service>
-    </authentication-provider>
-    </authentication-manager>
+ 	<jdbc-user-service id="userService"
+ 		data-source-ref="dataSource" 
+ 		users-by-username-query=
+ 			"SELECT USERNAME, PASSWORD, TRUE FROM USER WHERE USERNAME=?"
+ 		authorities-by-username-query=
+ 			"SELECT USERNAME, ROLE FROM USER WHERE USERNAME=?" />
+ 			
+ 	<user-service id="xmlUserService">
+ 		<user name="hubbabubba" password="purukumi" authorities="ROLE_ADMIN" />
+ 	</user-service>
+ 		
 
-    
+	<authentication-manager>
+		<authentication-provider user-service-ref="userService" />
+		<authentication-provider user-service-ref="xmlUserService" />
+	</authentication-manager>
+	
 </beans:beans>
