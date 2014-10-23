@@ -113,7 +113,7 @@ margin: 0;
 				<br>
 				<div style="border-bottom: 1px solid #eee;">
 					<h2>${report.workshop.name}</h2>
-					<h2>16.10.2014</h2>
+					<h2>${report.reportDate}</h2>
 					<br><br>
 					
 				</div>

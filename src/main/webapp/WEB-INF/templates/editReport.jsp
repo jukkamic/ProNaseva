@@ -31,11 +31,24 @@
 					<span class="label label-warning">Kesken</span>
 				</c:otherwise>
 			</c:choose>
+
 						
 			<br><br>
 			</div>
-			<br><br>
+			
 			<form modelAttribute="report" action="submitReport" method="post">
+		
+				<label for="workshopSelect"><h4>Valitse korjaamo: </h4></label>
+				<br>
+				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="report.workshopId"
+					class="form-control">
+					<c:forEach var="workshop" items="${workshops}">
+						<option value="${workshop.id}">${workshop}</option>
+					</c:forEach>
+				</sf:select>
+			
+			<br>
+			
 
 			<!-- Report part loop -->
 			

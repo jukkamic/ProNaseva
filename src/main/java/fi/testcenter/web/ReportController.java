@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Answer;
@@ -64,34 +65,24 @@ public class ReportController {
 	public String prepareNewReportBasicInfoForm(HttpServletRequest request,
 			Model model) {
 
-		List<Workshop> workshops = ws.getWorkshops();
-
-		model.addAttribute("workshops", workshops);
-
 		List<Importer> importers = is.getImporters();
 		model.addAttribute("importers", importers);
 
-		model.addAttribute("reportBasicInfo", new ReportBasicInfo());
-
-		return "newReportBasicInfo";
+		return "newReportSelectImporter";
 	}
 
 	@RequestMapping(value = "/addNewReport", method = RequestMethod.POST)
 	public String submitNewReportBasicInfo(HttpServletRequest request,
-			Model model,
-			@ModelAttribute("reportBasicInfo") ReportBasicInfo reportInfo,
-			BindingResult result) {
+			Model model, @RequestParam("importerID") Integer importerID) {
 
 		Report report = new Report();
 		report.setReportTemplate(rs.getReportTemplate());
 		report.setUser(us.getLoginUser());
 
-		Workshop workshop = ws.findWorkshop(reportInfo.getWorkshopID());
-		Importer importer = is.getImporterById(reportInfo.getImporterID());
-		report.setWorkshop(workshop);
+		Importer importer = is.getImporterById(importerID.longValue());
+
 		report.setImporter(importer);
-		report.setWorkshopId(reportInfo.getWorkshopID());
-		report.setImporterId(reportInfo.getImporterID());
+		report.setImporterId(importerID.longValue());
 
 		model.addAttribute("report", report);
 
@@ -103,6 +94,10 @@ public class ReportController {
 			@ModelAttribute("report") Report report, BindingResult result) {
 
 		model.addAttribute("report", report);
+
+		List<Workshop> workshops = ws.getWorkshops();
+
+		model.addAttribute("workshops", workshops);
 
 		List<Answer> answers = new ArrayList<Answer>();
 
@@ -149,7 +144,9 @@ public class ReportController {
 
 	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
-			@ModelAttribute("report") Report report) {
+			@ModelAttribute("report") Report report, BindingResult result) {
+
+		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
 		countReportScore(report);
 

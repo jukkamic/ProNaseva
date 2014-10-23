@@ -174,14 +174,6 @@ public class Report {
 		this.workshop = workshop;
 	}
 
-	public Long getWorkshopId() {
-		return workshopId;
-	}
-
-	public void setWorkshopId(Long workshopId) {
-		this.workshopId = workshopId;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -221,6 +213,14 @@ public class Report {
 
 	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
+	}
+
+	public Long getWorkshopId() {
+		return workshopId;
+	}
+
+	public void setWorkshopId(Long workshopId) {
+		this.workshopId = workshopId;
 	}
 
 }

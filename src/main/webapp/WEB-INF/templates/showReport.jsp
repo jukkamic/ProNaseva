@@ -24,7 +24,7 @@
 			<span class="label label-success">Valmis</span>
 			<br><br>
 			</div>
-			<br><br>
+			<br>
 			
 			
 			<!-- Report part loop -->

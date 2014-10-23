@@ -13,38 +13,27 @@
 		<div class="container">
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
-				<h1>Alkutiedot</h1>
+				<h1>Uusi raportti</h1>
 			</div>
 
 			<br>
 			<br>
 
-			<sf:form modelAttribute="reportBasicInfo" method="post">
+			<form method="post">
 
 				<label for="importerSelect">Maahantuoja: </label>
 				<br>
-				<sf:select style="width: auto; max-width: 100%" id="importerSelect" path="importerID"
+				<select style="width: auto; max-width: 100%" id="importerSelect" name="importerID"
 					class="form-control">
 					<c:forEach var="importer" items="${importers}">
 						<option value="${importer.id}">${importer}</option>
 					</c:forEach>
-				</sf:select>
-				<br>
-				<br>
-				
-				<label for="workshopSelect">Korjaamo: </label>
-				<br>
-				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="workshopID"
-					class="form-control">
-					<c:forEach var="workshop" items="${workshops}">
-						<option value="${workshop.id}">${workshop}</option>
-					</c:forEach>
-				</sf:select>
+				</select>
 
 				<br>
 				<br>
-				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-arrow-right" style="text-decoration: none;"></span> Seuraava</button>
-			</sf:form>
+				<button class="btn btn-large btn-primary" type="submit"><span class="glyphicon glyphicon-arrow-right" style="text-decoration: none;"></span> Seuraava</button>
+			</form>
 			
 		</div>
 
