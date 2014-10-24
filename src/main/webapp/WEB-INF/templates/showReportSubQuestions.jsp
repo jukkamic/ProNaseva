@@ -31,13 +31,13 @@
 					<c:when test="${option.radiobuttonText != null }">
 						<c:choose>
 							<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
-								<button class="btn btn-large btn-primary" type="button">
+								<button class="btn btn-large btn-primary disabled" type="button">
 									${option.radiobuttonText}
 																																											
 								</button>
 							</c:when>
 							<c:otherwise>
-								<button class="btn btn-large btn-primary" type="button" disabled>
+								<button class="btn btn-large btn-default" type="button" disabled>
 									${option.radiobuttonText}
 								</button>
 							</c:otherwise>
@@ -46,13 +46,13 @@
 					<c:otherwise>
 						<c:choose>
 							<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
-								<button class="btn btn-large btn-primary" type="button">
+								<button class="btn btn-large btn-primary disabled" type="button">
 									${option.option}
 								
 								</button>
 							</c:when>
 							<c:otherwise>
-								<button class="btn btn-large btn-primary" type="button" disabled>
+								<button class="btn btn-large btn-default" type="button" disabled>
 									${option.option}
 								</button>
 							</c:otherwise>
