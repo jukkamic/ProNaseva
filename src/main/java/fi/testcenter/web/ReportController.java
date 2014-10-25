@@ -142,7 +142,7 @@ public class ReportController {
 		return "editReport";
 	}
 
-	@RequestMapping(value = "/submitReport", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report, BindingResult result) {
 
@@ -157,6 +157,23 @@ public class ReportController {
 		}
 
 		return "showReport";
+	}
+
+	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)
+	public String submitReportForApproval(HttpServletRequest request,
+			Model model, @ModelAttribute("report") Report report) {
+
+		report.setReportStatus("AWAIT_APPROVAL");
+		model.addAttribute("report", report);
+
+		try {
+			rs.saveReport(report);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+		return "/showReport";
 	}
 
 	@RequestMapping(value = "/printReport")
@@ -182,8 +199,8 @@ public class ReportController {
 		List<Workshop> workshops = ws.getWorkshops();
 
 		model.addAttribute("workshops", workshops);
-
 		model.addAttribute("edit", "TRUE");
+		report.setReportStatus("DRAFT");
 
 		return "editReport";
 	}

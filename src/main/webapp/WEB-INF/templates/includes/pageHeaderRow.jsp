@@ -23,20 +23,21 @@
           	  message: "Kirjaudu ulos?",
           	  title: "Vahvista",
           	  buttons: {
-          	    cancel: {
-          	      label: "Peruuta",
-          	      className: "btn-primary",
-          	      callback: function() {
-          	        
-          	      }
-          	    },
-          	    confirm: {
+          	   confirm: {
           	      label: "Vahvista",
-          	      className: "btn-danger",
+          	      className: "btn-primary",
           	      callback: function() {
           	    	window.location.href = "<c:url value='/j_spring_security_logout' />"
           	      }
+          	    },
+          	  cancel: {
+          	      label: "Peruuta",
+          	      className: "btn-danger",
+          	      callback: function() {
+          	        
+          	      }
           	    }
+          	    
           	  }
           	});
             });

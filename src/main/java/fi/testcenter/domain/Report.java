@@ -39,6 +39,7 @@ public class Report {
 
 	private int totalScorePercentage;
 
+	private String reportStatus; // 'DRAFT', 'AWAIT_APPROVAL', or 'APPROVED'
 	private String vehicleModel;
 	private String vehicleRegistrationNumber;
 	private String vehicleRegistrationDate;
@@ -83,6 +84,7 @@ public class Report {
 
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 		this.reportDate = DATE_FORMAT.format(new Date());
+		this.reportStatus = "DRAFT";
 
 	}
 
@@ -161,6 +163,14 @@ public class Report {
 
 	public Importer getImporter() {
 		return importer;
+	}
+
+	public String getReportStatus() {
+		return reportStatus;
+	}
+
+	public void setReportStatus(String reportStatus) {
+		this.reportStatus = reportStatus;
 	}
 
 	public void setImporter(Importer importer) {

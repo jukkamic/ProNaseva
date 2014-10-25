@@ -13,7 +13,7 @@
 		<div class="container">
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" /> 
-				<h1>Raportti</h1>
+				<h1>Raportin muokkaus</h1>
 			</div>
 			<br>
 			<br>
@@ -28,7 +28,7 @@
 					<span class="label label-warning">Muokkaus</span>
 				</c:when>
 				<c:otherwise>
-					<span class="label label-warning">Kesken</span>
+					<span class="label label-warning">Luonnos</span>
 				</c:otherwise>
 			</c:choose>
 
@@ -36,7 +36,7 @@
 			<br><br>
 			</div>
 			
-			<form modelAttribute="report" action="submitReport" method="post">
+			<form modelAttribute="report" action="saveReport" method="post">
 		
 				<label for="workshopSelect"><h4>Valitse korjaamo: </h4></label>
 				<br>

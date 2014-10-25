@@ -21,7 +21,21 @@
 			<h4>Maahantuoja: ${report.importer.name}</h4>
 			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
 			<h4>Raportin päivämäärä: ${report.reportDate}</h4>
-			<span class="label label-success">Valmis</span>
+			
+			<h4>
+			<c:choose>
+				
+				<c:when test="${report.reportStatus == 'DRAFT'}">
+					<span class="label label-warning">Luonnos</span>
+				</c:when>
+				<c:when test="${report.reportStatus == 'AWAIT_APPROVAL'}">
+					<span class="label label-info">Odottaa vahvistusta</span>
+				</c:when>
+				<c:when test="${report.reportStatus == 'APPROVED'}">
+					<span class="label label-success">Valmis</span>
+				</c:when>
+			</c:choose></h4>
+						
 			<br><br>
 			</div>
 			<br>
@@ -176,10 +190,18 @@
 					</c:forEach> <!-- Report part loop end -->
 					</div>			
 				
+							
+				<security:authentication property="authorities" var="loginRole" scope="request" />
 				
-				<a class="btn btn-primary" href="editReport"><span class="glyphicon glyphicon-pencil" style="text-decoration: none;"></span> Muokkaa</a>
+				
+				
+				<c:if test="${report.reportStatus == 'DRAFT'or report.reportStatus == 'AWAIT_APPROVAL' or loginRole == '[ROLE_ADMIN]' }">
+					<a class="btn btn-primary" href="/ProNaseva/editReport"><span class="glyphicon glyphicon-pencil" style="text-decoration: none;"></span> Muokkaa</a>
+				</c:if>
+				<c:if test="${report.reportStatus == 'DRAFT'}">
+					<a class="btn btn-primary" href="/ProNaseva/submitReportForApproval/"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Lähetä vahvistettavaksi</a>
+				</c:if>
 				<a class="btn btn-primary" href="/ProNaseva/printReport/"><span class="glyphicon glyphicon-print" style="text-decoration: none;"></span> Tulosta</a>
-				
 				<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 								
 				<br><br>
@@ -193,20 +215,21 @@
           	  message: "Poista raportti?",
           	  title: "Vahvista",
           	  buttons: {
-          	    cancel: {
+          		confirm: {
+            	      label: "Poista",
+            	      className: "btn-primary",
+            	      callback: function() {
+            	    	window.location.href = "deleteReport"
+            	      }
+            	    },
+            	  cancel: {
           	      label: "Peruuta",
-          	      className: "btn-primary",
+          	      className: "btn-danger",
           	      callback: function() {
           	        
           	      }
           	    },
-          	    confirm: {
-          	      label: "Poista",
-          	      className: "btn-danger",
-          	      callback: function() {
-          	    	window.location.href = "deleteReport"
-          	      }
-          	    }
+          	    
           	  }
           	});
             });
