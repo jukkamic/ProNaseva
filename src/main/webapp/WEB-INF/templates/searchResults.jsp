@@ -16,6 +16,8 @@
 				<h1>Raportit</h1>
 			</div>
 			<br><br>
+			
+			
 						
 			<c:if test="${not empty awaitApproval}">
 			<h3>Vahvistusta odottavat raportit</h3>
@@ -77,14 +79,21 @@
 		<br>
 		</c:if>
 			
-		<c:if test="${empty awaitApproval}">
+		<security:authentication property="authorities" var="loginRole" scope="request" />
+		
+		<c:if test="${empty awaitApproval and loginRole == '[ROLE_ADMIN]'}">
 			<div class="alert alert-info">
 				<h4>Ei vahvistettavana olevia raportteja</h4>
 			</div>
 			<br>
 		</c:if>
 		
-		
+		<c:if test="${empty reportSearchList}">
+			<div class="alert alert-info">
+				<h4>Ei omia raportteja</h4>
+			</div>
+		</c:if>
+		<c:if test="${not empty reportSearchList}">	
 			<h3>Omat raportit</h3>
 			<br>
 			<table class="table table-striped">
@@ -139,8 +148,8 @@
 						
 				</c:forEach>
 			</table>
-			
 		<br>
+		</c:if>
 
 		</div>
 		<br>

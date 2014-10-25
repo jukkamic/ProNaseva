@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.domain.Report;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
+import fi.testcenter.service.UserAccountService;
 import fi.testcenter.service.WorkshopService;
 
 @SessionAttributes("report")
@@ -31,10 +32,14 @@ public class SearchController {
 	@Autowired
 	private ReportService rs;
 
+	@Autowired
+	private UserAccountService us;
+
 	@RequestMapping(value = "/searchReport", method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model) {
 
-		model.addAttribute("reportSearchList", rs.getSearchReports());
+		model.addAttribute("reportSearchList",
+				rs.getReportsByUserId(us.getLoginUser().getId()));
 
 		if (request.isUserInRole("ROLE_ADMIN")) {
 			model.addAttribute("awaitApproval", rs.getReportsAwaitingApproval());

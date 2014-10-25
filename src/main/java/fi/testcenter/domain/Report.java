@@ -47,7 +47,7 @@ public class Report {
 
 	@Column
 	@Temporal(TemporalType.DATE)
-	private Date date;
+	private Date date = new Date();
 
 	private String reportDate;
 

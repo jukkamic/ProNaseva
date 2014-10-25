@@ -1,5 +1,6 @@
 package fi.testcenter.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -65,20 +66,45 @@ public class ReportService {
 	}
 
 	public List<Report> getSearchReports() {
-		List<Report> reports = em
+		List<Object[]> reports = em
 				.createQuery(
-						"SELECT NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r",
-						Report.class).getResultList();
-		return reports;
+						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r ORDER BY r.date DESC")
+				.getResultList();
+
+		ArrayList<Report> resultReports = new ArrayList<Report>();
+		for (Object[] result : reports) {
+			resultReports.add((Report) result[1]);
+		}
+
+		return resultReports;
 
 	}
 
 	public List<Report> getReportsAwaitingApproval() {
-		List<Report> reports = em
+		List<Object[]> reports = em
 				.createQuery(
-						"SELECT NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.reportStatus = 'AWAIT_APPROVAL'",
-						Report.class).getResultList();
-		return reports;
+						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.date DESC")
+				.getResultList();
+
+		ArrayList<Report> resultReports = new ArrayList<Report>();
+		for (Object[] result : reports) {
+			resultReports.add((Report) result[1]);
+		}
+
+		return resultReports;
 	}
 
+	public List<Report> getReportsByUserId(Long userId) {
+		List<Object[]> reports = em
+				.createQuery(
+						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.user.id = :userId ORDER BY r.date DESC")
+				.setParameter("userId", userId).getResultList();
+
+		ArrayList<Report> resultReports = new ArrayList<Report>();
+		for (Object[] result : reports) {
+			resultReports.add((Report) result[1]);
+		}
+		return resultReports;
+
+	}
 }
