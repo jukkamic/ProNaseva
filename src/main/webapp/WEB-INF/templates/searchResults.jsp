@@ -16,7 +16,7 @@
 				<h1>Raportit</h1>
 			</div>
 			<br><br>
-			
+						
 			<c:if test="${not empty awaitApproval}">
 			<h3>Vahvistusta odottavat raportit</h3>
 			<br>
@@ -77,6 +77,14 @@
 		<br>
 		</c:if>
 			
+		<c:if test="${empty awaitApproval}">
+			<div class="alert alert-info">
+				<h4>Ei vahvistettavana olevia raportteja</h4>
+			</div>
+			<br>
+		</c:if>
+		
+		
 			<h3>Omat raportit</h3>
 			<br>
 			<table class="table table-striped">
