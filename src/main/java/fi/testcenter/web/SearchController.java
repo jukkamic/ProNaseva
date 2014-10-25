@@ -34,24 +34,7 @@ public class SearchController {
 	@RequestMapping(value = "/searchReport", method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request, Model model) {
 
-		// List<Workshop> workshops = ws.getWorkshops();
-		// model.addAttribute("workshops", workshops);
-		//
-		// List<Importer> importers = is.getImporters();
-		// model.addAttribute("importers", importers);
-		//
-		// model.addAttribute("searchReportCriteria", new
-		// SearchReportCriteria());
-		//
-		// return "searchReport";
-		// }
-		//
-		// @RequestMapping(value = "/searchReport", method = RequestMethod.POST)
-		// public String prepareNewReportBasicInfoForm(HttpServletRequest
-		// request,
-		// Model model) {
-
-		model.addAttribute("reportSearchList", rs.findAllReports());
+		model.addAttribute("reportSearchList", rs.getSearchReports());
 
 		return "searchResults";
 	}

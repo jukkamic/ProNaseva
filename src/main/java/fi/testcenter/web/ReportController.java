@@ -163,8 +163,6 @@ public class ReportController {
 	public String printReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report) {
 		model.addAttribute("report", report);
-		log.debug("question group score : "
-				+ report.getQuestionGroupScore().get(1).getScore());
 
 		return "printReport";
 	}
@@ -341,8 +339,6 @@ public class ReportController {
 				questionGroupScoreObject.calculateScorePercentage();
 				questionGroupScoreList.add(questionGroupScoreObject);
 
-				System.out.println(questionGroupScoreObject.getScore());
-
 				// Lisätään kysymysryhmän pisteet ja maksimipisteet raportin
 				// osan pisteisiin
 
@@ -351,7 +347,6 @@ public class ReportController {
 				reportPartScoreObject
 						.setMaxScore(reportPartScoreObject.getMaxScore()
 								+ questionGroupScoreObject.getMaxScore());
-				System.out.println(reportPartScoreObject.getScore());
 
 			}
 
@@ -373,11 +368,6 @@ public class ReportController {
 		report.setTotalScorePercentage((int) Math
 				.round((double) reportTotalScore / (double) reportMaxScore
 						* 100));
-		System.out.println("Ensimmäinen kysymysryhmä : "
-				+ report.getQuestionGroupScore().get(1).getScore());
-
-		System.out.println("Ensimmäinen raportin osa: "
-				+ report.getReportPartScore().get(0).getScore());
 
 	}
 }

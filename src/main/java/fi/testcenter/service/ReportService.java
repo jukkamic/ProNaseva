@@ -2,6 +2,9 @@ package fi.testcenter.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class ReportService {
 	@Autowired
 	private MockReportTemplate rts;
 
+	@PersistenceContext()
+	EntityManager em;
+
 	@Transactional(readOnly = true)
 	public ReportTemplate getReportTemplate() {
 		return rts.getReportTemplate("Volvo");
@@ -56,6 +62,14 @@ public class ReportService {
 	public void deleteReport(Report report) {
 
 		rr.delete(report);
+	}
+
+	public List<Report> getSearchReports() {
+		List<Report> reports = em
+				.createQuery(
+						"SELECT NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user) FROM Report r",
+						Report.class).getResultList();
+		return reports;
 	}
 
 }
