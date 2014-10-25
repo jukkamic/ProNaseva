@@ -15,6 +15,25 @@ public class Answer {
 	private boolean showScore;
 	private int score;
 	private int maxScore;
+	private boolean highlightAnswer;
+
+	public boolean isHighlightAnswer() {
+		return highlightAnswer;
+	}
+
+	public void setHighlightAnswer(boolean highlightAnswer) {
+		this.highlightAnswer = highlightAnswer;
+	}
+
+	private Question question;
+
+	public Question getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
 
 	public Answer() {
 

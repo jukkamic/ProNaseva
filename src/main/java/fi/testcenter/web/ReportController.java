@@ -103,18 +103,21 @@ public class ReportController {
 
 		for (ReportPart reportPart : report.getReportTemplate()
 				.getReportParts()) {
+
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
 				for (Question question : questionGroup.getQuestions()) {
 
 					if (question instanceof TextQuestion) {
 
 						Answer answer = new TextAnswer();
+						answer.setQuestion(question);
 						answers.add(answer);
 
 					}
 
 					if (question instanceof MultipleChoiceQuestion) {
 						Answer answer = new MultipleChoiceAnswer();
+						answer.setQuestion(question);
 						answers.add(answer);
 
 					}
@@ -122,12 +125,14 @@ public class ReportController {
 						for (Question subQuestion : question.getSubQuestions()) {
 							if (subQuestion instanceof TextQuestion) {
 								Answer answer = new TextAnswer();
+								answer.setQuestion(subQuestion);
 								answers.add(answer);
 
 							}
 
 							if (subQuestion instanceof MultipleChoiceQuestion) {
 								Answer answer = new MultipleChoiceAnswer();
+								answer.setQuestion(subQuestion);
 								answers.add(answer);
 
 							}
@@ -149,6 +154,8 @@ public class ReportController {
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
 		countReportScore(report);
+
+		report.setHighlightAnswers();
 
 		try {
 			rs.saveReport(report);
@@ -200,7 +207,6 @@ public class ReportController {
 
 		model.addAttribute("workshops", workshops);
 		model.addAttribute("edit", "TRUE");
-		report.setReportStatus("DRAFT");
 
 		return "editReport";
 	}

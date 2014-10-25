@@ -16,10 +16,18 @@
 	<!-- Multiple choice question -->
 
 	<c:if test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
-		
+	
+					<h3>${subQuestion.question}</h3>
+					<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+							<label class="checkbox">											
+								<sf:checkbox value='true' path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+							</label>
+						<br>
+					</c:if>
+					
+						
 		<c:choose>
 			<c:when test="${subQuestion.multipleSelectionsAllowed == true}">
-					<h3>${subQuestion.question}</h3>
 					<c:forEach var="option" items="${subQuestion.options}">
 						<label class="checkbox" style="">											
 						<sf:checkbox value="${option.option}" 
@@ -30,7 +38,7 @@
 					</c:forEach>
 			</c:when>
 	<c:otherwise>
-		<h3>${subQuestion.question}</h3>
+		
 		<div class="Demo-boot" style="padding-top: 15px;">
 			<div class="btn-group" data-toggle="buttons">
 				<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
@@ -80,6 +88,12 @@
 	<c:if
 		test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
 		<h3>${subQuestion.question}</h3>
+		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+				<label class="checkbox">											
+				<sf:checkbox value='true' path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+				</label>
+			<br>
+		</c:if>
 		
 		<br>
 		<c:choose>

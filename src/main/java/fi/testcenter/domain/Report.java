@@ -80,6 +80,11 @@ public class Report {
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
 
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "REPORT_REPORTHIGHLIGHTS", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTHIGHLIGHTS_ID"))
+	@OrderColumn(name = "ORDERINDEX")
+	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();
+
 	public Report() {
 
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
@@ -96,6 +101,60 @@ public class Report {
 		this.workshop = workshop;
 		this.user = user;
 		this.reportStatus = reportStatus;
+	}
+
+	public void setHighlightAnswers() {
+		ArrayList<ReportHighlight> reportHighlightList = new ArrayList<ReportHighlight>();
+		int answerIndexCounter = 0;
+
+		for (ReportPart reportPart : this.reportTemplate.getReportParts()) {
+			int questionGroupCounter = 1;
+			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
+				int questionCounter = 1;
+				for (Question question : questionGroup.getQuestions()) {
+					if (this.answers.get(answerIndexCounter)
+							.isHighlightAnswer() == true) {
+
+						System.out.println(answerIndexCounter);
+						ReportHighlight highlight = new ReportHighlight(
+								reportPart, questionGroup,
+								this.answers.get(answerIndexCounter));
+						highlight
+								.setQuestionGroupOrderNumber(questionGroupCounter);
+						highlight.setQuestionOrderNumber(questionCounter);
+						reportHighlightList.add(highlight);
+						System.out
+								.println("Highlight-kysymyslooppi, indeksi : "
+										+ answerIndexCounter
+										+ "Kysymysryhmä + " + questionGroup);
+
+					}
+					answerIndexCounter++;
+					int subQuestionCounter = 1;
+					for (Question subQuestion : question.getSubQuestions()) {
+						if (this.answers.get(answerIndexCounter)
+								.isHighlightAnswer() == true) {
+							ReportHighlight highlight = new ReportHighlight(
+									reportPart, questionGroup,
+									this.answers.get(answerIndexCounter));
+							highlight
+									.setQuestionGroupOrderNumber(questionGroupCounter);
+							highlight.setQuestionOrderNumber(questionCounter);
+							highlight
+									.setSubQuestionOrderNumber(subQuestionCounter);
+
+							reportHighlightList.add(highlight);
+						}
+						subQuestionCounter++;
+						answerIndexCounter++;
+					}
+
+					questionCounter++;
+				}
+				questionGroupCounter++;
+			}
+		}
+		this.reportHighlights = reportHighlightList;
 	}
 
 	public Long getId() {
@@ -204,6 +263,14 @@ public class Report {
 
 	public List<Answer> getAnswers() {
 		return answers;
+	}
+
+	public List<ReportHighlight> getReportHighlights() {
+		return reportHighlights;
+	}
+
+	public void setReportHighlights(List<ReportHighlight> reportHighlights) {
+		this.reportHighlights = reportHighlights;
 	}
 
 	public void setAnswers(List<Answer> answers) {

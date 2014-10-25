@@ -8,7 +8,10 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
+
+
 <body>
+<security:authentication property="authorities" var="loginRole" scope="request" />
 	<div id="wrap">
 		<div class="container">
 			<div class="page-header">
@@ -109,25 +112,28 @@
 										
 										<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 										
+										<h3>${questionCounter.count}. ${question.question}</h3>
+													
+														<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+															<label class="checkbox">											
+															<sf:checkbox value='true' 
+																path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+															</label>
+															<br>
+														</c:if>
 											<c:choose>
-
 												<c:when test="${question.multipleSelectionsAllowed == true}">
-														<h3>${questionCounter.count}. ${question.question}</h3>
 														<c:forEach var="option" items="${question.options}">
-															
 															<label class="checkbox" style="">											
 															<sf:checkbox value="${option.option}" 
 																path="report.answers[${answerIndexCounter}].chosenSelections" label="${option.option}" />
 															</label>
 															<br>
 														</c:forEach>
-														
-										
 												</c:when>
 												
 												
 										<c:otherwise>
-											<h3>${questionCounter.count}. ${question.question}</h3>
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
@@ -174,8 +180,17 @@
 										
 										<!-- Text question -->
 										<c:if test="${question.class == 'class fi.testcenter.domain.TextQuestion'}">
+											
 											<h3>${questionCounter.count}. ${question.question}</h3>
-											<br>
+											<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+															<label class="checkbox">											
+															<sf:checkbox value='true' 
+																path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+															
+															</label>
+															<br>
+											</c:if>
+											
 											<c:choose>
 												<c:when test="${question.textAreaInput == true }">
 													<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].answer" />

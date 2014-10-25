@@ -29,7 +29,7 @@
 					<span class="label label-warning">Luonnos</span>
 				</c:when>
 				<c:when test="${report.reportStatus == 'AWAIT_APPROVAL'}">
-					<span class="label label-info">Odottaa vahvistusta</span>
+					<span class="label label-info">Vahvistettavana</span>
 				</c:when>
 				<c:when test="${report.reportStatus == 'APPROVED'}">
 					<span class="label label-success">Valmis</span>
@@ -40,12 +40,23 @@
 			</div>
 			<br>
 			
+ 			<div class="panel-group" id="accordion"> 
+			<c:set var="bootstrapPanelCounter" value="1" scope="request" />
+						
+						
+			<security:authentication property="authorities" var="loginRole" scope="request" />			 							
+ 			<c:if test="${not empty report.reportHighlights}">
+ 				<jsp:include page="/WEB-INF/templates/showReportHighlightAnswers.jsp" />
+			</c:if>
+				
+			<c:if test="${empty report.reportHighlights and loginRole == '[ROLE_ADMIN]'}">
+				<div class="alert alert-warning">
+					<h4>Valitse raportin muokkauksessa huomionarvoiset vastaukset!</h4>
+				</div>
+				<br>
+			</c:if>
 			
 			<!-- Report part loop -->
-			
-			<c:set var="bootstrapPanelCounter" value="0" />
-			
-			<div class="panel-group" id="accordion">
 			
 			<c:set var="answerIndexCounter" value="0" scope="request" />
 			<c:set var="questionGroupScoreIndexCounter" value="0" scope="request" />
@@ -190,11 +201,7 @@
 					</c:forEach> <!-- Report part loop end -->
 					</div>			
 				
-							
-				<security:authentication property="authorities" var="loginRole" scope="request" />
-				
-				
-				
+	
 				<c:if test="${report.reportStatus == 'DRAFT' or report.reportStatus == 'AWAIT_APPROVAL' or loginRole == '[ROLE_ADMIN]' }">
 					<a class="btn btn-primary" href="/ProNaseva/editReport"><span class="glyphicon glyphicon-pencil" style="text-decoration: none;"></span> Muokkaa</a>
 				</c:if>

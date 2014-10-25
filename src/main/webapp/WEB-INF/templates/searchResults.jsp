@@ -65,7 +65,7 @@
 										<span class="label label-warning">Luonnos</span>
 									</c:when>
 									<c:when test="${report.reportStatus == 'AWAIT_APPROVAL'}">
-										<span class="label label-info">Odottaa vahvistusta</span>
+										<span class="label label-info">Vahvistettavana</span>
 									</c:when>
 									<c:when test="${report.reportStatus == 'APPROVED'}">
 										<span class="label label-success">Valmis</span>
@@ -138,7 +138,7 @@
 										<span class="label label-warning">Luonnos</span>
 									</c:when>
 									<c:when test="${report.reportStatus == 'AWAIT_APPROVAL'}">
-										<span class="label label-info">Odottaa vahvistusta</span>
+										<span class="label label-info">Vahvistettavana</span>
 									</c:when>
 									<c:when test="${report.reportStatus == 'APPROVED'}">
 										<span class="label label-success">Valmis</span>
