@@ -215,6 +215,17 @@ public class ReportController {
 
 	}
 
+	@RequestMapping(value = "approveReport")
+	public String approveReport(HttpServletRequest request,
+			@ModelAttribute("report") Report report) {
+
+		report.setReportStatus("APPROVED");
+		rs.saveReport(report);
+
+		return "showReport";
+
+	}
+
 	public static void countReportScore(Report report) {
 		int reportTotalScore = 0;
 		int reportMaxScore = 0;

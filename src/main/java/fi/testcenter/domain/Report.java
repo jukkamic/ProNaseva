@@ -89,12 +89,13 @@ public class Report {
 	}
 
 	public Report(Long id, String reportDate, Importer importer,
-			Workshop workshop, User user) {
+			Workshop workshop, User user, String reportStatus) {
 		this.id = id;
 		this.reportDate = reportDate;
 		this.importer = importer;
 		this.workshop = workshop;
 		this.user = user;
+		this.reportStatus = reportStatus;
 	}
 
 	public Long getId() {

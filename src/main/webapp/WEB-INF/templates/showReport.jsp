@@ -195,14 +195,21 @@
 				
 				
 				
-				<c:if test="${report.reportStatus == 'DRAFT'or report.reportStatus == 'AWAIT_APPROVAL' or loginRole == '[ROLE_ADMIN]' }">
+				<c:if test="${report.reportStatus == 'DRAFT' or report.reportStatus == 'AWAIT_APPROVAL' or loginRole == '[ROLE_ADMIN]' }">
 					<a class="btn btn-primary" href="/ProNaseva/editReport"><span class="glyphicon glyphicon-pencil" style="text-decoration: none;"></span> Muokkaa</a>
 				</c:if>
-				<c:if test="${report.reportStatus == 'DRAFT'}">
-					<a class="btn btn-primary" href="/ProNaseva/submitReportForApproval/"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Lähetä vahvistettavaksi</a>
+				<c:if test="${report.reportStatus == 'DRAFT' and loginRole != '[ROLE_ADMIN]' }">
+						<a class="btn btn-primary" href="/ProNaseva/submitReportForApproval/"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Lähetä vahvistettavaksi</a>
+				</c:if>
+					
+				<c:if test="${loginRole == '[ROLE_ADMIN]' and report.reportStatus != 'APPROVED' }">
+					<a class="btn btn-primary" href="/ProNaseva/approveReport/"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Vahvista raportti</a>
 				</c:if>
 				<a class="btn btn-primary" href="/ProNaseva/printReport/"><span class="glyphicon glyphicon-print" style="text-decoration: none;"></span> Tulosta</a>
-				<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+				
+				<c:if test="${loginRole == '[ROLE_ADMIN]' or report.reportStatus == 'DRAFT' or report.reportStatus == 'AWAIT_APPROVAL'}">
+					<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
+				</c:if>
 								
 				<br><br>
 				<br>

@@ -17,8 +17,11 @@
 			</div>
 			<br><br>
 			
-			<table class="table table-striped">
+			<c:if test="${not empty awaitApproval}">
+			<h3>Vahvistusta odottavat raportit</h3>
+			<br>
 			
+			<table class="table table-striped">
 				<tr>
 					<th></th>
 					<th>
@@ -32,6 +35,67 @@
 					</th>
 					<th>
 						Tarkastaja
+					</th>
+					<th>
+						Tila
+					</th>
+				</tr>
+				<c:forEach var="report" items="${awaitApproval}">
+						<tr>
+							<td><a class="btn btn-default" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
+								Näytä</a>
+							</td>
+							<td>
+								${report.reportDate}
+							</td>
+							<td>${report.importer.name}
+							</td>
+							<td>
+								${report.workshop.name}
+							</td>
+							<td>
+								${report.user.lastName}, ${report.user.firstName}								
+							</td>
+							<td>
+								<c:choose>
+				
+									<c:when test="${report.reportStatus == 'DRAFT'}">
+										<span class="label label-warning">Luonnos</span>
+									</c:when>
+									<c:when test="${report.reportStatus == 'AWAIT_APPROVAL'}">
+										<span class="label label-info">Odottaa vahvistusta</span>
+									</c:when>
+									<c:when test="${report.reportStatus == 'APPROVED'}">
+										<span class="label label-success">Valmis</span>
+									</c:when>
+								</c:choose>
+						</tr>
+						
+				</c:forEach>
+			</table>
+			
+		<br>
+		</c:if>
+			
+			<h3>Omat raportit</h3>
+			<br>
+			<table class="table table-striped">
+				<tr>
+					<th></th>
+					<th>
+						Pvm
+					</th>
+					<th>
+						Maahantuoja
+					</th>
+					<th>
+						Korjaamo
+					</th>
+					<th>
+						Tarkastaja
+					</th>
+					<th>
+						Tila
 					</th>
 				</tr>
 				<c:forEach var="report" items="${reportSearchList}">
@@ -50,6 +114,19 @@
 							<td>
 								${report.user.lastName}, ${report.user.firstName}								
 							</td>
+							<td>
+								<c:choose>
+				
+									<c:when test="${report.reportStatus == 'DRAFT'}">
+										<span class="label label-warning">Luonnos</span>
+									</c:when>
+									<c:when test="${report.reportStatus == 'AWAIT_APPROVAL'}">
+										<span class="label label-info">Odottaa vahvistusta</span>
+									</c:when>
+									<c:when test="${report.reportStatus == 'APPROVED'}">
+										<span class="label label-success">Valmis</span>
+									</c:when>
+								</c:choose>
 						</tr>
 						
 				</c:forEach>

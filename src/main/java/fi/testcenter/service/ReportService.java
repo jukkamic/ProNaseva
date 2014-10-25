@@ -67,7 +67,16 @@ public class ReportService {
 	public List<Report> getSearchReports() {
 		List<Report> reports = em
 				.createQuery(
-						"SELECT NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user) FROM Report r",
+						"SELECT NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r",
+						Report.class).getResultList();
+		return reports;
+
+	}
+
+	public List<Report> getReportsAwaitingApproval() {
+		List<Report> reports = em
+				.createQuery(
+						"SELECT NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.reportStatus = 'AWAIT_APPROVAL'",
 						Report.class).getResultList();
 		return reports;
 	}

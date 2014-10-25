@@ -36,6 +36,10 @@ public class SearchController {
 
 		model.addAttribute("reportSearchList", rs.getSearchReports());
 
+		if (request.isUserInRole("ROLE_ADMIN")) {
+			model.addAttribute("awaitApproval", rs.getReportsAwaitingApproval());
+		}
+
 		return "searchResults";
 	}
 
