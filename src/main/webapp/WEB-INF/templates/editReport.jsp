@@ -21,11 +21,30 @@
 			<br>
 			<br>
 			
-	
+<form modelAttribute="report" action="saveReport" method="post">
 			<div style="border-bottom: 1px solid #eee;">
 			<h4>Maahantuoja: ${report.importer.name}</h4>
-			<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
-			<h4>Raportin päivämäärä: ${report.reportDate}</h4>
+			<br>
+			<label for="workshopSelect"><h4>Valitse korjaamo: </h4></label>
+				
+				<sf:select style="width: auto; max-width: 100%; display: inline;" id="workshopSelect" path="report.workshopId"
+					class="form-control">
+					<c:forEach var="workshop" items="${workshops}">
+						<c:choose>
+							<c:when test='${workshop.id == report.workshop.id}'>
+								<option selected="selected" value="${workshop.id}">${workshop}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${workshop.id}">${workshop}</option>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+				</sf:select>
+			<br><br>
+			<label for="date"><h4>Raportin päivämäärä: </h4></label>
+			<sf:input path="report.reportDate" name="date" class="datepicker" id="testi" value="${report.reportDate}"/>
+			<br><br>
+						
 			<c:choose>
 				<c:when test="${edit == 'TRUE'}">
 					<span class="label label-warning">Muokkaus</span>
@@ -39,24 +58,7 @@
 			<br><br>
 			</div>
 			
-			<form modelAttribute="report" action="saveReport" method="post">
-		
-				<label for="workshopSelect"><h4>Valitse korjaamo: </h4></label>
-				<br>
-				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="report.workshopId"
-					class="form-control">
-					<c:forEach var="workshop" items="${workshops}">
-						<c:choose>
-							<c:when test='${workshop.id == report.workshop.id}'>
-								<option selected="selected" value="${workshop.id}">${workshop}</option>
-							</c:when>
-							<c:otherwise>
-								<option value="${workshop.id}">${workshop}</option>
-							</c:otherwise>
-						</c:choose>
-					</c:forEach>
-				</sf:select>
-			
+						
 			<br>
 			
 

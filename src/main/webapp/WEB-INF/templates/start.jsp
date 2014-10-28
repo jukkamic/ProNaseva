@@ -25,15 +25,16 @@
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="admin/user">Käyttäjätilit</a>
 			</security:authorize>
 			</div>
-
-		
+			<br>
+					
 		</div>
 
 		<br>
+	
+
 
 	<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
-	
-	
+
 
 	<!-- Le javascript
     ================================================== 

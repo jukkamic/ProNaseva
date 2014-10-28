@@ -1,5 +1,6 @@
 package fi.testcenter.web;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,7 +156,14 @@ public class ReportController {
 
 		countReportScore(report);
 
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
 		report.setHighlightAnswers();
+		try {
+			report.setDate(simpleDateFormat.parse(report.getReportDate()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		try {
 			rs.saveReport(report);
