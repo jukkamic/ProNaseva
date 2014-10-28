@@ -1,10 +1,19 @@
 package fi.testcenter.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +119,146 @@ public class ReportService {
 	}
 
 	public List<Report> searchReports(SearchReportCriteria searchReportCriteria) {
-		return null;
+
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Object[]> q = cb.createQuery(Object[].class);
+		Root<Report> report = q.from(Report.class);
+		q.multiselect(report.get("date"), cb.construct(Report.class,
+				report.get("id"), report.get("reportDate"),
+				report.get("importer"), report.get("workshop"),
+				report.get("user"), report.get("reportStatus")));
+
+		Predicate criteria = cb.conjunction();
+		if (searchReportCriteria.getUserId() != null) {
+			ParameterExpression<Long> p = cb.parameter(Long.class, "userId");
+			criteria = cb.and(criteria,
+					cb.equal(report.get("user").get("id"), p));
+		}
+
+		if (searchReportCriteria.getWorkshopId() != null) {
+			ParameterExpression<Long> p = cb
+					.parameter(Long.class, "workshopId");
+			criteria = cb.and(criteria,
+					cb.equal(report.get("workshop").get("id"), p));
+		}
+
+		if (searchReportCriteria.getImporterId() != null) {
+			ParameterExpression<Long> p = cb
+					.parameter(Long.class, "importerId");
+			criteria = cb.and(criteria,
+					cb.equal(report.get("importer").get("id"), p));
+		}
+
+		if ((searchReportCriteria.getStartDate() != null && searchReportCriteria
+				.getStartDate() != "")
+				&& (searchReportCriteria.getEndDate() == null || searchReportCriteria
+						.getEndDate() == "")) {
+			ParameterExpression<Date> p = cb.parameter(Date.class, "startDate");
+			Path<Date> datePath = report.get("date");
+			criteria = cb.and(criteria, cb.greaterThanOrEqualTo(datePath, p));
+		}
+
+		if (searchReportCriteria.getStartDate() != null
+				&& searchReportCriteria.getStartDate() != ""
+				&& searchReportCriteria.getEndDate() != null
+				&& searchReportCriteria.getEndDate() != "") {
+			ParameterExpression<Date> startDate = cb.parameter(Date.class,
+					"startDate");
+			ParameterExpression<Date> endDate = cb.parameter(Date.class,
+					"endDate");
+			Path<Date> datePath = report.get("date");
+			criteria = cb.and(criteria,
+					cb.between(datePath, startDate, endDate));
+		}
+
+		if ((searchReportCriteria.getStartDate() == null || searchReportCriteria
+				.getStartDate() == "")
+				&& searchReportCriteria.getEndDate() != null
+				&& searchReportCriteria.getEndDate() != "") {
+
+			ParameterExpression<Date> endDate = cb.parameter(Date.class,
+					"endDate");
+			Path<Date> datePath = report.get("date");
+			criteria = cb
+					.and(criteria, cb.lessThanOrEqualTo(datePath, endDate));
+		}
+
+		q.where(criteria);
+		q.orderBy(cb.desc(report.get("date")));
+
+		// SET PARAMETERS
+
+		TypedQuery<Object[]> typedQuery = em.createQuery(q);
+		if (searchReportCriteria.getUserId() != null)
+			typedQuery.setParameter("userId", searchReportCriteria.getUserId());
+
+		if (searchReportCriteria.getWorkshopId() != null)
+			typedQuery.setParameter("workshopId",
+					searchReportCriteria.getWorkshopId());
+
+		if (searchReportCriteria.getImporterId() != null)
+			typedQuery.setParameter("importerId",
+					searchReportCriteria.getImporterId());
+
+		if ((searchReportCriteria.getStartDate() != null && searchReportCriteria
+				.getStartDate() != "")
+				&& (searchReportCriteria.getEndDate() == null || searchReportCriteria
+						.getEndDate() == "")) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+			Date queryDate = new Date();
+			try {
+				queryDate = dateFormat.parse(searchReportCriteria
+						.getStartDate());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			typedQuery.setParameter("startDate", queryDate);
+
+		}
+
+		if (searchReportCriteria.getStartDate() != null
+				&& searchReportCriteria.getStartDate() != ""
+				&& searchReportCriteria.getEndDate() != null
+				&& searchReportCriteria.getEndDate() != "") {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+			Date queryStartDate = new Date();
+			Date queryEndDate = new Date();
+			try {
+				queryStartDate = dateFormat.parse(searchReportCriteria
+						.getStartDate());
+				queryEndDate = dateFormat.parse(searchReportCriteria
+						.getEndDate());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			typedQuery.setParameter("startDate", queryStartDate);
+			typedQuery.setParameter("endDate", queryEndDate);
+
+		}
+
+		if ((searchReportCriteria.getStartDate() == null || searchReportCriteria
+				.getStartDate() == "")
+				&& searchReportCriteria.getEndDate() != null
+				&& searchReportCriteria.getEndDate() != "") {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+			Date queryEndDate = new Date();
+			try {
+				queryEndDate = dateFormat.parse(searchReportCriteria
+						.getEndDate());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			typedQuery.setParameter("endDate", queryEndDate);
+
+		}
+
+		List<Object[]> resultList = typedQuery.getResultList();
+		List<Report> reportList = new ArrayList<Report>();
+
+		for (Object[] result : resultList) {
+			reportList.add((Report) result[1]);
+		}
+
+		return reportList;
 	}
 }

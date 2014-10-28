@@ -42,7 +42,7 @@
 				</sf:select>
 			<br><br>
 			<label for="date"><h4>Raportin päivämäärä: </h4></label>
-			<sf:input path="report.reportDate" name="date" class="datepicker" id="testi" value="${report.reportDate}"/>
+			<sf:input path="report.reportDate" name="date" class="datepicker" id="date" value="${report.reportDate}"/>
 			<br><br>
 						
 			<c:choose>
@@ -243,6 +243,23 @@
 				<br></form>
 				
 		</div>
+		
+<script type="text/javascript">
+            // When the document is ready
+            $(document).ready(function () {
+                
+                $('#date').datepicker({
+                   
+                    language: "fi",
+        			autoclose: true
+                    
+                });  
+            
+            });
+
+
+</script>
+		
 		
 		<script>
         $(document).on("click", ".deleteReport", function(e) {

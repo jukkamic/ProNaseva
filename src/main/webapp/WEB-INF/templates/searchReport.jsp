@@ -43,6 +43,17 @@
 				</sf:select>
 				<br>
 				
+				<label for="date"><h4>Raportit alkaen: </h4></label>
+				<br>
+				<sf:input path="startDate" name="date" class="datepicker" id="date" />
+				<br><br>
+				
+				<label for="date"><h4>Raportit saakka: </h4></label>
+				<br>
+				<sf:input path="endDate" name="date" class="datepicker" id="endDate"/>	
+				
+				<br><br>
+				
 				<label for="userSelect">Tarkastaja: </label>
 				<br>
 				<sf:select style="width: auto; max-width: 100%" id="userSelect" path="userId"
@@ -52,14 +63,9 @@
 						<option value="${user.id}">${user.firstName} ${user.lastName}</option>
 					</c:forEach>
 				</sf:select>
-				<br>
+				<br><br>
 				
-				<label for="date"><h4>Raportin päivämäärä (alkaen): </h4></label>
-				<sf:input path="startDate" name="date" class="datepicker" id="date" value="${report.reportDate}" />
-				<br>
-				
-				<label for="date"><h4>Raportit pvm saakka: </h4></label>
-				<sf:input path="endDate" name="date" class="datepicker" id="endDate" value="${report.reportDate}" />	
+
 				
 				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-search" style="text-decoration: none;"></span> Hae</button>
 				
