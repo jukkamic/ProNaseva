@@ -1,27 +1,56 @@
 package fi.testcenter.web;
 
-import fi.testcenter.domain.Importer;
-import fi.testcenter.domain.Workshop;
+import java.util.Date;
 
 public class SearchReportCriteria {
 
-	private Workshop workshop;
-	private Importer importer;
+	Long workshopId;
+	Long importerId;
 
-	public Workshop getWorkshop() {
-		return workshop;
+	Long userId;
+
+	Date startDate;
+
+	Date endDate;
+
+	public Long getWorkshopId() {
+		return workshopId;
 	}
 
-	public void setWorkshop(Workshop workshop) {
-		this.workshop = workshop;
+	public void setWorkshopId(Long workshopId) {
+		this.workshopId = workshopId;
 	}
 
-	public Importer getImporter() {
-		return importer;
+	public Long getImporterId() {
+		return importerId;
 	}
 
-	public void setImporter(Importer importer) {
-		this.importer = importer;
+	public void setImporterId(Long importerId) {
+		this.importerId = importerId;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

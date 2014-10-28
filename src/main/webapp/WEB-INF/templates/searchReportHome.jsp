@@ -150,6 +150,11 @@
 			</table>
 		<br>
 		</c:if>
+		
+		
+
+		<a class="btn btn-primary remove" href="/ProNaseva/searchReport"><span class="glyphicon glyphicon-search" style="text-decoration: none;"></span> Hae raportteja</a>
+		
 
 		</div>
 		<br>

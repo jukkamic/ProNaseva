@@ -23,19 +23,75 @@
 
 				<label for="importerSelect">Maahantuoja: </label>
 				<br>
-				<sf:select style="width: auto; max-width: 100%" id="importerSelect" path="importer"
+				<sf:select style="width: auto; max-width: 100%" id="importerSelect" path="importerId"
 					class="form-control">
+						<option value="">-- Valitse --</option>
 					<c:forEach var="importer" items="${importers}">
-						<option>${importer}</option>
+						<option value="${importer.id}">${importer}</option>
 					</c:forEach>
 				</sf:select>
 				<br>
+				
+				<label for="wrokshopSelect">Korjaamo: </label>
+				<br>
+				<sf:select style="width: auto; max-width: 100%" id="workshopSelect" path="workshopId"
+					class="form-control">
+					<option value="">-- Valitse --</option>
+					<c:forEach var="workshop" items="${workshops}">
+						<option value="${workshop.id}">${workshop}</option>
+					</c:forEach>
+				</sf:select>
 				<br>
 				
+				<label for="userSelect">Tarkastaja: </label>
+				<br>
+				<sf:select style="width: auto; max-width: 100%" id="userSelect" path="userId"
+					class="form-control">
+					<option value="">-- Valitse --</option>
+					<c:forEach var="user" items="${users}">
+						<option value="${user.id}">${user.firstName} ${user.lastName}</option>
+					</c:forEach>
+				</sf:select>
+				<br>
+				
+				<label for="date"><h4>Raportin päivämäärä (alkaen): </h4></label>
+				<sf:input path="startDate" name="date" class="datepicker" id="date" value="${report.reportDate}" />
+				<br>
+				
+				<label for="date"><h4>Raportit pvm saakka: </h4></label>
+				<sf:input path="endDate" name="date" class="datepicker" id="endDate" value="${report.reportDate}" />	
+				
 				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-search" style="text-decoration: none;"></span> Hae</button>
-			</sf:form>
+				
+				</sf:form>
 		</div>
 
 		<br>
+		
+		
+      <script type="text/javascript">
+            // When the document is ready
+            $(document).ready(function () {
+                
+                $('#date').datepicker({
+                   
+                    language: "fi",
+        			autoclose: true
+                    
+                });  
+            
+            });
+
+            $(document).ready(function () {
+                
+                $('#endDate').datepicker({
+                   
+                    language: "fi",
+        			autoclose: true
+                    
+                });  
+            
+            });
+        </script>
 
 			<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

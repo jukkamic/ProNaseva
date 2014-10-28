@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,8 +36,8 @@ public class SearchController {
 	@Autowired
 	private UserAccountService us;
 
-	@RequestMapping(value = "/searchReport", method = RequestMethod.GET)
-	public String setupForm(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "/searchReportHome", method = RequestMethod.GET)
+	public String setupSearchHomePage(HttpServletRequest request, Model model) {
 
 		model.addAttribute("reportSearchList",
 				rs.getReportsByUserId(us.getLoginUser().getId()));
@@ -45,7 +46,7 @@ public class SearchController {
 			model.addAttribute("awaitApproval", rs.getReportsAwaitingApproval());
 		}
 
-		return "searchResults";
+		return "searchReportHome";
 	}
 
 	@RequestMapping(value = "/searchReportSelect", method = RequestMethod.GET)
@@ -59,6 +60,28 @@ public class SearchController {
 
 		return "showReport";
 
+	}
+
+	@RequestMapping(value = "/searchReport", method = RequestMethod.GET)
+	public String setupSearchForm(HttpServletRequest request, Model model) {
+
+		model.addAttribute("searchReportCriteria", new SearchReportCriteria());
+		model.addAttribute("importers", is.getImporters());
+		model.addAttribute("workshops", ws.getWorkshops());
+		model.addAttribute("users", us.getUserList());
+
+		return "searchReport";
+	}
+
+	@RequestMapping(value = "/searchReport", method = RequestMethod.POST)
+	public String processSearchForm(
+			HttpServletRequest request,
+			Model model,
+			@ModelAttribute("searchReportCriteria") SearchReportCriteria searchReportCriteria) {
+
+		rs.searchReports(searchReportCriteria);
+
+		return "redirect:/";
 	}
 
 }

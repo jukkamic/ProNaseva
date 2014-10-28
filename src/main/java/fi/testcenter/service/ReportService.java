@@ -16,6 +16,7 @@ import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.ReportRepository;
 import fi.testcenter.repository.WorkshopRepository;
+import fi.testcenter.web.SearchReportCriteria;
 
 @Service
 public class ReportService {
@@ -106,5 +107,9 @@ public class ReportService {
 		}
 		return resultReports;
 
+	}
+
+	public List<Report> searchReports(SearchReportCriteria searchReportCriteria) {
+		return null;
 	}
 }
