@@ -15,7 +15,8 @@
 	
 	<!-- Multiple choice question -->
 
-	<c:if test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+	<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.MultipleChoiceQuestion"}'>
+	
 	
 					<h3>${subQuestion.question}</h3>
 					<c:if test="${loginRole == '[ROLE_ADMIN]' }">
@@ -85,8 +86,7 @@
 
 
 	<!-- Text question -->
-	<c:if
-		test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
+	<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.TextQuestion"}'>
 		<h3>${subQuestion.question}</h3>
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 				<label class="checkbox">											

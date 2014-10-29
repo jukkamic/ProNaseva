@@ -8,7 +8,7 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-
+<!-- TESTI -->
 
 <body>
 <security:authentication property="authorities" var="loginRole" scope="request" />
@@ -112,7 +112,8 @@
 										
 										<!-- Multiple choice question -->
 										
-										<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+										<c:if test='${question["class"] == "class fi.testcenter.domain.MultipleChoiceQuestion"}'>
+										
 										
 										<h3>${questionCounter.count}. ${question.question}</h3>
 													
@@ -181,7 +182,7 @@
 										</c:if> 
 										
 										<!-- Text question -->
-										<c:if test="${question.class == 'class fi.testcenter.domain.TextQuestion'}">
+										<c:if test='${question["class"] == "class fi.testcenter.domain.TextQuestion"}'>
 											
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<c:if test="${loginRole == '[ROLE_ADMIN]' }">

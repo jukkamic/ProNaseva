@@ -577,7 +577,7 @@ margin: 0;
 					
 				
 				<!-- Multiple choice question -->
-					<c:if test="${question.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+					<c:if test="${question['class'] == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 				
 						<div class="noPageBreak">
 						
@@ -629,7 +629,7 @@ margin: 0;
 
 										
 					<!-- Text field question -->
-					<c:if test="${question.class == 'class fi.testcenter.domain.TextQuestion'}">
+					<c:if test="${question['class'] == 'class fi.testcenter.domain.TextQuestion'}">
 					
 						<div class="noPageBreak">
 						

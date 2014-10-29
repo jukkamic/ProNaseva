@@ -13,7 +13,7 @@
 
 <!-- Multiple choice question -->
 <c:if
-	test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+	test="${subQuestion['class'] == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 
 	<div class="noPageBreak">
 	<h3>${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
@@ -62,7 +62,7 @@
 
 <!-- Text question -->
 <c:if
-	test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
+	test="${subQuestion['class'] == 'class fi.testcenter.domain.TextQuestion'}">
 	<h3 style="padding-left: 0;">${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
 	<p style="padding-left: 0;">${report.answers[answerIndexCounter].answer}</p>
 </c:if> 

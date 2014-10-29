@@ -15,7 +15,9 @@
 		http://www.springframework.org/schema/jdbc
 		http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
 		http://www.springframework.org/schema/data/jpa
-		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+		http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+		 http://www.springframework.org/schema/data/repository
+        http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd">
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

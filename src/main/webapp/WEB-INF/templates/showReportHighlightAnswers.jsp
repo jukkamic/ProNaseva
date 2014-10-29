@@ -34,7 +34,7 @@
 								
 								<!-- Multiple choice answer -->
 								
-								<c:if test="${reportHighlight.answer.class == 'class fi.testcenter.domain.MultipleChoiceAnswer'}">
+								<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.MultipleChoiceAnswer'}">
 									<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
 									<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
 										${reportHighlight.subQuestionOrderNumber}.
@@ -100,7 +100,7 @@
 								
 								<!-- Text answer -->
 								
-								<c:if test="${reportHighlight.answer.class == 'class fi.testcenter.domain.TextAnswer'}">
+								<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.TextAnswer'}">
 									<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
 									<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
 										${reportHighlight.subQuestionOrderNumber}.

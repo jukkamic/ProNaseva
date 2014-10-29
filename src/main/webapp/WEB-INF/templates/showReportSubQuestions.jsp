@@ -14,7 +14,7 @@
 
 <!-- Multiple choice question -->
 <c:if
-	test="${subQuestion.class == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
+	test="${subQuestion['class'] == 'class fi.testcenter.domain.MultipleChoiceQuestion'}">
 
 	
 	<h3>${subQuestion.question}</h3>
@@ -72,7 +72,7 @@
 
 <!--  Text question -->
 <c:if
-	test="${subQuestion.class == 'class fi.testcenter.domain.TextQuestion'}">
+	test="${subQuestion['class'] == 'class fi.testcenter.domain.TextQuestion'}">
 	<h3>${subQuestion.question}</h3>
 	<br>
 	<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
