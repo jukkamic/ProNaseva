@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ProNaseva</groupId>
 	<artifactId>ProNaseva</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>ProNaseva</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -37,26 +37,9 @@
 					<target>1.7</target>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<warSourceDirectory>WebContent/WEB-INF</warSourceDirectory>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
+
 		</plugins>
-		<resources>
-			<resource>
-				<directory>src/main/webapp/WEB-INF</directory>
-				<targetPath>../WEB-INF</targetPath>
-				
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<targetPath>../resources</targetPath>
-			</resource>	
-		</resources>
+
 	</build>
 	<dependencies>
 		<!-- Spring -->
