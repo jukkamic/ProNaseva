@@ -26,6 +26,7 @@ public class MockReportTemplate {
 
 		ReportPart reportPart1 = new ReportPart();
 		reportPart1.setTitle("Yhteenveto");
+		reportPart1.setShowScoreInReportHighlights(false);
 
 		ArrayList<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
@@ -72,6 +73,7 @@ public class MockReportTemplate {
 
 		QuestionGroup questionGroup2 = new QuestionGroup();
 		questionGroup2.setTitle("Tarkastuskohteet");
+		questionGroup2.setShowInReportSummary(true);
 
 		ArrayList<Question> questionList2 = new ArrayList<Question>();
 
@@ -128,6 +130,7 @@ public class MockReportTemplate {
 
 		QuestionGroup questionGroup3 = new QuestionGroup();
 		questionGroup3.setTitle("TCT-palvelun pisteet");
+		questionGroup3.setShowInReportSummary(true);
 		ArrayList<Question> questionList3 = new ArrayList<Question>();
 
 		MultipleChoiceQuestion q19 = new MultipleChoiceQuestion();

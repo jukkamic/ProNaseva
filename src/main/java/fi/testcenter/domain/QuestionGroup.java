@@ -31,9 +31,10 @@ public class QuestionGroup {
 	private boolean showScore;
 	private int score;
 	private int maxScore;
-
 	private boolean showStarCount;
 	private int starCount;
+	private String scoreSmiley;
+	private boolean showInReportSummary = false;
 
 	public String getTitle() {
 		return title;
@@ -99,4 +100,19 @@ public class QuestionGroup {
 		this.starCount = starCount;
 	}
 
+	public boolean isShowInReportSummary() {
+		return showInReportSummary;
+	}
+
+	public void setShowInReportSummary(boolean showInReportSummary) {
+		this.showInReportSummary = showInReportSummary;
+	}
+
+	public String getScoreSmiley() {
+		return scoreSmiley;
+	}
+
+	public void setScoreSmiley(String scoreSmiley) {
+		this.scoreSmiley = scoreSmiley;
+	}
 }

@@ -56,8 +56,11 @@ public class SearchController {
 
 		Report selectedReport = rs.getReportById(id.longValue());
 
+		log.debug("Tietokannasta haettu vastaus vastaus: "
+				+ selectedReport.getAnswers().get(0));
 		model.addAttribute("report", selectedReport);
 		model.addAttribute("edit", "TRUE");
+		model.addAttribute("readyReport", selectedReport);
 
 		return "showReport";
 

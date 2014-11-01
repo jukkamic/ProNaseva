@@ -14,10 +14,13 @@ public class QuestionGroupScore {
 
 	QuestionGroup questionGroup;
 
-	int score;
-	int maxScore;
-	int scorePercentage;
-	boolean showScore = false;
+	private int score;
+	private int maxScore;
+	private int scorePercentage;
+
+	private String scoreSmiley;
+	private boolean showInReportSummary = false;
+	private boolean showScore = false;
 
 	public QuestionGroupScore() {
 	}
@@ -81,6 +84,22 @@ public class QuestionGroupScore {
 
 	public void setShowScore(boolean showScore) {
 		this.showScore = showScore;
+	}
+
+	public String getScoreSmiley() {
+		return scoreSmiley;
+	}
+
+	public void setScoreSmiley(String scoreSmiley) {
+		this.scoreSmiley = scoreSmiley;
+	}
+
+	public boolean isShowInReportSummary() {
+		return showInReportSummary;
+	}
+
+	public void setShowInReportSummary(boolean showInReportSummary) {
+		this.showInReportSummary = showInReportSummary;
 	}
 
 }

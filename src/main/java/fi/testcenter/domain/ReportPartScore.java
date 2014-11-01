@@ -19,6 +19,8 @@ public class ReportPartScore {
 	int scorePercentage;
 	boolean showScore = false;
 
+	String scoreSmiley;
+
 	public ReportPartScore() {
 	}
 
@@ -81,6 +83,14 @@ public class ReportPartScore {
 
 	public void setShowScore(boolean showScore) {
 		this.showScore = showScore;
+	}
+
+	public String getScoreSmiley() {
+		return scoreSmiley;
+	}
+
+	public void setScoreSmiley(String scoreSmiley) {
+		this.scoreSmiley = scoreSmiley;
 	}
 
 }

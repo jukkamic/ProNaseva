@@ -30,8 +30,7 @@ public class ReportPart {
 	boolean showScorePercentage;
 	private int scorePercentage;
 
-	private boolean showStars;
-	private int starCount;
+	private boolean showScoreInReportHighlights = true;
 
 	public String getTitle() {
 		return title;
@@ -73,20 +72,13 @@ public class ReportPart {
 		this.scorePercentage = scorePercentage;
 	}
 
-	public boolean isShowStars() {
-		return showStars;
+	public boolean isShowScoreInReportHighlights() {
+		return showScoreInReportHighlights;
 	}
 
-	public void setShowStars(boolean showStars) {
-		this.showStars = showStars;
-	}
-
-	public int getStarCount() {
-		return starCount;
-	}
-
-	public void setStarCount(int starCount) {
-		this.starCount = starCount;
+	public void setShowScoreInReportHighlights(
+			boolean showScoreInReportHighlights) {
+		this.showScoreInReportHighlights = showScoreInReportHighlights;
 	}
 
 }

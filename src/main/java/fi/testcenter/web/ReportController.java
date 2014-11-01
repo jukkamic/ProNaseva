@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.domain.Answer;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.MultipleChoiceAnswer;
-import fi.testcenter.domain.MultipleChoiceOption;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
@@ -40,7 +39,7 @@ import fi.testcenter.service.WorkshopService;
 @Controller
 @RequestMapping("/")
 @SessionAttributes(value = { "reportTemplate", "report", "formAnswers",
-		"workshops" })
+		"workshops", "readyReport" })
 public class ReportController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
@@ -106,8 +105,9 @@ public class ReportController {
 
 		for (ReportPart reportPart : report.getReportTemplate()
 				.getReportParts()) {
-
+			report.getReportPartSmileys().add("");
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
+				report.getQuestionGroupSmileys().add("");
 				for (Question question : questionGroup.getQuestions()) {
 
 					if (question instanceof TextQuestion) {
@@ -158,7 +158,7 @@ public class ReportController {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
-		countReportScore(report);
+		report.calculateReportScore();
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -196,10 +196,13 @@ public class ReportController {
 			log.debug("Vastausindeksi : " + answerIndex);
 			log.debug("Edit report part : " + navigateToReportPart);
 			model.addAttribute("editReportPartNumber", navigateToReportPart);
+
 			return "editReport";
 
 		} else
-			return "showReport";
+			model.addAttribute("readyReport", report);
+		model.addAttribute("report", report);
+		return "showReport";
 	}
 
 	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)
@@ -216,6 +219,45 @@ public class ReportController {
 
 		}
 
+		return "/showReport";
+	}
+
+	@RequestMapping(value = "/saveSmileyAndHighlights", method = RequestMethod.POST)
+	public String saveSmileyAndHighlights(HttpServletRequest request,
+			Model model, @ModelAttribute("readyReport") Report formReport,
+			BindingResult result, @ModelAttribute("report") Report report) {
+
+		log.debug("report eka vastaus : " + report.getAnswers().get(0));
+		log.debug("formReport eka vastaus : " + formReport.getAnswers().get(0));
+		log.debug("toka reportpart max pisteet: "
+				+ report.getReportPartScore().get(1));
+		int reportPartScoreIndex = 0;
+
+		for (ReportPartScore reportPartScore : formReport.getReportPartScore()) {
+
+			report.getReportPartScore().get(reportPartScoreIndex++)
+					.setScoreSmiley(reportPartScore.getScoreSmiley());
+
+		}
+
+		int questionGroupScoreIndex = 0;
+		for (QuestionGroupScore questionGroupScore : formReport
+				.getQuestionGroupScore()) {
+			report.getQuestionGroupScore().get(questionGroupScoreIndex++)
+					.setScoreSmiley(questionGroupScore.getScoreSmiley());
+			log.debug("Questiongroup smiley : "
+					+ questionGroupScore.getScoreSmiley());
+		}
+
+		try {
+			rs.saveReport(report);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+
+		model.addAttribute("readyReport", report);
+		model.addAttribute("report", report);
 		return "/showReport";
 	}
 
@@ -271,176 +313,4 @@ public class ReportController {
 
 	}
 
-	public static void countReportScore(Report report) {
-		int reportTotalScore = 0;
-		int reportMaxScore = 0;
-		int answerIndexCounter = 0;
-		List<QuestionGroupScore> questionGroupScoreList = new ArrayList<QuestionGroupScore>();
-		List<ReportPartScore> reportPartScoreList = new ArrayList<ReportPartScore>();
-
-		for (ReportPart reportPart : report.getReportTemplate()
-				.getReportParts()) {
-
-			ReportPartScore reportPartScoreObject = new ReportPartScore();
-
-			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
-
-				QuestionGroupScore questionGroupScoreObject = new QuestionGroupScore();
-
-				for (Question question : questionGroup.getQuestions()) {
-
-					if (question instanceof MultipleChoiceQuestion) {
-						MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
-						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) report
-								.getAnswers().get(answerIndexCounter);
-
-						int maxScore = 0;
-						for (MultipleChoiceOption option : mcq.getOptions()) {
-							if (option.getPoints() != -1
-									&& option.getPoints() > maxScore) {
-								maxScore = option.getPoints();
-
-							}
-						}
-
-						mca.setMaxScore(maxScore); // Asetetaan
-													// monivalintakysymyksen
-													// maksimipistemäärä
-
-						// Lasketaan pisteet jos käyttäjä on tehnyt valinnan ja
-						// monivalinta ei ole sellainen, jota ei pisteytetä
-						// (pistemäärä -1)
-
-						if (mca.getChosenOptionIndex() != -1
-								&& mcq.getOptions()
-										.get(mca.getChosenOptionIndex())
-										.getPoints() != -1) {
-
-							mca.setShowScore(true);
-							mca.setScore(mcq.getOptions()
-									.get(mca.getChosenOptionIndex())
-									.getPoints());
-
-							// Lisätään kysymysryhmän pisteisiin ja asetetaan
-							// kysymysryhmän pisteet näkyviksi raportissa
-
-							questionGroupScoreObject.setShowScore(true);
-							questionGroupScoreObject
-									.setMaxScore(questionGroupScoreObject
-											.getMaxScore() + maxScore);
-
-							questionGroupScoreObject
-									.setScore(questionGroupScoreObject
-											.getScore()
-											+ mcq.getOptions()
-													.get(mca.getChosenOptionIndex())
-													.getPoints());
-
-							reportPartScoreObject.setShowScore(true);
-						}
-
-					}
-
-					answerIndexCounter++;
-
-					// subQuestions loop
-
-					for (Question subQuestion : question.getSubQuestions()) {
-
-						if (subQuestion instanceof MultipleChoiceQuestion) {
-							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
-							MultipleChoiceAnswer mca = (MultipleChoiceAnswer) report
-									.getAnswers().get(answerIndexCounter);
-
-							// Lasketan maksimipisteet
-
-							int maxScore = 0;
-							for (MultipleChoiceOption option : mcq.getOptions()) {
-								if (option.getPoints() != -1
-										&& option.getPoints() > maxScore) {
-									maxScore = option.getPoints();
-								}
-							}
-
-							mca.setMaxScore(maxScore);
-
-							// Lasketaan pisteet jos käyttäjä on tehnyt valinnan
-							// ja
-							// monivalinta ei ole sellainen, jota ei pisteytetä
-							// (pistemäärä -1)
-
-							if (mca.getChosenOptionIndex() != -1
-									&& mcq.getOptions()
-											.get(mca.getChosenOptionIndex())
-											.getPoints() != -1) {
-
-								mca.setShowScore(true);
-								mca.setScore(mcq.getOptions()
-										.get(mca.getChosenOptionIndex())
-										.getPoints());
-
-								// Lisätään kysymysryhmän pisteisiin ja
-								// asetetaan
-								// kysymysryhmän ja raportin osan pisteet
-								// näkyviksi raportissa
-
-								questionGroupScoreObject.setShowScore(true);
-								questionGroupScoreObject
-										.setMaxScore(questionGroupScoreObject
-												.getMaxScore() + maxScore);
-
-								questionGroupScoreObject
-										.setScore(questionGroupScoreObject
-												.getScore()
-												+ mcq.getOptions()
-														.get(mca.getChosenOptionIndex())
-														.getPoints());
-
-								reportPartScoreObject.setShowScore(true);
-
-							}
-
-						}
-
-						answerIndexCounter++;
-					}
-
-				}
-
-				// Lisätään kysymysryhmän pisteet Report-luokan olioon.
-
-				questionGroupScoreObject.calculateScorePercentage();
-				questionGroupScoreList.add(questionGroupScoreObject);
-
-				// Lisätään kysymysryhmän pisteet ja maksimipisteet raportin
-				// osan pisteisiin
-
-				reportPartScoreObject.setScore(reportPartScoreObject.getScore()
-						+ questionGroupScoreObject.getScore());
-				reportPartScoreObject
-						.setMaxScore(reportPartScoreObject.getMaxScore()
-								+ questionGroupScoreObject.getMaxScore());
-
-			}
-
-			// Lisätään raportin osan pisteet Report-luokan olioon.
-
-			reportPartScoreObject.calculateScorePercentage();
-			reportPartScoreList.add(reportPartScoreObject);
-
-			reportTotalScore = reportTotalScore
-					+ reportPartScoreObject.getScore();
-			reportMaxScore = reportMaxScore
-					+ reportPartScoreObject.getMaxScore();
-
-		}
-
-		report.setQuestionGroupScore(questionGroupScoreList);
-		report.setReportPartScore(reportPartScoreList);
-
-		report.setTotalScorePercentage((int) Math
-				.round((double) reportTotalScore / (double) reportMaxScore
-						* 100));
-
-	}
 }

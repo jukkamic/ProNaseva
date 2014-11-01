@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.css' />"/>
 <link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.theme.css' />"/>
 
+<link rel="stylesheet" href="<c:url value='/resources/css/font-awesome.css' />"/>
 
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 

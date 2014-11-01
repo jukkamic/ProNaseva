@@ -44,6 +44,7 @@ public class Report {
 	private String vehicleRegistrationNumber;
 	private String vehicleRegistrationDate;
 	private String vehicleMileage;
+	private String overallResultSmiley;
 
 	@Column
 	@Temporal(TemporalType.DATE)
@@ -85,6 +86,26 @@ public class Report {
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();
 
+	List<String> reportPartSmileys = new ArrayList<String>();
+
+	List<String> questionGroupSmileys = new ArrayList<String>();
+
+	public List<String> getReportPartSmileys() {
+		return reportPartSmileys;
+	}
+
+	public void setReportPartSmileys(List<String> reportPartSmileys) {
+		this.reportPartSmileys = reportPartSmileys;
+	}
+
+	public List<String> getQuestionGroupSmileys() {
+		return questionGroupSmileys;
+	}
+
+	public void setQuestionPartSmileys(List<String> questionGroupSmileys) {
+		this.questionGroupSmileys = questionGroupSmileys;
+	}
+
 	public Report() {
 
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
@@ -101,60 +122,6 @@ public class Report {
 		this.workshop = workshop;
 		this.user = user;
 		this.reportStatus = reportStatus;
-	}
-
-	public void setHighlightAnswers() {
-		ArrayList<ReportHighlight> reportHighlightList = new ArrayList<ReportHighlight>();
-		int answerIndexCounter = 0;
-
-		for (ReportPart reportPart : this.reportTemplate.getReportParts()) {
-			int questionGroupCounter = 1;
-			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
-				int questionCounter = 1;
-				for (Question question : questionGroup.getQuestions()) {
-					if (this.answers.get(answerIndexCounter)
-							.isHighlightAnswer() == true) {
-
-						System.out.println(answerIndexCounter);
-						ReportHighlight highlight = new ReportHighlight(
-								reportPart, questionGroup,
-								this.answers.get(answerIndexCounter));
-						highlight
-								.setQuestionGroupOrderNumber(questionGroupCounter);
-						highlight.setQuestionOrderNumber(questionCounter);
-						reportHighlightList.add(highlight);
-						System.out
-								.println("Highlight-kysymyslooppi, indeksi : "
-										+ answerIndexCounter
-										+ "Kysymysryhmä + " + questionGroup);
-
-					}
-					answerIndexCounter++;
-					int subQuestionCounter = 1;
-					for (Question subQuestion : question.getSubQuestions()) {
-						if (this.answers.get(answerIndexCounter)
-								.isHighlightAnswer() == true) {
-							ReportHighlight highlight = new ReportHighlight(
-									reportPart, questionGroup,
-									this.answers.get(answerIndexCounter));
-							highlight
-									.setQuestionGroupOrderNumber(questionGroupCounter);
-							highlight.setQuestionOrderNumber(questionCounter);
-							highlight
-									.setSubQuestionOrderNumber(subQuestionCounter);
-
-							reportHighlightList.add(highlight);
-						}
-						subQuestionCounter++;
-						answerIndexCounter++;
-					}
-
-					questionCounter++;
-				}
-				questionGroupCounter++;
-			}
-		}
-		this.reportHighlights = reportHighlightList;
 	}
 
 	public Long getId() {
@@ -308,6 +275,264 @@ public class Report {
 
 	public void setWorkshopId(Long workshopId) {
 		this.workshopId = workshopId;
+	}
+
+	public String getOverallResultSmiley() {
+		return overallResultSmiley;
+	}
+
+	public void setOverallResultSmiley(String overallResultSmiley) {
+		this.overallResultSmiley = overallResultSmiley;
+	}
+
+	// ASETETAAN HIGHLIGHT-VASTAUKSET KÄYTTÄJÄN RAPORTINMUOKKAUKSESSA TEKEMIEN
+	// JA ANSWER-OLIOIHIN TALLENNETTUJEN VALINTOJEN MUKAAN
+
+	public void setHighlightAnswers() {
+		ArrayList<ReportHighlight> reportHighlightList = new ArrayList<ReportHighlight>();
+		int answerIndexCounter = 0;
+
+		for (ReportPart reportPart : this.reportTemplate.getReportParts()) {
+			int questionGroupCounter = 1;
+			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
+				int questionCounter = 1;
+				for (Question question : questionGroup.getQuestions()) {
+					if (this.answers.get(answerIndexCounter)
+							.isHighlightAnswer() == true) {
+
+						System.out.println(answerIndexCounter);
+						ReportHighlight highlight = new ReportHighlight(
+								reportPart, questionGroup,
+								this.answers.get(answerIndexCounter));
+						highlight
+								.setQuestionGroupOrderNumber(questionGroupCounter);
+						highlight.setQuestionOrderNumber(questionCounter);
+						reportHighlightList.add(highlight);
+						System.out
+								.println("Highlight-kysymyslooppi, indeksi : "
+										+ answerIndexCounter
+										+ "Kysymysryhmä + " + questionGroup);
+
+					}
+					answerIndexCounter++;
+					int subQuestionCounter = 1;
+					for (Question subQuestion : question.getSubQuestions()) {
+						if (this.answers.get(answerIndexCounter)
+								.isHighlightAnswer() == true) {
+							ReportHighlight highlight = new ReportHighlight(
+									reportPart, questionGroup,
+									this.answers.get(answerIndexCounter));
+							highlight
+									.setQuestionGroupOrderNumber(questionGroupCounter);
+							highlight.setQuestionOrderNumber(questionCounter);
+							highlight
+									.setSubQuestionOrderNumber(subQuestionCounter);
+
+							reportHighlightList.add(highlight);
+						}
+						subQuestionCounter++;
+						answerIndexCounter++;
+					}
+
+					questionCounter++;
+				}
+				questionGroupCounter++;
+			}
+		}
+		this.reportHighlights = reportHighlightList;
+	}
+
+	// LASKETAAN RAPORTIN PISTEET MONIVALINTOJEN POHJALTA:
+
+	public void calculateReportScore() {
+		int reportTotalScore = 0;
+		int reportMaxScore = 0;
+		int answerIndexCounter = 0;
+		int reportPartIndex = 0;
+		int questionGroupIndex = 0;
+		List<QuestionGroupScore> questionGroupScoreList = new ArrayList<QuestionGroupScore>();
+		List<ReportPartScore> reportPartScoreList = new ArrayList<ReportPartScore>();
+
+		for (ReportPart reportPart : this.reportTemplate.getReportParts()) {
+			ReportPartScore reportPartScoreObject;
+			if (reportPartScore.size() > 0) {
+				reportPartScoreObject = reportPartScore.get(reportPartIndex);
+			} else {
+				reportPartScoreObject = new ReportPartScore();
+			}
+
+			reportPartScoreObject.setReportPart(reportPart);
+
+			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
+
+				QuestionGroupScore questionGroupScoreObject;
+
+				if (questionGroupScore.size() > 0) {
+					questionGroupScoreObject = questionGroupScore
+							.get(questionGroupIndex);
+				} else {
+					questionGroupScoreObject = new QuestionGroupScore();
+				}
+
+				questionGroupScoreObject.setQuestionGroup(questionGroup);
+
+				for (Question question : questionGroup.getQuestions()) {
+
+					if (question instanceof MultipleChoiceQuestion) {
+						MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
+						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
+								.get(answerIndexCounter);
+
+						int maxScore = 0;
+						for (MultipleChoiceOption option : mcq.getOptions()) {
+							if (option.getPoints() != -1
+									&& option.getPoints() > maxScore) {
+								maxScore = option.getPoints();
+
+							}
+						}
+
+						mca.setMaxScore(maxScore); // Asetetaan
+													// monivalintakysymyksen
+													// maksimipistemäärä
+
+						// Lasketaan pisteet jos käyttäjä on tehnyt valinnan ja
+						// monivalinta ei ole sellainen, jota ei pisteytetä
+						// (pistemäärä -1)
+
+						if (mca.getChosenOptionIndex() != -1
+								&& mcq.getOptions()
+										.get(mca.getChosenOptionIndex())
+										.getPoints() != -1) {
+
+							mca.setShowScore(true);
+							mca.setScore(mcq.getOptions()
+									.get(mca.getChosenOptionIndex())
+									.getPoints());
+
+							// Lisätään kysymysryhmän pisteisiin ja asetetaan
+							// kysymysryhmän pisteet näkyviksi raportissa
+
+							questionGroupScoreObject.setShowScore(true);
+							questionGroupScoreObject
+									.setMaxScore(questionGroupScoreObject
+											.getMaxScore() + maxScore);
+
+							questionGroupScoreObject
+									.setScore(questionGroupScoreObject
+											.getScore()
+											+ mcq.getOptions()
+													.get(mca.getChosenOptionIndex())
+													.getPoints());
+
+							reportPartScoreObject.setShowScore(true);
+						}
+
+					}
+
+					answerIndexCounter++;
+
+					// subQuestions loop
+
+					for (Question subQuestion : question.getSubQuestions()) {
+
+						if (subQuestion instanceof MultipleChoiceQuestion) {
+							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
+							MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
+									.get(answerIndexCounter);
+
+							// Lasketan maksimipisteet
+
+							int maxScore = 0;
+							for (MultipleChoiceOption option : mcq.getOptions()) {
+								if (option.getPoints() != -1
+										&& option.getPoints() > maxScore) {
+									maxScore = option.getPoints();
+								}
+							}
+
+							mca.setMaxScore(maxScore);
+
+							// Lasketaan pisteet jos käyttäjä on tehnyt valinnan
+							// ja
+							// monivalinta ei ole sellainen, jota ei pisteytetä
+							// (pistemäärä -1)
+
+							if (mca.getChosenOptionIndex() != -1
+									&& mcq.getOptions()
+											.get(mca.getChosenOptionIndex())
+											.getPoints() != -1) {
+
+								mca.setShowScore(true);
+								mca.setScore(mcq.getOptions()
+										.get(mca.getChosenOptionIndex())
+										.getPoints());
+
+								// Lisätään kysymysryhmän pisteisiin ja
+								// asetetaan
+								// kysymysryhmän ja raportin osan pisteet
+								// näkyviksi raportissa
+
+								questionGroupScoreObject.setShowScore(true);
+								questionGroupScoreObject
+										.setMaxScore(questionGroupScoreObject
+												.getMaxScore() + maxScore);
+
+								questionGroupScoreObject
+										.setScore(questionGroupScoreObject
+												.getScore()
+												+ mcq.getOptions()
+														.get(mca.getChosenOptionIndex())
+														.getPoints());
+
+								reportPartScoreObject.setShowScore(true);
+
+							}
+
+						}
+
+						answerIndexCounter++;
+					}
+
+				}
+
+				// Lisätään kysymysryhmän pisteet Report-luokan olioon.
+
+				questionGroupScoreObject.calculateScorePercentage();
+				questionGroupScoreList.add(questionGroupScoreObject);
+
+				// Lisätään kysymysryhmän pisteet ja maksimipisteet raportin
+				// osan pisteisiin
+
+				reportPartScoreObject.setScore(reportPartScoreObject.getScore()
+						+ questionGroupScoreObject.getScore());
+				reportPartScoreObject
+						.setMaxScore(reportPartScoreObject.getMaxScore()
+								+ questionGroupScoreObject.getMaxScore());
+
+				questionGroupIndex++;
+
+			}
+
+			// Lisätään raportin osan pisteet Report-luokan olioon.
+
+			reportPartScoreObject.calculateScorePercentage();
+			reportPartScoreList.add(reportPartScoreObject);
+
+			reportTotalScore = reportTotalScore
+					+ reportPartScoreObject.getScore();
+			reportMaxScore = reportMaxScore
+					+ reportPartScoreObject.getMaxScore();
+
+			reportPartIndex++;
+		}
+
+		questionGroupScore = questionGroupScoreList;
+		reportPartScore = reportPartScoreList;
+
+		totalScorePercentage = (int) Math.round((double) reportTotalScore
+				/ (double) reportMaxScore * 100);
+
 	}
 
 }
