@@ -137,13 +137,17 @@
 										
 										<h3>${questionCounter.count}. ${question.question}</h3>
 													
-														<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-															<label class="checkbox">											
-															<sf:checkbox value='true' 
+											<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+															<div class="checkbox" style="font-size: 1.2em;">
+															<label>											
+															<sf:checkbox value='true'
 																path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+															
 															</label>
+															
+															</div>
 															<br>
-														</c:if>
+											</c:if>
 											<c:choose>
 												<c:when test="${question.multipleSelectionsAllowed == true}">
 														<c:forEach var="option" items="${question.options}">
@@ -188,6 +192,17 @@
 															</c:choose>
 														</label>
 													</c:forEach> 
+													 <c:choose>
+															<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == -1}"> 
+																<label class="btn btn-default active">
+ 															</c:when>
+															<c:otherwise>
+																<label class="btn btn-default">
+															</c:otherwise>
+														</c:choose> 
+														<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex" 
+																value="-1" /> Ei valintaa
+														
 												</div>
 											</div>
 											</c:otherwise>
@@ -206,11 +221,14 @@
 											
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-															<label class="checkbox">											
-															<sf:checkbox value='true' 
+															<div class="checkbox" style="font-size: 1.2em;">
+															<label>											
+															<sf:checkbox value='true'
 																path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
 															
 															</label>
+															
+															</div>
 															<br>
 											</c:if>
 											
@@ -219,13 +237,14 @@
 													<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].answer" />
 												</c:when>
 												<c:otherwise>
-													<sf:input path="report.answers[${answerIndexCounter}].answer" />
+													<sf:input class="form-control" path="report.answers[${answerIndexCounter}].answer" />
 												</c:otherwise>
 											</c:choose>
+											<br>
 											
 										</c:if>
 										
-		<!-- Show subquestions --> 
+		<!-- Subquestions --> 
 										
 										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 										
@@ -234,7 +253,8 @@
 											<c:set var="mainQuestion" value="${question}" scope="request" />
 											<div style="margin-left: 3em;">
 												<jsp:include page="/WEB-INF/templates/editReportSubQuestions.jsp" />
-											</div>				
+											</div>	
+											<br>			
 										</c:if>
 										
 										
@@ -282,7 +302,14 @@
 
 
 </script>
-		
+
+
+<script>
+$("[data-toggle='buttons'] .btn").live('click', function(evt){
+    $(this).removeClass('active');
+});
+</script>
+
 
 <script>
    function navigateToReportPart(reportPartIndex)

@@ -242,6 +242,9 @@ public class ReportController {
 		List<Workshop> workshops = ws.getWorkshops();
 
 		model.addAttribute("workshops", workshops);
+		model.addAttribute("initialAnswerIndexCounter", 0);
+		model.addAttribute("editReportPartNumber", 0);
+
 		model.addAttribute("edit", "TRUE");
 
 		return "editReport";
