@@ -42,8 +42,8 @@
 			<br><br>
 			</div>
 			<br>
-			
- 			<div class="panel-group" id="accordion"> 
+<sf:form modelAttribute="readyReport" action="saveSmileyAndHighlights">
+ <div class="panel-group" id="accordion"> 
 			<c:set var="bootstrapPanelCounter" value="1" scope="request" />
 						
 			<c:if test="${empty report.reportHighlights and loginRole == '[ROLE_ADMIN]'}">
@@ -53,7 +53,7 @@
 				<br>
 			</c:if>			
 
-<sf:form modelAttribute="readyReport" action="saveSmileyAndHighlights">
+
 		<h3>Raportin yhteenveto</h3>
 			<br>
 			<div class="panel panel-default">
@@ -124,7 +124,7 @@
 					
 						<c:if test="${questionGroupScore.questionGroup.showInReportSummary == true}">
 								<c:if test="${showQuestionGroupHighlightsTitle == 'false'}">
-									<h3><b>Kysymysryhmät: </b></h3>
+									<h3><b>Yhteenveto: </b></h3>
 									
 									<c:set var="showQuestionGroupHighlightsTitle" value="true" />
 								</c:if>
@@ -184,12 +184,18 @@
 				</c:if>			
 			</div>
 			<br>
-			
+			<div style="border-bottom: 3px solid #eee;">
 			<h3><b>Raportin osien pisteet: </b></h3>
 					<c:forEach var="reportPartScore" items="${readyReport.reportPartScore}" varStatus="reportPartScoreCounter">
 					<c:if test="${reportPartScore.reportPart.showScoreInReportHighlights == 'true' }">
 						<h3>${reportPartScore.reportPart.title}</h3>
-						<h4>Pisteet: ${reportPartScore.scorePercentage} %</h4>
+						<c:if test="${reportPartScore.maxScore > 0}">
+							<h4>Pisteet: ${reportPartScore.scorePercentage} %</h4>
+						</c:if>
+						
+						<c:if test="${reportPartScore.maxScore == 0}">
+							<h4>Pisteet: --</h4>
+						</c:if>
 						
 						<c:if test="${reportPartScore.maxScore > 0 }">
 							<div class="Demo-boot" style="padding-top: 15px;">
@@ -236,18 +242,21 @@
 					</c:forEach>
 								
 				<br>
-				<h4><b>Yhteensä: ${report.totalScorePercentage} %</b></h4>
-			
-			<br>			
+				</div>
+				<br>
+				
+				<h3><b>Raportin kokonaispisteet: ${report.totalScorePercentage} %</b></h3>
+								
 			</div>
-			<br>
+			<br><br>
 			
-			
+			<c:set var="bootstrapPanelCounter" value="1" scope="request" />
 			</div>
 			</div>
 								
  			<c:if test="${not empty report.reportHighlights}">
  				<jsp:include page="/WEB-INF/templates/showReportHighlightAnswers.jsp" />
+ 				<c:set var="bootstrapPanelCounter" value="2" scope="request" />
 			</c:if>
 				
 
@@ -285,16 +294,10 @@
 								</h4>
 							</div>
 
-								<!-- Ensimmäisen kysymysryhmän luokka on "collapse in" jotta javascript 
-									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
-								<c:choose>
-									<c:when test="${questionGroupCounter.count == 1 and reportPartCounter.count == 1}">
-										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start">
-									</c:when>
-									<c:otherwise>
+
 										<div id="${bootstrapPanelCounter}" class="panel-collapse collapse">
-								</c:otherwise>
-							</c:choose>
+							
+						
 								<div class="panel-body">
 								
 									<!-- Questions loop -->

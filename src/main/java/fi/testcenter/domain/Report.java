@@ -357,6 +357,10 @@ public class Report {
 			ReportPartScore reportPartScoreObject;
 			if (reportPartScore.size() > 0) {
 				reportPartScoreObject = reportPartScore.get(reportPartIndex);
+				reportPartScoreObject.setScore(0);
+				reportPartScoreObject.setMaxScore(0);
+				reportPartScoreObject.setScorePercentage(0);
+
 			} else {
 				reportPartScoreObject = new ReportPartScore();
 			}
@@ -370,6 +374,9 @@ public class Report {
 				if (questionGroupScore.size() > 0) {
 					questionGroupScoreObject = questionGroupScore
 							.get(questionGroupIndex);
+					questionGroupScoreObject.setScore(0);
+					questionGroupScoreObject.setMaxScore(0);
+					questionGroupScoreObject.setScorePercentage(0);
 				} else {
 					questionGroupScoreObject = new QuestionGroupScore();
 				}
