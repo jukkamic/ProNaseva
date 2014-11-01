@@ -8,7 +8,6 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<!-- TESTI -->
 
 <body>
 <security:authentication property="authorities" var="loginRole" scope="request" />
@@ -18,13 +17,16 @@
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" /> 
 				<h1>Raportin muokkaus</h1>
 			</div>
-			<br>
-			<br>
+			<br><br>
 			
-<form modelAttribute="report" action="saveReport" method="post">
+<form id="editReportForm" modelAttribute="report" action="saveReport" method="post">
+
+
+<!-- Raportin yleistiedot -->
+
 			<div style="border-bottom: 1px solid #eee;">
 			<h4>Maahantuoja: ${report.importer.name}</h4>
-			<br>
+			
 			<label for="workshopSelect"><h4>Valitse korjaamo: </h4></label>
 				
 				<sf:select style="width: auto; max-width: 100%; display: inline;" id="workshopSelect" path="report.workshopId"
@@ -40,10 +42,10 @@
 						</c:choose>
 					</c:forEach>
 				</sf:select>
-			<br><br>
+			<br>
 			<label for="date"><h4>Raportin päivämäärä: </h4></label>
 			<sf:input path="report.reportDate" name="date" class="datepicker" id="date" value="${report.reportDate}"/>
-			<br><br>
+			<br>
 						
 			<c:choose>
 				<c:when test="${edit == 'TRUE'}">
@@ -58,22 +60,40 @@
 			<br><br>
 			</div>
 			
+			<br>
+
+<!-- Raportinosien nav-pills listaus -->
+
+<input type="hidden" id="navigateToReportPart" name="navigateToReportPart">
+			<ul class="nav nav-pills nav-stacked" role="tablist">
+				<c:forEach var="navbarReportPart" items="${report.reportTemplate.reportParts}" varStatus="navbarCounter">
+			  		<c:if test="${navbarCounter.index == editReportPartNumber}">
+			  			<li role="presentation" class="active"><a onclick="navigateToReportPart(${navbarCounter.index});">${navbarReportPart.title}</a></li>
+			  		</c:if>
+			  		<c:if test="${navbarCounter.index != editReportPartNumber}">
+			  			<li role="presentation"><a onclick="navigateToReportPart(${navbarCounter.index});">${navbarReportPart.title}</a></li>
+			  		</c:if>
+				</c:forEach>
+			</ul>
 						
 			<br>
 			
 
-			<!-- Report part loop -->
+<!-- Report part loop -->
 			
 			<c:set var="bootstrapPanelCounter" value="0" />
 			
 			<div class="panel-group" id="accordion">
 		
-			<c:set var="answerIndexCounter" value="0" scope="request" />
-			<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
+			<c:set var="answerIndexCounter" value="${initialAnswerIndexCounter}" scope="request" />
+
+			
+			<c:set var="reportPart" value="${report.reportTemplate.reportParts[editReportPartNumber]}" />
+			
 			<h3>${reportPart.title}</h3>
 			<br>			
 
-				<!-- QuestionGroup loop -->
+<!-- QuestionGroup loop -->
 						
 	
 					<c:forEach var="questionGroup" items="${reportPart.questionGroups}" varStatus="questionGroupCounter">
@@ -95,7 +115,7 @@
 									tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
 									
 								<c:choose>
-									<c:when test="${questionGroupCounter.count == 1 and reportPartCounter.count == 1}">
+									<c:when test="${questionGroupCounter.count == 1}">
 										<div id="panel${bootstrapPanelCounter}" class="panel-collapse collapse start">
 									</c:when>
 									<c:otherwise>
@@ -105,12 +125,12 @@
 								<div class="panel-body">
 								
 								
-									<!-- Questions loop -->
+<!-- Questions loop -->
 									
 									<c:forEach var="question" items="${questionGroup.questions}" varStatus="questionCounter">
 										
 										
-										<!-- Multiple choice question -->
+		<!-- Multiple choice question -->
 										
 										<c:if test='${question["class"] == "class fi.testcenter.domain.MultipleChoiceQuestion"}'>
 										
@@ -181,7 +201,7 @@
 											<br><br>
 										</c:if> 
 										
-										<!-- Text question -->
+		<!-- Text question -->
 										<c:if test='${question["class"] == "class fi.testcenter.domain.TextQuestion"}'>
 											
 											<h3>${questionCounter.count}. ${question.question}</h3>
@@ -205,7 +225,7 @@
 											
 										</c:if>
 										
-										<!-- Show subquestions --> 
+		<!-- Show subquestions --> 
 										
 										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 										
@@ -218,18 +238,18 @@
 										</c:if>
 										
 										
-									</c:forEach> <!-- Questions end -->
+<!-- Questions loop end -->			</c:forEach> 
 									</div>
 									</div>
 									</div>
 									
 												
-					</c:forEach> <!-- QuestionGroup end -->
+<!-- QuestionGroup loop end -->	</c:forEach> 
 					
 					
 					
-					<br><br>
-					</c:forEach> <!-- Report part end -->
+							<br><br>
+
 					
 				</div>
 				
@@ -245,6 +265,8 @@
 				
 		</div>
 		
+		
+
 <script type="text/javascript">
             // When the document is ready
             $(document).ready(function () {
@@ -261,6 +283,19 @@
 
 </script>
 		
+
+<script>
+   function navigateToReportPart(reportPartIndex)
+   {
+           
+      document.getElementById("navigateToReportPart").value = reportPartIndex;
+      document.getElementById('editReportForm').submit();
+   }
+</script>
+
+
+
+
 		
 		<script>
         $(document).on("click", ".deleteReport", function(e) {

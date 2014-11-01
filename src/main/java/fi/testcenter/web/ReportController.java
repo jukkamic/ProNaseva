@@ -39,7 +39,8 @@ import fi.testcenter.service.WorkshopService;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes(value = { "reportTemplate", "report", "formAnswers" })
+@SessionAttributes(value = { "reportTemplate", "report", "formAnswers",
+		"workshops" })
 public class ReportController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
@@ -99,6 +100,7 @@ public class ReportController {
 		List<Workshop> workshops = ws.getWorkshops();
 
 		model.addAttribute("workshops", workshops);
+		model.addAttribute("initialAnswerIndexCounter", 0);
 
 		List<Answer> answers = new ArrayList<Answer>();
 
@@ -145,12 +147,14 @@ public class ReportController {
 		}
 		report.setAnswers(answers);
 
+		model.addAttribute("editReportPartNumber", 0);
 		return "editReport";
 	}
 
 	@RequestMapping(value = "/saveReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
-			@ModelAttribute("report") Report report, BindingResult result) {
+			@ModelAttribute("report") Report report, BindingResult result,
+			@RequestParam("navigateToReportPart") Integer navigateToReportPart) {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
@@ -171,7 +175,31 @@ public class ReportController {
 			e.printStackTrace();
 		}
 
-		return "showReport";
+		// Jos käyttäjä on clickannut navigointia toisen raportinosan
+		// muokkaukseen, asetetaan tallennuksen jälkeen tarvittavat muuttujat ja
+		// palataan
+		// editReport.jsp
+
+		if (navigateToReportPart != null) {
+
+			int answerIndex = 0;
+			for (int i = 0; i < navigateToReportPart; i++) {
+				for (QuestionGroup questionGroup : report.getReportTemplate()
+						.getReportParts().get(i).getQuestionGroups()) {
+					answerIndex += questionGroup.getQuestions().size();
+					for (Question question : questionGroup.getQuestions()) {
+						answerIndex += question.getSubQuestions().size();
+					}
+				}
+			}
+			model.addAttribute("initialAnswerIndexCounter", answerIndex);
+			log.debug("Vastausindeksi : " + answerIndex);
+			log.debug("Edit report part : " + navigateToReportPart);
+			model.addAttribute("editReportPartNumber", navigateToReportPart);
+			return "editReport";
+
+		} else
+			return "showReport";
 	}
 
 	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)
