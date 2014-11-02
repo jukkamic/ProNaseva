@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class ReportHighlight {
@@ -12,8 +13,13 @@ public class ReportHighlight {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
+	@Transient
 	private ReportPart reportPart;
+
+	@Transient
 	private QuestionGroup questionGroup;
+
+	@Transient
 	private Answer answer;
 
 	int questionGroupOrderNumber;

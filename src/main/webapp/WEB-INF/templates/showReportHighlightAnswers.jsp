@@ -22,6 +22,7 @@
 
  							
 							<c:forEach var="reportHighlight" items="${report.reportHighlights}">
+								<div style="border-bottom: 3px solid #eee;">
 								<c:if test="${reportHighlight.reportPart.title != reportPartTitle}">
 									<h3>${reportHighlight.reportPart.title}</h3>
 									<c:set var="reportPartTitle" value="${reportHighlight.reportPart.title}" />
@@ -88,10 +89,12 @@
 																								
 												</div>
 											</div>
-											<br>
-											<h4>Huomioita:</h4>
-											<p style="font-size: 1.2em;">${reportHighlight.answer.remarks}</p>
 											
+											<c:if test="${reportHighlight.answer.remarks != '' and reportHighlight.answer.remarks != null}">
+												<br>
+												<h4>Huomioita:</h4>
+												<p style="font-size: 1.2em;">${reportHighlight.answer.remarks}</p>
+											</c:if>
 											<br><br>
 										</c:if>
 								
@@ -107,10 +110,10 @@
 									</c:if>									
 									${reportHighlight.answer.question.question}</h3>
 									<p style="font-size: 1.2em;">${reportHighlight.answer.answer}</p>
-									
+									<br>
 								</c:if>
 								
-							
+							</div>
 							</c:forEach>
 	
 							</div>

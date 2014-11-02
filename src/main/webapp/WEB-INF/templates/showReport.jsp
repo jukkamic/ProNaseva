@@ -129,10 +129,21 @@
 									<c:set var="showQuestionGroupHighlightsTitle" value="true" />
 								</c:if>
 								<h3>${questionGroupScore.questionGroup.title}</h3>
-								<h4>Pisteet: ${questionGroupScore.score}/${questionGroupScore.maxScore}</h4>
+																
+								<c:if test="${questionGroupScore.maxScore > 0}">
+									<h4>Pisteet: ${questionGroupScore.score}/${questionGroupScore.maxScore}</h4>
+								</c:if>
+						
+								<c:if test="${questionGroupScore.maxScore == 0}">
+									<h4>Pisteet: --</h4>
+								</c:if>
+								
+								
+								
 								<c:set var="highlightGroupsScore" value="${highlightGroupsScore + questionGroupScore.score}" />
 								<c:set var="highlightGroupsMaxScore" value="${highlightGroupsMaxScore + questionGroupScore.maxScore}" />
 								
+								<c:if test="${questionGroupScore.maxScore > 0 }">
 									<div class="Demo-boot" style="padding-top: 15px;">
 									<div class="btn-group" data-toggle="buttons">
 									
@@ -170,6 +181,7 @@
 										</label>
 									</div>
 								</div>
+								</c:if>
 							<br>	
 						</c:if>
 						
@@ -248,12 +260,12 @@
 				<h3><b>Raportin kokonaispisteet: ${report.totalScorePercentage} %</b></h3>
 								
 			</div>
-			<br><br>
+			<br>
 			
-			<c:set var="bootstrapPanelCounter" value="1" scope="request" />
+			<c:set var="bootstrapPanelCounter" value="2" scope="request" />
 			</div>
 			</div>
-								
+			<br>				
  			<c:if test="${not empty report.reportHighlights}">
  				<jsp:include page="/WEB-INF/templates/showReportHighlightAnswers.jsp" />
  				<c:set var="bootstrapPanelCounter" value="2" scope="request" />

@@ -29,7 +29,7 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER)
 	private ReportTemplate reportTemplate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -81,7 +81,7 @@ public class Report {
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "REPORT_REPORTHIGHLIGHTS", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTHIGHLIGHTS_ID"))
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();

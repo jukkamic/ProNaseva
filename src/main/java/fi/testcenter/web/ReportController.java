@@ -286,6 +286,7 @@ public class ReportController {
 		model.addAttribute("workshops", workshops);
 		model.addAttribute("initialAnswerIndexCounter", 0);
 		model.addAttribute("editReportPartNumber", 0);
+		model.addAttribute("report", report);
 
 		model.addAttribute("edit", "TRUE");
 

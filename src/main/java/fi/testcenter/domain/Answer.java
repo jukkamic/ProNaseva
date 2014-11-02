@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class Answer {
@@ -12,10 +13,17 @@ public class Answer {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
+	@Transient
+	private Question question;
+
 	private boolean showScore;
 	private int score;
 	private int maxScore;
 	private boolean highlightAnswer;
+
+	public Answer() {
+
+	}
 
 	public boolean isHighlightAnswer() {
 		return highlightAnswer;
@@ -25,18 +33,12 @@ public class Answer {
 		this.highlightAnswer = highlightAnswer;
 	}
 
-	private Question question;
-
 	public Question getQuestion() {
 		return question;
 	}
 
 	public void setQuestion(Question question) {
 		this.question = question;
-	}
-
-	public Answer() {
-
 	}
 
 	public Long getId() {
