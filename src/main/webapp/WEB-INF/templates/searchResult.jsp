@@ -39,7 +39,8 @@
 						Tila
 					</th>
 				</tr>
-				<c:forEach var="report" items="${reportSearchList}">
+				
+				<c:forEach var="report" begin="${reportListStart}" end="${reportListEnd}" items="${reportSearchList}" varStatus="reportListCounter">
 						<tr>
 							<td><a class="btn btn-default" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
 								Näytä</a>
@@ -72,9 +73,36 @@
 						
 				</c:forEach>
 			</table>
-		<br>
-		
-		<a class="btn btn-primary remove" href="/ProNaseva/"><span class="glyphicon glyphicon-home" style="text-decoration: none;"></span> Alkuun</a>
+				 
+ 			<div style="text-align: center">  
+				<ul class="pagination pagination-centered pagination-lg"> 
+
+ 						<c:if test="${currentPage > 1 }">
+								<li><a href="/ProNaseva/showSearchResult?page=${currentPage - 1}">&laquo;</a></li>
+							</c:if>
+						<c:if test="${currentPage == 1 }">
+								<li class="disabled"><a href="#">&laquo;</a></li>
+						</c:if>
+ 					<c:forEach begin="1" end="${pageCount}" varStatus="pageCounter">
+	 						
+	 					<c:if test="${currentPage == pageCounter.index}">
+	 							<li class="active"><a href="#">${pageCounter.count} <span class="sr-only">(current)</span></a></li>
+	 					</c:if>
+	 					<c:if test="${currentPage != pageCounter.index}">
+	 							<li><a href="/ProNaseva/showSearchResult?page=${pageCounter.index}">${pageCounter.count} </a></li>
+	 					</c:if>
+ 					</c:forEach>			
+															
+					<c:if test="${currentPage < pageCount }">
+						<li><a href="/ProNaseva/showSearchResult?page=${currentPage + 1}">&raquo;</a></li>
+					</c:if>
+					<c:if test="${currentPage == pageCount}">
+						<li class="disabled"><a href="#">&raquo;</a></li>
+					</c:if>
+										
+				</ul>  
+			</div>   
+
 		
 
 		</div>

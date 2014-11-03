@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <body>
 	<div id="wrap">
@@ -42,7 +43,7 @@
 						Tila
 					</th>
 				</tr>
-				<c:forEach var="report" items="${awaitApproval}">
+				<c:forEach begin="0" end="4" var="report" items="${awaitApproval}">
 						<tr>
 							<td><a class="btn btn-default" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
 								Näytä</a>
@@ -75,6 +76,13 @@
 						
 				</c:forEach>
 			</table>
+		
+		<c:if test="${fn:length(awaitApproval) > 4}">
+			<a class="btn btn-primary" href="/ProNaseva/showAllAwaitApproval"> Hae kaikki</a>
+			<br><br>
+		</c:if>
+				
+			
 			
 		<br>
 		</c:if>
@@ -115,7 +123,7 @@
 						Tila
 					</th>
 				</tr>
-				<c:forEach var="report" items="${reportSearchList}">
+				<c:forEach var="report" begin="0" end="4" items="${reportSearchList}">
 						<tr>
 							<td><a class="btn btn-default" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
 								Näytä</a>
@@ -147,15 +155,16 @@
 						</tr>
 						
 				</c:forEach>
+				
 			</table>
-		<br>
+		<c:if test="${fn:length(reportSearchList) > 4}">
+			<a class="btn btn-primary" href="/ProNaseva/showAllUserOwnReports?showAllUserReports=true"> Hae kaikki</a>
+			<br><br>
 		</c:if>
 		
+		</c:if>
 		
-
-		<a class="btn btn-primary remove" href="/ProNaseva/searchReport"><span class="glyphicon glyphicon-search" style="text-decoration: none;"></span> Hae raportteja</a>
-		
-
+	
 		</div>
 		<br>
 	
