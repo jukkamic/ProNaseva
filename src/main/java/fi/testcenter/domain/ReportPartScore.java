@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 @Entity
 public class ReportPartScore {
@@ -13,7 +12,6 @@ public class ReportPartScore {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@Transient
 	ReportPart reportPart;
 
 	int score;

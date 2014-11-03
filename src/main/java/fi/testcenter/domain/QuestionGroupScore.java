@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 @Entity
 public class QuestionGroupScore {
@@ -13,7 +12,6 @@ public class QuestionGroupScore {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@Transient
 	QuestionGroup questionGroup;
 
 	private int score;

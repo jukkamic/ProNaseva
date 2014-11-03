@@ -99,10 +99,8 @@ public class Report {
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();
 
-	@Transient
 	List<String> reportPartSmileys = new ArrayList<String>();
 
-	@Transient
 	List<String> questionGroupSmileys = new ArrayList<String>();
 
 	public List<String> getReportPartSmileys() {

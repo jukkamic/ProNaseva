@@ -179,7 +179,7 @@ public class ReportController {
 		}
 
 		report.setHighlightAnswers();
-		model.addAttribute("reportHighlight", report.getReportHighlights());
+
 		try {
 			report.setDate(simpleDateFormat.parse(report.getReportDate()));
 		} catch (Exception e) {
