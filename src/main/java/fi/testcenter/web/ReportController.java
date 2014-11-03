@@ -77,7 +77,14 @@ public class ReportController {
 			Model model, @RequestParam("importerID") Integer importerID) {
 
 		Report report = new Report();
-		report.setReportTemplate(rs.getReportTemplate());
+
+		try {
+			report.setReportTemplate(rs.saveReportTemplate(rs
+					.getReportTemplate()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		report.setUser(us.getLoginUser());
 
 		Importer importer = is.getImporterById(importerID.longValue());
@@ -187,9 +194,6 @@ public class ReportController {
 
 		}
 
-		log.debug("Eka highlight id tallennetusta raportista : "
-				+ savedReport.getReportHighlights().get(0).getId());
-
 		// Jos käyttäjä on clickannut navigointia toisen raportinosan
 		// muokkaukseen, asetetaan tallennuksen jälkeen tarvittavat muuttujat ja
 		// palataan
@@ -241,10 +245,6 @@ public class ReportController {
 			Model model, @ModelAttribute("readyReport") Report formReport,
 			BindingResult result, @ModelAttribute("report") Report report) {
 
-		if (report.getReportHighlights().size() > 0)
-			log.debug("\n Eka highlight hymiöiden tallennuksessa : "
-					+ report.getReportHighlights().get(0).getId());
-
 		int reportPartScoreIndex = 0;
 
 		for (ReportPartScore reportPartScore : formReport.getReportPartScore()) {
@@ -259,8 +259,7 @@ public class ReportController {
 				.getQuestionGroupScore()) {
 			report.getQuestionGroupScore().get(questionGroupScoreIndex++)
 					.setScoreSmiley(questionGroupScore.getScoreSmiley());
-			log.debug("Questiongroup smiley : "
-					+ questionGroupScore.getScoreSmiley());
+
 		}
 
 		Report savedReport = new Report();
@@ -271,8 +270,6 @@ public class ReportController {
 
 		}
 
-		log.debug("Eka highlight id tallennetusta raportista : "
-				+ savedReport.getReportHighlights().get(0).getId());
 		model.addAttribute("readyReport", savedReport);
 		model.addAttribute("report", savedReport);
 		return "/showReport";

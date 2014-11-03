@@ -444,7 +444,7 @@
             	      label: "Poista",
             	      className: "btn-primary",
             	      callback: function() {
-            	    	window.location.href = "deleteReport"
+            	    	window.location.href = "/ProNaseva/deleteReport"
             	      }
             	    },
             	  cancel: {

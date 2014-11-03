@@ -26,6 +26,7 @@ import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.repository.ReportRepository;
+import fi.testcenter.repository.ReportTemplateRepository;
 import fi.testcenter.repository.WorkshopRepository;
 import fi.testcenter.web.SearchReportCriteria;
 
@@ -40,6 +41,9 @@ public class ReportService {
 
 	@Autowired
 	private WorkshopRepository wr;
+
+	@Autowired
+	private ReportTemplateRepository rtr;
 
 	@Autowired
 	private ImporterRepository ir;
@@ -270,5 +274,9 @@ public class ReportService {
 	public void deleteReportHighlights(List<ReportHighlight> highlights) {
 		log.debug("Report Service eka id " + highlights.get(0).getId());
 		rhls.deleteInBatch(highlights);
+	}
+
+	public ReportTemplate saveReportTemplate(ReportTemplate template) {
+		return rtr.save(template);
 	}
 }

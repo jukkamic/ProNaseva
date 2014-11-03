@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class ReportHighlight {
@@ -12,10 +14,13 @@ public class ReportHighlight {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
+	@ManyToOne
 	private ReportPart reportPart;
 
+	@ManyToOne
 	private QuestionGroup questionGroup;
 
+	@OneToOne
 	private Answer answer;
 
 	Report report;

@@ -43,7 +43,7 @@ public class Report {
 	@Transient
 	EntityManager em;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private ReportTemplate reportTemplate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
