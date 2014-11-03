@@ -21,8 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.Report;
+import fi.testcenter.domain.ReportHighlight;
 import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
+import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.repository.ReportRepository;
 import fi.testcenter.repository.WorkshopRepository;
 import fi.testcenter.web.SearchReportCriteria;
@@ -44,6 +46,9 @@ public class ReportService {
 
 	@Autowired
 	private MockReportTemplate rts;
+
+	@Autowired
+	private ReportHighlightRepository rhls;
 
 	@PersistenceContext()
 	EntityManager em;
@@ -260,5 +265,10 @@ public class ReportService {
 		}
 
 		return reportList;
+	}
+
+	public void deleteReportHighlights(List<ReportHighlight> highlights) {
+		em.flush();
+		rhls.deleteInBatch(highlights);
 	}
 }

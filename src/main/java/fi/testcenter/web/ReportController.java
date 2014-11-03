@@ -180,6 +180,12 @@ public class ReportController {
 		// palataan
 		// editReport.jsp
 
+		log.debug("Raportin id tallennuksen jälkeen : " + report.getId());
+		if (report.getReportHighlights().size() > 0)
+			log.debug("\n Eka highlight id tallennuksen jälkeen : "
+					+ report.getReportHighlights().get(0).getId());
+		log.debug("eka vastaus id tallennuksen jälkeen: "
+				+ report.getAnswers().get(0).getId());
 		if (navigateToReportPart != null) {
 
 			int answerIndex = 0;
@@ -193,8 +199,7 @@ public class ReportController {
 				}
 			}
 			model.addAttribute("initialAnswerIndexCounter", answerIndex);
-			log.debug("Vastausindeksi : " + answerIndex);
-			log.debug("Edit report part : " + navigateToReportPart);
+			model.addAttribute("report", report);
 			model.addAttribute("editReportPartNumber", navigateToReportPart);
 
 			return "editReport";
@@ -227,10 +232,10 @@ public class ReportController {
 			Model model, @ModelAttribute("readyReport") Report formReport,
 			BindingResult result, @ModelAttribute("report") Report report) {
 
-		log.debug("report eka vastaus : " + report.getAnswers().get(0));
-		log.debug("formReport eka vastaus : " + formReport.getAnswers().get(0));
-		log.debug("toka reportpart max pisteet: "
-				+ report.getReportPartScore().get(1));
+		log.debug("raportin id hymiöiden tallennuksessa: " + report.getId());
+		log.debug("formReport id hymiöiden tallennuksessa: "
+				+ formReport.getId());
+
 		int reportPartScoreIndex = 0;
 
 		for (ReportPartScore reportPartScore : formReport.getReportPartScore()) {

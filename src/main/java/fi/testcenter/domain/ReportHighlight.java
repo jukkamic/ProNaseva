@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Transient;
 
 @Entity
 public class ReportHighlight {
@@ -13,14 +12,13 @@ public class ReportHighlight {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@Transient
 	private ReportPart reportPart;
 
-	@Transient
 	private QuestionGroup questionGroup;
 
-	@Transient
 	private Answer answer;
+
+	Report report;
 
 	int questionGroupOrderNumber;
 	int questionOrderNumber;
@@ -30,8 +28,8 @@ public class ReportHighlight {
 
 	}
 
-	ReportHighlight(ReportPart reportPart, QuestionGroup questionGroup,
-			Answer answer) {
+	ReportHighlight(Report report, ReportPart reportPart,
+			QuestionGroup questionGroup, Answer answer) {
 		this.reportPart = reportPart;
 		this.questionGroup = questionGroup;
 		this.answer = answer;
@@ -91,5 +89,13 @@ public class ReportHighlight {
 
 	public void setSubQuestionOrderNumber(int subQuestionOrderNumber) {
 		this.subQuestionOrderNumber = subQuestionOrderNumber;
+	}
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
 	}
 }

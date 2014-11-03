@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,9 +19,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import fi.testcenter.repository.ReportHighlightRepository;
+import fi.testcenter.service.ReportService;
 
 @Entity
 public class Report {
@@ -29,7 +36,19 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@Autowired
+	@Transient
+	ReportService rs;
+
+	@Autowired
+	@Transient
+	ReportHighlightRepository rhlr;
+
+	@PersistenceContext()
+	@Transient
+	EntityManager em;
+
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private ReportTemplate reportTemplate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -81,13 +100,14 @@ public class Report {
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "REPORT_REPORTHIGHLIGHTS", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTHIGHLIGHTS_ID"))
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();
 
+	@Transient
 	List<String> reportPartSmileys = new ArrayList<String>();
 
+	@Transient
 	List<String> questionGroupSmileys = new ArrayList<String>();
 
 	public List<String> getReportPartSmileys() {
@@ -170,6 +190,10 @@ public class Report {
 
 	public void setVehicleRegistrationDate(String vehicleRegistrationDate) {
 		this.vehicleRegistrationDate = vehicleRegistrationDate;
+	}
+
+	public void setQuestionGroupSmileys(List<String> questionGroupSmileys) {
+		this.questionGroupSmileys = questionGroupSmileys;
 	}
 
 	public String getVehicleMileage() {
@@ -289,6 +313,7 @@ public class Report {
 	// JA ANSWER-OLIOIHIN TALLENNETTUJEN VALINTOJEN MUKAAN
 
 	public void setHighlightAnswers() {
+
 		ArrayList<ReportHighlight> reportHighlightList = new ArrayList<ReportHighlight>();
 		int answerIndexCounter = 0;
 
@@ -301,13 +326,15 @@ public class Report {
 							.isHighlightAnswer() == true) {
 
 						System.out.println(answerIndexCounter);
-						ReportHighlight highlight = new ReportHighlight(
+						ReportHighlight highlight = new ReportHighlight(this,
 								reportPart, questionGroup,
 								this.answers.get(answerIndexCounter));
 						highlight
 								.setQuestionGroupOrderNumber(questionGroupCounter);
 						highlight.setQuestionOrderNumber(questionCounter);
+
 						reportHighlightList.add(highlight);
+
 						System.out
 								.println("Highlight-kysymyslooppi, indeksi : "
 										+ answerIndexCounter
@@ -320,7 +347,7 @@ public class Report {
 						if (this.answers.get(answerIndexCounter)
 								.isHighlightAnswer() == true) {
 							ReportHighlight highlight = new ReportHighlight(
-									reportPart, questionGroup,
+									this, reportPart, questionGroup,
 									this.answers.get(answerIndexCounter));
 							highlight
 									.setQuestionGroupOrderNumber(questionGroupCounter);
@@ -329,6 +356,7 @@ public class Report {
 									.setSubQuestionOrderNumber(subQuestionCounter);
 
 							reportHighlightList.add(highlight);
+
 						}
 						subQuestionCounter++;
 						answerIndexCounter++;
@@ -339,7 +367,9 @@ public class Report {
 				questionGroupCounter++;
 			}
 		}
+
 		this.reportHighlights = reportHighlightList;
+
 	}
 
 	// LASKETAAN RAPORTIN PISTEET MONIVALINTOJEN POHJALTA:

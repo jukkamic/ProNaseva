@@ -42,6 +42,13 @@
 
 	</build>
 	<dependencies>
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>5.1.33</version>
+</dependency>
+
+	
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
