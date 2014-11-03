@@ -59,9 +59,9 @@ public class ReportService {
 	}
 
 	@Transactional
-	public void saveReport(Report report) {
+	public Report saveReport(Report report) {
 
-		rr.save(report);
+		return rr.save(report);
 	}
 
 	@Transactional
@@ -268,7 +268,7 @@ public class ReportService {
 	}
 
 	public void deleteReportHighlights(List<ReportHighlight> highlights) {
-		em.flush();
+		log.debug("Report Service eka id " + highlights.get(0).getId());
 		rhls.deleteInBatch(highlights);
 	}
 }

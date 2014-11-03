@@ -26,7 +26,6 @@ import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.service.ReportService;
 
 @Entity
@@ -39,10 +38,6 @@ public class Report {
 	@Autowired
 	@Transient
 	ReportService rs;
-
-	@Autowired
-	@Transient
-	ReportHighlightRepository rhlr;
 
 	@PersistenceContext()
 	@Transient

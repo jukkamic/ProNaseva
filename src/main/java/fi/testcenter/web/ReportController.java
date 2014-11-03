@@ -162,30 +162,39 @@ public class ReportController {
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
+		if (report.getReportHighlights().size() > 0) {
+
+			try {
+				rs.deleteReportHighlights(report.getReportHighlights());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		report.setHighlightAnswers();
+		model.addAttribute("reportHighlight", report.getReportHighlights());
 		try {
 			report.setDate(simpleDateFormat.parse(report.getReportDate()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		Report savedReport = new Report();
 		try {
-			rs.saveReport(report);
+			savedReport = rs.saveReport(report);
 		} catch (Exception e) {
 			e.printStackTrace();
+
 		}
+
+		log.debug("Eka highlight id tallennetusta raportista : "
+				+ savedReport.getReportHighlights().get(0).getId());
 
 		// Jos käyttäjä on clickannut navigointia toisen raportinosan
 		// muokkaukseen, asetetaan tallennuksen jälkeen tarvittavat muuttujat ja
 		// palataan
 		// editReport.jsp
 
-		log.debug("Raportin id tallennuksen jälkeen : " + report.getId());
-		if (report.getReportHighlights().size() > 0)
-			log.debug("\n Eka highlight id tallennuksen jälkeen : "
-					+ report.getReportHighlights().get(0).getId());
-		log.debug("eka vastaus id tallennuksen jälkeen: "
-				+ report.getAnswers().get(0).getId());
 		if (navigateToReportPart != null) {
 
 			int answerIndex = 0;
@@ -205,8 +214,8 @@ public class ReportController {
 			return "editReport";
 
 		} else
-			model.addAttribute("readyReport", report);
-		model.addAttribute("report", report);
+			model.addAttribute("readyReport", savedReport);
+		model.addAttribute("report", savedReport);
 		return "showReport";
 	}
 
@@ -232,9 +241,9 @@ public class ReportController {
 			Model model, @ModelAttribute("readyReport") Report formReport,
 			BindingResult result, @ModelAttribute("report") Report report) {
 
-		log.debug("raportin id hymiöiden tallennuksessa: " + report.getId());
-		log.debug("formReport id hymiöiden tallennuksessa: "
-				+ formReport.getId());
+		if (report.getReportHighlights().size() > 0)
+			log.debug("\n Eka highlight hymiöiden tallennuksessa : "
+					+ report.getReportHighlights().get(0).getId());
 
 		int reportPartScoreIndex = 0;
 
@@ -254,15 +263,18 @@ public class ReportController {
 					+ questionGroupScore.getScoreSmiley());
 		}
 
+		Report savedReport = new Report();
 		try {
-			rs.saveReport(report);
+			savedReport = rs.saveReport(report);
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 
-		model.addAttribute("readyReport", report);
-		model.addAttribute("report", report);
+		log.debug("Eka highlight id tallennetusta raportista : "
+				+ savedReport.getReportHighlights().get(0).getId());
+		model.addAttribute("readyReport", savedReport);
+		model.addAttribute("report", savedReport);
 		return "/showReport";
 	}
 
