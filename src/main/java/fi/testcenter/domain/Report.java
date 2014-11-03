@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,14 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import fi.testcenter.service.ReportService;
 
 @Entity
 public class Report {
@@ -34,14 +28,6 @@ public class Report {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
-
-	@Autowired
-	@Transient
-	ReportService rs;
-
-	@PersistenceContext()
-	@Transient
-	EntityManager em;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private ReportTemplate reportTemplate;
@@ -59,6 +45,7 @@ public class Report {
 	private String vehicleRegistrationDate;
 	private String vehicleMileage;
 	private String overallResultSmiley;
+	private boolean smileysSet = false;
 
 	@Column
 	@Temporal(TemporalType.DATE)
@@ -102,22 +89,6 @@ public class Report {
 	List<String> reportPartSmileys = new ArrayList<String>();
 
 	List<String> questionGroupSmileys = new ArrayList<String>();
-
-	public List<String> getReportPartSmileys() {
-		return reportPartSmileys;
-	}
-
-	public void setReportPartSmileys(List<String> reportPartSmileys) {
-		this.reportPartSmileys = reportPartSmileys;
-	}
-
-	public List<String> getQuestionGroupSmileys() {
-		return questionGroupSmileys;
-	}
-
-	public void setQuestionPartSmileys(List<String> questionGroupSmileys) {
-		this.questionGroupSmileys = questionGroupSmileys;
-	}
 
 	public Report() {
 
@@ -300,6 +271,30 @@ public class Report {
 
 	public void setOverallResultSmiley(String overallResultSmiley) {
 		this.overallResultSmiley = overallResultSmiley;
+	}
+
+	public List<String> getReportPartSmileys() {
+		return reportPartSmileys;
+	}
+
+	public void setReportPartSmileys(List<String> reportPartSmileys) {
+		this.reportPartSmileys = reportPartSmileys;
+	}
+
+	public List<String> getQuestionGroupSmileys() {
+		return questionGroupSmileys;
+	}
+
+	public void setQuestionPartSmileys(List<String> questionGroupSmileys) {
+		this.questionGroupSmileys = questionGroupSmileys;
+	}
+
+	public boolean isSmileysSet() {
+		return smileysSet;
+	}
+
+	public void setSmileysSet(boolean smileysSet) {
+		this.smileysSet = smileysSet;
 	}
 
 	// ASETETAAN HIGHLIGHT-VASTAUKSET KÄYTTÄJÄN RAPORTINMUOKKAUKSESSA TEKEMIEN

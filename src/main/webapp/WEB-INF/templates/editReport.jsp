@@ -19,7 +19,7 @@
 			</div>
 			<br><br>
 			
-<form id="editReportForm" modelAttribute="report" action="saveReport" method="post">
+<sf:form id="editReportForm" modelAttribute="report" action="saveReport" method="post">
 
 
 <!-- Raportin yleistiedot -->
@@ -29,7 +29,7 @@
 			
 			<label for="workshopSelect"><h4>Valitse korjaamo: </h4></label>
 				
-				<sf:select style="width: auto; max-width: 100%; display: inline;" id="workshopSelect" path="report.workshopId"
+				<sf:select style="width: auto; max-width: 100%; display: inline;" id="workshopSelect" path="workshopId"
 					class="form-control">
 					<c:forEach var="workshop" items="${workshops}">
 						<c:choose>
@@ -44,9 +44,9 @@
 				</sf:select>
 			<br>
 			<label for="date"><h4>Raportin päivämäärä: </h4></label>
-			<sf:input path="report.reportDate" name="date" class="datepicker" id="date" value="${report.reportDate}"/>
+			<sf:input path="reportDate" name="date" class="datepicker" id="date" value="${report.reportDate}"/>
 			<br>
-						
+			<h4>			
 			<c:choose>
 				<c:when test="${edit == 'TRUE'}">
 					<span class="label label-warning">Muokkaus</span>
@@ -55,7 +55,7 @@
 					<span class="label label-warning">Luonnos</span>
 				</c:otherwise>
 			</c:choose>
-
+			</h4>
 						
 			<br><br>
 			</div>
@@ -141,7 +141,7 @@
 															<div class="checkbox" style="font-size: 1.2em;">
 															<label>											
 															<sf:checkbox value='true'
-																path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+																path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
 															
 															</label>
 															
@@ -153,7 +153,7 @@
 														<c:forEach var="option" items="${question.options}">
 															<label class="checkbox" style="">											
 															<sf:checkbox value="${option.option}" 
-																path="report.answers[${answerIndexCounter}].chosenSelections" label="${option.option}" />
+																path="answers[${answerIndexCounter}].chosenSelections" label="${option.option}" />
 															</label>
 															<br>
 														</c:forEach>
@@ -182,11 +182,11 @@
 																ei ole tägejä -->
 														<c:choose>
 															<c:when test="${option.radiobuttonText != null }">
-																<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex" 
+																<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex" 
 																value="${optionsCounter.index}" /> ${option.radiobuttonText}
 															</c:when>
 															<c:otherwise>
-																<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex"
+																<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex"
 																value="${optionsCounter.index}" /> ${option.option}
 															</c:otherwise>
 															</c:choose>
@@ -200,7 +200,7 @@
 																<label class="btn btn-default">
 															</c:otherwise>
 														</c:choose> 
-														<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex" 
+														<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex" 
 																value="-1" /> Ei valintaa
 														
 												</div>
@@ -211,7 +211,7 @@
 											
 											<br>
 											<h4>Huomioita:</h4>
-											<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].remarks" 
+											<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
 												value="report.answers[${answerIndexCounter}].remarks}" />
 											<br><br>
 										</c:if> 
@@ -224,7 +224,7 @@
 															<div class="checkbox" style="font-size: 1.2em;">
 															<label>											
 															<sf:checkbox value='true'
-																path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+																path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
 															
 															</label>
 															
@@ -234,10 +234,10 @@
 											
 											<c:choose>
 												<c:when test="${question.textAreaInput == true }">
-													<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].answer" />
+													<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].answer" />
 												</c:when>
 												<c:otherwise>
-													<sf:input class="form-control" path="report.answers[${answerIndexCounter}].answer" />
+													<sf:input class="form-control" path="answers[${answerIndexCounter}].answer" />
 												</c:otherwise>
 											</c:choose>
 											<br>
@@ -281,7 +281,8 @@
 				</c:if>
 				
 				<br><br>
-				<br></form>
+				<br>
+</sf:form>
 				
 		</div>
 		

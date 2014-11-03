@@ -21,7 +21,7 @@
 					<h3>${subQuestion.question}</h3>
 					<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 							<label class="checkbox">											
-								<sf:checkbox value='true' path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+								<sf:checkbox value='true' path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
 							</label>
 						<br>
 					</c:if>
@@ -32,7 +32,7 @@
 					<c:forEach var="option" items="${subQuestion.options}">
 						<label class="checkbox" style="">											
 						<sf:checkbox value="${option.option}" 
-							path="report.answers[${answerIndexCounter}].chosenSelections" 
+							path="answers[${answerIndexCounter}].chosenSelections" 
 							label="${option.option}" />
 						</label>
 						<br>
@@ -61,11 +61,11 @@
 							ei ole tägejä -->
 					<c:choose>
 						<c:when test="${option.radiobuttonText != null }">
-							<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex" 
+							<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex" 
 							value="${optionsCounter.index}" /> ${option.radiobuttonText}
 						</c:when>
 						<c:otherwise>
-							<sf:radiobutton id="button" path="report.answers[${answerIndexCounter}].chosenOptionIndex"
+							<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex"
 							value="${optionsCounter.index}" /> ${option.option}
 						</c:otherwise>
 						</c:choose>
@@ -78,7 +78,7 @@
 	
 		<br>
 		<h4>Huomioita:</h4>
-		<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].remarks" 
+		<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
 			value="report.answers[${answerIndexCounter}].remarks}" />
 		<br><br>
 	</c:if>
@@ -90,7 +90,7 @@
 		<h3>${subQuestion.question}</h3>
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 				<label class="checkbox">											
-				<sf:checkbox value='true' path="report.answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+				<sf:checkbox value='true' path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
 				</label>
 			<br>
 		</c:if>
@@ -98,10 +98,10 @@
 		<br>
 		<c:choose>
 				<c:when test="${subQuestion.textAreaInput == true }">
-					<sf:textarea rows="5" style="width:100%;" path="report.answers[${answerIndexCounter}].answer" />
+					<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].answer" />
 				</c:when>
 				<c:otherwise>
-					<sf:input path="report.answers[${answerIndexCounter}].answer" />
+					<sf:input path="answers[${answerIndexCounter}].answer" />
 				</c:otherwise>
 		</c:choose>
 		

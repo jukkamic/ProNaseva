@@ -17,7 +17,13 @@
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
 				<h1>Raportti</h1>
+			
 			</div>
+
+
+<sf:form modelAttribute="readyReport" action="saveSmileysAndHighlights" method="post"> 
+
+<button type="submit" class="btn btn-primary">Tallenna</button>
 			<br>
 			<br>
 			<div style="border-bottom: 1px solid #eee;">
@@ -42,26 +48,38 @@
 			<br><br>
 			</div>
 			<br>
-<fieldset>
-<sf:form modelAttribute="readyReport" action="saveSmileyAndHighlights">
+
  <div class="panel-group" id="accordion"> 
 			<c:set var="bootstrapPanelCounter" value="1" scope="request" />
 						
+			<c:if test="${successMessage != null and message != ''}">
+				<div class="alert alert-success">
+					<h4>${message}</h4>
+				</div>
+				<br>
+			</c:if>
 			<c:if test="${empty report.reportHighlights and loginRole == '[ROLE_ADMIN]'}">
 				<div class="alert alert-warning">
-					<h4>Valitse raportin huomionarvoiset vastaukset!</h4>
+					<h4>Valitse raportin huomionarvoiset vastaukset ja tallenna!</h4>
+				</div>
+				<br>
+			</c:if>	
+			
+			<c:if test="${report.smileysSet != 'true' and loginRole == '[ROLE_ADMIN]'}">
+				<div class="alert alert-warning">
+					<h4>Arvostele tulokset raportin yhteenvedosta!</h4>
 				</div>
 				<br>
 			</c:if>			
 
-
-		
-			<c:if test="${report.reportStatus == 'APPROVED'}">
+	
+			<c:if test="${editSmileys != 'true' }">
 			<jsp:include page="/WEB-INF/templates/showReportSummary.jsp" />
 			</c:if>
 
 			
-			<c:if test="${report.reportStatus == 'DRAFT' or report.reportStatus == 'AWAIT_APPROVAL'}">
+			<c:if test="${editSmileys == 'true'}">
+			
 			<jsp:include page="/WEB-INF/templates/showReportSummaryForEdit.jsp" />
 			</c:if>
 			
@@ -72,10 +90,10 @@
 			</c:if>
 				
 
-			
+			<c:set var="answerIndexCounter" value="0" scope="request" />
 			<!-- Report part loop -->
 			
-			<c:set var="answerIndexCounter" value="0" scope="request" />
+			
 			<c:set var="questionGroupScoreIndexCounter" value="0" scope="request" />
 			<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
 			<h3>${reportPart.title}</h3>
@@ -121,6 +139,19 @@
 										<c:if test='${question["class"] == "class fi.testcenter.domain.MultipleChoiceQuestion"}'>
 																												
 											<h3>${questionCounter.count}. ${question.question}</h3>
+											<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+													<div class="checkbox" style="font-size: 1.2em;">
+													<label>											
+													<sf:checkbox value='true'
+														path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />  
+													
+													</label>
+													
+													</div>
+													<br>
+											</c:if>
+											
+											
 											<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
@@ -177,6 +208,18 @@
 										<!--  Text question -->
 										<c:if test='${question["class"] == "class fi.testcenter.domain.TextQuestion"}'>
 											<h3>${questionCounter.count}. ${question.question}</h3>
+											<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+													<div class="checkbox" style="font-size: 1.2em;">
+													<label>											
+													<sf:checkbox value='true'
+														path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+													
+													</label>
+													
+													</div>
+													<br>
+											</c:if>
+											
 											<br>
 											<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
 										</c:if>
@@ -190,7 +233,7 @@
 											<div style="margin-left: 3em;">
 												<jsp:include page="/WEB-INF/templates/showReportSubQuestions.jsp" />
 											</div>				
-										</c:if>
+										</c:if> 
 										
 										
 									</c:forEach> <!-- Questions loop end -->
@@ -220,9 +263,14 @@
 				</c:if>
 					
 				<c:if test="${loginRole == '[ROLE_ADMIN]' and report.reportStatus != 'APPROVED' }">
-					<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Tallenna</button>
+					
 					<a class="btn btn-primary" href="/ProNaseva/approveReport/"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Vahvista raportti</a>
 				</c:if>
+				<c:if test="${loginRole == '[ROLE_ADMIN]'}">
+					<button type="submit" class="btn btn-primary" href="/ProNaseva/saveSmileyAndHighlights/"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> 
+						Tallenna</button>
+				</c:if>
+				
 				<a class="btn btn-primary" href="/ProNaseva/printReport/"><span class="glyphicon glyphicon-print" style="text-decoration: none;"></span> Tulosta</a>
 				
 				<c:if test="${loginRole == '[ROLE_ADMIN]' or report.reportStatus == 'DRAFT' or report.reportStatus == 'AWAIT_APPROVAL'}">
@@ -231,9 +279,7 @@
 								
 				<br><br>
 				<br>
-</sf:form>
-
-</fieldset>
+</sf:form> 
 		</div>
 				
 		<script>

@@ -17,9 +17,15 @@
 								</h4>
 							</div> 
 							
-								<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start"> 
-								<div class="panel-body">
+		<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start"> 
+		<div class="panel-body">
 			<br>
+			
+			<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+				<a class="btn btn-default" style="text-decoration: none;" href="/ProNaseva/editSmileys"><span class="glyphicon glyphicon-edit" style="text-decoration: none;"></span> Muokkaa arvostelua</a>
+				
+			</c:if>
+			<br><br><br>
 			
 			<div style="border-bottom: 3px solid #eee;">
 			<h3 style="display: inline"><b>Yleisarvosana: </b></h3>

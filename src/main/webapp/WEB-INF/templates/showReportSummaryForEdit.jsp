@@ -4,7 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
     
-    
+
+
     		<h3>Raportin yhteenveto</h3>
 			<br>
 			<div class="panel panel-default">
@@ -17,10 +18,20 @@
 								</h4>
 							</div> 
 							
-								<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start"> 
-								<div class="panel-body">
+								
+			<c:if test="${openSummaryPanel == 'true'}">
+				<div id="${bootstrapPanelCounter}" class="panel-collapse start">
+			</c:if>
+			<c:if test="${openSummaryPanel != 'true'}">
+				<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start">
+			</c:if>
+								
+								
+			<div class="panel-body">
 			<br>
+			<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Tallenna arvostelu</button>
 			
+			<br><br><br>
 			<div style="border-bottom: 3px solid #eee;">
 			<h3 style="display: inline"><b>Yleisarvosana: </b></h3>
 

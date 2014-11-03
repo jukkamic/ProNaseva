@@ -18,6 +18,17 @@
 
 	
 	<h3>${subQuestion.question}</h3>
+	<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+		<div class="checkbox" style="font-size: 1.2em;">
+				<label>											
+				<sf:checkbox value='true'
+					path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+				
+				</label>
+				
+				</div>
+				<br>
+		</c:if>
 	<div class="Demo-boot" style="padding-top: 15px;">
 		<div class="btn-group" data-toggle="buttons">
 			<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
@@ -74,6 +85,17 @@
 <c:if
 	test="${subQuestion['class'] == 'class fi.testcenter.domain.TextQuestion'}">
 	<h3>${subQuestion.question}</h3>
+	<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+			<div class="checkbox" style="font-size: 1.2em;">
+			<label>											
+			<sf:checkbox value='true'
+				path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+			
+			</label>
+			
+			</div>
+			<br>
+	</c:if>
 	<br>
 	<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
 </c:if>

@@ -189,6 +189,7 @@ public class ReportController {
 		Report savedReport = new Report();
 		try {
 			savedReport = rs.saveReport(report);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -217,10 +218,26 @@ public class ReportController {
 
 			return "editReport";
 
-		} else
-			model.addAttribute("readyReport", savedReport);
-		model.addAttribute("report", savedReport);
-		return "showReport";
+		} else {
+
+			model.addAttribute("readyReport", report);
+			model.addAttribute("report", savedReport);
+
+			if (report.isSmileysSet() == false) {
+
+				model.addAttribute("editSmileys", false);
+				if (report.getReportStatus() == "DRAFT"
+						|| report.getReportStatus() == "AWAIT_APPROVAL")
+					model.addAttribute("editSmileys", true);
+				if (report.getReportStatus() == "APPROVED"
+						&& request.isUserInRole("ROLE_ADMIN"))
+					model.addAttribute("editSmileys", true);
+
+			} else
+				model.addAttribute("editSmileys", false);
+
+			return "showReport";
+		}
 	}
 
 	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)
@@ -240,10 +257,21 @@ public class ReportController {
 		return "/showReport";
 	}
 
-	@RequestMapping(value = "/saveSmileyAndHighlights", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveSmileysAndHighlights", method = RequestMethod.POST)
 	public String saveSmileyAndHighlights(HttpServletRequest request,
 			Model model, @ModelAttribute("readyReport") Report formReport,
 			BindingResult result, @ModelAttribute("report") Report report) {
+
+		if (report.getReportHighlights().size() > 0) {
+
+			try {
+				rs.deleteReportHighlights(report.getReportHighlights());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		report.setHighlightAnswers();
 
 		int reportPartScoreIndex = 0;
 
@@ -262,6 +290,7 @@ public class ReportController {
 
 		}
 
+		report.setSmileysSet(true);
 		Report savedReport = new Report();
 		try {
 			savedReport = rs.saveReport(report);
@@ -270,6 +299,7 @@ public class ReportController {
 
 		}
 
+		model.addAttribute("editSmileys", false);
 		model.addAttribute("readyReport", savedReport);
 		model.addAttribute("report", savedReport);
 		return "/showReport";
@@ -304,6 +334,7 @@ public class ReportController {
 
 		model.addAttribute("edit", "TRUE");
 
+		report.setSmileysSet(false);
 		return "editReport";
 	}
 
@@ -323,6 +354,16 @@ public class ReportController {
 
 		report.setReportStatus("APPROVED");
 		rs.saveReport(report);
+
+		return "showReport";
+
+	}
+
+	@RequestMapping(value = "editSmileys")
+	public String approveReport(HttpServletRequest request, Model model) {
+
+		model.addAttribute("editSmileys", true);
+		model.addAttribute("openSummaryPanel", true);
 
 		return "showReport";
 
