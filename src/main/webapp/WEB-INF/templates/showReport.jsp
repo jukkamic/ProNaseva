@@ -23,7 +23,7 @@
 
 <sf:form modelAttribute="readyReport" action="saveSmileysAndHighlights" method="post"> 
 
-<button type="submit" class="btn btn-primary">Tallenna</button>
+
 			<br>
 			<br>
 			<div style="border-bottom: 1px solid #eee;">

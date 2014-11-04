@@ -360,10 +360,41 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "editSmileys")
-	public String approveReport(HttpServletRequest request, Model model) {
+	public String approveReport(HttpServletRequest request, Model model,
+			@ModelAttribute("report") Report report) {
 
 		model.addAttribute("editSmileys", true);
 		model.addAttribute("openSummaryPanel", true);
+		model.addAttribute("readyReport", report);
+		model.addAttribute("report", report);
+
+		return "showReport";
+
+	}
+
+	@RequestMapping(value = "/searchReportSelect", method = RequestMethod.GET)
+	public String showSelectedReport(HttpServletRequest request, Model model,
+			@RequestParam("id") Integer id) {
+
+		Report selectedReport = rs.getReportById(id.longValue());
+
+		log.debug("reportcontroller");
+		model.addAttribute("report", selectedReport);
+		model.addAttribute("edit", "TRUE");
+		model.addAttribute("readyReport", selectedReport);
+
+		if (selectedReport.isSmileysSet() == false) {
+
+			model.addAttribute("editSmileys", false);
+			if (selectedReport.getReportStatus() == "DRAFT"
+					|| selectedReport.getReportStatus() == "AWAIT_APPROVAL")
+				model.addAttribute("editSmileys", true);
+			if (selectedReport.getReportStatus() == "APPROVED"
+					&& request.isUserInRole("ROLE_ADMIN"))
+				model.addAttribute("editSmileys", true);
+
+		} else
+			model.addAttribute("editSmileys", false);
 
 		return "showReport";
 
