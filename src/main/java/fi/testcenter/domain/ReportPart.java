@@ -24,7 +24,7 @@ public class ReportPart {
 	private String title;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "REPORTPART_QUESTIONGROUP", joinColumns = @JoinColumn(name = "REPORTPART_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"))
-	@OrderColumn(name = "INDEX")
+	@OrderColumn(name = "ORDERINDEX")
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
 	boolean showScorePercentage;

@@ -23,7 +23,7 @@ public class ReportTemplate {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "REPORT_REPORTPART", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTPART_ID"))
-	@OrderColumn(name = "INDEX")
+	@OrderColumn(name = "ORDERINDEX")
 	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
 
 	public Long getId() {

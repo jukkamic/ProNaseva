@@ -26,8 +26,7 @@
 			<property name="eclipselink.weaving" value="false" />
 			<property name="eclipselink.logging.level" value="SEVERE" />
 			<property name="eclipselink.logging.level.sql" value="SEVERE" />
-			<!-- <property name="eclipselink.target-database" 
-                    value="MySQL4"/> -->
+			<property name="eclipselink.target-database" value="MySQL4"/> 
 			<!-- <property name="eclipselink.create-ddl-jdbc-file-name" value="ProNasevaDB.script"/> -->
 		</properties>
 	</persistence-unit>

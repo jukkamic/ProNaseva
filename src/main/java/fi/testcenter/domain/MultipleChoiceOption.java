@@ -1,5 +1,6 @@
 package fi.testcenter.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,10 +11,9 @@ public class MultipleChoiceOption {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	private long choiceID;
+	private long id;
 
-	private MultipleChoiceQuestion multiQuestion;
-
+	@Column(name = "mcqOption")
 	private String option;
 	private String radiobuttonText;
 
@@ -42,20 +42,12 @@ public class MultipleChoiceOption {
 		this.option = option;
 	}
 
-	public long getChoiceID() {
-		return choiceID;
+	public long getChoiceId() {
+		return id;
 	}
 
-	public void setChoiceID(long choiceID) {
-		this.choiceID = choiceID;
-	}
-
-	public MultipleChoiceQuestion getMultiQuestion() {
-		return multiQuestion;
-	}
-
-	public void setMultiQuestion(MultipleChoiceQuestion multiQuestion) {
-		this.multiQuestion = multiQuestion;
+	public void setChoiceID(long id) {
+		this.id = id;
 	}
 
 	public int getPoints() {

@@ -17,9 +17,9 @@ public class MultipleChoiceQuestion extends Question {
 	private String question;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "MULTIPLECHOICEQ_OPTION", joinColumns = @JoinColumn(name = "MULTIPLECHOICEQ_ID"), inverseJoinColumns = @JoinColumn(name = "OPTION_ID"))
-	@OrderColumn(name = "INDEX")
-	private List<MultipleChoiceOption> options;
+	@JoinTable(name = "MULTIPLECHOICEQUESTION_MULTIPLECHOICEOPTION", joinColumns = @JoinColumn(name = "MULTIPLECHOICEQUESTION_ID"), inverseJoinColumns = @JoinColumn(name = "MULTIPLECHOICEOPTION_ID"))
+	@OrderColumn(name = "ORDERINDEX")
+	private List<MultipleChoiceOption> options = new ArrayList<MultipleChoiceOption>();
 
 	private int chosenOptionIndex;
 

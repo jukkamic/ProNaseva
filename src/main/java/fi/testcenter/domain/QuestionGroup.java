@@ -25,7 +25,7 @@ public class QuestionGroup {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "QUESTIONGROUP_QUESTION", joinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
-	@OrderColumn(name = "INDEX")
+	@OrderColumn(name = "ORDERINDEX")
 	private List<Question> questions = new ArrayList<Question>();
 
 	private boolean showScore;
