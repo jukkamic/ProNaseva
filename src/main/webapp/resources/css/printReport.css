@@ -1,12 +1,62 @@
 @CHARSET "ISO-8859-1";
 
-<style type="text/css">
-    body
-    {
-        background-image:url('../resources/images/lataus.jpg');
-         background-color: #cccccc;
+body {
+background-image: url('/resources/images/printReportBackground.jpg');
+font-family: 'Arial';
+ 
+}
 
-    }
-</style>
+body {
+font-family: 'Arial';
+background-image: url('/resources/images/printReportBackground.jpg');
+-webkit-print-color-adjust:exact;
+background-repeat:repeat-y;
+background-position: left top;
+background-attachment:fixed;
+
+background-size: 100% 100%; 
+
+background-color: white;
+
+ }
+tfoot { display: table-footer-group; 
+}
+
+thead { display: table-header-group;
+}
 
 
+h3 {
+	
+	padding-top: 1em; 
+	
+}
+
+h4 {
+	padding-left: 1.5em;
+	padding-right: 2em; 
+	padding-top: 0.7em;
+}
+
+p {
+
+	padding-left: 1.5em;
+	padding-right: 2em;
+}
+
+@page {
+size: A4;
+margin: 0;
+
+}
+.newpage {
+  page-break-before: always;
+
+}
+
+.noPageBreak {
+	page-break-inside: avoid;
+}
+
+
+}

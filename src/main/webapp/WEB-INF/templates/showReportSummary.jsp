@@ -86,10 +86,7 @@
 								<c:if test="${questionGroupScore.maxScore == 0}">
 									<h4>Pisteet: --</h4>
 								</c:if>
-								
-								
-								
-								<c:set var="highlightGroupsScore" value="${highlightGroupsScore + questionGroupScore.score}" />
+							<c:set var="highlightGroupsScore" value="${highlightGroupsScore + questionGroupScore.score}" />
 								<c:set var="highlightGroupsMaxScore" value="${highlightGroupsMaxScore + questionGroupScore.maxScore}" />
 								
 								<c:if test="${questionGroupScore.maxScore > 0 }">
