@@ -138,7 +138,7 @@
 											<label class="btn btn-primary">
 				 						</c:if>
 									
-										<sf:radiobutton id="button"path="questionGroupScore[${questionGroupScoreCounter.index}].scoreSmiley" value="FROWN"/> <span class="fa fa-frown-o fa-2x"></span>
+										<sf:radiobutton id="button" path="questionGroupScore[${questionGroupScoreCounter.index}].scoreSmiley" value="FROWN"/> <span class="fa fa-frown-o fa-2x"></span>
 							
 										</label>
 									</div>
@@ -204,7 +204,7 @@
 									<label class="btn btn-primary">
 		 						</c:if>
 							
-								<sf:radiobutton id="button"path="reportPartScore[${reportPartScoreCounter.index}].scoreSmiley" value="FROWN"/> <i class="fa fa-frown-o fa-2x"></i>
+								<sf:radiobutton id="button" path="reportPartScore[${reportPartScoreCounter.index}].scoreSmiley" value="FROWN"/> <i class="fa fa-frown-o fa-2x"></i>
 					
 								</label>
 							</div>
