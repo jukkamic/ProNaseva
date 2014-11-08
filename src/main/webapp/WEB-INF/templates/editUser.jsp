@@ -19,7 +19,7 @@
 			<br>
 			<br>
 
-			<sf:form modelAttribute="user" method="post">
+			<sf:form id="editUserForm" modelAttribute="user" method="post">
 
 				<label for="firstName">Etunimi: </label>
 				<br>
@@ -43,14 +43,23 @@
 				
 				<label for="password">Salasana: </label>
 				<br>
-				<sf:input type="password" style="width: 15em; max-width: 100%" id="password" path="password" value="${user.password}"/> 
-				<br><br>
-				
-				<label for="confirmPassword">Vahvista salasana: </label>
-				<br>
-				<input type="password" style="width: 15em; max-width: 100%" id="confirmPassword" name="confirmPassword" value="${user.password}"/> 
-				<br><br>
-				
+				<input type="hidden" id="editPassword" name="editPassword" value="false" />
+				<c:if test="${editPassword == 'true' }">
+					<sf:input type="password" style="width: 15em; max-width: 100%" id="password" path="password" value=" "/> 
+					<br><br>
+					
+					<label for="confirmPassword">Vahvista salasana: </label>
+					<br>
+					<input type="password" style="width: 15em; max-width: 100%" id="confirmPassword" name="confirmPassword" value=""/> 
+					<br><br>
+				</c:if>
+				<c:if test="${editPassword != 'true' }">
+					<a class="btn btn-large btn-default" href="#" onclick="editPassword();">Vaihda salasana</a>
+					<br><br>
+					
+					<input type="hidden" name="confirmPassword" value="" />
+					
+				</c:if>
 				<label for="role">Käyttöoikeudet: </label>
 				<br>				
 
@@ -81,7 +90,17 @@
 			</sf:form>
 		</div>
 		<br>
-		
+
+<script>
+   function editPassword()
+   {
+           
+      document.getElementById("editPassword").value = true;
+      document.getElementById('editUserForm').submit();
+   }
+</script>
+
+
 		<script>
         $(document).on("click", ".deleteAlert", function(e) {
             bootbox.dialog({

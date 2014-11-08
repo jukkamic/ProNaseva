@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.domain.User;
 import fi.testcenter.service.UserAccountService;
 
-@SessionAttributes("user")
+@SessionAttributes({ "user", "roles" })
 @Controller
 public class UserController {
 
@@ -124,12 +124,20 @@ public class UserController {
 	public String deleteUser(HttpServletRequest request, Model model,
 			@ModelAttribute("user") User user,
 			@RequestParam("confirmPassword") String confirmPassword,
+			@RequestParam("editPassword") boolean editPassword,
 			BindingResult result) {
 
-		us.saveUser(user);
+		if (editPassword == true) {
+			model.addAttribute("editPassword", true);
+			user.setPassword("");
+			return "editUser";
+		} else {
+			user.setPassword(new BCryptPasswordEncoder().encode(user
+					.getPassword()));
+			us.saveUser(user);
 
-		return "redirect:/admin/showUser?id=" + user.getId();
-
+			return "redirect:/admin/showUser?id=" + user.getId();
+		}
 	}
 
 	@RequestMapping(value = "/admin/deleteUser", method = RequestMethod.GET)
