@@ -16,8 +16,14 @@
 				<h1>Käyttäjätilit</h1>
 			</div>
 			<br><br>
-		
-					
+	
+		<c:if test="${empty users}">
+			<div class="alert alert-info">
+				<h4>Ei käyttäjätilejä</h4>
+			</div>
+			<br>
+		</c:if>
+		<c:if test="${not empty users}">
 			<table class="table table-striped">
 				<tr>
 					<th />
@@ -47,7 +53,7 @@
 						</tr>
 				</c:forEach>
 			</table>
-			
+		
 					
 			<c:if test="${pageCount > 1}">
  			<div style="text-align: center">  
@@ -80,6 +86,7 @@
 				</ul>  
 			</div>   
 		</c:if>	
+		</c:if>
 		
 		<a class="btn btn-primary" href="newUser"><span class="glyphicon glyphicon-plus" style="text-decoration: none;"></span> Lisää käyttäjä</a>
 		

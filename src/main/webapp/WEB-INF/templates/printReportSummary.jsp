@@ -23,6 +23,7 @@
 
 
 		<c:forEach var="questionGroupScore" items="${report.questionGroupScore}">
+			
 			<c:if test="${questionGroupScore.questionGroup.showInReportSummary == true}">
 				<c:set var="hasQuestionGroupHighlights" value="true" />
 					<tr>
@@ -72,6 +73,10 @@
 </c:if>
 	
 <c:forEach var="reportPartScore" items="${readyReport.reportPartScore}" varStatus="reportPartScoreCounter">
+	
+	<!-- POISTA E-OSAA KOSKEVA IF-LAUSEKE, TILAPÄINEN !!! -->
+	
+	<c:if test="${reportPartScore.reportPart.title != 'Osa E - Korjaamon yhteistyö' }">
 	<c:if test="${reportPartScore.reportPart.showScoreInReportHighlights == 'true' }">
 	 
 		<tr>
@@ -104,6 +109,7 @@
 			</td>
 		</tr>
 	</c:if>
+</c:if>
 </c:forEach>
 		
 

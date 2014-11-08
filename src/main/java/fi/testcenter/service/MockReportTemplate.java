@@ -1530,6 +1530,7 @@ public class MockReportTemplate {
 		//
 		ReportPart reportPart6 = new ReportPart();
 		reportPart6.setTitle("Osa E - Korjaamon yhteistyö");
+		reportPart6.setShowScoreInReportHighlights(false);
 
 		ArrayList<QuestionGroup> questionGroups6 = new ArrayList<QuestionGroup>();
 

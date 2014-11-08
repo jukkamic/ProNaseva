@@ -292,4 +292,5 @@ public class ReportService {
 	public ReportTemplate saveReportTemplate(ReportTemplate template) {
 		return rtr.save(template);
 	}
+
 }

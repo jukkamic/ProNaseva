@@ -15,6 +15,14 @@
 				<h1>Korjaamot</h1>
 			</div>
 			<br><br>
+		<c:if test="${empty workshops}">
+			<div class="alert alert-info">
+				<h4>Ei korjaamoja</h4>
+			</div>
+			<br>
+		</c:if>
+			
+		<c:if test="${not empty workshops}">
 			
 			<table class="table table-striped">
 				<tr>
@@ -65,7 +73,7 @@
 				</ul>  
 			</div>   
 		</c:if>	
-		
+		</c:if>
 		
 		<a class="btn btn-primary" href="newWorkshop"><span class="glyphicon glyphicon-plus" style="text-decoration: none;"></span> Lisää korjaamo</a>
 		

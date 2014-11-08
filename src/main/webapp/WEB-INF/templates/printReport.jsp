@@ -28,7 +28,7 @@ lisäosana PDFCreator -->
 	   <tbody>
 	    <tr><td>
 			<div style="margin-top: 5em; margin-left: 7em;">
-			<h1>${report.workshop.name}</h1>
+			<h1>${report.importer.name}</h1>
 			<h1>Korjaamotestiraportti</h1>
 				<br>
 				<br>
@@ -181,9 +181,8 @@ lisäosana PDFCreator -->
 									
 										
 			<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
-				<h4 style="font-weight: bold; padding-right: 2em; padding-bottom: 2em; padding-top: 2em; text-align: right;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
+				<h4 style="font-weight: bold; padding-right: 2em; padding-top: 2em; text-align: right;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
 				${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore}</h4>
-				<br>
 			</c:if>
 	
 	<c:set var="questionGroupScoreIndexCounter" value="${questionGroupScoreIndexCounter + 1}" scope="request" />

@@ -85,6 +85,8 @@ public class UserController {
 		roles.put("Asiakas", "ROLE_CLIENT");
 		roles.put("Admin", "ROLE_ADMIN");
 
+		model.addAttribute("editPassword", true);
+
 		model.addAttribute("roles", roles);
 
 		model.addAttribute("user", new User());
