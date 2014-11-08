@@ -288,20 +288,21 @@
           	  message: "Poista raportti?",
           	  title: "Vahvista",
           	  buttons: {
-          		confirm: {
-            	      label: "Poista",
+          		cancel: {
+            	      label: "Peruuta",
             	      className: "btn-primary",
+            	      callback: function() {
+            	        
+            	      }
+            	    },
+            	  confirm: {
+            	      label: "Poista",
+            	      className: "btn-danger",
             	      callback: function() {
             	    	window.location.href = "/ProNaseva/deleteReport"
             	      }
             	    },
-            	  cancel: {
-          	      label: "Peruuta",
-          	      className: "btn-danger",
-          	      callback: function() {
-          	        
-          	      }
-          	    },
+            	  
           	    
           	  }
           	});

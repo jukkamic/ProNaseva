@@ -21,7 +21,8 @@ import fi.testcenter.service.ReportService;
 import fi.testcenter.service.UserAccountService;
 import fi.testcenter.service.WorkshopService;
 
-@SessionAttributes({ "report", "reportSearchList", "readyReport" })
+@SessionAttributes({ "report", "reportSearchList", "readyReport",
+		"searchReportCriteria", "importers", "workshops", "users" })
 @Controller
 public class SearchController {
 
@@ -64,10 +65,10 @@ public class SearchController {
 	public String setupSearchForm(HttpServletRequest request, Model model) {
 
 		model.addAttribute("searchReportCriteria", new SearchReportCriteria());
+
 		model.addAttribute("importers", is.getImporters());
 		model.addAttribute("workshops", ws.getWorkshops());
-		model.addAttribute("users", us.getUserList());
-
+		model.addAttribute("users", us.getActiveUserList());
 		return "searchReport";
 	}
 
@@ -78,6 +79,7 @@ public class SearchController {
 			@ModelAttribute("searchReportCriteria") SearchReportCriteria searchReportCriteria,
 			BindingResult result) {
 
+		searchReportCriteria.setCriteriaSet(true);
 		model.addAttribute("reportSearchList",
 				rs.searchReports(searchReportCriteria));
 		model.addAttribute("paginateFrom", 1);
@@ -96,7 +98,7 @@ public class SearchController {
 		int reportListEnd;
 
 		log.debug("count : " + reportSearchList.size());
-		int pageCount = (int) Math.ceil(reportSearchList.size() / 7.0);
+		int pageCount = (int) Math.ceil(reportSearchList.size() / 10.0);
 
 		log.debug("pagecount : " + pageCount);
 		if (reportSearchList.size() == 0)
@@ -105,12 +107,12 @@ public class SearchController {
 		if (currentPage == 1)
 			reportListStart = 0;
 		else
-			reportListStart = (currentPage - 1) * 7;
+			reportListStart = (currentPage - 1) * 10;
 
-		if ((currentPage * 7) >= reportSearchList.size())
+		if ((currentPage * 10) >= reportSearchList.size())
 			reportListEnd = reportSearchList.size() - 1;
 		else
-			reportListEnd = reportListStart + 6;
+			reportListEnd = reportListStart + 9;
 
 		model.addAttribute("pageCount", pageCount);
 
@@ -121,5 +123,16 @@ public class SearchController {
 		model.addAttribute("reportListEnd", reportListEnd);
 
 		return "searchResult";
+	}
+
+	@RequestMapping(value = "/modifySearch", method = RequestMethod.GET)
+	public String showAllUserOwnReports(
+			HttpServletRequest request,
+			Model model,
+			@ModelAttribute("searchReportCriteria") SearchReportCriteria searchReportCriteria) {
+
+		model.addAttribute("searchReportCriteria", searchReportCriteria);
+		return "searchReport";
+
 	}
 }

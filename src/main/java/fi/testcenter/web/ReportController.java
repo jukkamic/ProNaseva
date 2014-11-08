@@ -204,8 +204,9 @@ public class ReportController {
 
 			int answerIndex = 0;
 			for (int i = 0; i < navigateToReportPart; i++) {
-				for (QuestionGroup questionGroup : report.getReportTemplate()
-						.getReportParts().get(i).getQuestionGroups()) {
+				for (QuestionGroup questionGroup : savedReport
+						.getReportTemplate().getReportParts().get(i)
+						.getQuestionGroups()) {
 					answerIndex += questionGroup.getQuestions().size();
 					for (Question question : questionGroup.getQuestions()) {
 						answerIndex += question.getSubQuestions().size();
@@ -213,7 +214,7 @@ public class ReportController {
 				}
 			}
 			model.addAttribute("initialAnswerIndexCounter", answerIndex);
-			model.addAttribute("report", report);
+			model.addAttribute("report", savedReport);
 			model.addAttribute("editReportPartNumber", navigateToReportPart);
 
 			return "editReport";

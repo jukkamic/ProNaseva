@@ -1,6 +1,5 @@
 package fi.testcenter.web;
 
-
 public class SearchReportCriteria {
 
 	Long workshopId;
@@ -9,6 +8,7 @@ public class SearchReportCriteria {
 	Long userId;
 
 	String startDate;
+	boolean criteriaSet = false;
 
 	String endDate;
 
@@ -50,6 +50,14 @@ public class SearchReportCriteria {
 
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+
+	public boolean isCriteriaSet() {
+		return criteriaSet;
+	}
+
+	public void setCriteriaSet(boolean criteriaSet) {
+		this.criteriaSet = criteriaSet;
 	}
 
 }

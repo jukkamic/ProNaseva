@@ -1,4 +1,6 @@
 <!-- Push footer --->
+<div style="height: 15em"></div>
+
 <div id="push"></div>
 </div>
    

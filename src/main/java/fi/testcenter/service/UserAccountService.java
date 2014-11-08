@@ -1,5 +1,6 @@
 package fi.testcenter.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fi.testcenter.domain.Report;
 import fi.testcenter.domain.User;
 import fi.testcenter.repository.UserRepository;
 
@@ -20,6 +22,9 @@ public class UserAccountService {
 
 	@Autowired
 	UserRepository ur;
+
+	@Autowired
+	ReportService rs;
 
 	@PersistenceContext()
 	EntityManager em;
@@ -37,6 +42,18 @@ public class UserAccountService {
 		return ur.findAll();
 	}
 
+	public List<User> getActiveUserList() {
+		List<Object[]> userList = em
+				.createQuery(
+						"SELECT u.lastName, u FROM User u WHERE u.enabled = TRUE order by u.lastName ASC")
+				.getResultList();
+		List<User> userReturnList = new ArrayList<User>();
+		for (Object[] listItem : userList) {
+			userReturnList.add((User) listItem[1]);
+		}
+		return userReturnList;
+	}
+
 	@Transactional
 	public User getUserById(Integer id) {
 		return ur.findOne(id.longValue());
@@ -44,8 +61,24 @@ public class UserAccountService {
 
 	@Transactional
 	public void deleteUser(User user) {
-		user.setEnabled(false);
-		ur.save(user);
+		List<Report> userReports = new ArrayList<Report>();
+		try {
+			userReports = rs.getReportsByUserId(user.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (userReports.size() > 0) {
+			user.setEnabled(false);
+			ur.save(user);
+		} else {
+			try {
+				ur.delete(user.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	@Transactional

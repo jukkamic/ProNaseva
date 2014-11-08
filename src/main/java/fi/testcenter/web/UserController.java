@@ -1,6 +1,7 @@
 package fi.testcenter.web;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,11 +28,52 @@ public class UserController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.UserController");
 
-	@RequestMapping(value = "/admin/user", method = RequestMethod.GET)
-	public String showUserAdminPage(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "/admin/showUserList", method = RequestMethod.GET)
+	public String showUserAdminPage(HttpServletRequest request, Model model,
+			@RequestParam("page") Integer page) {
 
-		model.addAttribute("users", us.getUserList());
-		return "userAdmin";
+		List<User> userList = us.getActiveUserList();
+
+		int currentPage = page;
+
+		int userListStart;
+		int userListEnd;
+
+		log.debug("count : " + userList.size());
+		int pageCount = (int) Math.ceil(userList.size() / 10.0);
+
+		log.debug("pagecount : " + pageCount);
+		if (userList.size() == 0)
+			pageCount = 0;
+
+		if (currentPage == 1)
+			userListStart = 0;
+		else
+			userListStart = (currentPage - 1) * 10;
+
+		if ((currentPage * 10) >= userList.size())
+			userListEnd = userList.size() - 1;
+		else
+			userListEnd = userListStart + 9;
+
+		model.addAttribute("pageCount", pageCount);
+
+		model.addAttribute("currentPage", currentPage);
+
+		model.addAttribute("users", userList);
+		model.addAttribute("userListStart", userListStart);
+		model.addAttribute("userListEnd", userListEnd);
+
+		return "showUserList";
+	}
+
+	@RequestMapping(value = "/admin/showUser", method = RequestMethod.GET)
+	public String processEditUserForm(HttpServletRequest request, Model model,
+			@RequestParam("id") Integer id) {
+
+		model.addAttribute("user", us.getUserById(id));
+
+		return "showUser";
 	}
 
 	@RequestMapping(value = "/admin/newUser", method = RequestMethod.GET)
@@ -59,14 +101,12 @@ public class UserController {
 
 		us.saveUser(user);
 
-		return "redirect:/admin/user";
+		return "redirect:/admin/showUserList?page=1";
 	}
 
 	@RequestMapping(value = "/admin/editUser", method = RequestMethod.GET)
 	public String prepareEditUserForm(HttpServletRequest request, Model model,
-			@ModelAttribute("id") Integer id, BindingResult result) {
-
-		model.addAttribute("user", us.getUserById(id));
+			@RequestParam("id") Integer id) {
 
 		LinkedHashMap<String, String> roles = new LinkedHashMap<String, String>();
 		roles.put("Testaaja", "ROLE_TESTER");
@@ -88,7 +128,7 @@ public class UserController {
 
 		us.saveUser(user);
 
-		return "redirect:/admin/user";
+		return "redirect:/admin/showUser?id=" + user.getId();
 
 	}
 
@@ -98,7 +138,7 @@ public class UserController {
 
 		us.deleteUser(user);
 
-		return "redirect:/admin/user";
+		return "redirect:/admin/showUserList?page=1";
 	}
 
 }

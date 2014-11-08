@@ -18,8 +18,14 @@
 			</div>
 			<br><br>
 
-
 			<br>
+		<c:if test="${empty reportSearchList}">
+			<div class="alert alert-info">
+				<h4>Ei hakutuloksia</h4>
+			</div>
+			<br>
+		</c:if>			
+		<c:if test="${not empty reportSearchList}">	
 			<table class="table table-striped">
 				<tr>
 					<th></th>
@@ -40,7 +46,7 @@
 					</th>
 				</tr>
 				
-				<c:forEach var="report" begin="${reportListStart}" end="${reportListEnd}" items="${reportSearchList}" varStatus="reportListCounter">
+				<c:forEach var="report" begin="${reportListStart}" end="${reportListEnd}" items="${reportSearchList}">
 						<tr>
 							<td><a class="btn btn-default" style="text-decoration: none;" href="searchReportSelect?id=${report.id}">
 								Näytä</a>
@@ -73,10 +79,13 @@
 						
 				</c:forEach>
 			</table>
-				 
+			
+			
+			<c:if test="${pageCount > 1}">
  			<div style="text-align: center">  
 				<ul class="pagination pagination-centered pagination-lg"> 
 
+				
  						<c:if test="${currentPage > 1 }">
 								<li><a href="/ProNaseva/showSearchResult?page=${currentPage - 1}">&laquo;</a></li>
 							</c:if>
@@ -102,10 +111,12 @@
 										
 				</ul>  
 			</div>   
+		</c:if>	
+	</c:if>
 
-		
-
-		</div>
 		<br>
+		<a class="btn btn-large btn-primary" href="/ProNaseva/modifySearch"><span class="glyphicon glyphicon-arrow-left" style="text-decoration: none;"></span> Palaa hakuun</a>		
+		
+	
 	
 <jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

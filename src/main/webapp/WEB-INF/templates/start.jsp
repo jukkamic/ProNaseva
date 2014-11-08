@@ -16,7 +16,7 @@
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
 				<h1>Test-Center</h1>
 				</div>
-			<br><br><br><br>
+			<br><br>
 			<div style="width: 70%;">
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Uusi raportti</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="userOwnReports">Omat raportit</a>
@@ -25,17 +25,14 @@
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="importers">Maahantuojat</a>
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="workshops">Korjaamot</a>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
-			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/user">Käyttäjätilit</a>
+			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/showUserList?page=1">Käyttäjätilit</a>
 			</security:authorize>
 			</div>
 			<br>
 					
 		</div>
 
-		<br>
 	
-
-
 
 	<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
 

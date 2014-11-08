@@ -19,7 +19,7 @@
 			<br>
 			<br>
 
-			<sf:form modelAttribute="searchReportCriteria" method="post">
+			<sf:form modelAttribute="searchReportCriteria" action="searchReport" method="post">
 
 				<label for="importerSelect">Maahantuoja: </label>
 				<br>
@@ -27,7 +27,12 @@
 					class="form-control">
 						<option value="">-- Valitse --</option>
 					<c:forEach var="importer" items="${importers}">
-						<option value="${importer.id}">${importer}</option>
+						<c:if test="${searchReportCriteria.importerId == importer.id}">
+							<option value="${importer.id}" selected>${importer}</option>
+						</c:if>
+						<c:if test="${searchReportCriteria.importerId != importer.id}">
+							<option value="${importer.id}">${importer}</option>
+						</c:if>
 					</c:forEach>
 				</sf:select>
 				<br>
@@ -38,7 +43,13 @@
 					class="form-control">
 					<option value="">-- Valitse --</option>
 					<c:forEach var="workshop" items="${workshops}">
-						<option value="${workshop.id}">${workshop}</option>
+						<c:if test="${searchReportCriteria.workshopId == workshop.id}">
+							<option value="${workshop.id}" selected>${workshop}</option>
+						</c:if>
+						<c:if test="${searchReportCriteria.workshopId != workshop.id}">
+							<option value="${workshop.id}">${workshop}</option>
+						</c:if>
+
 					</c:forEach>
 				</sf:select>
 				<br>
@@ -60,7 +71,13 @@
 					class="form-control">
 					<option value="">-- Valitse --</option>
 					<c:forEach var="user" items="${users}">
-						<option value="${user.id}">${user.firstName} ${user.lastName}</option>
+						<c:if test="${searchReportCriteria.userId == user.id}">
+							<option value="${user.id}" selected>${user.firstName} ${user.lastName}</option>
+						</c:if>
+						<c:if test="${searchReportCriteria.userId != user.id}">
+							<option value="${user.id}">${user.firstName} ${user.lastName}</option>
+						</c:if>
+						
 					</c:forEach>
 				</sf:select>
 				<br><br>

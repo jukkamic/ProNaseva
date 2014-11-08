@@ -16,8 +16,8 @@
 				<h1>Käyttäjätilit</h1>
 			</div>
 			<br><br>
-			
-			
+		
+					
 			<table class="table table-striped">
 				<tr>
 					<th />
@@ -25,9 +25,9 @@
 					<th>Käyttäjänimi</th>
 					<th>Käyttöoikeudet</th>
 				</tr>						
-				<c:forEach var="user" items="${users}">
+				<c:forEach var="user" begin="${userListStart}" end="${userListEnd}" items="${users}" varStatus="userListCounter">
 						<tr>
-							<td><a class="btn btn-default" style="text-decoration: none;" href="editUser?id=${user.id}">
+							<td><a class="btn btn-default" style="text-decoration: none;" href="/ProNaseva/admin/showUser?id=${user.id}">
 								Valitse</a></td>
 							<td>${user.lastName}, ${user.firstName}</td>
 							<td>${user.userName}</td>
@@ -48,7 +48,38 @@
 				</c:forEach>
 			</table>
 			
-		<br><br>
+					
+			<c:if test="${pageCount > 1}">
+ 			<div style="text-align: center">  
+				<ul class="pagination pagination-centered pagination-lg"> 
+
+				
+ 						<c:if test="${currentPage > 1 }">
+								<li><a href="/ProNaseva/admin/showUserList?page=${currentPage - 1}">&laquo;</a></li>
+							</c:if>
+						<c:if test="${currentPage == 1 }">
+								<li class="disabled"><a href="#">&laquo;</a></li>
+						</c:if>
+ 					<c:forEach begin="1" end="${pageCount}" varStatus="pageCounter">
+	 						
+	 					<c:if test="${currentPage == pageCounter.index}">
+	 							<li class="active"><a href="#">${pageCounter.count} <span class="sr-only">(current)</span></a></li>
+	 					</c:if>
+	 					<c:if test="${currentPage != pageCounter.index}">
+	 							<li><a href="/ProNaseva/admin/showUserList?page=${pageCounter.index}">${pageCounter.count} </a></li>
+	 					</c:if>
+ 					</c:forEach>			
+															
+					<c:if test="${currentPage < pageCount }">
+						<li><a href="/ProNaseva/admin/showUserList?page=${currentPage + 1}">&raquo;</a></li>
+					</c:if>
+					<c:if test="${currentPage == pageCount}">
+						<li class="disabled"><a href="#">&raquo;</a></li>
+					</c:if>
+										
+				</ul>  
+			</div>   
+		</c:if>	
 		
 		<a class="btn btn-primary" href="newUser"><span class="glyphicon glyphicon-plus" style="text-decoration: none;"></span> Lisää käyttäjä</a>
 		

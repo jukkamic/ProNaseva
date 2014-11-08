@@ -71,7 +71,7 @@
 				<br><br>
 	
 				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Tallenna</button>
-				<a class="btn btn-large btn-primary" style="text-decoration: none" href="user"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
+				<a class="btn btn-large btn-primary" style="text-decoration: none" href="/ProNaseva/admin/showUser?id=${user.id}"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
 					<a href="#" class="btn btn-large btn-danger deleteAlert" style="text-decoration: none"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
