@@ -115,7 +115,8 @@
 	</c:if>
 
 		<br>
-		<a class="btn btn-large btn-primary" href="/ProNaseva/modifySearch"><span class="glyphicon glyphicon-arrow-left" style="text-decoration: none;"></span> Palaa hakuun</a>		
+		<a class="btn btn-large btn-primary" href="/ProNaseva/modifySearch"><span class="glyphicon glyphicon-search" style="text-decoration: none;"></span> Raporttien hakuun</a>
+		<a class="btn btn-large btn-primary" href="/ProNaseva/userOwnReports"><span class="glyphicon glyphicon-list" style="text-decoration: none;"></span> Omat raportit</a>		
 		
 	
 	

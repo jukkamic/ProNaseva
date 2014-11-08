@@ -157,7 +157,8 @@
 				</c:forEach>
 				
 			</table>
-		<c:if test="${fn:length(reportSearchList) > 4}">
+			
+		<c:if test="${fn:length(reportSearchList) > 5}">
 			<a class="btn btn-primary" href="/ProNaseva/showAllUserOwnReports?showAllUserReports=true"> Hae kaikki</a>
 			<br><br>
 		</c:if>

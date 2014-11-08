@@ -17,6 +17,7 @@
         <form-login login-page="/login" 
         			authentication-failure-url="/login" />
         <anonymous username="guest" granted-authority="ROLE_GUEST" />
+        
     </http>
     
  	<jdbc-user-service id="userService"
@@ -35,7 +36,9 @@
 	
 	
 	<authentication-manager>
-		<authentication-provider user-service-ref="userService" />
+		<authentication-provider user-service-ref="userService">
+			<password-encoder hash="bcrypt" />
+		</authentication-provider>
 		<authentication-provider user-service-ref="xmlUserService" />
 	</authentication-manager>
 	

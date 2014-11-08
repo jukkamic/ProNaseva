@@ -54,6 +54,17 @@ public class UserAccountService {
 		return userReturnList;
 	}
 
+	public List<User> getUserListInAlphaOrder() {
+		List<Object[]> userList = em.createQuery(
+				"SELECT u.lastName, u FROM User u ORDER BY u.lastName ASC")
+				.getResultList();
+		List<User> userReturnList = new ArrayList<User>();
+		for (Object[] listItem : userList) {
+			userReturnList.add((User) listItem[1]);
+		}
+		return userReturnList;
+	}
+
 	@Transactional
 	public User getUserById(Integer id) {
 		return ur.findOne(id.longValue());

@@ -58,6 +58,9 @@ public class SearchController {
 			Model model,
 			@ModelAttribute("reportSearchList") List<Report> reportSearchList) {
 
+		// Nollataan searchReportCriteria jotta se ei näytä vanhoja hakuehtoja
+		// jos käyttäjä menee raporttilistan kautta raporttien hakuun
+		model.addAttribute("searchReportCriteria", new SearchReportCriteria());
 		return "redirect:showSearchResult?page=1";
 	}
 
@@ -66,9 +69,9 @@ public class SearchController {
 
 		model.addAttribute("searchReportCriteria", new SearchReportCriteria());
 
-		model.addAttribute("importers", is.getImporters());
-		model.addAttribute("workshops", ws.getWorkshops());
-		model.addAttribute("users", us.getActiveUserList());
+		model.addAttribute("importers", is.getImportersInAplhaOrder());
+		model.addAttribute("workshops", ws.getWorkshopsInAplhaOrder());
+		model.addAttribute("users", us.getUserListInAlphaOrder());
 		return "searchReport";
 	}
 

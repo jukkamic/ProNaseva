@@ -53,7 +53,7 @@
 				<br><br><br>
 		
 				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Tallenna</button>
-				<a class="btn btn-large btn-primary" href="workshops"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
+				<a class="btn btn-large btn-primary" href="/ProNaseva/showWorkshop?id=${workshop.id}"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Hylkää muutokset</a>
 				
 				<c:if test="${edit == 'TRUE'}">
 					<a href="#" class="btn btn-large btn btn-danger deleteWorkshop"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>

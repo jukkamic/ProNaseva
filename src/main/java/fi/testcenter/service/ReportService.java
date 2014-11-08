@@ -127,6 +127,19 @@ public class ReportService {
 
 	}
 
+	public Long getReportsByWorkshopId(Long id) {
+		TypedQuery<Long> query = em.createNamedQuery("workshopReportCount",
+				Long.class);
+		Long result = (Long) query.setParameter("workshopId", id)
+				.getSingleResult();
+		log.debug("Haun tulos" + result);
+		// return (Integer) query.setParameter("workshopId",
+		// id).getSingleResult();
+
+		return result;
+
+	}
+
 	public List<Report> searchReports(SearchReportCriteria searchReportCriteria) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -97,8 +98,7 @@ public class UserController {
 			@RequestParam("confirmPassword") String confirmPassword,
 			BindingResult result) {
 
-		log.debug(confirmPassword);
-
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		us.saveUser(user);
 
 		return "redirect:/admin/showUserList?page=1";

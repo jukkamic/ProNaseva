@@ -60,13 +60,41 @@ public class ImporterWorkshopController {
 		return "redirect:/importers";
 	}
 
-	@RequestMapping(value = "/workshops", method = RequestMethod.GET)
-	public String prepareWorkshopPage(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "/showWorkshopList", method = RequestMethod.GET)
+	public String prepareWorkshopPage(HttpServletRequest request, Model model,
+			@RequestParam("page") Integer page) {
 
-		List<Workshop> workshops = ws.getWorkshops();
+		List<Workshop> workshops = ws.getActiveWorkshops();
+
+		int currentPage = page;
+
+		int workshopListStart;
+		int workshopListEnd;
+
+		int pageCount = (int) Math.ceil(workshops.size() / 10.0);
+
+		if (workshops.size() == 0)
+			pageCount = 0;
+
+		if (currentPage == 1)
+			workshopListStart = 0;
+		else
+			workshopListStart = (currentPage - 1) * 10;
+
+		if ((currentPage * 10) >= workshops.size())
+			workshopListEnd = workshops.size() - 1;
+		else
+			workshopListEnd = workshopListStart + 9;
+
+		model.addAttribute("pageCount", pageCount);
+
+		model.addAttribute("currentPage", currentPage);
+
 		model.addAttribute("workshops", workshops);
+		model.addAttribute("workshopListStart", workshopListStart);
+		model.addAttribute("workshopListEnd", workshopListEnd);
 
-		return "workshopAdmin";
+		return "showWorkshopList";
 	}
 
 	@RequestMapping(value = "/newWorkshop", method = RequestMethod.GET)
@@ -84,35 +112,45 @@ public class ImporterWorkshopController {
 
 		ws.saveWorkshop(workshop);
 
-		return "redirect:/workshops";
+		return "redirect:/showWorkshopList?page=1";
 	}
 
-	@RequestMapping(value = "/editWorkshop", method = RequestMethod.GET)
-	public String prepareEditWorkshopForm(HttpServletRequest request,
-			Model model, @RequestParam("id") Integer id) {
+	@RequestMapping(value = "/showWorkshop", method = RequestMethod.GET)
+	public String showWorkshop(HttpServletRequest request, Model model,
+			@RequestParam("id") Integer id) {
 
 		model.addAttribute("workshop", ws.getWorkshopById(id.longValue()));
+
+		return "showWorkshop";
+	}
+
+	@RequestMapping(value = "/admin/editWorkshop", method = RequestMethod.GET)
+	public String prepareEditWorkshopForm(HttpServletRequest request,
+			@ModelAttribute("workshop") Workshop workshop, Model model,
+			@RequestParam("id") Integer id) {
+
+		model.addAttribute("workshop", workshop);
 		model.addAttribute("edit", "TRUE");
 
 		return "editWorkshop";
 	}
 
-	@RequestMapping(value = "/editWorkshop", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/editWorkshop", method = RequestMethod.POST)
 	public String processEditWorkshopForm(HttpServletRequest request,
 			Model model, @ModelAttribute("workshop") Workshop workshop,
 			BindingResult result) {
 
 		ws.saveWorkshop(workshop);
 
-		return "redirect:/workshops";
+		return "redirect:/showWorkshop?id=" + workshop.getId();
 	}
 
-	@RequestMapping(value = "/deleteWorkshop")
+	@RequestMapping(value = "/admin/deleteWorkshop")
 	public String deleteWorkshop(HttpServletRequest request,
 			@ModelAttribute("workshop") Workshop workshop) {
 
 		ws.deleteWorkshop(workshop);
-		return "redirect:/workshops";
+		return "redirect:/showWorkshopList?page=1";
 	}
 
 	@RequestMapping(value = "/editImporter", method = RequestMethod.GET)
