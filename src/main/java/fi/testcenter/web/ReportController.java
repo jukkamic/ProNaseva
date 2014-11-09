@@ -21,6 +21,9 @@ import fi.testcenter.domain.Answer;
 import fi.testcenter.domain.CostListingAnswer;
 import fi.testcenter.domain.CostListingQuestion;
 import fi.testcenter.domain.Importer;
+import fi.testcenter.domain.ImpPointsAnswerItem;
+import fi.testcenter.domain.ImportantPointsAnswer;
+import fi.testcenter.domain.ImportantPointsQuestion;
 import fi.testcenter.domain.MultipleChoiceAnswer;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
@@ -149,6 +152,18 @@ public class ReportController {
 						answers.add(answer);
 
 					}
+					if (question instanceof ImportantPointsQuestion) {
+						ImportantPointsAnswer answer = new ImportantPointsAnswer();
+						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
+						answer.setQuestion(question);
+						List<ImpPointsAnswerItem> answerItems = new ArrayList<ImpPointsAnswerItem>();
+						for (int i = 0; i < listQuestion.getQuestionItems()
+								.size(); i++)
+							answerItems.add(new ImpPointsAnswerItem());
+						answer.setAnswerItems(answerItems);
+						answers.add(answer);
+					}
+
 					if (!question.getSubQuestions().isEmpty()) {
 						for (Question subQuestion : question.getSubQuestions()) {
 							if (subQuestion instanceof TextQuestion) {

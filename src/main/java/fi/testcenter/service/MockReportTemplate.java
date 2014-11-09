@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import fi.testcenter.domain.CostListingQuestion;
+import fi.testcenter.domain.ImportantPointsQuestion;
 import fi.testcenter.domain.MultipleChoiceOption;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
@@ -274,6 +275,35 @@ public class MockReportTemplate {
 		questionGroupYhteenveto31
 				.setQuestions(questionGroupYhteenveto31Questions);
 		questionGroups.add(questionGroupYhteenveto31);
+
+		QuestionGroup questionGroupYhteenveto32 = new QuestionGroup();
+		questionGroupYhteenveto32
+				.setTitle("Asiakkaan tärkeäksi kokemat asiat huollon prosessissa");
+		List<Question> questionGroupYhteenveto32Questions = new ArrayList<Question>();
+		ImportantPointsQuestion listImportant1 = new ImportantPointsQuestion();
+		List<String> questionItems1 = new ArrayList<String>();
+		questionItems1.add("Liikeen sijainti");
+		questionItems1.add("Huollon pysäköinti");
+		questionItems1.add("Liikkeen aukioloajat");
+		questionItems1.add("Huoltoajan saaminen helposti sopivaan aikaan");
+		questionItems1.add("Mahdollisuus ajanvaraukseen internetissä");
+		questionItems1.add("Yhteystietojen helppo löytäminen");
+		questionItems1.add("Internet-varauksen vahvistus");
+		questionItems1
+				.add("Muistutus tekstiviestillä huollosta huoltoa edeltävänä päivänä");
+		questionItems1
+				.add("Liikkumisesta huolehtiminen (vuokra-auto, taksi, tms.");
+		listImportant1.setQuestionItems(questionItems1);
+		listImportant1
+				.setQuestion("Numeroi mielestäsi viisi tärkeintä asiaa huollossa, "
+						+ "viitosella tärkein. Arvioi sen jälkeen, kuinka kyseiset viisi asiaa "
+						+ "onnistuivat tällä kertaa arvosanoilla 1-5, 5 on erittäin hyvin ja 1 erittäin heikosti.");
+		listImportant1.setMaxScoreForQuestionItem(5);
+		listImportant1.setNumberOfItemsToChoose(5);
+		questionGroupYhteenveto32Questions.add(listImportant1);
+		questionGroupYhteenveto32
+				.setQuestions(questionGroupYhteenveto32Questions);
+		questionGroups.add(questionGroupYhteenveto32);
 
 		reportPart1.setQuestionGroups(questionGroups);
 		reportParts.add(reportPart1);

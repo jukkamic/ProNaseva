@@ -255,7 +255,82 @@
 										<h4><b>${question.total}</b></h4>
 										<sf:input style="width: 5em" path="answers[${answerIndexCounter}].total" /> €
 									</c:if>
-										
+		
+		
+		<!-- ListAndScoreImportantPoints -->
+									<c:if test='${question["class"] == "class fi.testcenter.domain.ImportantPointsQuestion"}'>
+										<h3>${questionCounter.count}. ${question.question}</h3>
+										<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+															<div class="checkbox" style="font-size: 1.2em;">
+															<label>											
+															<sf:checkbox value='true'
+																path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+															
+															</label>
+															
+															</div>
+															<br>
+											</c:if>
+						
+											<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
+											<div style="border-bottom: 3px solid #eee;">
+												<h3>${questionItem}</h3>
+												<table>
+												<tr>
+												<td width="40%" style="padding-bottom: 2em">
+												<h4>Tärkeys: </h4>
+												<div class="Demo-boot" style="padding-top: 15px;">
+												<div class="btn-group" data-toggle="buttons">
+												
+													<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber">
+														<c:choose>
+															<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
+																<label class="btn btn-primary active">
+ 															</c:when>
+															<c:otherwise>
+																<label class="btn btn-primary">
+															</c:otherwise>
+														</c:choose>  
+														<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].importance"
+																value="${importanceNumber.index}" /> ${importanceNumber.index} 
+																</label>
+													</c:forEach>
+													
+													<br><br>
+												</div>
+												</div>
+												</td>
+												<td width="20%"></td>
+												<td width="40%" style="padding-bottom: 2em">
+												<h4>Arvosana: </h4>
+												<div class="Demo-boot" style="padding-top: 15px;">
+												<div class="btn-group" data-toggle="buttons">
+												
+													<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
+														<c:choose>
+															<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score == score.index}"> 
+																<label class="btn btn-primary active">
+ 															</c:when>
+															<c:otherwise>
+																<label class="btn btn-primary">
+															</c:otherwise>
+														</c:choose>  
+														<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].score"
+																value="${score.index}" /> ${score.index} 
+																</label>
+													</c:forEach>
+													
+													<br><br>
+												</div>
+												</div>
+												</tr>
+												
+												</table>
+											</div>
+											</c:forEach>
+											
+												
+									</c:if>	
 		<!-- Subquestions --> 
 										
 										<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
