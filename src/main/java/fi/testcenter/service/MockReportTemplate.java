@@ -1,9 +1,11 @@
 package fi.testcenter.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import fi.testcenter.domain.CostListingQuestion;
 import fi.testcenter.domain.MultipleChoiceOption;
 import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
@@ -237,6 +239,41 @@ public class MockReportTemplate {
 
 		questionGroup3.setQuestions(questionList3);
 		questionGroups.add(questionGroup3);
+
+		QuestionGroup questionGroupYhteenveto31 = new QuestionGroup();
+		questionGroupYhteenveto31.setTitle("Kustannukset");
+
+		List<Question> questionGroupYhteenveto31Questions = new ArrayList<Question>();
+
+		CostListingQuestion costQuestion1 = new CostListingQuestion();
+		costQuestion1.setQuestionTopic("Huollon kustannukset:");
+		List<String> costQuestionList1 = new ArrayList<String>();
+		costQuestionList1
+				.add("Kustannusarvio huollolle, jakohihnan vaihdolle (jos on) ja lisätöille");
+		costQuestionList1.add("Huoltotyö (sisältää jakohihnan vaihdon jos on)");
+		costQuestionList1
+				.add("Huoltotyöhön kuuluvat osat (sisältää jakohihnan vaihdon osat)");
+		costQuestionList1.add("Lisätyöt, joka sisältyvät kustannusarvioon");
+		costQuestionList1
+				.add("Lisätöiden osat, jotka sisältyvät kustannusarvioon");
+		costQuestionList1
+				.add("Lisätyöt, joille ei ole annettu tai pyydetty korjauslupaa");
+		costQuestionList1
+				.add("Lisätöiden osat, joille ei ole annettu tai pyydetty korjauslupaa");
+		costQuestionList1
+				.add("Lisätyöt, joille annetaan korjauslupa (esim. työnjohtajan soittaessa)");
+		costQuestionList1.add("Lisätöiden osat, joille annettu korjauslupa");
+		costQuestionList1.add("Pientarvikelisä");
+		costQuestionList1.add("Jätemaksu");
+		costQuestionList1.add("Loppusumman pyöristys ym.");
+		costQuestionList1.add("Laskun loppusumma");
+		costQuestion1.setQuestions(costQuestionList1);
+		costQuestion1
+				.setTotal("Huolto- ja lisätyöt osineen, jotka sisältyvät annettuun kustannusarvioon");
+		questionGroupYhteenveto31Questions.add(costQuestion1);
+		questionGroupYhteenveto31
+				.setQuestions(questionGroupYhteenveto31Questions);
+		questionGroups.add(questionGroupYhteenveto31);
 
 		reportPart1.setQuestionGroups(questionGroups);
 		reportParts.add(reportPart1);

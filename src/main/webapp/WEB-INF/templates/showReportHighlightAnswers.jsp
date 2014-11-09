@@ -113,6 +113,27 @@
 									<br>
 								</c:if>
 								
+								<!-- Cost listing question -->
+									<c:if test='${reportHighlight.answer["class"] == "class fi.testcenter.domain.CostListingAnswer"}'>
+									<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
+									<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
+										${reportHighlight.subQuestionOrderNumber}.
+									</c:if>									
+									${reportHighlight.answer.question.questionTopic}</h3>
+																				
+									<c:forEach var="listQuestion" items="${reportHighlight.answer.question.questions}" varStatus="costListingAnswerCounter">
+												
+									<h4>${listQuestion}</h4>
+												<c:set var="listingAnswer" value="${reportHighlight.answer.answers}" />
+												<p style="font-size: 1.2em;">${reportHighlight.answer.answers[costListingAnswerCounter.index]} €</p>
+												<br>
+											</c:forEach>
+												<h4><b>${reportHighlight.answer.question.total}</b></h4>
+												<p style="font-size: 1.2em;">${reportHighlight.answer.total} €</p>
+											<br>
+									</c:if>
+														
+								
 							</div>
 							</c:forEach>
 	

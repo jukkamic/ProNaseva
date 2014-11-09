@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Answer;
+import fi.testcenter.domain.CostListingAnswer;
+import fi.testcenter.domain.CostListingQuestion;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.MultipleChoiceAnswer;
 import fi.testcenter.domain.MultipleChoiceQuestion;
@@ -128,6 +130,22 @@ public class ReportController {
 					if (question instanceof MultipleChoiceQuestion) {
 						Answer answer = new MultipleChoiceAnswer();
 						answer.setQuestion(question);
+						answers.add(answer);
+
+					}
+					if (question instanceof CostListingQuestion) {
+
+						CostListingAnswer answer = new CostListingAnswer();
+						CostListingQuestion clq = (CostListingQuestion) question;
+						log.debug("costlistingQ loop, clq questions size: "
+								+ clq.getQuestions().size());
+						answer.setQuestion(question);
+						List<Float> answerList = new ArrayList<Float>();
+						for (int i = 0; i < clq.getQuestions().size(); i++)
+							answerList.add(new Float(0));
+						answer.setAnswers(answerList);
+						log.debug("answerListsize : " + answerList.size());
+						log.debug("ensimmäinen answer : " + answerList.get(0));
 						answers.add(answer);
 
 					}

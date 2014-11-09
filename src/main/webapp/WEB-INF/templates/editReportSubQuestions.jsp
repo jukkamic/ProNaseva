@@ -106,5 +106,22 @@
 		</c:choose>
 		
 	</c:if>
+	
+<!-- Cost listing question -->
+						<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.CostListingQuestion"}'>
+							<h3>${subQuestion.questionTopic}</h3>
+								<c:forEach var="listQuestion" items="${subQuestion.questions}" varStatus="costListingAnswerCounter">
+									<h4>${listQuestion}</h4>
+									<sf:input style="width: 5em" path="answers[${answerIndexCounter}].answers[${costListingAnswerCounter.index}]" /> €
+									<br>
+								</c:forEach>
+								<h4><b>${question.total}</b></h4>
+								<sf:input style="width: 5em" path="answers[${answerIndexCounter}].total" /> €
+								<br>
+						</c:if>
+										
+	
+	
+	
 	<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 </c:forEach>
