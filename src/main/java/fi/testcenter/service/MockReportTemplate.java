@@ -292,7 +292,7 @@ public class MockReportTemplate {
 		questionItems1
 				.add("Muistutus tekstiviestillä huollosta huoltoa edeltävänä päivänä");
 		questionItems1
-				.add("Liikkumisesta huolehtiminen (vuokra-auto, taksi, tms.");
+				.add("Liikkumisesta huolehtiminen (vuokra-auto, taksi, tms.)");
 		listImportant1.setQuestionItems(questionItems1);
 		listImportant1
 				.setQuestion("Numeroi mielestäsi viisi tärkeintä asiaa huollossa, "

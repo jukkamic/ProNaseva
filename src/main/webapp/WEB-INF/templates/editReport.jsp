@@ -295,6 +295,17 @@
 																value="${importanceNumber.index}" /> ${importanceNumber.index} 
 																</label>
 													</c:forEach>
+													<c:choose>
+															<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance == -1}"> 
+																<label class="btn btn-default active">
+ 															</c:when>
+															<c:otherwise>
+																<label class="btn btn-default">
+															</c:otherwise>
+														</c:choose>  
+														<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].importance"
+																value="-1" /> Ei valintaa
+														</label>
 													
 													<br><br>
 												</div>
@@ -319,6 +330,17 @@
 																value="${score.index}" /> ${score.index} 
 																</label>
 													</c:forEach>
+														<c:choose>
+															<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score == -1}"> 
+																<label class="btn btn-default active">
+ 															</c:when>
+															<c:otherwise>
+																<label class="btn btn-default">
+															</c:otherwise>
+														</c:choose>  
+														<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].score"
+																value="-1" /> Ei valinta
+																</label>
 													
 													<br><br>
 												</div>

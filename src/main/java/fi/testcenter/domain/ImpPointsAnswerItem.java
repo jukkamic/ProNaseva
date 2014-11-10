@@ -16,6 +16,11 @@ public class ImpPointsAnswerItem {
 	int importance;
 	int score;
 
+	public ImpPointsAnswerItem() {
+		this.importance = -1;
+		this.score = -1;
+	}
+
 	public String getItem() {
 		return item;
 	}

@@ -130,12 +130,12 @@
 						
 								<div class="panel-body">
 								
-									<!-- Questions loop -->
+			<!-- Questions loop -->
 									
 									<c:forEach var="question" items="${questionGroup.questions}"
 										varStatus="questionCounter">
 
-										<!-- Multiple choice question -->
+			<!-- Multiple choice question -->
 										<c:if test='${question["class"] == "class fi.testcenter.domain.MultipleChoiceQuestion"}'>
 																												
 											<h3>${questionCounter.count}. ${question.question}</h3>
@@ -151,8 +151,18 @@
 													<br>
 											</c:if>
 											
-											
-											<div class="Demo-boot" style="padding-top: 15px;">
+										<c:choose>
+										<c:when test="${question.multipleSelectionsAllowed == true}">
+														<c:forEach var="option" items="${question.options}">
+															<label class="checkbox" style="">											
+															<sf:checkbox value="${option.option}" 
+																path="answers[${answerIndexCounter}].chosenSelections" label="${option.option}" disabled="true" />
+															</label>
+															<br>
+														</c:forEach>
+										</c:when>
+										<c:otherwise>
+										<div class="Demo-boot" style="padding-top: 15px;">
 												<div class="btn-group" data-toggle="buttons">
 													<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
 
@@ -198,6 +208,8 @@
 																								
 												</div>
 											</div>
+											</c:otherwise>
+											</c:choose>
 											<br>
 											<h4>Huomioita:</h4>
 											<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
@@ -205,7 +217,7 @@
 											<br><br>
 										</c:if>
 
-										<!--  Text question -->
+				<!--  Text question -->
 										<c:if test='${question["class"] == "class fi.testcenter.domain.TextQuestion"}'>
 											<h3>${questionCounter.count}. ${question.question}</h3>
 											<c:if test="${loginRole == '[ROLE_ADMIN]' }">
@@ -225,7 +237,7 @@
 										</c:if>
 										
 										
-									<!-- Cost listing question -->
+			<!-- Cost listing question -->
 									<c:if test='${question["class"] == "class fi.testcenter.domain.CostListingQuestion"}'>
 										<h3>${questionCounter.count}. ${question.questionTopic}</h3>
 											<c:if test="${loginRole == '[ROLE_ADMIN]' }">
@@ -252,9 +264,93 @@
 											<br>
 									</c:if>
 										
+		<!-- ListAndScoreImportantPoints -->
+									<c:if test='${question["class"] == "class fi.testcenter.domain.ImportantPointsQuestion"}'>
+										<h3>${questionCounter.count}. ${question.question}</h3>
+										<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+															<div class="checkbox" style="font-size: 1.2em;">
+															<label>											
+															<sf:checkbox value='true'
+																path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+															
+															</label>
+															
+															</div>
+															<br>
+											</c:if>
+						
+											<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
+											<div style="border-bottom: 3px solid #eee;">
+												<h3>${questionItem}</h3>
+												<table>
+												<tr>
+												<td width="40%" style="padding-bottom: 2em">
+												<h4>Tärkeys: </h4>
+												<div class="Demo-boot" style="padding-top: 15px;">
+												<div class="btn-group" data-toggle="buttons">
+		
+												<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber">
+													<c:choose>
+														<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
+															<button class="btn btn-large btn-primary disabled" type="button">
+																${importanceNumber.index}
+															</button>
+															</c:when>
+														<c:otherwise>
+															<button class="btn btn-large btn-default" type="button" disabled>
+																${importanceNumber.index}
+															</button>
+														</c:otherwise>
+													</c:choose>  
+
+												</c:forEach>
+
+												  
+												
+												<br><br>
+												</div>
+												</div>
+												</td>
+												<td width="20%"></td>
+												<td width="40%" style="padding-bottom: 2em">
+												<h4>Arvosana: </h4>
+												<div class="Demo-boot" style="padding-top: 15px;">
+												<div class="btn-group" data-toggle="buttons">
+												
+													<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
+													<c:choose>
+														<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score == score.index}">
+															<button class="btn btn-large btn-primary disabled" type="button">
+																${score.index} 
+															</button>
+															</c:when>
+														<c:otherwise>
+															<button class="btn btn-large btn-default" type="button" disabled>
+																${score.index} 
+															</button>
+														</c:otherwise>
+													</c:choose>  
+
+												</c:forEach>
+
+			
+												<br><br>
+												</div>
+												</div>
+												</tr>
+												
+												</table>
+											</div>
+											</c:forEach>
+											
+												
+									</c:if>	
+										
+										
+										
 					<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 										
-											<!-- Show subquestions -->
+				<!-- Show subquestions -->
 										
 										<c:if test="${not empty question.subQuestions}">
 											<c:set var="mainQuestion" value="${question}" scope="request" />
