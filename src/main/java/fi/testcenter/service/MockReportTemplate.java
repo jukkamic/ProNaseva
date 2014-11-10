@@ -82,7 +82,7 @@ public class MockReportTemplate {
 
 		MultipleChoiceQuestion q40 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options17 = new ArrayList<MultipleChoiceOption>();
-		q40.setQuestion("Varapyörän ilmanpaineen tarkastus");
+		q40.setQuestion("Pesunesteen tarkastus");
 		options17.add(new MultipleChoiceOption("0 p", 0));
 		options17.add(new MultipleChoiceOption("1 p", 1));
 		options17.add(new MultipleChoiceOption("2 p", 2));
@@ -91,7 +91,7 @@ public class MockReportTemplate {
 
 		MultipleChoiceQuestion q41 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options18 = new ArrayList<MultipleChoiceOption>();
-		q41.setQuestion("Akun tarkastus");
+		q41.setQuestion("Rekisterikilven valon tarkastus");
 		options18.add(new MultipleChoiceOption("0 p", 0));
 		options18.add(new MultipleChoiceOption("1 p", 1));
 		options18.add(new MultipleChoiceOption("2 p", 2));
@@ -100,7 +100,7 @@ public class MockReportTemplate {
 
 		MultipleChoiceQuestion q42 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options19 = new ArrayList<MultipleChoiceOption>();
-		q42.setQuestion("Seisontavalon tarkastus");
+		q42.setQuestion("Turvavöiden tarkastus");
 		options19.add(new MultipleChoiceOption("0 p", 0));
 		options19.add(new MultipleChoiceOption("1 p", 1));
 		options19.add(new MultipleChoiceOption("2 p", 2));
@@ -109,21 +109,20 @@ public class MockReportTemplate {
 
 		MultipleChoiceQuestion q7 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options1 = new ArrayList<MultipleChoiceOption>();
-		q7.setQuestion("Jäähdytysnestemäärän tarkastus");
+		q7.setQuestion("Takalasinpyyhkimen sulan tarkastus");
 		options1.add(new MultipleChoiceOption("0 p", 0));
 		options1.add(new MultipleChoiceOption("1 p", 1));
 		options1.add(new MultipleChoiceOption("2 p", 2));
 		q7.setOptions(options1);
 		questionList2.add(q7);
 
-		MultipleChoiceQuestion q9 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options2 = new ArrayList<MultipleChoiceOption>();
-		q9.setQuestion("Muu vika");
-		options2.add(new MultipleChoiceOption("0 p", 0));
-		options2.add(new MultipleChoiceOption("1 p", 1));
-		options2.add(new MultipleChoiceOption("2 p", 2));
-		q9.setOptions(options2);
-		questionList2.add(q9);
+		MultipleChoiceQuestion q7uusi = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsQ7uusi = new ArrayList<MultipleChoiceOption>();
+		q7uusi.setQuestion("Oliko Service 2.0 hengari ripustettu peiliin?");
+		optionsQ7uusi.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsQ7uusi.add(new MultipleChoiceOption("Ei", 0));
+		q7uusi.setOptions(optionsQ7uusi);
+		questionList2.add(q7uusi);
 
 		questionGroup2.setQuestions(questionList2);
 
@@ -587,6 +586,18 @@ public class MockReportTemplate {
 
 		questionList7.add(a38);
 
+		MultipleChoiceQuestion a38uusi = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsA38uusi = new ArrayList<MultipleChoiceOption>();
+		a38uusi.setQuestion("Tarjottiinko asiakkaalle saman merkkistä autoa kuin asiakkaalla on?");
+		optionsA38uusi.add(new MultipleChoiceOption("Kyllä",
+				"Kyllä <br> &nbsp", 2));
+		optionsA38uusi.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
+		optionsA38uusi.add(new MultipleChoiceOption(
+				"Kyllä, mutta asiakas valitsi toisen vaihtoehdon",
+				"Kyllä mutta asiakas valitsi<br>toisen vaihtoehdon", -1));
+		a38uusi.setOptions(optionsA38uusi);
+		questionList7.add(a38uusi);
+
 		questionGroup7.setQuestions(questionList7);
 		questionGroups2.add(questionGroup7);
 
@@ -870,6 +881,14 @@ public class MockReportTemplate {
 		b9.setSubQuestions(subQListb9);
 
 		questionList10.add(b9);
+
+		MultipleChoiceQuestion b9uusi = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsB9uusi = new ArrayList<MultipleChoiceOption>();
+		b9uusi.setQuestion("Saiko asiakas huoltoneuvojan yhteystiedot?");
+		optionsB9uusi.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsB9uusi.add(new MultipleChoiceOption("Ei", 0));
+		b9uusi.setOptions(optionsB9uusi);
+		questionList10.add(b9uusi);
 
 		MultipleChoiceQuestion b11 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsB11 = new ArrayList<MultipleChoiceOption>();
@@ -1220,6 +1239,16 @@ public class MockReportTemplate {
 		b45.setOptions(optionsB45);
 		questionList11.add(b45);
 
+		MultipleChoiceQuestion b45uusi = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsB45uusi = new ArrayList<MultipleChoiceOption>();
+		b45uusi.setQuestion("Saiko asiakas haluamansa merkkisen sijaisauton?");
+		optionsB45uusi.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsB45uusi.add(new MultipleChoiceOption("Ei", 0));
+		optionsB45uusi.add(new MultipleChoiceOption(
+				"Asiakasta ei kiinnostanut sijaintiauton merkki", -1));
+		b45uusi.setOptions(optionsB45uusi);
+		questionList11.add(b45uusi);
+
 		questionGroup11.setQuestions(questionList11);
 		questionGroups3.add(questionGroup11);
 
@@ -1568,6 +1597,14 @@ public class MockReportTemplate {
 		d12.setOptions(optionsD12);
 		questionList15.add(d12);
 
+		MultipleChoiceQuestion d12uusi = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD12uusi = new ArrayList<MultipleChoiceOption>();
+		d12uusi.setQuestion("Kerrottiinko asiakkaalle Tiepalvelun olemassaolosta?");
+		optionsD12uusi.add(new MultipleChoiceOption("Kyllä", 2));
+		optionsD12uusi.add(new MultipleChoiceOption("Ei", 0));
+		d12uusi.setOptions(optionsD12uusi);
+		questionList15.add(d12uusi);
+
 		questionGroup15.setQuestions(questionList15);
 		questionGroups5.add(questionGroup15);
 		//
@@ -1590,6 +1627,7 @@ public class MockReportTemplate {
 
 		questionGroup16.setQuestions(questionList16);
 		questionGroups5.add(questionGroup16);
+
 		reportPart5.setQuestionGroups(questionGroups5);
 		reportParts.add(reportPart5);
 		//
@@ -1603,9 +1641,25 @@ public class MockReportTemplate {
 
 		QuestionGroup questionGroup17 = new QuestionGroup();
 
-		questionGroup17.setTitle("Asiakaspalveluhenkinen toiminta");
+		questionGroup17.setTitle("Työmääräyksen merkinnät");
 
 		ArrayList<Question> questionList17 = new ArrayList<Question>();
+
+		MultipleChoiceQuestion d14uusi = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsD14uusi = new ArrayList<MultipleChoiceOption>();
+		d14uusi.setQuestion("Leimaus käytössä?");
+		optionsD14uusi.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsD14uusi.add(new MultipleChoiceOption("Ei", -1));
+		d14uusi.setOptions(optionsD14uusi);
+		questionList17.add(d14uusi);
+
+		TextQuestion d14uusi2 = new TextQuestion();
+		d14uusi2.setQuestion("Huollon ohjeaika: ");
+		questionList17.add(d14uusi2);
+
+		TextQuestion d14uusi3 = new TextQuestion();
+		d14uusi3.setQuestion("Mekaanikon leimaama aika: ");
+		questionList17.add(d14uusi3);
 
 		MultipleChoiceQuestion d14 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsD14 = new ArrayList<MultipleChoiceOption>();
@@ -1681,6 +1735,15 @@ public class MockReportTemplate {
 		optionsE2.add(new MultipleChoiceOption("Ei", -1));
 		e2.setOptions(optionsE2);
 		questionList18.add(e2);
+
+		MultipleChoiceQuestion e2uusi = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> optionsE2uusi = new ArrayList<MultipleChoiceOption>();
+		e2uusi.setQuestion("Vika/Syy/Korjaus merkinnät merkitty selvästi takuukorjauksissa");
+		optionsE2uusi.add(new MultipleChoiceOption("Kyllä", -1));
+		optionsE2uusi.add(new MultipleChoiceOption("Ei", -1));
+		optionsE2uusi.add(new MultipleChoiceOption("Ei takuukorjauksia", -1));
+		e2uusi.setOptions(optionsE2uusi);
+		questionList18.add(e2uusi);
 
 		MultipleChoiceQuestion e3 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> optionsE3 = new ArrayList<MultipleChoiceOption>();
