@@ -212,15 +212,15 @@ lisäosana PDFCreator -->
 												
 					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
 						<div class="noPageBreak">
-						<h4 style="margin: 0.5em 0 0 0;">${listQuestion}</h4>
+						<h4 style="margin: 0 0 0 0;">${listQuestion}</h4>
 						
 						<p style="font-size: 1.2em; margin: 0.5em 0 0 0;">${report.answers[answerIndexCounter].answers[costListingAnswerCounter.index]} €</p>
 						<br>
 						</div>
 					</c:forEach>
 							<div class="noPageBreak">
-							<h4 style="margin: 0.5em 0 0 0;"><b>${question.total}</b></h4>
-							<p style="font-size: 1.2em; margin: 0.5em 0 0 0;">${report.answers[answerIndexCounter].total} €</p>
+							<h4 style="margin: 0 0 0 0;"><b>${question.total}</b></h4>
+							<p style="font-size: 1.2em; margin: 0 0 0 0;">${report.answers[answerIndexCounter].total} €</p>
 							</div>
 						<br>
 				</c:if>
@@ -249,15 +249,15 @@ lisäosana PDFCreator -->
 									<tr>
 										<td>
 											<c:if test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance != -1}"> 
-													<h3 style="margin: 0.5em 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </h3>
+													<h3 style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </h3>
 										</c:if>
 										</td>
 										<td>							
-											<h3 style="margin: 0.5em 0 0 0; vertical-align: top">${questionItem}</h3>
+											<h3 style="margin: 0 0 0 0; vertical-align: top">${questionItem}</h3>
 										</td>
 										<td>
 											<c:if test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score != -1}">
-													<h3 style="margin: 0.5em 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score}</h3>
+													<h3 style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score}</h3>
 											</c:if>
 										</td>
 									</tr>

@@ -107,6 +107,15 @@ public class MockReportTemplate {
 		q42.setOptions(options19);
 		questionList2.add(q42);
 
+		MultipleChoiceQuestion q42uusi2 = new MultipleChoiceQuestion();
+		ArrayList<MultipleChoiceOption> options19uusi2 = new ArrayList<MultipleChoiceOption>();
+		q42uusi2.setQuestion("Rengaspaineiden tarkastus");
+		options19uusi2.add(new MultipleChoiceOption("0 p", 0));
+		options19uusi2.add(new MultipleChoiceOption("1 p", 1));
+		options19uusi2.add(new MultipleChoiceOption("2 p", 2));
+		q42uusi2.setOptions(options19uusi2);
+		questionList2.add(q42uusi2);
+
 		MultipleChoiceQuestion q7 = new MultipleChoiceQuestion();
 		ArrayList<MultipleChoiceOption> options1 = new ArrayList<MultipleChoiceOption>();
 		q7.setQuestion("Takalasinpyyhkimen sulan tarkastus");
@@ -280,8 +289,13 @@ public class MockReportTemplate {
 				.setTitle("Asiakkaan tärkeäksi kokemat asiat huollon prosessissa");
 		List<Question> questionGroupYhteenveto32Questions = new ArrayList<Question>();
 		ImportantPointsQuestion listImportant1 = new ImportantPointsQuestion();
+		listImportant1
+				.setQuestion("Numeroi mielestäsi viisi tärkeintä asiaa huollossa, "
+						+ "viitosella tärkein. Arvioi sen jälkeen, kuinka kyseiset viisi asiaa "
+						+ "onnistuivat tällä kertaa arvosanoilla 1-5, 5 on erittäin hyvin ja 1 erittäin heikosti.");
+
 		List<String> questionItems1 = new ArrayList<String>();
-		questionItems1.add("Liikeen sijainti");
+		questionItems1.add("Liikkeen sijainti");
 		questionItems1.add("Huollon pysäköinti");
 		questionItems1.add("Liikkeen aukioloajat");
 		questionItems1.add("Huoltoajan saaminen helposti sopivaan aikaan");
@@ -292,11 +306,34 @@ public class MockReportTemplate {
 				.add("Muistutus tekstiviestillä huollosta huoltoa edeltävänä päivänä");
 		questionItems1
 				.add("Liikkumisesta huolehtiminen (vuokra-auto, taksi, tms.)");
+		questionItems1
+				.add("Tehtävän huollon sisällöstä kertominen etukäteen (puhelimessa, tiskillä)");
+		questionItems1.add("Kustannusarvion saaminen kysymättä");
+		questionItems1.add("Kustannusarvion saaminen kysyttäessä");
+		questionItems1
+				.add("Odottavalle asiakkaalle tarjotut palvelut (kahviautomaatti, internet-yhteys, työtila tms.)");
+		questionItems1.add("Valmistumisajan saaminen");
+		questionItems1.add("Kustannusarvion toteutuminen luvattuna");
+		questionItems1
+				.add("Työn valmistumisesta ilmoittaminen (puh. tai tekstiviestillä)");
+		questionItems1.add("Valmistumisajan toteutuminen luvattuna");
+		questionItems1
+				.add("Lisätöille luvan kysyminen autoa jätettäessä huoltoon");
+		questionItems1
+				.add("Yhteydenotto huollon aikana havaituista lisätöistä");
+		questionItems1.add("Kaikki työt tehdään kerralla kuntoon");
+		questionItems1.add("Auton siisteys huollon jälkeen");
+		questionItems1
+				.add("Tehdyn huollon sisällöstä kertominen huollon jälkeen");
+		questionItems1.add("Tulevista korjaustarpeista kertominen");
+		questionItems1.add("Laskun läpikäyminen");
+		questionItems1
+				.add("Seuraavan huollon sisällöstä, ajankohdasta ja hinnasta kertominen");
+		questionItems1.add("Ystävällinen henkilökunta");
+		questionItems1.add("Aikaisemmat kokemukset liikkeestä");
+
 		listImportant1.setQuestionItems(questionItems1);
-		listImportant1
-				.setQuestion("Numeroi mielestäsi viisi tärkeintä asiaa huollossa, "
-						+ "viitosella tärkein. Arvioi sen jälkeen, kuinka kyseiset viisi asiaa "
-						+ "onnistuivat tällä kertaa arvosanoilla 1-5, 5 on erittäin hyvin ja 1 erittäin heikosti.");
+
 		listImportant1.setMaxScoreForQuestionItem(5);
 		listImportant1.setNumberOfItemsToChoose(5);
 		questionGroupYhteenveto32Questions.add(listImportant1);
