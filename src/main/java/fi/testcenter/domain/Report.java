@@ -413,6 +413,7 @@ public class Report {
 						MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
 						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
 								.get(answerIndexCounter);
+						mca.setShowScore(false);
 
 						int maxScore = 0;
 						for (MultipleChoiceOption option : mcq.getOptions()) {

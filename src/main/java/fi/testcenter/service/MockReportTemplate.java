@@ -125,13 +125,14 @@ public class MockReportTemplate {
 		q7.setOptions(options1);
 		questionList2.add(q7);
 
-		MultipleChoiceQuestion q7uusi = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> optionsQ7uusi = new ArrayList<MultipleChoiceOption>();
-		q7uusi.setQuestion("Oliko Service 2.0 hengari ripustettu peiliin?");
-		optionsQ7uusi.add(new MultipleChoiceOption("Kyllä", 2));
-		optionsQ7uusi.add(new MultipleChoiceOption("Ei", 0));
-		q7uusi.setOptions(optionsQ7uusi);
-		questionList2.add(q7uusi);
+		// MultipleChoiceQuestion q7uusi = new MultipleChoiceQuestion();
+		// ArrayList<MultipleChoiceOption> optionsQ7uusi = new
+		// ArrayList<MultipleChoiceOption>();
+		// q7uusi.setQuestion("Oliko Service 2.0 hengari ripustettu peiliin?");
+		// optionsQ7uusi.add(new MultipleChoiceOption("Kyllä", -1));
+		// optionsQ7uusi.add(new MultipleChoiceOption("Ei", -1));
+		// q7uusi.setOptions(optionsQ7uusi);
+		// questionList2.add(q7uusi);
 
 		questionGroup2.setQuestions(questionList2);
 
