@@ -54,6 +54,7 @@
 		<property name="password" value="" />
 	</bean> 
 	
+	<!-- Testi -->
 
 	<!--  <jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 		<jdbc:script location="classpath:sql/init.sql" />
