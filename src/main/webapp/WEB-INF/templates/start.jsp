@@ -26,6 +26,7 @@
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="showWorkshopList?page=1">Korjaamot</a>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/showUserList?page=1">Käyttäjätilit</a>
+			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/reportTemplates">Raporttipohjat</a>
 			</security:authorize>
 			</div>
 			<br>

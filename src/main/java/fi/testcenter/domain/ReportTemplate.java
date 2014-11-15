@@ -25,6 +25,7 @@ public class ReportTemplate {
 	@JoinTable(name = "REPORT_REPORTPART", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTPART_ID"))
 	@OrderColumn(name = "ORDERINDEX")
 	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
+	private String templateName;
 
 	public Long getId() {
 		return id;
@@ -40,6 +41,14 @@ public class ReportTemplate {
 
 	public void setReportParts(List<ReportPart> reportParts) {
 		this.reportParts = reportParts;
+	}
+
+	public String getTemplateName() {
+		return templateName;
+	}
+
+	public void setTemplateName(String templateName) {
+		this.templateName = templateName;
 	}
 
 }

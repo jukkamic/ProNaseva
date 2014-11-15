@@ -49,7 +49,7 @@ public class ReportService {
 	private ImporterRepository ir;
 
 	@Autowired
-	private MockReportTemplate rts;
+	private ReportTemplateService rts;
 
 	@Autowired
 	private ReportHighlightRepository rhls;
@@ -289,8 +289,32 @@ public class ReportService {
 		rhls.deleteInBatch(highlights);
 	}
 
-	public ReportTemplate saveReportTemplate(ReportTemplate template) {
-		return rtr.save(template);
+	@Transactional
+	public void saveNewReportTemplate(String name) {
+		ReportTemplate template = new ReportTemplate();
+		try {
+			template = rtr.save(rts.getReportTemplate(name));
+			log.debug("Tallennettu raporttipohja: " + template.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Transactional
+	public ReportTemplate findReportTemplateByName(String name) {
+		ReportTemplate template = new ReportTemplate();
+		try {
+			TypedQuery query = em
+					.createQuery(
+							"SELECT rt FROM ReportTemplate rt WHERE rt.templateName = :name",
+							ReportTemplate.class);
+			query.setParameter("name", name);
+			template = (ReportTemplate) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return template;
 	}
 
 }
