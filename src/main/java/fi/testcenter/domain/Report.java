@@ -24,6 +24,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import fi.testcenter.service.ReportService;
+
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "workshopReportCount", query = "SELECT COUNT(r) FROM Report r WHERE r.workshop.id = :workshopId"),
@@ -306,10 +308,19 @@ public class Report {
 	// ASETETAAN HIGHLIGHT-VASTAUKSET KÄYTTÄJÄN RAPORTINMUOKKAUKSESSA TEKEMIEN
 	// JA ANSWER-OLIOIHIN TALLENNETTUJEN VALINTOJEN MUKAAN
 
-	public void setHighlightAnswers() {
+	public void setHighlightAnswers(ReportService rs) {
 
 		ArrayList<ReportHighlight> reportHighlightList = new ArrayList<ReportHighlight>();
 		int answerIndexCounter = 0;
+
+		if (reportHighlights.size() > 0) {
+
+			try {
+				rs.deleteReportHighlights(reportHighlights);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 		for (ReportPart reportPart : this.reportTemplate.getReportParts()) {
 			int questionGroupCounter = 1;

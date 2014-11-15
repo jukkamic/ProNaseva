@@ -112,18 +112,9 @@ public class ReportController {
 
 		report.calculateReportScore();
 
+		report.setHighlightAnswers(rs);
+
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-
-		if (report.getReportHighlights().size() > 0) {
-
-			try {
-				rs.deleteReportHighlights(report.getReportHighlights());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		report.setHighlightAnswers();
 
 		try {
 			report.setDate(simpleDateFormat.parse(report.getReportDate()));
@@ -217,7 +208,7 @@ public class ReportController {
 			}
 		}
 
-		report.setHighlightAnswers();
+		report.setHighlightAnswers(rs);
 
 		int reportPartScoreIndex = 0;
 
