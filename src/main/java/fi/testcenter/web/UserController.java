@@ -31,7 +31,7 @@ public class UserController {
 	public String showUserAdminPage(Model model,
 			@RequestParam("page") Integer page) {
 
-		List<User> userList = us.getActiveUserList();
+		List<User> userList = us.findActiveUsers();
 
 		int currentPage = page;
 
@@ -70,7 +70,7 @@ public class UserController {
 	public String processEditUserForm(Model model,
 			@RequestParam("id") Integer id) {
 
-		model.addAttribute("user", us.getUserById(id));
+		model.addAttribute("user", us.findUserById(id));
 
 		return "showUser";
 	}

@@ -41,7 +41,7 @@ public class WorkshopService {
 	}
 
 	@Transactional
-	public List<Workshop> getWorkshopsInAplhaOrder() {
+	public List<Workshop> findWorkshopsInAplhaOrder() {
 		List<Object[]> workshopList = em.createQuery(
 				"SELECT w.name, w FROM Workshop w ORDER BY w.name ASC")
 				.getResultList();
@@ -63,7 +63,7 @@ public class WorkshopService {
 	}
 
 	@Transactional
-	public Workshop getWorkshopById(Long id) {
+	public Workshop findWorkshopById(Long id) {
 		return wr.findOne(id);
 	}
 
@@ -71,7 +71,7 @@ public class WorkshopService {
 	public void deleteWorkshop(Workshop workshop) {
 		Long reportCount = new Long(0);
 		try {
-			reportCount = rs.getReportsByWorkshopId(workshop.getId());
+			reportCount = rs.findReportsByWorkshopId(workshop.getId());
 			log.debug("report count" + reportCount);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class WorkshopService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Workshop> getActiveWorkshops() {
+	public List<Workshop> findActiveWorkshops() {
 		List<Object[]> workshopList = em
 				.createQuery(
 						"SELECT w.name, w FROM Workshop w WHERE w.active = TRUE ORDER BY w.name ASC")

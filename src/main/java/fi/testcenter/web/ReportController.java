@@ -75,9 +75,9 @@ public class ReportController {
 			e.printStackTrace();
 		}
 
-		report.setUser(us.getLoginUser());
+		report.setUser(us.findLoginUser());
 
-		Importer importer = is.getImporterById(importerID.longValue());
+		Importer importer = is.finImporterById(importerID.longValue());
 
 		report.setImporter(importer);
 		report.setImporterId(importerID.longValue());

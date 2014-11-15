@@ -60,7 +60,7 @@ public class ImporterWorkshopController {
 	public String prepareWorkshopPage(Model model,
 			@RequestParam("page") Integer page) {
 
-		List<Workshop> workshops = ws.getActiveWorkshops();
+		List<Workshop> workshops = ws.findActiveWorkshops();
 
 		int currentPage = page;
 
@@ -113,7 +113,7 @@ public class ImporterWorkshopController {
 	@RequestMapping(value = "/showWorkshop", method = RequestMethod.GET)
 	public String showWorkshop(Model model, @RequestParam("id") Integer id) {
 
-		model.addAttribute("workshop", ws.getWorkshopById(id.longValue()));
+		model.addAttribute("workshop", ws.findWorkshopById(id.longValue()));
 
 		return "showWorkshop";
 	}
@@ -149,7 +149,7 @@ public class ImporterWorkshopController {
 	public String prepareEditImporterForm(Model model,
 			@RequestParam("id") Integer id) {
 
-		model.addAttribute("importer", is.getImporterById(id.longValue()));
+		model.addAttribute("importer", is.finImporterById(id.longValue()));
 		model.addAttribute("edit", "TRUE");
 
 		return "editImporter";

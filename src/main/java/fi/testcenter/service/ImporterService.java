@@ -27,7 +27,7 @@ public class ImporterService {
 		return ir.findAll();
 	}
 
-	public Importer getImporterById(Long id) {
+	public Importer finImporterById(Long id) {
 		return ir.findOne(id.longValue());
 	}
 
@@ -40,7 +40,7 @@ public class ImporterService {
 	}
 
 	@Transactional
-	public List<Importer> getImportersInAplhaOrder() {
+	public List<Importer> findImportersInAplhaOrder() {
 		List<Object[]> importerList = em.createQuery(
 				"SELECT i.name, i FROM Importer i ORDER BY i.name ASC")
 				.getResultList();

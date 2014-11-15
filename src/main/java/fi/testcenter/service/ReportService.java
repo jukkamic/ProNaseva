@@ -59,7 +59,7 @@ public class ReportService {
 
 	@Transactional(readOnly = true)
 	public ReportTemplate getReportTemplate() {
-		return rts.getReportTemplate("Volvo");
+		return rts.findReportTemplate("Volvo");
 	}
 
 	@Transactional
@@ -84,7 +84,7 @@ public class ReportService {
 		rr.delete(report);
 	}
 
-	public List<Report> getSearchReports() {
+	public List<Report> findSearchReports() {
 		List<Object[]> reports = em
 				.createQuery(
 						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r ORDER BY r.date DESC")
@@ -99,7 +99,7 @@ public class ReportService {
 
 	}
 
-	public List<Report> getReportsAwaitingApproval() {
+	public List<Report> findReportsAwaitingApproval() {
 		List<Object[]> reports = em
 				.createQuery(
 						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.date DESC")
@@ -113,7 +113,7 @@ public class ReportService {
 		return resultReports;
 	}
 
-	public List<Report> getReportsByUserId(Long userId) {
+	public List<Report> findReportsByUserId(Long userId) {
 		List<Object[]> reports = em
 				.createQuery(
 						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.user.id = :userId ORDER BY r.date DESC")
@@ -127,7 +127,7 @@ public class ReportService {
 
 	}
 
-	public Long getReportsByWorkshopId(Long id) {
+	public Long findReportsByWorkshopId(Long id) {
 		TypedQuery<Long> query = em.createNamedQuery("workshopReportCount",
 				Long.class);
 		Long result = (Long) query.setParameter("workshopId", id)
@@ -140,7 +140,7 @@ public class ReportService {
 
 	}
 
-	public List<Report> searchReports(SearchReportCriteria searchReportCriteria) {
+	public List<Report> findReportsBySearchCriteria(SearchReportCriteria searchReportCriteria) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Object[]> q = cb.createQuery(Object[].class);
@@ -293,7 +293,7 @@ public class ReportService {
 	public void saveNewReportTemplate(String name) {
 		ReportTemplate template = new ReportTemplate();
 		try {
-			template = rtr.save(rts.getReportTemplate(name));
+			template = rtr.save(rts.findReportTemplate(name));
 			log.debug("Tallennettu raporttipohja: " + template.getId());
 		} catch (Exception e) {
 			e.printStackTrace();

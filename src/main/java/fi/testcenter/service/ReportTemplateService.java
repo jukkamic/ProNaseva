@@ -18,7 +18,7 @@ import fi.testcenter.domain.TextQuestion;
 @Service
 public class ReportTemplateService {
 
-	public ReportTemplate getReportTemplate(String name) {
+	public ReportTemplate findReportTemplate(String name) {
 		switch (name) {
 		case "Volvo":
 			return getReportTemplateVolvo();

@@ -43,10 +43,10 @@ public class SearchController {
 	public String setupSearchHomePage(HttpServletRequest request, Model model) {
 
 		model.addAttribute("reportSearchList",
-				rs.getReportsByUserId(us.getLoginUser().getId()));
+				rs.findReportsByUserId(us.findLoginUser().getId()));
 
 		if (request.isUserInRole("ROLE_ADMIN")) {
-			model.addAttribute("awaitApproval", rs.getReportsAwaitingApproval());
+			model.addAttribute("awaitApproval", rs.findReportsAwaitingApproval());
 		}
 
 		return "userOwnReports";
@@ -67,9 +67,9 @@ public class SearchController {
 
 		model.addAttribute("searchReportCriteria", new SearchReportCriteria());
 
-		model.addAttribute("importers", is.getImportersInAplhaOrder());
-		model.addAttribute("workshops", ws.getWorkshopsInAplhaOrder());
-		model.addAttribute("users", us.getUserListInAlphaOrder());
+		model.addAttribute("importers", is.findImportersInAplhaOrder());
+		model.addAttribute("workshops", ws.findWorkshopsInAplhaOrder());
+		model.addAttribute("users", us.findUsersInAlphaOrder());
 		return "searchReport";
 	}
 
@@ -80,7 +80,7 @@ public class SearchController {
 
 		searchReportCriteria.setCriteriaSet(true);
 		model.addAttribute("reportSearchList",
-				rs.searchReports(searchReportCriteria));
+				rs.findReportsBySearchCriteria(searchReportCriteria));
 		model.addAttribute("paginateFrom", 1);
 
 		return "redirect:showSearchResult?page=1";

@@ -42,7 +42,7 @@ public class UserAccountService {
 		return ur.findAll();
 	}
 
-	public List<User> getActiveUserList() {
+	public List<User> findActiveUsers() {
 		List<Object[]> userList = em
 				.createQuery(
 						"SELECT u.lastName, u FROM User u WHERE u.enabled = TRUE order by u.lastName ASC")
@@ -54,7 +54,7 @@ public class UserAccountService {
 		return userReturnList;
 	}
 
-	public List<User> getUserListInAlphaOrder() {
+	public List<User> findUsersInAlphaOrder() {
 		List<Object[]> userList = em.createQuery(
 				"SELECT u.lastName, u FROM User u ORDER BY u.lastName ASC")
 				.getResultList();
@@ -66,7 +66,7 @@ public class UserAccountService {
 	}
 
 	@Transactional
-	public User getUserById(Integer id) {
+	public User findUserById(Integer id) {
 		return ur.findOne(id.longValue());
 	}
 
@@ -74,7 +74,7 @@ public class UserAccountService {
 	public void deleteUser(User user) {
 		List<Report> userReports = new ArrayList<Report>();
 		try {
-			userReports = rs.getReportsByUserId(user.getId());
+			userReports = rs.findReportsByUserId(user.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -93,7 +93,7 @@ public class UserAccountService {
 	}
 
 	@Transactional
-	public User getLoginUser() {
+	public User findLoginUser() {
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 
