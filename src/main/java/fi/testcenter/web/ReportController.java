@@ -1,7 +1,6 @@
 package fi.testcenter.web;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,24 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.domain.Answer;
-import fi.testcenter.domain.CostListingAnswer;
-import fi.testcenter.domain.CostListingQuestion;
 import fi.testcenter.domain.Importer;
-import fi.testcenter.domain.ImpPointsAnswerItem;
-import fi.testcenter.domain.ImportantPointsAnswer;
-import fi.testcenter.domain.ImportantPointsQuestion;
-import fi.testcenter.domain.MultipleChoiceAnswer;
-import fi.testcenter.domain.MultipleChoiceQuestion;
 import fi.testcenter.domain.Question;
 import fi.testcenter.domain.QuestionGroup;
 import fi.testcenter.domain.QuestionGroupScore;
 import fi.testcenter.domain.Report;
-import fi.testcenter.domain.ReportPart;
 import fi.testcenter.domain.ReportPartScore;
 import fi.testcenter.domain.ReportTemplate;
-import fi.testcenter.domain.TextAnswer;
-import fi.testcenter.domain.TextQuestion;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
@@ -113,80 +101,7 @@ public class ReportController {
 		model.addAttribute("workshops", workshops);
 		model.addAttribute("initialAnswerIndexCounter", 0);
 
-		List<Answer> answers = new ArrayList<Answer>();
-
-		for (ReportPart reportPart : report.getReportTemplate()
-				.getReportParts()) {
-			report.getReportPartSmileys().add("");
-			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
-				report.getQuestionGroupSmileys().add("");
-				for (Question question : questionGroup.getQuestions()) {
-
-					if (question instanceof TextQuestion) {
-
-						Answer answer = new TextAnswer();
-						answer.setQuestion(question);
-						answers.add(answer);
-
-					}
-
-					if (question instanceof MultipleChoiceQuestion) {
-						Answer answer = new MultipleChoiceAnswer();
-						answer.setQuestion(question);
-						answers.add(answer);
-
-					}
-					if (question instanceof CostListingQuestion) {
-
-						CostListingAnswer answer = new CostListingAnswer();
-						CostListingQuestion clq = (CostListingQuestion) question;
-						log.debug("costlistingQ loop, clq questions size: "
-								+ clq.getQuestions().size());
-						answer.setQuestion(question);
-						List<Float> answerList = new ArrayList<Float>();
-						for (int i = 0; i < clq.getQuestions().size(); i++)
-							answerList.add(new Float(0));
-						answer.setAnswers(answerList);
-						log.debug("answerListsize : " + answerList.size());
-						log.debug("ensimmäinen answer : " + answerList.get(0));
-						answers.add(answer);
-
-					}
-					if (question instanceof ImportantPointsQuestion) {
-						ImportantPointsAnswer answer = new ImportantPointsAnswer();
-						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
-						answer.setQuestion(question);
-						List<ImpPointsAnswerItem> answerItems = new ArrayList<ImpPointsAnswerItem>();
-						for (int i = 0; i < listQuestion.getQuestionItems()
-								.size(); i++)
-							answerItems.add(new ImpPointsAnswerItem());
-						answer.setAnswerItems(answerItems);
-						answers.add(answer);
-					}
-
-					if (!question.getSubQuestions().isEmpty()) {
-						for (Question subQuestion : question.getSubQuestions()) {
-							if (subQuestion instanceof TextQuestion) {
-								Answer answer = new TextAnswer();
-								answer.setQuestion(subQuestion);
-								answers.add(answer);
-
-							}
-
-							if (subQuestion instanceof MultipleChoiceQuestion) {
-								Answer answer = new MultipleChoiceAnswer();
-								answer.setQuestion(subQuestion);
-								answers.add(answer);
-
-							}
-						}
-					}
-
-				}
-			}
-		}
-		report.setAnswers(answers);
-
+		report.prepareAnswerList();
 		model.addAttribute("editReportPartNumber", 0);
 		return "editReport";
 	}

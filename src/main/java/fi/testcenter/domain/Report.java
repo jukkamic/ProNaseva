@@ -567,4 +567,78 @@ public class Report {
 
 	}
 
+	public void prepareAnswerList() {
+
+		List<Answer> reportAnswerList = new ArrayList<Answer>();
+
+		for (ReportPart reportPart : reportTemplate.getReportParts()) {
+			reportPartSmileys.add("");
+			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
+				questionGroupSmileys.add("");
+				for (Question question : questionGroup.getQuestions()) {
+
+					if (question instanceof TextQuestion) {
+
+						Answer answer = new TextAnswer();
+						answer.setQuestion(question);
+						reportAnswerList.add(answer);
+
+					}
+
+					if (question instanceof MultipleChoiceQuestion) {
+						Answer answer = new MultipleChoiceAnswer();
+						answer.setQuestion(question);
+						reportAnswerList.add(answer);
+
+					}
+					if (question instanceof CostListingQuestion) {
+
+						CostListingAnswer answer = new CostListingAnswer();
+						CostListingQuestion clq = (CostListingQuestion) question;
+
+						answer.setQuestion(question);
+						List<Float> answerList = new ArrayList<Float>();
+						for (int i = 0; i < clq.getQuestions().size(); i++)
+							answerList.add(new Float(0));
+						answer.setAnswers(answerList);
+
+						reportAnswerList.add(answer);
+
+					}
+					if (question instanceof ImportantPointsQuestion) {
+						ImportantPointsAnswer answer = new ImportantPointsAnswer();
+						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
+						answer.setQuestion(question);
+						List<ImpPointsAnswerItem> answerItems = new ArrayList<ImpPointsAnswerItem>();
+						for (int i = 0; i < listQuestion.getQuestionItems()
+								.size(); i++)
+							answerItems.add(new ImpPointsAnswerItem());
+						answer.setAnswerItems(answerItems);
+						reportAnswerList.add(answer);
+					}
+
+					if (!question.getSubQuestions().isEmpty()) {
+						for (Question subQuestion : question.getSubQuestions()) {
+							if (subQuestion instanceof TextQuestion) {
+								Answer answer = new TextAnswer();
+								answer.setQuestion(subQuestion);
+								reportAnswerList.add(answer);
+
+							}
+
+							if (subQuestion instanceof MultipleChoiceQuestion) {
+								Answer answer = new MultipleChoiceAnswer();
+								answer.setQuestion(subQuestion);
+								reportAnswerList.add(answer);
+
+							}
+						}
+					}
+
+				}
+			}
+		}
+		answers = reportAnswerList;
+	}
+
 }
