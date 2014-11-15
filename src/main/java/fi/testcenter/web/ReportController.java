@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -50,14 +49,13 @@ public class ReportController {
 	private UserAccountService us;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm(HttpServletRequest request, Model model) {
+	public String setupForm() {
 
 		return "start";
 	}
 
 	@RequestMapping(value = "/addNewReport", method = RequestMethod.GET)
-	public String prepareNewReportBasicInfoForm(HttpServletRequest request,
-			Model model) {
+	public String prepareNewReportBasicInfoForm(Model model) {
 
 		List<Importer> importers = is.getImporters();
 		model.addAttribute("importers", importers);
@@ -66,8 +64,8 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/addNewReport", method = RequestMethod.POST)
-	public String submitNewReportBasicInfo(HttpServletRequest request,
-			Model model, @RequestParam("importerID") Integer importerID) {
+	public String submitNewReportBasicInfo(Model model,
+			@RequestParam("importerID") Integer importerID) {
 
 		Report report = new Report();
 
@@ -90,9 +88,10 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/prepareReport")
-	public String prepareForm(HttpServletRequest request, Model model,
-			@ModelAttribute("report") Report report, BindingResult result) {
+	public String prepareForm(Model model,
+			@ModelAttribute("report") Report report) {
 
+		report.prepareAnswerList();
 		model.addAttribute("report", report);
 
 		List<Workshop> workshops = ws.getWorkshops();
@@ -100,14 +99,13 @@ public class ReportController {
 		model.addAttribute("workshops", workshops);
 		model.addAttribute("initialAnswerIndexCounter", 0);
 
-		report.prepareAnswerList();
 		model.addAttribute("editReportPartNumber", 0);
 		return "editReport";
 	}
 
 	@RequestMapping(value = "/saveReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
-			@ModelAttribute("report") Report report, BindingResult result,
+			@ModelAttribute("report") Report report,
 			@RequestParam("navigateToReportPart") Integer navigateToReportPart) {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
@@ -189,8 +187,8 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)
-	public String submitReportForApproval(HttpServletRequest request,
-			Model model, @ModelAttribute("report") Report report) {
+	public String submitReportForApproval(Model model,
+			@ModelAttribute("report") Report report) {
 
 		report.setReportStatus("AWAIT_APPROVAL");
 		model.addAttribute("report", report);
@@ -206,9 +204,9 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/saveSmileysAndHighlights", method = RequestMethod.POST)
-	public String saveSmileyAndHighlights(HttpServletRequest request,
-			Model model, @ModelAttribute("readyReport") Report formReport,
-			BindingResult result, @ModelAttribute("report") Report report) {
+	public String saveSmileyAndHighlights(Model model,
+			@ModelAttribute("readyReport") Report formReport,
+			@ModelAttribute("report") Report report) {
 
 		if (report.getReportHighlights().size() > 0) {
 
@@ -254,7 +252,7 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/printReport")
-	public String printReport(HttpServletRequest request, Model model,
+	public String printReport(Model model,
 			@ModelAttribute("report") Report report) {
 		model.addAttribute("report", report);
 
@@ -262,7 +260,7 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/printDone")
-	public String printDone(HttpServletRequest request, Model model,
+	public String printDone(Model model,
 			@ModelAttribute("report") ReportTemplate report) {
 
 		model.addAttribute("report", report);
@@ -270,7 +268,7 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "editReport")
-	public String editReport(HttpServletRequest request, Model model,
+	public String editReport(Model model,
 			@ModelAttribute("report") Report report) {
 
 		List<Workshop> workshops = ws.getWorkshops();
@@ -287,8 +285,7 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "deleteReport")
-	public String editReport(HttpServletRequest request,
-			@ModelAttribute("report") Report report) {
+	public String editReport(@ModelAttribute("report") Report report) {
 
 		rs.deleteReport(report);
 
@@ -297,8 +294,7 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "approveReport")
-	public String approveReport(HttpServletRequest request,
-			@ModelAttribute("report") Report report) {
+	public String approveReport(@ModelAttribute("report") Report report) {
 
 		report.setReportStatus("APPROVED");
 		rs.saveReport(report);
@@ -308,7 +304,7 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "editSmileys")
-	public String approveReport(HttpServletRequest request, Model model,
+	public String approveReport(Model model,
 			@ModelAttribute("report") Report report) {
 
 		model.addAttribute("editSmileys", true);
@@ -349,13 +345,12 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/admin/reportTemplates", method = RequestMethod.GET)
-	public String reportTemplates(HttpServletRequest request, Model model) {
+	public String reportTemplates() {
 		return "reportTemplates";
 	}
 
 	@RequestMapping(value = "/admin/saveReportTemplate", method = RequestMethod.GET)
-	public String saveTemplate(HttpServletRequest request, Model model,
-			@RequestParam("name") String reportName) {
+	public String saveTemplate(@RequestParam("name") String reportName) {
 		rs.saveNewReportTemplate(reportName);
 		return "redirect:/";
 	}

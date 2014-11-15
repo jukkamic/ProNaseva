@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,8 +53,7 @@ public class SearchController {
 	}
 
 	@RequestMapping(value = "/showAllUserOwnReports", method = RequestMethod.GET)
-	public String showAllUserOwnReports(HttpServletRequest request,
-			Model model,
+	public String showAllUserOwnReports(Model model,
 			@ModelAttribute("reportSearchList") List<Report> reportSearchList) {
 
 		// Nollataan searchReportCriteria jotta se ei näytä vanhoja hakuehtoja
@@ -65,7 +63,7 @@ public class SearchController {
 	}
 
 	@RequestMapping(value = "/searchReport", method = RequestMethod.GET)
-	public String setupSearchForm(HttpServletRequest request, Model model) {
+	public String setupSearchForm(Model model) {
 
 		model.addAttribute("searchReportCriteria", new SearchReportCriteria());
 
@@ -77,10 +75,8 @@ public class SearchController {
 
 	@RequestMapping(value = "/searchReport", method = RequestMethod.POST)
 	public String processSearchForm(
-			HttpServletRequest request,
 			Model model,
-			@ModelAttribute("searchReportCriteria") SearchReportCriteria searchReportCriteria,
-			BindingResult result) {
+			@ModelAttribute("searchReportCriteria") SearchReportCriteria searchReportCriteria) {
 
 		searchReportCriteria.setCriteriaSet(true);
 		model.addAttribute("reportSearchList",
@@ -91,7 +87,7 @@ public class SearchController {
 	}
 
 	@RequestMapping(value = "/showSearchResult", method = RequestMethod.GET)
-	public String paginateSearchResult(HttpServletRequest request, Model model,
+	public String paginateSearchResult(Model model,
 			@ModelAttribute("reportSearchList") List<Report> reportSearchList,
 			@RequestParam("page") Integer page) {
 
@@ -130,7 +126,6 @@ public class SearchController {
 
 	@RequestMapping(value = "/modifySearch", method = RequestMethod.GET)
 	public String showAllUserOwnReports(
-			HttpServletRequest request,
 			Model model,
 			@ModelAttribute("searchReportCriteria") SearchReportCriteria searchReportCriteria) {
 

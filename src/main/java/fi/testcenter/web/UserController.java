@@ -3,8 +3,6 @@ package fi.testcenter.web;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +28,7 @@ public class UserController {
 	Logger log = Logger.getLogger("fi.testcenter.web.UserController");
 
 	@RequestMapping(value = "/admin/showUserList", method = RequestMethod.GET)
-	public String showUserAdminPage(HttpServletRequest request, Model model,
+	public String showUserAdminPage(Model model,
 			@RequestParam("page") Integer page) {
 
 		List<User> userList = us.getActiveUserList();
@@ -69,7 +67,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/showUser", method = RequestMethod.GET)
-	public String processEditUserForm(HttpServletRequest request, Model model,
+	public String processEditUserForm(Model model,
 			@RequestParam("id") Integer id) {
 
 		model.addAttribute("user", us.getUserById(id));
@@ -78,7 +76,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/newUser", method = RequestMethod.GET)
-	public String prepareNewUserForm(HttpServletRequest request, Model model) {
+	public String prepareNewUserForm(Model model) {
 
 		LinkedHashMap<String, String> roles = new LinkedHashMap<String, String>();
 		roles.put("Testaaja", "ROLE_TESTER");
@@ -95,8 +93,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/newUser", method = RequestMethod.POST)
-	public String processNewUserForm(HttpServletRequest request, Model model,
-			@ModelAttribute("user") User user,
+	public String processNewUserForm(@ModelAttribute("user") User user,
 			@RequestParam("confirmPassword") String confirmPassword,
 			BindingResult result) {
 
@@ -107,7 +104,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/editUser", method = RequestMethod.GET)
-	public String prepareEditUserForm(HttpServletRequest request, Model model,
+	public String prepareEditUserForm(Model model,
 			@RequestParam("id") Integer id) {
 
 		LinkedHashMap<String, String> roles = new LinkedHashMap<String, String>();
@@ -123,11 +120,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)
-	public String deleteUser(HttpServletRequest request, Model model,
-			@ModelAttribute("user") User user,
+	public String deleteUser(Model model, @ModelAttribute("user") User user,
 			@RequestParam("confirmPassword") String confirmPassword,
-			@RequestParam("editPassword") boolean editPassword,
-			BindingResult result) {
+			@RequestParam("editPassword") boolean editPassword) {
 
 		if (editPassword == true) {
 			model.addAttribute("editPassword", true);
@@ -143,8 +138,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/deleteUser", method = RequestMethod.GET)
-	public String processEditUserForm(HttpServletRequest request, Model model,
-			@ModelAttribute("user") User user) {
+	public String processEditUserForm(@ModelAttribute("user") User user) {
 
 		us.deleteUser(user);
 
