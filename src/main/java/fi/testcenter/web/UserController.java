@@ -38,10 +38,8 @@ public class UserController {
 		int userListStart;
 		int userListEnd;
 
-		log.debug("count : " + userList.size());
 		int pageCount = (int) Math.ceil(userList.size() / 10.0);
 
-		log.debug("pagecount : " + pageCount);
 		if (userList.size() == 0)
 			pageCount = 0;
 

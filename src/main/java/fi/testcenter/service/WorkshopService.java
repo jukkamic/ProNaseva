@@ -72,7 +72,6 @@ public class WorkshopService {
 		Long reportCount = new Long(0);
 		try {
 			reportCount = rs.findReportsByWorkshopId(workshop.getId());
-			log.debug("report count" + reportCount);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

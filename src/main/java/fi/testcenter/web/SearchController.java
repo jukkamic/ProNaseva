@@ -46,7 +46,8 @@ public class SearchController {
 				rs.findReportsByUserId(us.findLoginUser().getId()));
 
 		if (request.isUserInRole("ROLE_ADMIN")) {
-			model.addAttribute("awaitApproval", rs.findReportsAwaitingApproval());
+			model.addAttribute("awaitApproval",
+					rs.findReportsAwaitingApproval());
 		}
 
 		return "userOwnReports";
@@ -96,10 +97,8 @@ public class SearchController {
 		int reportListStart;
 		int reportListEnd;
 
-		log.debug("count : " + reportSearchList.size());
 		int pageCount = (int) Math.ceil(reportSearchList.size() / 10.0);
 
-		log.debug("pagecount : " + pageCount);
 		if (reportSearchList.size() == 0)
 			pageCount = 0;
 

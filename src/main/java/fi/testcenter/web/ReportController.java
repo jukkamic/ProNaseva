@@ -313,7 +313,6 @@ public class ReportController {
 
 		Report selectedReport = rs.getReportById(id.longValue());
 
-		log.debug("reportcontroller");
 		model.addAttribute("report", selectedReport);
 		model.addAttribute("edit", "TRUE");
 		model.addAttribute("readyReport", selectedReport);

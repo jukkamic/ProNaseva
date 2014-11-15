@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class ImpPointsAnswerItem {
+public class ImportantPointsItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -16,7 +16,7 @@ public class ImpPointsAnswerItem {
 	int importance;
 	int score;
 
-	public ImpPointsAnswerItem() {
+	public ImportantPointsItem() {
 		this.importance = -1;
 		this.score = -1;
 	}

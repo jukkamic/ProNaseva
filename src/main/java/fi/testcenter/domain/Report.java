@@ -620,10 +620,10 @@ public class Report {
 						ImportantPointsAnswer answer = new ImportantPointsAnswer();
 						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
 						answer.setQuestion(question);
-						List<ImpPointsAnswerItem> answerItems = new ArrayList<ImpPointsAnswerItem>();
+						List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
 						for (int i = 0; i < listQuestion.getQuestionItems()
 								.size(); i++)
-							answerItems.add(new ImpPointsAnswerItem());
+							answerItems.add(new ImportantPointsItem());
 						answer.setAnswerItems(answerItems);
 						reportAnswerList.add(answer);
 					}

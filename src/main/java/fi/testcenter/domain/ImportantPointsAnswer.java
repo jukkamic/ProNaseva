@@ -13,13 +13,13 @@ public class ImportantPointsAnswer extends Answer {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@OrderColumn(name = "ORDERINDEX")
-	List<ImpPointsAnswerItem> answerItems;
+	List<ImportantPointsItem> answerItems;
 
-	public List<ImpPointsAnswerItem> getAnswerItems() {
+	public List<ImportantPointsItem> getAnswerItems() {
 		return answerItems;
 	}
 
-	public void setAnswerItems(List<ImpPointsAnswerItem> answerItems) {
+	public void setAnswerItems(List<ImportantPointsItem> answerItems) {
 		this.answerItems = answerItems;
 	}
 

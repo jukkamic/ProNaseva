@@ -132,15 +132,13 @@ public class ReportService {
 				Long.class);
 		Long result = (Long) query.setParameter("workshopId", id)
 				.getSingleResult();
-		log.debug("Haun tulos" + result);
-		// return (Integer) query.setParameter("workshopId",
-		// id).getSingleResult();
 
 		return result;
 
 	}
 
-	public List<Report> findReportsBySearchCriteria(SearchReportCriteria searchReportCriteria) {
+	public List<Report> findReportsBySearchCriteria(
+			SearchReportCriteria searchReportCriteria) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Object[]> q = cb.createQuery(Object[].class);
@@ -285,7 +283,6 @@ public class ReportService {
 	}
 
 	public void deleteReportHighlights(List<ReportHighlight> highlights) {
-		log.debug("Report Service eka id " + highlights.get(0).getId());
 		rhls.deleteInBatch(highlights);
 	}
 
@@ -294,7 +291,6 @@ public class ReportService {
 		ReportTemplate template = new ReportTemplate();
 		try {
 			template = rtr.save(rts.findReportTemplate(name));
-			log.debug("Tallennettu raporttipohja: " + template.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
