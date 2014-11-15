@@ -35,7 +35,7 @@ public class Report {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToOne(fetch = FetchType.EAGER)
 	private ReportTemplate reportTemplate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

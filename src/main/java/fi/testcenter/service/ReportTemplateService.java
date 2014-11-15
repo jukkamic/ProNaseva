@@ -16,15 +16,21 @@ import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.domain.TextQuestion;
 
 @Service
-public class MockReportTemplate {
+public class ReportTemplateService {
 
-	public ReportTemplate getReportTemplate(String template) {
-		return getReportTemplateVolvo();
+	public ReportTemplate getReportTemplate(String name) {
+		switch (name) {
+		case "Volvo":
+			return getReportTemplateVolvo();
+		}
+
+		return null;
 	}
 
 	private ReportTemplate getReportTemplateVolvo() {
 
-		ReportTemplate report = new ReportTemplate();
+		ReportTemplate reportTemplate = new ReportTemplate();
+		reportTemplate.setTemplateName("Volvo");
 		ArrayList<ReportPart> reportParts = new ArrayList<ReportPart>();
 
 		ReportPart reportPart1 = new ReportPart();
@@ -1957,8 +1963,8 @@ public class MockReportTemplate {
 		reportPart6.setQuestionGroups(questionGroups6);
 		reportParts.add(reportPart6);
 
-		report.setReportParts(reportParts);
+		reportTemplate.setReportParts(reportParts);
 
-		return report;
+		return reportTemplate;
 	}
 }

@@ -72,8 +72,7 @@ public class ReportController {
 		Report report = new Report();
 
 		try {
-			report.setReportTemplate(rs.saveReportTemplate(rs
-					.getReportTemplate()));
+			report.setReportTemplate(rs.findReportTemplateByName("Volvo"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -347,6 +346,18 @@ public class ReportController {
 
 		return "showReport";
 
+	}
+
+	@RequestMapping(value = "/admin/reportTemplates", method = RequestMethod.GET)
+	public String reportTemplates(HttpServletRequest request, Model model) {
+		return "reportTemplates";
+	}
+
+	@RequestMapping(value = "/admin/saveReportTemplate", method = RequestMethod.GET)
+	public String saveTemplate(HttpServletRequest request, Model model,
+			@RequestParam("name") String reportName) {
+		rs.saveNewReportTemplate(reportName);
+		return "redirect:/";
 	}
 
 }
