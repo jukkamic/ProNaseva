@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
+import fi.testcenter.service.ReportTemplateService;
 import fi.testcenter.service.WorkshopService;
 
 @SessionAttributes(value = { "workshop", "importer" })
@@ -26,6 +27,9 @@ public class ImporterWorkshopController {
 
 	@Autowired
 	private ImporterService is;
+
+	@Autowired
+	private ReportTemplateService rts;
 
 	@Autowired
 	private WorkshopService ws;
@@ -43,6 +47,8 @@ public class ImporterWorkshopController {
 	public String prepareNewImporterForm(Model model) {
 
 		model.addAttribute("importer", new Importer());
+		model.addAttribute("reportTemplateList",
+				rts.findCurrentReportTemplates());
 
 		return "editImporter";
 	}
@@ -151,6 +157,8 @@ public class ImporterWorkshopController {
 
 		model.addAttribute("importer", is.finImporterById(id.longValue()));
 		model.addAttribute("edit", "TRUE");
+		model.addAttribute("reportTemplateList",
+				rts.findCurrentReportTemplates());
 
 		return "editImporter";
 	}

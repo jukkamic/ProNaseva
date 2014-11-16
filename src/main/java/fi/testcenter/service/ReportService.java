@@ -26,7 +26,6 @@ import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.repository.ReportRepository;
-import fi.testcenter.repository.ReportTemplateRepository;
 import fi.testcenter.repository.WorkshopRepository;
 import fi.testcenter.web.SearchReportCriteria;
 
@@ -41,9 +40,6 @@ public class ReportService {
 
 	@Autowired
 	private WorkshopRepository wr;
-
-	@Autowired
-	private ReportTemplateRepository rtr;
 
 	@Autowired
 	private ImporterRepository ir;
@@ -284,33 +280,6 @@ public class ReportService {
 
 	public void deleteReportHighlights(List<ReportHighlight> highlights) {
 		rhls.deleteInBatch(highlights);
-	}
-
-	@Transactional
-	public void saveNewReportTemplate(String name) {
-		ReportTemplate template = new ReportTemplate();
-		try {
-			template = rtr.save(rts.findReportTemplate(name));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@Transactional
-	public ReportTemplate findReportTemplateByName(String name) {
-		ReportTemplate template = new ReportTemplate();
-		try {
-			TypedQuery query = em
-					.createQuery(
-							"SELECT rt FROM ReportTemplate rt WHERE rt.templateName = :name",
-							ReportTemplate.class);
-			query.setParameter("name", name);
-			template = (ReportTemplate) query.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return template;
 	}
 
 }

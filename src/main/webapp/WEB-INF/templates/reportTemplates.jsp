@@ -19,6 +19,35 @@
 			<br>
 			<br>
 
-	<a href="/ProNaseva/admin/saveReportTemplate?name=Volvo" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Volvo-raporttipohja <br>kantaan</a>
+	<a href="/ProNaseva/admin/saveReportTemplate?name=Volvo Auto raporttipohja" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Volvo-raporttipohja <br>kantaan</a>
+	<br><br>
+	<a href="/ProNaseva/admin/saveReportTemplate?name=Autoasi raporttipohja" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Autoasi-raporttipohja <br>kantaan</a>
+	<br><br>
+	<c:if test="${not empty unusedTemplates}">	
+			<table class="table table-striped">
+				<tr>
+					<th></th>
+					
+					<th>
+						Raporttipohja
+					</th>
+				</tr>
+				
+				<c:forEach var="reportTemplate"items="${unusedTemplates}">
+						<tr>
+							<td><a class="btn btn-default" style="text-decoration: none;" href="/ProNaseva/admin/deleteReportTemplate?id=${reportTemplate.id}">
+								Poista</a>
+							</td>
+							<td>
+								${reportTemplate.templateName}
+							</td>
+						</tr>
+				</c:forEach>
+			</table>
+		</c:if>
+			
 
+
+
+</div>
 	<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />

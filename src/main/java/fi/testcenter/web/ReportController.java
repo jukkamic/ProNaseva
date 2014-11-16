@@ -25,6 +25,7 @@ import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
+import fi.testcenter.service.ReportTemplateService;
 import fi.testcenter.service.UserAccountService;
 import fi.testcenter.service.WorkshopService;
 
@@ -41,6 +42,9 @@ public class ReportController {
 
 	@Autowired
 	private WorkshopService ws;
+
+	@Autowired
+	private ReportTemplateService rts;
 
 	@Autowired
 	private ReportService rs;
@@ -69,16 +73,16 @@ public class ReportController {
 
 		Report report = new Report();
 
+		Importer importer = is.finImporterById(importerID.longValue());
+
 		try {
-			report.setReportTemplate(rs.findReportTemplateByName("Volvo"));
+			report.setReportTemplate(rts.findReportTemplateByName(importer
+					.getReportTemplateName()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		report.setUser(us.findLoginUser());
-
-		Importer importer = is.finImporterById(importerID.longValue());
-
 		report.setImporter(importer);
 		report.setImporterId(importerID.longValue());
 
@@ -335,14 +339,21 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/admin/reportTemplates", method = RequestMethod.GET)
-	public String reportTemplates() {
+	public String reportTemplates(Model model) {
+		model.addAttribute("unusedTemplates", rts.findUnusedReportTemplates());
 		return "reportTemplates";
 	}
 
 	@RequestMapping(value = "/admin/saveReportTemplate", method = RequestMethod.GET)
-	public String saveTemplate(@RequestParam("name") String reportName) {
-		rs.saveNewReportTemplate(reportName);
-		return "redirect:/";
+	public String saveReportTemplate(@RequestParam("name") String reportName) {
+		rts.saveNewReportTemplate(reportName);
+		return "redirect:/admin/reportTemplates";
+	}
+
+	@RequestMapping(value = "/admin/deleteReportTemplate", method = RequestMethod.GET)
+	public String deleteReportTemplate(@RequestParam("id") Integer id) {
+		rts.deleteReportTemplateById(id.longValue());
+		return "redirect:/admin/reportTemplates";
 	}
 
 }

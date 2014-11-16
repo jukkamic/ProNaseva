@@ -18,6 +18,7 @@ public class Importer {
 	private String zipCode;
 	private String email;
 	private String telNum;
+	private String reportTemplateName;
 
 	private boolean active;
 
@@ -92,6 +93,14 @@ public class Importer {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public String getReportTemplateName() {
+		return reportTemplateName;
+	}
+
+	public void setReportTemplateName(String reportTemplateName) {
+		this.reportTemplateName = reportTemplateName;
 	}
 
 }

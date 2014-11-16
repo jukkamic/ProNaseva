@@ -26,6 +26,7 @@ public class ReportTemplate {
 	@OrderColumn(name = "ORDERINDEX")
 	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
 	private String templateName;
+	private boolean current;
 
 	public Long getId() {
 		return id;
@@ -49,6 +50,14 @@ public class ReportTemplate {
 
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
+	}
+
+	public boolean isCurrent() {
+		return current;
+	}
+
+	public void setCurrent(boolean current) {
+		this.current = current;
 	}
 
 }

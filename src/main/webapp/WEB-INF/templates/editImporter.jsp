@@ -48,7 +48,32 @@
 				
 				<label for="telNum">Puhelinnumero: </label>
 				<br>
-				<input type="text" style="width: 15em; max-width: 100%" id="telNum" name="telNum" value="${importer.telNum}"/> 
+				<input type="text" style="width: 15em; max-width: 100%" id="telNum" name="telNum" value="${importer.telNum}"/>
+				<br><br>
+				<label for="template">Raporttipohja: </label>
+				<sf:select style="width: auto; max-width: 100%" id="role" path="reportTemplateName"
+					class="form-control">
+					<c:if test="${importer.reportTemplateName == null or importer.reportTemplateName == '' }">
+						<option value='null'>-- Valitse --</option>
+					</c:if>
+					<c:if test="${importer.reportTemplateName != null and importer.reportTemplateName != '' }">
+						<option value='null'>-- Valitse --</option>
+					</c:if> 
+					<c:forEach var="template" items="${reportTemplateList}">
+					
+						<c:choose>
+							<c:when test="${importer.reportTemplateName == template.templateName}">
+								<option value="${template.templateName}" selected="selected">${template.templateName}</option>
+							</c:when>
+							<c:otherwise>
+								<option value="${template.templateName}">${template.templateName}</option>
+							</c:otherwise>
+						</c:choose>
+						
+					</c:forEach>
+				</sf:select>
+				<br><br>
+				 
 				<br><br><br>
 		
 				<button class="btn btn-large btn-primary" action="submit"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Tallenna</button>
@@ -58,6 +83,7 @@
 					<a href="#" class="btn btn-large btn btn-danger deleteImporter"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 				</c:if>
 				
+				<br>				
 			</sf:form>
 		</div>
 		<br>
