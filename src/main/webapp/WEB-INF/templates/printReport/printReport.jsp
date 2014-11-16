@@ -18,7 +18,8 @@ lisäosana PDFCreator -->
 	   			<td style="width:595pt; height: 10em; margin-top:0; padding-top:0;">
 							<div style="float: right; width: 70%; border: bottom; height: 5em;">
 								<div style="text-align:left; margin: 0em 0em 0em 0em; padding-top:0;">
-									<h2 style="margin-top:0; padding-top:0; padding-bottom:0; margin-bottom:0;">Test Center Tiililä Oy</h2>
+									<h2 style="margin-top:0; padding-top:0; padding-bottom:1.5em; margin-bottom:0;">${report.importer.name}</h2>
+									<h2 style="margin-top:0; padding-top:0; padding-bottom:1.5em; margin-bottom:0;">${report.workshop.name}</h2>
 								</div>
 							</div>
 				</td>
@@ -106,14 +107,15 @@ lisäosana PDFCreator -->
 				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.MultipleChoiceQuestion'}">
 			
 					<div class="noPageBreak">
-					
-					
+					<div class="multipleChoice">					
 					<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 					<c:if test="${report.answers[answerIndexCounter].showScore == true}">
-					<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
+						<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
 					</c:if>
+					
 					<c:choose>
 					<c:when test="${question.multipleSelectionsAllowed == true}">
+					
 						<table>
 							<c:forEach var="option" items="${question.options}">
 							<tr>
@@ -126,61 +128,62 @@ lisäosana PDFCreator -->
 								
 								<c:choose>
 									<c:when test="${selected == 'false'}">
-											<td style="padding-left: 1.5em;">
-											&#9744;
-											&nbsp;
+											<td>
+											<p>&#9744; &nbsp;</p>
+											
 											</td>
 									</c:when>
 									<c:otherwise>
-											<td	style="padding-left: 1.5em;">
-											&#9745;
-											&nbsp;											
+											<td>
+											<p>&#9745; &nbsp;</p>
+																					
 											</td>
 									</c:otherwise>
 								</c:choose>
 									
 									
 							<td style="padding-right: 2em;">	
-								${option.option}
+								<p>${option.option}</p>
 							</td>
 						</tr>
 					</c:forEach>
 				</table>
+				
+				
 			</c:when>
-						
-
-
-					<c:otherwise>
-					<table>
+				<c:otherwise>
+					
+					<table class="multipleChoice">
+					
 						<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
-							
 								<tr>
-														
-									<c:choose>
+								<c:choose>
 										<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
-											<td	style="padding-left: 1.5em;">
-											&#9745;
-											&nbsp;
-											
+											<td>
+											<p>&#9745; &nbsp;</p>
+										
 											</td>
 										</c:when>
 										<c:otherwise>
-											<td style="padding-left: 1.5em;">
-											&#9744;
-											&nbsp;
+											<td>
+											<p>&#9744; &nbsp;</p>
+											
 											</td>
 										</c:otherwise>
 									</c:choose>
 									
 									
-									<td style="padding-right: 2em;">	
-										${option.option}
+									<td>	
+										<p>${option.option}</p>
 									</td>
 								</tr>
 						</c:forEach> 
+						
 						</table>
+					
 						</c:otherwise>
 						</c:choose>
+					</div>
 											
 						</div> <!-- Page break ok -->
 						<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
@@ -192,7 +195,6 @@ lisäosana PDFCreator -->
 						</c:if>
 						
 				</c:if>
-
 									
 	<!-- Text field question -->
 				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.TextQuestion'}">
@@ -208,25 +210,37 @@ lisäosana PDFCreator -->
 											
 			<!-- Cost listing question -->
 				<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
+				<div class="costListing">
 					<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.questionTopic}</h3>
 												
+					<table>
 					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
-						<div class="noPageBreak">
-						<h4 style="margin: 0 0 0 0;">${listQuestion}</h4>
-						
-						<p style="font-size: 1.2em; margin: 0.5em 0 0 0;">${report.answers[answerIndexCounter].answers[costListingAnswerCounter.index]} €</p>
-						<br>
-						</div>
+						<tr>
+						<td style="width: 70%">
+						<p>${listQuestion}</p>
+						</td>
+						<td style="width: 30%; text-align: right;">
+						<p>${report.answers[answerIndexCounter].answers[costListingAnswerCounter.index]} €</p>
+						</td>
+						</tr>
 					</c:forEach>
-							<div class="noPageBreak">
-							<h4 style="margin: 0 0 0 0;"><b>${question.total}</b></h4>
-							<p style="font-size: 1.2em; margin: 0 0 0 0;">${report.answers[answerIndexCounter].total} €</p>
-							</div>
-						<br>
+					
+					<tr>
+						<td style="width: 70%">
+							<p><b>${question.total}</b></p>
+						</td>
+						<td style="width: 30%; text-align: right;">
+							<p>${report.answers[answerIndexCounter].total} €</p>
+						</td>
+					</tr>
+							
+					</table>
+				</div>
 				</c:if>
 										
 		<!-- ListAndScoreImportantPoints -->
 					<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
+					<div class="importantPoints">
 						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 						<br>
 						
@@ -249,22 +263,22 @@ lisäosana PDFCreator -->
 									<tr>
 										<td>
 											<c:if test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance != -1}"> 
-													<h3 style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </h3>
+													<p> style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </p>
 										</c:if>
 										</td>
 										<td>							
-											<h3 style="margin: 0 0 0 0; vertical-align: top">${questionItem}</h3>
+											<p>${questionItem}</p>
 										</td>
 										<td>
 											<c:if test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score != -1}">
-													<h3 style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score}</h3>
+													<p>${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score}</p>
 											</c:if>
 										</td>
 									</tr>
 									</c:forEach>
 							</tbody>
 								</table>
-										
+							</div>			
 				</c:if>	
 				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 	

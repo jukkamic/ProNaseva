@@ -16,38 +16,39 @@
 	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.MultipleChoiceQuestion'}">
 
 	<div class="noPageBreak">
+	<div class="multipleChoice">
 	<h3>${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
 	<c:if test="${report.answers[answerIndexCounter].showScore == true}">
 		<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
 	</c:if>
-						<table>
-							<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
+	
+		<table>
+			<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
 
-								<tr>
-								<c:choose>
-										<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
-											<td>
-												&#9745;
-												&nbsp;
-										
-											</td>
-										</c:when>
-										<c:otherwise>
-											<td>
-												&#9744;
-												&nbsp;
-											</td>
-										</c:otherwise>
-										</c:choose>
-										
-										
-										<td style="padding-right: 2em;">	
-											${option.option}
-										</td>
-									</tr>
-							</c:forEach> 
-							</table>
-			
+				<tr>
+				<c:choose>
+						<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
+							<td> 
+								<p>&#9745; &nbsp;</p>
+						
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td>
+								<p>&#9744; &nbsp;</p>
+							</td>
+						</c:otherwise>
+						</c:choose>
+						
+						
+						<td>	
+							<p>${option.option}</p>
+						</td>
+					</tr>
+			</c:forEach> 
+			</table>
+		</div>
+
 	</div>
 	
 		<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />

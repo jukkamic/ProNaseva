@@ -45,22 +45,162 @@ thead { display: table-header-group;
 }
 
 
-h3 {
+h3, h4, p {
+	padding: 0;
+	margin: .5 0 .5 0;
+		
+}
+
+table.multipleChoice {
 	
-	padding-top: 1em; 
+	padding: 0;
+	margin: 0;
 	
 }
 
-h4 {
-	padding-left: 1.5em;
-	padding-right: 2em; 
-	padding-top: 0.7em;
+.multipleChoice p {
+	padding: 0;
+	margin: 0;
+	margin-left: 1.5em;
+	
 }
 
-p {
+.multipleChoice h3, h4 {
+	padding: 0;
+	margin: .5em 2em .5em 0;
+	
+}
 
-	padding-left: 1.5em;
-	padding-right: 2em;
+
+.multipleChoice td {
+	padding: 0;
+	margin: 0;
+	
+}
+
+.multipleChoice th {
+	padding: 0;
+	margin: 0;
+	
+}
+
+
+
+
+
+
+
+
+table.costListing {
+	
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	text-align: top;
+	border-spacing: 0;
+	border-collapse: collapse;
+	
+}
+
+.costListing p {
+	border-collapse: collapse;
+	padding: .5em 0 .5em 0;
+	margin: 0;
+	vertical-align: top;
+	text-align: top;
+}
+
+.costListing h3, h4 {
+	padding: 0;
+	margin: .5em 2em .5em 0;
+	vertical-align: top;
+	text-align: top;
+	
+}
+
+
+.costListing td {
+	border-top: 2px solid black;
+	
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	text-align: top;
+	
+}
+
+.costListing tr {
+	
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	text-align: top;
+	
+}
+
+
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+table.importantPoints {
+	
+	border-collapse: collapse;
+	
+	padding: 0;
+	margin: 0;
+	
+}
+
+.importantPoints p {
+	border-collapse: collapse;
+	padding: .5em 0 .5em 0;
+	margin: 0;
+	border-spacing: 0;
+	margin-left: 1.5em;
+	vertical-align: top;
+	text-align: center;
+	
+}
+
+.importantPoints h3, h4 {
+	border-collapse: collapse;
+	padding: 0;
+	border-spacing: 0;
+	margin: .5em 2em .5em 0;
+	vertical-align: top;
+	text-align: top;
+	
+}
+
+
+.importantPoints td {
+	border-top: 2px solid black;
+	
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	text-align: top;
+	
+}
+
+.importantPoints th {
+	
+	border-spacing: 0;
+	border-collapse: collapse;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	text-align: top;
+	
+}
+
 }
 
 @page {
@@ -68,6 +208,7 @@ size: A4;
 margin: 0;
 
 }
+
 .newpage {
   page-break-before: always;
 

@@ -43,7 +43,7 @@
 					</c:forEach>
 				</sf:select>
 			<br>
-			<label for="date"><h4>Raportin päivämäärä: </h4></label>
+			<label for="date"><h4>Tarkastuksen päivämäärä: </h4></label>
 			<sf:input path="reportDate" name="date" class="datepicker" id="date" value="${report.reportDate}"/>
 			<br>
 			<h4>			
