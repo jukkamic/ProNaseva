@@ -55,7 +55,7 @@ public class ReportService {
 
 	@Transactional(readOnly = true)
 	public ReportTemplate getReportTemplate() {
-		return rts.findReportTemplate("Volvo");
+		return rts.createReportTemplate("Volvo");
 	}
 
 	@Transactional
