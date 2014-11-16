@@ -340,11 +340,6 @@ public class Report {
 
 						reportHighlightList.add(highlight);
 
-						System.out
-								.println("Highlight-kysymyslooppi, indeksi : "
-										+ answerIndexCounter
-										+ "Kysymysryhmä + " + questionGroup);
-
 					}
 					answerIndexCounter++;
 					int subQuestionCounter = 1;
