@@ -29,7 +29,7 @@ public class ReportTemplateService {
 	@Autowired
 	private ImporterRepository ir;
 
-	public ReportTemplate findReportTemplate(String name) {
+	public ReportTemplate createReportTemplate(String name) {
 		switch (name) {
 		case "Volvo Auto raporttipohja":
 			return VolvoReportTemplate.getReportTemplate();
@@ -47,9 +47,22 @@ public class ReportTemplateService {
 
 	@Transactional
 	public void saveNewReportTemplate(String name) {
-		ReportTemplate template = new ReportTemplate();
+
 		try {
-			template = rtr.save(findReportTemplate(name));
+			ReportTemplate savedTemplate = rtr.save(createReportTemplate(name));
+			List<ReportTemplate> reportTemplateList = em
+					.createQuery(
+							"SELECT rt FROM ReportTemplate rt where rt.templateName = :templateName",
+							ReportTemplate.class)
+					.setParameter("templateName", name).getResultList();
+			for (ReportTemplate oldTemplate : reportTemplateList) {
+				if (oldTemplate.getId() != savedTemplate.getId()) {
+					oldTemplate.setCurrent(false);
+					rtr.save(oldTemplate);
+				}
+
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,7 +75,7 @@ public class ReportTemplateService {
 		try {
 			TypedQuery query = em
 					.createQuery(
-							"SELECT rt FROM ReportTemplate rt WHERE rt.templateName = :name",
+							"SELECT rt FROM ReportTemplate rt WHERE rt.templateName = :name AND rt.current = true",
 							ReportTemplate.class);
 			query.setParameter("name", name);
 			template = (ReportTemplate) query.getSingleResult();

@@ -338,22 +338,4 @@ public class ReportController {
 
 	}
 
-	@RequestMapping(value = "/admin/reportTemplates", method = RequestMethod.GET)
-	public String reportTemplates(Model model) {
-		model.addAttribute("unusedTemplates", rts.findUnusedReportTemplates());
-		return "reportTemplates";
-	}
-
-	@RequestMapping(value = "/admin/saveReportTemplate", method = RequestMethod.GET)
-	public String saveReportTemplate(@RequestParam("name") String reportName) {
-		rts.saveNewReportTemplate(reportName);
-		return "redirect:/admin/reportTemplates";
-	}
-
-	@RequestMapping(value = "/admin/deleteReportTemplate", method = RequestMethod.GET)
-	public String deleteReportTemplate(@RequestParam("id") Integer id) {
-		rts.deleteReportTemplateById(id.longValue());
-		return "redirect:/admin/reportTemplates";
-	}
-
 }
