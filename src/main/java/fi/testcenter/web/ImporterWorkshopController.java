@@ -40,7 +40,7 @@ public class ImporterWorkshopController {
 		List<Importer> importers = is.getImporters();
 		model.addAttribute("importers", importers);
 
-		return "importerAdmin";
+		return "userWorkshopImporter/importerAdmin";
 	}
 
 	@RequestMapping(value = "/newImporter", method = RequestMethod.GET)
@@ -50,7 +50,7 @@ public class ImporterWorkshopController {
 		model.addAttribute("reportTemplateList",
 				rts.findCurrentReportTemplates());
 
-		return "editImporter";
+		return "userWorkshopImporter/editImporter";
 	}
 
 	@RequestMapping(value = "/newImporter", method = RequestMethod.POST)
@@ -96,7 +96,7 @@ public class ImporterWorkshopController {
 		model.addAttribute("workshopListStart", workshopListStart);
 		model.addAttribute("workshopListEnd", workshopListEnd);
 
-		return "showWorkshopList";
+		return "userWorkshopImporter/showWorkshopList";
 	}
 
 	@RequestMapping(value = "/newWorkshop", method = RequestMethod.GET)
@@ -104,7 +104,7 @@ public class ImporterWorkshopController {
 
 		model.addAttribute("workshop", new Workshop());
 
-		return "editWorkshop";
+		return "userWorkshopImporter/editWorkshop";
 	}
 
 	@RequestMapping(value = "/newWorkshop", method = RequestMethod.POST)
@@ -121,7 +121,7 @@ public class ImporterWorkshopController {
 
 		model.addAttribute("workshop", ws.findWorkshopById(id.longValue()));
 
-		return "showWorkshop";
+		return "userWorkshopImporter/showWorkshop";
 	}
 
 	@RequestMapping(value = "/admin/editWorkshop", method = RequestMethod.GET)
@@ -132,7 +132,7 @@ public class ImporterWorkshopController {
 		model.addAttribute("workshop", workshop);
 		model.addAttribute("edit", "TRUE");
 
-		return "editWorkshop";
+		return "userWorkshopImporter/editWorkshop";
 	}
 
 	@RequestMapping(value = "/admin/editWorkshop", method = RequestMethod.POST)
@@ -160,7 +160,7 @@ public class ImporterWorkshopController {
 		model.addAttribute("reportTemplateList",
 				rts.findCurrentReportTemplates());
 
-		return "editImporter";
+		return "userWorkshopImporter/editImporter";
 	}
 
 	@RequestMapping(value = "/editImporter", method = RequestMethod.POST)

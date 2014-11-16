@@ -6,17 +6,17 @@
 
 	<persistence-unit name="ProNasevaPersistence" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>fi.testcenter.domain.ReportTemplate</class>
+		<class>fi.testcenter.domain.report.ReportTemplate</class>
 		<class>fi.testcenter.domain.Importer</class>
 		<class>fi.testcenter.domain.Workshop</class>
-		<class>fi.testcenter.domain.QuestionGroup</class>
-		<class>fi.testcenter.domain.Question</class>
-		<class>fi.testcenter.domain.TextQuestion</class>
-		<class>fi.testcenter.domain.MultipleChoiceQuestion</class>
-		<class>fi.testcenter.domain.MultipleChoiceOption</class>
-		<class>fi.testcenter.domain.Answer</class>
-		<class>fi.testcenter.domain.TextAnswer</class>
-		<class>fi.testcenter.domain.MultipleChoiceAnswer</class>
+		<class>fi.testcenter.domain.report.QuestionGroup</class>
+		<class>fi.testcenter.domain.question.Question</class>
+		<class>fi.testcenter.domain.question.TextQuestion</class>
+		<class>fi.testcenter.domain.question.MultipleChoiceQuestion</class>
+		<class>fi.testcenter.domain.question.MultipleChoiceOption</class>
+		<class>fi.testcenter.domain.answer.Answer</class>
+		<class>fi.testcenter.domain.answer.TextAnswer</class>
+		<class>fi.testcenter.domain.answer.MultipleChoiceAnswer</class>
 		<class>fi.testcenter.domain.User</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>

@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.Importer;
-import fi.testcenter.domain.ReportTemplate;
-import fi.testcenter.reportTemplate.AutoasiReportTemplate;
-import fi.testcenter.reportTemplate.VolvoReportTemplate;
+import fi.testcenter.domain.report.ReportTemplate;
+import fi.testcenter.reportTemplatesForImporters.AutoasiReportTemplate;
+import fi.testcenter.reportTemplatesForImporters.VolvoReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.ReportTemplateRepository;
 

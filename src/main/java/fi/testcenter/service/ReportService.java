@@ -20,9 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fi.testcenter.domain.Report;
-import fi.testcenter.domain.ReportHighlight;
-import fi.testcenter.domain.ReportTemplate;
+import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportHighlight;
+import fi.testcenter.domain.report.ReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.repository.ReportRepository;
@@ -98,7 +98,7 @@ public class ReportService {
 	public List<Report> findReportsAwaitingApproval() {
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.date DESC")
+						"SELECT r.date, NEW fi.testcenter.domain.report.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.date DESC")
 				.getResultList();
 
 		ArrayList<Report> resultReports = new ArrayList<Report>();
@@ -112,7 +112,7 @@ public class ReportService {
 	public List<Report> findReportsByUserId(Long userId) {
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.user.id = :userId ORDER BY r.date DESC")
+						"SELECT r.date, NEW fi.testcenter.domain.report.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.user.id = :userId ORDER BY r.date DESC")
 				.setParameter("userId", userId).getResultList();
 
 		ArrayList<Report> resultReports = new ArrayList<Report>();

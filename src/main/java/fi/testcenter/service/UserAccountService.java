@@ -13,8 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fi.testcenter.domain.Report;
 import fi.testcenter.domain.User;
+import fi.testcenter.domain.report.Report;
 import fi.testcenter.repository.UserRepository;
 
 @Service

@@ -18,7 +18,7 @@ public class ReportTemplateController {
 	@RequestMapping(value = "/admin/reportTemplates", method = RequestMethod.GET)
 	public String reportTemplates(Model model) {
 		model.addAttribute("unusedTemplates", rts.findUnusedReportTemplates());
-		return "reportTemplates";
+		return "report/reportTemplates";
 	}
 
 	@RequestMapping(value = "/admin/saveReportTemplate", method = RequestMethod.GET)

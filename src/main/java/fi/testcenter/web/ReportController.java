@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
-import fi.testcenter.domain.Question;
-import fi.testcenter.domain.QuestionGroup;
-import fi.testcenter.domain.QuestionGroupScore;
-import fi.testcenter.domain.Report;
-import fi.testcenter.domain.ReportPartScore;
-import fi.testcenter.domain.ReportTemplate;
 import fi.testcenter.domain.Workshop;
+import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.QuestionGroup;
+import fi.testcenter.domain.report.QuestionGroupScore;
+import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportPartScore;
+import fi.testcenter.domain.report.ReportTemplate;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.ReportTemplateService;
@@ -64,7 +64,7 @@ public class ReportController {
 		List<Importer> importers = is.getImporters();
 		model.addAttribute("importers", importers);
 
-		return "newReportSelectImporter";
+		return "report/newReportSelectImporter";
 	}
 
 	@RequestMapping(value = "/addNewReport", method = RequestMethod.POST)
@@ -104,7 +104,7 @@ public class ReportController {
 		model.addAttribute("initialAnswerIndexCounter", 0);
 
 		model.addAttribute("editReportPartNumber", 0);
-		return "editReport";
+		return "report/editReport";
 	}
 
 	@RequestMapping(value = "/saveReport", method = RequestMethod.POST)
@@ -157,7 +157,7 @@ public class ReportController {
 			model.addAttribute("report", savedReport);
 			model.addAttribute("editReportPartNumber", navigateToReportPart);
 
-			return "editReport";
+			return "report/editReport";
 
 		} else {
 
@@ -177,7 +177,7 @@ public class ReportController {
 			} else
 				model.addAttribute("editSmileys", false);
 
-			return "showReport";
+			return "report/showReport";
 		}
 	}
 
@@ -195,7 +195,7 @@ public class ReportController {
 
 		}
 
-		return "/showReport";
+		return "report/showReport";
 	}
 
 	@RequestMapping(value = "/saveSmileysAndHighlights", method = RequestMethod.POST)
@@ -243,7 +243,7 @@ public class ReportController {
 		model.addAttribute("editSmileys", false);
 		model.addAttribute("readyReport", savedReport);
 		model.addAttribute("report", savedReport);
-		return "/showReport";
+		return "report/showReport";
 	}
 
 	@RequestMapping(value = "/printReport")
@@ -251,7 +251,7 @@ public class ReportController {
 			@ModelAttribute("report") Report report) {
 		model.addAttribute("report", report);
 
-		return "printReport";
+		return "printReport/printReport";
 	}
 
 	@RequestMapping(value = "/printDone")
@@ -259,7 +259,7 @@ public class ReportController {
 			@ModelAttribute("report") ReportTemplate report) {
 
 		model.addAttribute("report", report);
-		return "showReport";
+		return "report/showReport";
 	}
 
 	@RequestMapping(value = "editReport")
@@ -276,7 +276,7 @@ public class ReportController {
 		model.addAttribute("edit", "TRUE");
 
 		report.setSmileysSet(false);
-		return "editReport";
+		return "report/editReport";
 	}
 
 	@RequestMapping(value = "deleteReport")
@@ -294,7 +294,7 @@ public class ReportController {
 		report.setReportStatus("APPROVED");
 		rs.saveReport(report);
 
-		return "showReport";
+		return "report/showReport";
 
 	}
 
@@ -307,7 +307,7 @@ public class ReportController {
 		model.addAttribute("readyReport", report);
 		model.addAttribute("report", report);
 
-		return "showReport";
+		return "report/showReport";
 
 	}
 
@@ -334,7 +334,7 @@ public class ReportController {
 		} else
 			model.addAttribute("editSmileys", false);
 
-		return "showReport";
+		return "report/showReport";
 
 	}
 

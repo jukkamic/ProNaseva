@@ -61,7 +61,7 @@ public class UserController {
 		model.addAttribute("userListStart", userListStart);
 		model.addAttribute("userListEnd", userListEnd);
 
-		return "showUserList";
+		return "userWorkshopImporter/showUserList";
 	}
 
 	@RequestMapping(value = "/admin/showUser", method = RequestMethod.GET)
@@ -70,7 +70,7 @@ public class UserController {
 
 		model.addAttribute("user", us.findUserById(id));
 
-		return "showUser";
+		return "userWorkshopImporter/showUser";
 	}
 
 	@RequestMapping(value = "/admin/newUser", method = RequestMethod.GET)
@@ -87,7 +87,7 @@ public class UserController {
 
 		model.addAttribute("user", new User());
 
-		return "editUser";
+		return "userWorkshopImporter/editUser";
 	}
 
 	@RequestMapping(value = "/admin/newUser", method = RequestMethod.POST)
@@ -114,7 +114,7 @@ public class UserController {
 
 		model.addAttribute("edit", "TRUE");
 
-		return "editUser";
+		return "userWorkshopImporter/editUser";
 	}
 
 	@RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)

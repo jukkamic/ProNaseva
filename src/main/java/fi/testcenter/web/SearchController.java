@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.domain.Report;
+import fi.testcenter.domain.report.Report;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.UserAccountService;
@@ -50,7 +50,7 @@ public class SearchController {
 					rs.findReportsAwaitingApproval());
 		}
 
-		return "userOwnReports";
+		return "search/userOwnReports";
 	}
 
 	@RequestMapping(value = "/showAllUserOwnReports", method = RequestMethod.GET)
@@ -71,7 +71,7 @@ public class SearchController {
 		model.addAttribute("importers", is.findImportersInAplhaOrder());
 		model.addAttribute("workshops", ws.findWorkshopsInAplhaOrder());
 		model.addAttribute("users", us.findUsersInAlphaOrder());
-		return "searchReport";
+		return "search/searchReport";
 	}
 
 	@RequestMapping(value = "/searchReport", method = RequestMethod.POST)
@@ -120,7 +120,7 @@ public class SearchController {
 		model.addAttribute("reportListStart", reportListStart);
 		model.addAttribute("reportListEnd", reportListEnd);
 
-		return "searchResult";
+		return "search/searchResult";
 	}
 
 	@RequestMapping(value = "/modifySearch", method = RequestMethod.GET)
@@ -129,7 +129,7 @@ public class SearchController {
 			@ModelAttribute("searchReportCriteria") SearchReportCriteria searchReportCriteria) {
 
 		model.addAttribute("searchReportCriteria", searchReportCriteria);
-		return "searchReport";
+		return "search/searchReport";
 
 	}
 }
