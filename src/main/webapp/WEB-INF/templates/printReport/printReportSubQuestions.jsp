@@ -21,8 +21,8 @@
 	<c:if test="${report.answers[answerIndexCounter].showScore == true}">
 		<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
 	</c:if>
-	
-		<table>
+		<div class="indentAnswer">
+		<table style="margin-left: 3em;">
 			<c:forEach var="option" items="${subQuestion.options}" varStatus="optionsCounter">
 
 				<tr>
@@ -47,25 +47,28 @@
 					</tr>
 			</c:forEach> 
 			</table>
+			</div>
 		</div>
 
 	</div>
-	
-		<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+		<div class = "indentAnswer">
+			<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
 			<c:if test="${remarks !='' and remarks != null}"> 
-		<div class="noPageBreak">
-		<h4 style="padding-left: 0;">Huomioita:</h4>
-		<p style="padding-left: 0;">${report.answers[answerIndexCounter].remarks}</p>
+				<div class="noPageBreak">
+				<h4 style="padding-left: 0;">Huomioita:</h4>
+				<p style="padding-left: 0;">${report.answers[answerIndexCounter].remarks}</p>
+				
+				</div>
+			</c:if>
 		</div>
-	</c:if>
 	
 </c:if>
 
 <!-- Text question -->
 <c:if
 	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.TextQuestion'}">
-	<h3 style="padding-left: 0;">${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
-	<p style="padding-left: 0;">${report.answers[answerIndexCounter].answer}</p>
+	<h3 style="margin: 0; padding: 0;">${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
+	<p class="indentAnswer">${report.answers[answerIndexCounter].answer}</p>
 </c:if> 
 
 <c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />

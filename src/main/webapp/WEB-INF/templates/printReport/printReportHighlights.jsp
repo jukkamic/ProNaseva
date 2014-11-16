@@ -21,47 +21,50 @@
 <!-- Multiple choice question -->
 
 	<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.MultipleChoiceAnswer'}">
-	
-			<div class="noPageBreak">
+
+		<div class="noPageBreak">
+		<div class="multipleChoice">
+		
+		<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
+			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.${reportHighlight.subQuestionOrderNumber}" />
+		</c:if>
+		<c:if test="${reportHighlight.subQuestionOrderNumber == null or reportHighlight.subQuestionOrderNumber == 0}">
+			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}" />
+		</c:if>
+		<h3>${questionNumber}. ${reportHighlight.answer.question.question}</h3>
 			
-			<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
-				<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.${reportHighlight.subQuestionOrderNumber}" />
+			<c:if test="${reportHighlight.answer.showScore == true}">
+				<h3 style="display: inline; float:right;">${reportHighlight.answer.score}/${reportHighlight.answer.maxScore}</h3>
 			</c:if>
-			<c:if test="${reportHighlight.subQuestionOrderNumber == null or reportHighlight.subQuestionOrderNumber == 0}">
-				<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}" />
-			</c:if>
-			<h3>${questionNumber}. ${reportHighlight.answer.question.question}</h3>
-				
-				<c:if test="${reportHighlight.answer.showScore == true}">
-					<h3 style="display: inline; float:right;">${reportHighlight.answer.score}/${reportHighlight.answer.maxScore}</h3>
-				</c:if>
-				
-				<table>
-					<c:forEach var="option" items="${reportHighlight.answer.question.options}" varStatus="optionsCounter">
-						<tr>
-							<c:choose>
-								<c:when test="${reportHighlight.answer.chosenOptionIndex == optionsCounter.index}">
-									<td	style="padding-left: 1.5em;">
-										&#9745;
+			<div class="indentAnswer">
+			<table style="margin-left: 2.2em">
+				<c:forEach var="option" items="${reportHighlight.answer.question.options}" varStatus="optionsCounter">
+					<tr>
+						<c:choose>
+							<c:when test="${reportHighlight.answer.chosenOptionIndex == optionsCounter.index}">
+								<td>
+									&#9745;
+									&nbsp;
+									
+								</td>
+							</c:when>
+								<c:otherwise>
+									<td>
+										&#9744;
 										&nbsp;
-										
-									</td>
-								</c:when>
-									<c:otherwise>
-										<td style="padding-left: 1.5em;">
-											&#9744;
-											&nbsp;
-									</td>
-								</c:otherwise>
-							</c:choose>
-						<td style="padding-right: 2em;">	
-							${option.option}
-						</td>
-					</tr>
-				</c:forEach> 
-			</table>
+								</td>
+							</c:otherwise>
+						</c:choose>
+					<td>	
+						${option.option}
+					</td>
+				</tr>
+			</c:forEach> 
+		</table>
+		</div>
 										
 			</div> <!-- Page break ok -->
+			<div class = "indentAnswer">
 				<c:set var="remarks" value="${reportHighlight.answer.remarks}" />
 				<c:if test="${remarks !='' and remarks != null}"> 
 					<div class="noPageBreak">
@@ -69,7 +72,8 @@
 						<p>${reportHighlight.answer.remarks}</p>
 					</div>
 				</c:if>
-				
+			</div>
+			</div>
 	</c:if>
 		
 	<!-- Text answer -->
@@ -82,8 +86,8 @@
 		<c:if test="${reportHighlight.subQuestionOrderNumber == null or reportHighlight.subQuestionOrderNumber == 0}">
 			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}" />
 		</c:if>
-		<h3>${questionNumber}. ${reportHighlight.answer.question.question}</h3>
-		<p style="font-size: 1.2em;">${reportHighlight.answer.answer}</p>
+		<h3 style="margin: 0; padding: 0;">${questionNumber}. ${reportHighlight.answer.question.question}</h3>
+		<p class="indentAnswer">${reportHighlight.answer.answer}</p>
 		<br>
 	</div>
 	</c:if>

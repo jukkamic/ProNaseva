@@ -61,7 +61,7 @@ table.multipleChoice {
 .multipleChoice p {
 	padding: 0;
 	margin: 0;
-	margin-left: 1.5em;
+	
 	
 }
 
@@ -83,13 +83,7 @@ table.multipleChoice {
 	margin: 0;
 	
 }
-
-
-
-
-
-
-
+iv
 
 table.costListing {
 	
@@ -199,6 +193,10 @@ table.importantPoints {
 	vertical-align: top;
 	text-align: top;
 	
+}
+
+.indentAnswer h3, h4, p, td, th {
+	margin-left: 2.2em;
 }
 
 }

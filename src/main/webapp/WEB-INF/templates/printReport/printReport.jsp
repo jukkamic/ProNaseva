@@ -109,14 +109,16 @@ lisäosana PDFCreator -->
 					<div class="noPageBreak">
 					<div class="multipleChoice">					
 					<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
+					
+					
 					<c:if test="${report.answers[answerIndexCounter].showScore == true}">
 						<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].score}/${report.answers[answerIndexCounter].maxScore}</h3>
 					</c:if>
 					
 					<c:choose>
 					<c:when test="${question.multipleSelectionsAllowed == true}">
-					
-						<table>
+						<div class="indentAnswer">
+						<table style="margin-left: 2.2em">
 							<c:forEach var="option" items="${question.options}">
 							<tr>
 								<c:set var="selected" value="false" />
@@ -142,18 +144,19 @@ lisäosana PDFCreator -->
 								</c:choose>
 									
 									
-							<td style="padding-right: 2em;">	
+							<td>	
 								<p>${option.option}</p>
 							</td>
 						</tr>
 					</c:forEach>
 				</table>
-				
-				
+				</div>
+			
 			</c:when>
 				<c:otherwise>
-					
-					<table class="multipleChoice">
+					<div class="multipleChoice">
+					<div class="indentAnswer">
+					<table style="margin-left: 2.2em">
 					
 						<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
 								<tr>
@@ -180,12 +183,16 @@ lisäosana PDFCreator -->
 						</c:forEach> 
 						
 						</table>
-					
+						</div>
+						</div>
+						
 						</c:otherwise>
+						
 						</c:choose>
-					</div>
-											
-						</div> <!-- Page break ok -->
+					</div> 
+					</div> <!-- Page break ok -->
+					<div class = "indentAnswer">
+						
 						<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
 						<c:if test="${remarks !='' and remarks != null}"> 
 							<div class="noPageBreak">
@@ -193,6 +200,7 @@ lisäosana PDFCreator -->
 								<p>${report.answers[answerIndexCounter].remarks}</p>
 							</div>
 						</c:if>
+					</div>
 						
 				</c:if>
 									
@@ -201,8 +209,9 @@ lisäosana PDFCreator -->
 				
 					<div class="noPageBreak">
 					
-						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
-						<p>${report.answers[answerIndexCounter].answer}</p> 
+						<h3 style="margin: .5em 0 .5em 0; padding: 0;">${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
+						
+						<p class="indentAnswer">${report.answers[answerIndexCounter].answer}</p> 
 					</div>
 					
 				</c:if>
@@ -263,7 +272,7 @@ lisäosana PDFCreator -->
 									<tr>
 										<td>
 											<c:if test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance != -1}"> 
-													<p> style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </p>
+													<p style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </p>
 										</c:if>
 										</td>
 										<td>							
