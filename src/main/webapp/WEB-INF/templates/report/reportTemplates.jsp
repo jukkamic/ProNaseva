@@ -36,7 +36,7 @@
 					</th>
 				</tr>
 				
-				<c:forEach var="reportTemplate"items="${unusedTemplates}">
+				<c:forEach var="reportTemplate" items="${unusedTemplates}">
 						<tr>
 							<td><a class="btn btn-default" style="text-decoration: none;" href="/ProNaseva/admin/deleteReportTemplate?id=${reportTemplate.id}">
 								Poista</a>

@@ -125,7 +125,7 @@ public class UserController {
 		if (editPassword == true) {
 			model.addAttribute("editPassword", true);
 			user.setPassword("");
-			return "editUser";
+			return "userWorkshopImporter/editUser";
 		} else {
 			user.setPassword(new BCryptPasswordEncoder().encode(user
 					.getPassword()));

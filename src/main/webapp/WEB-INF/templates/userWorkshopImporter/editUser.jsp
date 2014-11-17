@@ -53,6 +53,7 @@
 					<input type="password" style="width: 15em; max-width: 100%" id="confirmPassword" name="confirmPassword" value=""/> 
 					<br><br>
 				</c:if>
+				<h3>KORJAA SALASANAN TALLENNUS!!!</h3>
 				<c:if test="${editPassword != 'true' }">
 					<a class="btn btn-large btn-default" href="#" onclick="editPassword();">Vaihda salasana</a>
 					<br><br>
