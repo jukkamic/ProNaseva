@@ -81,6 +81,49 @@
 	<br><br>
 </c:if>
 
+<!-- Points question -->
+
+<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
+																		
+	${subQuestion.question}</h3>
+	<c:if test="${loginRole == '[ROLE_ADMIN]' }">
+			<div class="checkbox" style="font-size: 1.2em;">
+			<label>											
+			<sf:checkbox value='true' path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />  
+			
+			</label>
+			
+			</div>
+			<br>
+	</c:if>
+								
+<div class="Demo-boot" style="padding-top: 15px;">
+		<div class="btn-group" data-toggle="buttons">
+			<c:forEach var="points" begin="0" end="${subQuestion.maxPoints}">
+					
+				<c:choose>
+					<c:when test="${report.answers[answerIndexCounter].givenPoints == points}">
+						<button class="btn btn-large btn-primary disabled" type="button">
+							${points}
+							
+						</button>
+					</c:when>
+					<c:otherwise>
+						<button class="btn btn-large btn-default" type="button" disabled>
+							${points}
+						</button>
+					</c:otherwise>
+				</c:choose>	
+			</c:forEach> 
+		</div>
+	</div>
+	<br>
+	<h4>Huomioita:</h4>
+	<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
+	<br><br>
+</c:if>
+
+
 <!--  Text question -->
 <c:if
 	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.TextQuestion'}">

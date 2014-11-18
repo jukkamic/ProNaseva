@@ -5,140 +5,175 @@
 
     
     
-    			<h3>Tiivistelmä</h3>
-			<br>
-			<div class="panel panel-default">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a style="font-size: 1.5em; text-decoration: none; display: block;"
-										data-toggle="collapse" data-parent="#accordion"
-										href="#${bootstrapPanelCounter}">Huomionarvoiset vastaukset
-									</a>
-								</h4>
-							</div> 
-							
- 							<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start"> 
- 							<div class="panel-body">
-
- 							
-							<c:forEach var="reportHighlight" items="${report.reportHighlights}">
-								<div style="border-bottom: 3px solid #eee;">
-								<c:if test="${reportHighlight.reportPart.title != reportPartTitle}">
-									<h3>${reportHighlight.reportPart.title}</h3>
-									<c:set var="reportPartTitle" value="${reportHighlight.reportPart.title}" />
-								</c:if>
-								
-								<c:if test="${reportHighlight.questionGroup.title != questionGroupTitle}">
-									<h3>${reportHighlight.questionGroupOrderNumber}. ${reportHighlight.questionGroup.title}</h3>
-									<c:set var="questionGroupTitle" value="${reportHighlight.questionGroup.title}" />
-								</c:if>
-								
-								<!-- Multiple choice answer -->
-								
-								<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.MultipleChoiceAnswer'}">
-									<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
-									<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
-										${reportHighlight.subQuestionOrderNumber}.
-									</c:if>									
-									
-									${reportHighlight.answer.question.question}</h3>
-									
-									
-											<div class="Demo-boot" style="padding-top: 15px;">
-												<div class="btn-group" data-toggle="buttons">
-													<c:forEach var="option" items="${reportHighlight.answer.question.options}" varStatus="optionsCounter">
-																												
-														<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
-																varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
-																riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
-																ei ole tägejä -->
-														<c:choose>
-															<c:when test="${option.radiobuttonText != null }">
-																<c:choose>
-																	<c:when test="${reportHighlight.answer.chosenOptionIndex == optionsCounter.index}">
-																		<button class="btn btn-large btn-primary disabled" type="button">
-																			${option.radiobuttonText}
-																																																			
-																		</button>
-																	</c:when>
-																	<c:otherwise>
-																		<button class="btn btn-large btn-default" type="button" disabled>
-																			${option.radiobuttonText}
-																		</button>
-																	</c:otherwise>
-																</c:choose>
-															</c:when>
-															<c:otherwise>
-																<c:choose>
-																	<c:when test="${reportHighlight.answer.chosenOptionIndex == optionsCounter.index}">
-																		<button class="btn btn-large btn-primary disabled" type="button">
-																			${option.option}
-																			
-																		</button>
-																	</c:when>
-																	<c:otherwise>
-																		<button class="btn btn-large btn-default" type="button" disabled>
-																			${option.option}
-																		</button>
-																	</c:otherwise>
-																</c:choose>	
-															</c:otherwise>
-														</c:choose>														
-													</c:forEach> 
-													
-																								
-												</div>
-											</div>
-											
-											<c:if test="${reportHighlight.answer.remarks != '' and reportHighlight.answer.remarks != null}">
-												<br>
-												<h4>Huomioita:</h4>
-												<p style="font-size: 1.2em;">${reportHighlight.answer.remarks}</p>
-											</c:if>
-											<br><br>
-										</c:if>
-								
-								
-								
-								
-								<!-- Text answer -->
-								
-								<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.TextAnswer'}">
-									<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
-									<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
-										${reportHighlight.subQuestionOrderNumber}.
-									</c:if>									
-									${reportHighlight.answer.question.question}</h3>
-									<p style="font-size: 1.2em;">${reportHighlight.answer.answer}</p>
-									<br>
-								</c:if>
-								
-								<!-- Cost listing question -->
-									<c:if test='${reportHighlight.answer["class"] == "class fi.testcenter.domain.answer.CostListingAnswer"}'>
-									<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
-									<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
-										${reportHighlight.subQuestionOrderNumber}.
-									</c:if>									
-									${reportHighlight.answer.question.questionTopic}</h3>
-																				
-									<c:forEach var="listQuestion" items="${reportHighlight.answer.question.questions}" varStatus="costListingAnswerCounter">
-												
-									<h4>${listQuestion}</h4>
-												<c:set var="listingAnswer" value="${reportHighlight.answer.answers}" />
-												<p style="font-size: 1.2em;">${reportHighlight.answer.answers[costListingAnswerCounter.index]} €</p>
-												<br>
-											</c:forEach>
-												<h4><b>${reportHighlight.answer.question.total}</b></h4>
-												<p style="font-size: 1.2em;">${reportHighlight.answer.total} €</p>
-											<br>
-									</c:if>
-														
-								
-							</div>
-							</c:forEach>
+<h3>Tiivistelmä</h3>
+<br>
+<div class="panel panel-default">
+<div class="panel-heading">
+	<h4 class="panel-title">
+		<a style="font-size: 1.5em; text-decoration: none; display: block;"
+			data-toggle="collapse" data-parent="#accordion"
+			href="#${bootstrapPanelCounter}">Huomionarvoiset vastaukset
+				</a>
+	</h4>
+</div> 
 	
-							</div>
-							</div>
+<div id="${bootstrapPanelCounter}" class="panel-collapse collapse start"> 
+<div class="panel-body">
+
+<c:forEach var="reportHighlight" items="${report.reportHighlights}">
+		<div style="border-bottom: 3px solid #eee;">
+		<c:if test="${reportHighlight.reportPart.title != reportPartTitle}">
+			<h3>${reportHighlight.reportPart.title}</h3>
+			<c:set var="reportPartTitle" value="${reportHighlight.reportPart.title}" />
+		</c:if>
+		
+		<c:if test="${reportHighlight.questionGroup.title != questionGroupTitle}">
+			<h3>${reportHighlight.questionGroupOrderNumber}. ${reportHighlight.questionGroup.title}</h3>
+			<c:set var="questionGroupTitle" value="${reportHighlight.questionGroup.title}" />
+		</c:if>
+		
+		<!-- Multiple choice answer -->
+		
+		<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.MultipleChoiceAnswer'}">
+			<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
+			<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
+				${reportHighlight.subQuestionOrderNumber}.
+			</c:if>									
 			
-			</div> 
+			${reportHighlight.answer.question.question}</h3>
+			
+			
+					<div class="Demo-boot" style="padding-top: 15px;">
+						<div class="btn-group" data-toggle="buttons">
+							<c:forEach var="option" items="${reportHighlight.answer.question.options}" varStatus="optionsCounter">
+																						
+								<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
+										varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
+										riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
+										ei ole tägejä -->
+								<c:choose>
+									<c:when test="${option.radiobuttonText != null }">
+										<c:choose>
+											<c:when test="${reportHighlight.answer.chosenOptionIndex == optionsCounter.index}">
+												<button class="btn btn-large btn-primary disabled" type="button">
+													${option.radiobuttonText}
+																																													
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button class="btn btn-large btn-default" type="button" disabled>
+													${option.radiobuttonText}
+												</button>
+											</c:otherwise>
+										</c:choose>
+									</c:when>
+									<c:otherwise>
+										<c:choose>
+											<c:when test="${reportHighlight.answer.chosenOptionIndex == optionsCounter.index}">
+												<button class="btn btn-large btn-primary disabled" type="button">
+													${option.option}
+													
+												</button>
+											</c:when>
+											<c:otherwise>
+												<button class="btn btn-large btn-default" type="button" disabled>
+													${option.option}
+												</button>
+											</c:otherwise>
+										</c:choose>	
+									</c:otherwise>
+								</c:choose>														
+							</c:forEach> 
+							
+																		
+						</div>
+					</div>
+					
+					<c:if test="${reportHighlight.answer.remarks != '' and reportHighlight.answer.remarks != null}">
+						<br>
+						<h4>Huomioita:</h4>
+						<p style="font-size: 1.2em;">${reportHighlight.answer.remarks}</p>
+					</c:if>
+					<br><br>
+				</c:if>
+		
+<!-- Points question -->
+<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.PointsAnswer'}">
+
+	<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
+	<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
+		${reportHighlight.subQuestionOrderNumber}.
+</c:if>									
+	
+	${reportHighlight.answer.question.question}</h3>
+	
+<div class="Demo-boot" style="padding-top: 15px;">
+		<div class="btn-group" data-toggle="buttons">
+			<c:forEach var="points" begin="0" end="${reportHighlight.answer.question.maxPoints}">
+					
+				<c:choose>
+					<c:when test="${reportHighlight.answer.givenPoints == points}">
+						<button class="btn btn-large btn-primary disabled" type="button">
+							${points}
+							
+						</button>
+					</c:when>
+					<c:otherwise>
+						<button class="btn btn-large btn-default" type="button" disabled>
+							${points}
+						</button>
+					</c:otherwise>
+				</c:choose>	
+														
+			</c:forEach> 
+		</div>
+	</div>
+
+	<br>
+	<h4>Huomioita:</h4>
+	<p style="font-size: 1.2em;">${reportHighlight.answer.remarks}</p>
+	
+	<br><br>
+</c:if>
+
+<!-- Text answer -->
+		
+		<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.TextAnswer'}">
+			<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
+			<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
+				${reportHighlight.subQuestionOrderNumber}.
+			</c:if>									
+			${reportHighlight.answer.question.question}</h3>
+			<p style="font-size: 1.2em;">${reportHighlight.answer.answer}</p>
 			<br>
+		</c:if>
+		
+		<!-- Cost listing question -->
+			<c:if test='${reportHighlight.answer["class"] == "class fi.testcenter.domain.answer.CostListingAnswer"}'>
+			<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.
+			<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
+				${reportHighlight.subQuestionOrderNumber}.
+			</c:if>									
+			${reportHighlight.answer.question.questionTopic}</h3>
+														
+			<c:forEach var="listQuestion" items="${reportHighlight.answer.question.questions}" varStatus="costListingAnswerCounter">
+						
+			<h4>${listQuestion}</h4>
+						<c:set var="listingAnswer" value="${reportHighlight.answer.answers}" />
+						<p style="font-size: 1.2em;">${reportHighlight.answer.answers[costListingAnswerCounter.index]} €</p>
+						<br>
+					</c:forEach>
+						<h4><b>${reportHighlight.answer.question.total}</b></h4>
+						<p style="font-size: 1.2em;">${reportHighlight.answer.total} €</p>
+					<br>
+			</c:if>
+								
+		
+	</div>
+	</c:forEach>
+
+			</div>
+			</div>
+
+</div> 
+<br>

@@ -32,11 +32,13 @@ import fi.testcenter.domain.answer.CostListingAnswer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.ImportantPointsItem;
 import fi.testcenter.domain.answer.MultipleChoiceAnswer;
+import fi.testcenter.domain.answer.PointsAnswer;
 import fi.testcenter.domain.answer.TextAnswer;
 import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.ImportantPointsQuestion;
 import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
+import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
 import fi.testcenter.service.ReportService;
@@ -483,6 +485,24 @@ public class Report {
 
 					}
 
+					if (question instanceof PointsQuestion) {
+						PointsQuestion pointsQuestion = (PointsQuestion) question;
+						PointsAnswer pointsAnswer = (PointsAnswer) answers
+								.get(answerIndexCounter);
+						if (pointsAnswer.getGivenPoints() != -1) {
+							questionGroupScoreObject.setShowScore(true);
+							questionGroupScoreObject
+									.setMaxScore(questionGroupScoreObject
+											.getMaxScore()
+											+ pointsQuestion.getMaxPoints());
+							questionGroupScoreObject
+									.setScore(questionGroupScoreObject
+											.getScore()
+											+ pointsAnswer.getGivenPoints());
+							reportPartScoreObject.setShowScore(true);
+						}
+					}
+
 					answerIndexCounter++;
 
 					// subQuestions loop
@@ -636,6 +656,12 @@ public class Report {
 							answerItems.add(new ImportantPointsItem());
 						answer.setAnswerItems(answerItems);
 						reportAnswerList.add(answer);
+					}
+					if (question instanceof PointsQuestion) {
+						Answer answer = new PointsAnswer();
+						answer.setQuestion(question);
+						reportAnswerList.add(answer);
+
 					}
 
 					if (!question.getSubQuestions().isEmpty()) {

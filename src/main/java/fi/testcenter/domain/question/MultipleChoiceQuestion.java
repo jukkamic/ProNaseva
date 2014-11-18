@@ -21,20 +21,10 @@ public class MultipleChoiceQuestion extends Question {
 	@OrderColumn(name = "ORDERINDEX")
 	private List<MultipleChoiceOption> options = new ArrayList<MultipleChoiceOption>();
 
-	private int chosenOptionIndex;
-
 	private boolean multipleSelectionsAllowed = false;
 
 	public MultipleChoiceQuestion() {
-		this.chosenOptionIndex = -1;
-	}
 
-	public int getChosenOptionIndex() {
-		return chosenOptionIndex;
-	}
-
-	public void setChosenOptionIndex(int chosenOptionIndex) {
-		this.chosenOptionIndex = chosenOptionIndex;
 	}
 
 	public void setOptions(List<MultipleChoiceOption> options) {

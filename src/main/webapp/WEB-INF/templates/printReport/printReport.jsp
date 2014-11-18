@@ -204,6 +204,31 @@ lisäosana PDFCreator -->
 					</div>
 						
 				</c:if>
+
+						
+			<!-- Points question -->
+				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.PointsQuestion'}">
+			
+					<div class="noPageBreak">
+					<br>
+					<h3 style="display: inline">${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
+						<c:if test="${report.answers[answerIndexCounter].givenPoints != '-1'}">
+							<h3 style="float: right; display: inline;">${report.answers[answerIndexCounter].givenPoints}/${report.answers[answerIndexCounter].question.maxPoints}</h3>
+						</c:if>
+					
+					</div>
+					
+					<div class = "indentAnswer">
+						
+						<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+						<c:if test="${remarks !='' and remarks != null}"> 
+							<div class="noPageBreak">
+								<h4>Huomioita:</h4>
+								<p>${report.answers[answerIndexCounter].remarks}</p>
+							</div>
+						</c:if>
+					</div>
+				</c:if>
 									
 	<!-- Text field question -->
 				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.TextQuestion'}">

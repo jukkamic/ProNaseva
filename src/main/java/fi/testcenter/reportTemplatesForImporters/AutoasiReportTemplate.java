@@ -7,6 +7,7 @@ import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.ImportantPointsQuestion;
 import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
+import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
 import fi.testcenter.domain.report.QuestionGroup;
@@ -74,50 +75,23 @@ public class AutoasiReportTemplate {
 
 		ArrayList<Question> questionList2 = new ArrayList<Question>();
 
-		MultipleChoiceQuestion q40 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options17 = new ArrayList<MultipleChoiceOption>();
-		q40.setQuestion("Pesunesteen tarkastus");
-		options17.add(new MultipleChoiceOption("0 p", 0));
-		options17.add(new MultipleChoiceOption("1 p", 1));
-		options17.add(new MultipleChoiceOption("2 p", 2));
-		q40.setOptions(options17);
-		questionList2.add(q40);
+		PointsQuestion points1 = new PointsQuestion("Pesunesteen tarkastus", 2);
+		questionList2.add(points1);
 
-		MultipleChoiceQuestion q41 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options18 = new ArrayList<MultipleChoiceOption>();
-		q41.setQuestion("Rekisterikilven valon tarkastus");
-		options18.add(new MultipleChoiceOption("0 p", 0));
-		options18.add(new MultipleChoiceOption("1 p", 1));
-		options18.add(new MultipleChoiceOption("2 p", 2));
-		q41.setOptions(options18);
-		questionList2.add(q41);
+		PointsQuestion points2 = new PointsQuestion(
+				"Rekisterikilven valon tarkastus", 2);
+		questionList2.add(points2);
 
-		MultipleChoiceQuestion q42 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options19 = new ArrayList<MultipleChoiceOption>();
-		q42.setQuestion("Turvavöiden tarkastus");
-		options19.add(new MultipleChoiceOption("0 p", 0));
-		options19.add(new MultipleChoiceOption("1 p", 1));
-		options19.add(new MultipleChoiceOption("2 p", 2));
-		q42.setOptions(options19);
-		questionList2.add(q42);
+		PointsQuestion points3 = new PointsQuestion("Turvavöiden tarkastus", 2);
+		questionList2.add(points3);
 
-		MultipleChoiceQuestion q42uusi2 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options19uusi2 = new ArrayList<MultipleChoiceOption>();
-		q42uusi2.setQuestion("Rengaspaineiden tarkastus");
-		options19uusi2.add(new MultipleChoiceOption("0 p", 0));
-		options19uusi2.add(new MultipleChoiceOption("1 p", 1));
-		options19uusi2.add(new MultipleChoiceOption("2 p", 2));
-		q42uusi2.setOptions(options19uusi2);
-		questionList2.add(q42uusi2);
+		PointsQuestion points4 = new PointsQuestion(
+				"Rengaspaineiden tarkastus", 2);
+		questionList2.add(points4);
 
-		MultipleChoiceQuestion q7 = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> options1 = new ArrayList<MultipleChoiceOption>();
-		q7.setQuestion("Takalasinpyyhkimen sulan tarkastus");
-		options1.add(new MultipleChoiceOption("0 p", 0));
-		options1.add(new MultipleChoiceOption("1 p", 1));
-		options1.add(new MultipleChoiceOption("2 p", 2));
-		q7.setOptions(options1);
-		questionList2.add(q7);
+		PointsQuestion points5 = new PointsQuestion(
+				"Takalasinpyyhkimen sulan tarkastus", 2);
+		questionList2.add(points5);
 
 		questionGroup2.setQuestions(questionList2);
 

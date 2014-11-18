@@ -75,7 +75,39 @@
 			</div>
 			</div>
 	</c:if>
-		
+	
+<!-- Points question -->
+		<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.PointsAnswer'}">
+	
+			<div class="noPageBreak">
+			
+				<c:if test="${reportHighlight.subQuestionOrderNumber != null and reportHighlight.subQuestionOrderNumber != 0}">
+					<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.${reportHighlight.subQuestionOrderNumber}" />
+				</c:if>
+				<c:if test="${reportHighlight.subQuestionOrderNumber == null or reportHighlight.subQuestionOrderNumber == 0}">
+					<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}" />
+				</c:if>
+				<br>
+				<h3 style="display: inline; margin-top: 6px;">${questionNumber}. ${reportHighlight.answer.question.question}</h3>
+				<c:if test="${reportHighlight.answer.givenPoints != '-1'}">
+					<h3 style="float: right; display: inline; margin-top: 6px;">${reportHighlight.answer.givenPoints}/${reportHighlight.answer.question.maxPoints}</h3>
+					
+				</c:if>
+				<br>
+			
+			</div>
+			
+			<div class = "indentAnswer">
+				
+				<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+				<c:if test="${remarks !='' and remarks != null}"> 
+					<div class="noPageBreak">
+						<h4>Huomioita:</h4>
+						<p>${report.answers[answerIndexCounter].remarks}</p>
+					</div>
+				</c:if>
+			</div>
+		</c:if>
 	<!-- Text answer -->
 	
 	<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.TextAnswer'}">
