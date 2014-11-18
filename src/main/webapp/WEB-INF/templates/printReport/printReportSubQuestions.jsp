@@ -67,7 +67,7 @@
 <!-- Text question -->
 <c:if
 	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.TextQuestion'}">
-	<h3 style="margin: 0; padding: 0;">${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
+	<h3>${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
 	<p class="indentAnswer">${report.answers[answerIndexCounter].answer}</p>
 </c:if> 
 

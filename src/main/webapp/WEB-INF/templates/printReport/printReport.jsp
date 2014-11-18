@@ -11,15 +11,16 @@ lisäosana PDFCreator -->
 
 <body>
 
-<div style="margin-left: 3.5em; margin-right: 2em;">
+<div style="margin-left: 49px; margin-right: 28px;">
+
 <table>
 	   <thead >
 	   		<tr>
-	   			<td style="width:595pt; height: 10em; margin-top:0; padding-top:0;">
+	   			<td style="width:595pt; height: 140px; margin-top:0; padding-top:0;">
 							<div style="float: right; width: 70%; border: bottom; height: 5em;">
-								<div style="text-align:left; margin: 0em 0em 0em 0em; padding-top:0;">
-									<h2 style="margin-top:0; padding-top:0; padding-bottom:1.5em; margin-bottom:0;">${report.importer.name}</h2>
-									<h2 style="margin-top:0; padding-top:0; padding-bottom:1.5em; margin-bottom:0;">${report.workshop.name}</h2>
+								<div style="text-align:left; margin: 0; padding-top:0;">
+									<h2 style="margin-top:0; padding-top:0; padding-bottom:21px; margin-bottom:0;">${report.importer.name}</h2>
+									<h2 style="margin-top:0; padding-top:0; padding-bottom:21åx; margin-bottom:0;">${report.workshop.name}</h2>
 								</div>
 							</div>
 				</td>
@@ -28,7 +29,7 @@ lisäosana PDFCreator -->
 
 	   <tbody>
 	    <tr><td>
-			<div style="margin-top: 5em; margin-left: 7em;">
+			<div style="margin-top: 70px; margin-left: 98px;" class="coverPage">
 			<h1>${report.importer.name}</h1>
 			<h1>Korjaamotestiraportti</h1>
 				<br>
@@ -44,7 +45,7 @@ lisäosana PDFCreator -->
 			<table>
 				<tr>
 					<td>
-						<h2 style="display: inline; padding-right: 3em;">Yleisarvosana : </h2>
+						<h2 style="display: inline; padding-right: 42px;">Yleisarvosana : </h2>
 					</td>
 					<td>
 						<c:if test="${report.overallResultSmiley == 'SMILE' }">
@@ -90,7 +91,7 @@ lisäosana PDFCreator -->
 			<c:set var="scoredQuestions" value="FALSE" />
 			<c:choose>
 				<c:when test="${questionGroupCounter.count == 1}">
-					<h2 style="border-bottom: 1px solid #eee;">${questionGroupCounter.count}. ${questionGroup.title}</h2>
+					<h2>${questionGroupCounter.count}. ${questionGroup.title}</h2>
 				</c:when>
 				<c:otherwise>
 					<h2 class="newpage" style="border-bottom: 1px solid #eee;">${questionGroupCounter.count}. ${questionGroup.title}</h2>
@@ -118,7 +119,7 @@ lisäosana PDFCreator -->
 					<c:choose>
 					<c:when test="${question.multipleSelectionsAllowed == true}">
 						<div class="indentAnswer">
-						<table style="margin-left: 2.2em">
+						<table style="margin-left: 31px">
 							<c:forEach var="option" items="${question.options}">
 							<tr>
 								<c:set var="selected" value="false" />
@@ -156,7 +157,7 @@ lisäosana PDFCreator -->
 				<c:otherwise>
 					<div class="multipleChoice">
 					<div class="indentAnswer">
-					<table style="margin-left: 2.2em">
+					<table style="margin-left: 31px">
 					
 						<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
 								<tr>
@@ -209,7 +210,7 @@ lisäosana PDFCreator -->
 				
 					<div class="noPageBreak">
 					
-						<h3 style="margin: .5em 0 .5em 0; padding: 0;">${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
+						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 						
 						<p class="indentAnswer">${report.answers[answerIndexCounter].answer}</p> 
 					</div>
@@ -248,6 +249,7 @@ lisäosana PDFCreator -->
 				</c:if>
 										
 		<!-- ListAndScoreImportantPoints -->
+		<div class="importantPoints">
 					<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
 					<div class="importantPoints">
 						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
@@ -257,11 +259,11 @@ lisäosana PDFCreator -->
 							<thead>
 									<tr>
 									<th>
-									<p style="text-align: center"><b>Tärkeys</b></p>
+									<p><b>Tärkeys</b></p>
 									</th>
 									<th></th>
 									<th>
-									<p style="text-align: center"><b>Pisteet</b></p>
+									<p><b>Pisteet</b></p>
 									</th>
 									</tr>
 						  </thead>
@@ -272,7 +274,7 @@ lisäosana PDFCreator -->
 									<tr>
 										<td>
 											<c:if test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance != -1}"> 
-													<p style="margin: 0 0 0 0; text-align: center; vertical-align: top">${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </p>
+													<p>${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance} </p>
 										</c:if>
 										</td>
 										<td>							
@@ -290,13 +292,13 @@ lisäosana PDFCreator -->
 							</div>			
 				</c:if>	
 				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
-	
+	</div>
 	<!-- Subquestions -->
 				<c:if test="${not empty question.subQuestions}">
 					<c:set var="mainQuestion" value="${question}" scope="request" />
 					<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
 					<c:set var="mainQuestionNumber" value="${questionCounter.count}" scope="request" />
-					<div style="margin-left: 3em;">
+					<div style="margin-left: 42px;">
 						<jsp:include page="/WEB-INF/templates/printReport/printReportSubQuestions.jsp" />
 					</div>				
 				</c:if>
@@ -305,8 +307,8 @@ lisäosana PDFCreator -->
 									
 										
 			<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
-				<h4 style="font-weight: bold; padding-right: 2em; padding-top: 2em; text-align: right;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
-				${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore}</h4>
+				<h3 style="padding-top: 24px; text-align: right;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
+				${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore}</h3>
 			</c:if>
 	
 	<c:set var="questionGroupScoreIndexCounter" value="${questionGroupScoreIndexCounter + 1}" scope="request" />
@@ -318,7 +320,7 @@ lisäosana PDFCreator -->
 		 
 </td></tr>
 	    
-<tfoot><tr><td><div style="margin-top: 7em;"></div></td></tr></tfoot>
+<tfoot><tr><td><div style="margin-top: 98px;"></div></td></tr></tfoot>
 </tbody></table>
 	
 	

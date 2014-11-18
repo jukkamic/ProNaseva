@@ -45,9 +45,45 @@ thead { display: table-header-group;
 }
 
 
+.coverPage h1 {
+	font-size: 32px;
+	font-weight: bold;
+}
+
+.coverPage h2 {
+	font-size: 26px;
+	font-weight: bold;
+}
+p {
+	font-size: 14px;
+}
+
+h1 {
+	font-size: 26px;
+	font-weight: bold;
+	
+}
+
+h2 {
+	font-size: 20px;
+	font-weight: bold;
+	
+}
+
+h3 {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+h4 {
+	font-size: 14px;
+	font-weight: bold;
+	
+}
+
 h3, h4, p {
 	padding: 0;
-	margin: .5 0 .5 0;
+	margin: 6px 0 6px 0;
 		
 }
 
@@ -67,7 +103,7 @@ table.multipleChoice {
 
 .multipleChoice h3, h4 {
 	padding: 0;
-	margin: .5em 2em .5em 0;
+	margin: 6px 0 6px 0;
 	
 }
 
@@ -98,7 +134,7 @@ table.costListing {
 
 .costListing p {
 	border-collapse: collapse;
-	padding: .5em 0 .5em 0;
+	padding: 6px 0 6px 0;
 	margin: 0;
 	vertical-align: top;
 	text-align: top;
@@ -106,7 +142,7 @@ table.costListing {
 
 .costListing h3, h4 {
 	padding: 0;
-	margin: .5em 2em .5em 0;
+	margin: 6px 24px 6px 0;
 	vertical-align: top;
 	text-align: top;
 	
@@ -152,20 +188,31 @@ table.importantPoints {
 
 .importantPoints p {
 	border-collapse: collapse;
-	padding: .5em 0 .5em 0;
+	padding: 0;
 	margin: 0;
 	border-spacing: 0;
-	margin-left: 1.5em;
+	margin-left: 18px;
 	vertical-align: top;
 	text-align: center;
 	
 }
 
-.importantPoints h3, h4 {
+.importantPoints h3 {
 	border-collapse: collapse;
 	padding: 0;
 	border-spacing: 0;
-	margin: .5em 2em .5em 0;
+	margin: 6px 24px 6px 0;
+	vertical-align: top;
+	text-align: top;
+	
+}
+
+.importantPoints h4 {
+	
+	border-collapse: collapse;
+	padding: 0;
+	border-spacing: 0;
+	margin: 6px 24px 6px 0;
 	vertical-align: top;
 	text-align: top;
 	
@@ -196,7 +243,7 @@ table.importantPoints {
 }
 
 .indentAnswer h3, h4, p, td, th {
-	margin-left: 2.2em;
+	margin-left: 26px;
 }
 
 }
