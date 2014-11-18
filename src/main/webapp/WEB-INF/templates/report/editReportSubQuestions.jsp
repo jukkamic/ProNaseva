@@ -170,7 +170,7 @@
 					<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].answer" />
 				</c:when>
 				<c:otherwise>
-					<sf:input path="answers[${answerIndexCounter}].answer" />
+					<sf:input class="form-control" path="answers[${answerIndexCounter}].answer" />
 				</c:otherwise>
 		</c:choose>
 		

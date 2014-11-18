@@ -486,7 +486,7 @@ public class Report {
 					}
 
 					if (question instanceof PointsQuestion) {
-						System.out.println("pointsquestion score");
+
 						PointsQuestion pointsQuestion = (PointsQuestion) question;
 						PointsAnswer pointsAnswer = (PointsAnswer) answers
 								.get(answerIndexCounter);
