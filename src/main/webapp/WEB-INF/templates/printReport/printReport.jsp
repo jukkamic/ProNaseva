@@ -16,8 +16,8 @@ lisäosana PDFCreator -->
 <table>
 	   <thead >
 	   		<tr>
-	   			<td style="width:595pt; height: 140px; margin-top:0; padding-top:0;">
-							<div style="float: right; width: 70%; border: bottom; height: 5em;">
+	   			<td style="width:595pt; height: 150px; margin-top:0; padding-top:0;">
+							<div style="float: right; width: 75%; border: bottom; height: 70px;">
 								<div style="text-align:left; margin: 0; padding-top:0;">
 									<h2 style="margin-top:0; padding-top:0; padding-bottom:21px; margin-bottom:0;">${report.importer.name}</h2>
 									<h2 style="margin-top:0; padding-top:0; padding-bottom:21åx; margin-bottom:0;">${report.workshop.name}</h2>
@@ -94,7 +94,7 @@ lisäosana PDFCreator -->
 					<h2>${questionGroupCounter.count}. ${questionGroup.title}</h2>
 				</c:when>
 				<c:otherwise>
-					<h2 class="newpage" style="border-bottom: 1px solid #eee;">${questionGroupCounter.count}. ${questionGroup.title}</h2>
+					<h2 class="newpage">${questionGroupCounter.count}. ${questionGroup.title}</h2>
 				</c:otherwise>
 			</c:choose>
 			
@@ -223,7 +223,7 @@ lisäosana PDFCreator -->
 				<div class="costListing">
 					<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.questionTopic}</h3>
 												
-					<table>
+					<table style="width: 550px;">
 					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
 						<tr>
 						<td style="width: 70%">
@@ -255,7 +255,7 @@ lisäosana PDFCreator -->
 						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 						<br>
 						
-						<table>
+						<table style="width: 550px;">
 							<thead>
 									<tr>
 									<th>

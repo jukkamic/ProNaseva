@@ -150,7 +150,7 @@ table.costListing {
 
 
 .costListing td {
-	border-top: 2px solid black;
+	border-top: 1px solid black;
 	
 	border-spacing: 0;
 	border-collapse: collapse;
@@ -220,7 +220,7 @@ table.importantPoints {
 
 
 .importantPoints td {
-	border-top: 2px solid black;
+	border-top: 1px solid black;
 	
 	border-spacing: 0;
 	border-collapse: collapse;
