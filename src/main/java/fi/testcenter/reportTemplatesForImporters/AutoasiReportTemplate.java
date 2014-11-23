@@ -1924,15 +1924,63 @@ public class AutoasiReportTemplate {
 
 	public static List<Question> getOptionalQuestions() {
 		List<Question> optionalQuestions = new ArrayList<Question>();
-		PointsQuestion optionalPoints1 = new PointsQuestion(
-				"Ensimmäinen valinnainen kysymys", 2);
-		optionalQuestions.add(optionalPoints1);
-		PointsQuestion optionalPoints2 = new PointsQuestion(
-				"Toinen valinnainen kysymys", 2);
-		optionalQuestions.add(optionalPoints2);
-		PointsQuestion optionalPoints3 = new PointsQuestion(
-				"Kolmas valinnainen kysymys", 2);
-		optionalQuestions.add(optionalPoints3);
+		optionalQuestions.add(new PointsQuestion("Suuntavalon värin tarkastus",
+				2));
+		optionalQuestions.add(new PointsQuestion(
+				"Sumuvalon toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Lähivalon toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Tuulilasin kunnon tarkastus",
+				2));
+		optionalQuestions.add(new PointsQuestion("Pesunesteen tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Äänimerkin toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Seisontavalon tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Peruutusvalon toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Ovien lukkojen, saranoiden ja rajoittimien tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Jäähdytysnestemäärän tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Akun tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Turvavöiden tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Muu vika", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Suodattimen kunnon tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Jäähdytysnestemäärän tarkastus", 2));
+		optionalQuestions
+				.add(new PointsQuestion("Rengaspaineiden tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Varapyörä tai renkaantäyttölaite puuttuu - huomioidaanko", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Ajovalojen korkeudensäätölaitteen tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Tuulilasinpyyhkimien kunnon tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Ohjaustehostimen nestemäärän tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Ajovalojen suuntauksen tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Varapyörän ilmanpaineen tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Suuntavalon tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Takalasin pyyhkimen sulan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Lasinpesurin toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Kaukovalon toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Sisä-, ovi-, tai tavaratilan valon tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Jarrulevyjen tai -palojen tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Jäähdytysnesteen pakkaskeston tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Ajovalonpesimen toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Akun kiinnityksen tarkastus",
+				2));
 		return optionalQuestions;
+
 	}
 }
