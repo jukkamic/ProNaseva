@@ -149,7 +149,7 @@
 		<c:choose>
 			<c:when test="${question.multipleSelectionsAllowed == true}">
 				<c:forEach var="option" items="${question.options}">
-					<label class="checkbox" style="">											
+					<label class="checkbox">											
 						<sf:checkbox value="${option.option}" 
 							path="answers[${answerIndexCounter}].chosenSelections" label="${option.option}" />
 					</label>
@@ -428,6 +428,7 @@
 					</c:if>
 				</c:if>
 			</c:if>
+			<input type="hidden" id="addQuestionToReportPart" name="addQuestionToReportPart" value="${editReportPartNumber}"/>
 			<input type="hidden" id="addQuestionToGroup" name="addQuestionToGroup" />
 			<c:if test="${not empty questionGroup.optionalQuestions}">
 				<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index})" class="btn btn-primary"> Lisää kysymys</a>
@@ -440,7 +441,9 @@
 		</div>
 		</div>
 		
-												
+	<c:if test="${not empty questionGroup.optionalQuestions}">
+		<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
+	</c:if>				
 <!-- QuestionGroup loop end -->	
 	</c:forEach> 
 	<br><br>
@@ -488,71 +491,67 @@ $("[data-toggle='buttons'] .btn").live('click', function(evt){
 <script>
    function navigateToReportPart(reportPartIndex)
    {
-           
-      document.getElementById("navigateToReportPart").value = reportPartIndex;
+      
       document.getElementById('editReportForm').submit();
    }
 
    function addOptionalQuestion(questionGroupIndex)
    {
+	   
 		document.getElementById("addQuestionToGroup").value = questionGroupIndex;
 		document.getElementById("editReportForm").submit();
 		
 	   }
 </script>
 
+<script>
+ $(document).on("click", ".deleteReport", function(e) {
+     bootbox.dialog({
+   	  message: "Poista raportti?",
+   	  title: "Vahvista",
+   	  buttons: {
+   	    cancel: {
+   	      label: "Peruuta",
+   	      className: "btn-primary",
+   	      callback: function() {
+   	        
+   	      }
+   	    },
+   	    confirm: {
+   	      label: "Poista",
+   	      className: "btn-danger",
+   	      callback: function() {
+   	    	window.location.href = "deleteReport"
+   	      }
+   	    }
+   	  }
+   	});
+     });
 
-
-
-		
-		<script>
-        $(document).on("click", ".deleteReport", function(e) {
-            bootbox.dialog({
-          	  message: "Poista raportti?",
-          	  title: "Vahvista",
-          	  buttons: {
-          	    cancel: {
-          	      label: "Peruuta",
-          	      className: "btn-primary",
-          	      callback: function() {
-          	        
-          	      }
-          	    },
-          	    confirm: {
-          	      label: "Poista",
-          	      className: "btn-danger",
-          	      callback: function() {
-          	    	window.location.href = "deleteReport"
-          	      }
-          	    }
-          	  }
-          	});
-            });
-
-        $(document).on("click", ".remove", function(e) {
-            bootbox.dialog({
-          	  message: "Hylkää muutokset?",
-          	  title: "Vahvista",
-          	  buttons: {
-          	    cancel: {
-          	      label: "Peruuta",
-          	      className: "btn-primary",
-          	      callback: function() {
-          	        
-          	      }
-          	    },
-          	    confirm: {
-          	      label: "Hylkää muutokset",
-          	      className: "btn-danger",
-          	      callback: function() {
-          	    	window.location.href = "/ProNaseva/"
-          	      }
-          	    }
-          	  }
-          	});
-            });
-        
-       </script>
+ $(document).on("click", ".remove", function(e) {
+     bootbox.dialog({
+   	  message: "Hylkää muutokset?",
+   	  title: "Vahvista",
+   	  buttons: {
+   	    cancel: {
+   	      label: "Peruuta",
+   	      className: "btn-primary",
+   	      callback: function() {
+   	        
+   	      }
+   	    },
+   	    confirm: {
+   	      label: "Hylkää muutokset",
+   	      className: "btn-danger",
+   	      callback: function() {
+   	    	window.location.href = "/ProNaseva/"
+   	      }
+   	    }
+   	  }
+   	});
+     });
+ 
+</script>
 		
 
 		

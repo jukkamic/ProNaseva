@@ -32,6 +32,7 @@ import fi.testcenter.domain.answer.CostListingAnswer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.ImportantPointsItem;
 import fi.testcenter.domain.answer.MultipleChoiceAnswer;
+import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.answer.PointsAnswer;
 import fi.testcenter.domain.answer.TextAnswer;
 import fi.testcenter.domain.question.CostListingQuestion;
@@ -589,6 +590,8 @@ public class Report {
 								+ questionGroupScoreObject.getMaxScore());
 
 				questionGroupIndex++;
+				if (questionGroup.getOptionalQuestions().size() > 0)
+					answerIndexCounter++;
 
 			}
 
@@ -688,9 +691,14 @@ public class Report {
 					}
 
 				}
+				List<Question> optionalQuestions = questionGroup
+						.getOptionalQuestions();
+				if (optionalQuestions.size() > 0)
+					reportAnswerList.add(new OptionalQuestionsAnswer());
+
 			}
 		}
 		answers = reportAnswerList;
-	}
 
+	}
 }

@@ -1,6 +1,7 @@
 package fi.testcenter.web;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,7 +19,19 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
+import fi.testcenter.domain.answer.Answer;
+import fi.testcenter.domain.answer.CostListingAnswer;
+import fi.testcenter.domain.answer.ImportantPointsAnswer;
+import fi.testcenter.domain.answer.MultipleChoiceAnswer;
+import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
+import fi.testcenter.domain.answer.PointsAnswer;
+import fi.testcenter.domain.answer.TextAnswer;
+import fi.testcenter.domain.question.CostListingQuestion;
+import fi.testcenter.domain.question.ImportantPointsQuestion;
+import fi.testcenter.domain.question.MultipleChoiceQuestion;
+import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.question.TextQuestion;
 import fi.testcenter.domain.report.QuestionGroup;
 import fi.testcenter.domain.report.QuestionGroupScore;
 import fi.testcenter.domain.report.Report;
@@ -32,7 +46,8 @@ import fi.testcenter.service.WorkshopService;
 @Controller
 @RequestMapping("/")
 @SessionAttributes(value = { "reportTemplate", "report", "formAnswers",
-		"workshops", "readyReport" })
+		"workshops", "readyReport", "addQuestionToGroup",
+		"addQuestionToReportPart" })
 public class ReportController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
@@ -108,10 +123,13 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/saveReport", method = RequestMethod.POST)
-	public String submitReport(HttpServletRequest request, Model model,
+	public String submitReport(
+			HttpServletRequest request,
+			Model model,
 			@ModelAttribute("report") Report report,
 			@RequestParam("navigateToReportPart") Integer navigateToReportPart,
-			@RequestParam("addQuestionToGroup") Integer addQuestionToGroup) {
+			@RequestParam("addQuestionToGroup") Integer addQuestionToGroup,
+			@RequestParam("addQuestionToReportPart") Integer addQuestionToReportPart) {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
@@ -161,8 +179,22 @@ public class ReportController {
 			return "report/editReport";
 
 		} else if (addQuestionToGroup != null) {
-			log.debug("add question to Group");
-			return "report/editReport";
+			List<Question> Qlist = report.getReportTemplate().getReportParts()
+					.get(addQuestionToReportPart).getQuestionGroups()
+					.get(addQuestionToGroup).getOptionalQuestions();
+			model.addAttribute("optionalQuestions", report.getReportTemplate()
+					.getReportParts().get(addQuestionToReportPart)
+					.getQuestionGroups().get(addQuestionToGroup)
+					.getOptionalQuestions());
+			log.debug("Add to part : " + addQuestionToReportPart + " group "
+					+ addQuestionToGroup + " list size: " + Qlist.size());
+			model.addAttribute("addQuestionToReportPart",
+					addQuestionToReportPart);
+			model.addAttribute("addQuestionToGroup", addQuestionToGroup);
+			model.addAttribute("chosenQuestions", new ChosenQuestions());
+			model.addAttribute("report", report);
+
+			return "report/addOptionalQuestions";
 		}
 
 		else {
@@ -185,6 +217,110 @@ public class ReportController {
 
 			return "report/showReport";
 		}
+	}
+
+	@RequestMapping(value = "/addChosenQuestions", method = RequestMethod.POST)
+	public String addChosenQuestions(Model model,
+			@ModelAttribute("chosenQuestions") ChosenQuestions chosenQuestions,
+			BindingResult result, @ModelAttribute("report") Report report,
+			@ModelAttribute("addQuestionToReportPart") Integer reportPart,
+			@ModelAttribute("addQuestionToGroup") Integer questionGroup) {
+
+		ArrayList<Question> newChosenQuestionsList = new ArrayList<Question>();
+
+		log.debug("Report answer list: " + report.getAnswers().size());
+		List<Question> reportTemplateQuestionsList = report.getReportTemplate()
+				.getReportParts().get(reportPart).getQuestionGroups()
+				.get(questionGroup).getOptionalQuestions();
+
+		// Get Report answers List start index for optional questions
+		int answerIndex = -1;
+
+		for (int i = 0; i < reportPart; i++) {
+			for (QuestionGroup group : report.getReportTemplate()
+					.getReportParts().get(i).getQuestionGroups()) {
+				answerIndex = answerIndex + group.getQuestions().size();
+
+			}
+		}
+
+		for (int i = 0; i <= questionGroup; i++) {
+			answerIndex = answerIndex
+					+ report.getReportTemplate().getReportParts()
+							.get(reportPart).getQuestionGroups().get(i)
+							.getQuestions().size();
+
+		}
+
+		OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer) report
+				.getAnswers().get(answerIndex + 1);
+
+		// Tehdään lista käyttäjän valitsemista kysymyksistä
+
+		ArrayList<Question> chosenQuestionObjectList = new ArrayList<Question>();
+		for (int chosenQuestion : chosenQuestions.getChosenQuestions()) {
+			newChosenQuestionsList.add(reportTemplateQuestionsList
+					.get(chosenQuestion));
+
+		}
+
+		ArrayList<Answer> newAnswerList = new ArrayList<Answer>();
+
+		// Lisätään OptionalQuestionsAnswerin uusiin listoihin vanhat kysymys-
+		// ja vastaus-oliot
+
+		int i = 0;
+		for (Question existingQuestion : optionalAnswer.getQuestions()) {
+			if (chosenQuestionObjectList.contains(existingQuestion)) {
+				newChosenQuestionsList.add(existingQuestion);
+				newAnswerList.add(optionalAnswer.getAnswers().get(i));
+			} else {
+				// POISTETTAVA KAIKKI VANHAT VASTAUKSET KANNASTA
+
+			}
+
+			// Lisätään OptionalQuestionsAnswerin uusiin listoihin uudet
+			// kysymys- ja vastaus-oliot
+
+			for (Question newQuestion : chosenQuestionObjectList) {
+				if (!newChosenQuestionsList.contains(newQuestion)) {
+					newChosenQuestionsList.add(newQuestion);
+					if (newQuestion instanceof MultipleChoiceQuestion)
+						newAnswerList.add(new MultipleChoiceAnswer());
+					if (newQuestion instanceof PointsQuestion)
+						newAnswerList.add(new PointsAnswer());
+					if (newQuestion instanceof TextQuestion)
+						newAnswerList.add(new TextAnswer());
+					if (newQuestion instanceof ImportantPointsQuestion)
+						newAnswerList.add(new ImportantPointsAnswer());
+					if (newQuestion instanceof CostListingQuestion)
+						newAnswerList.add(new CostListingAnswer());
+
+				}
+			}
+			i++;
+		}
+
+		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
+		newAnswer.setQuestions(newChosenQuestionsList);
+		newAnswer.setAnswers(newAnswerList);
+
+		List<Answer> reportAnswerList = report.getAnswers();
+		reportAnswerList.set(answerIndex + 1, newAnswer);
+		report.setAnswers(reportAnswerList);
+		OptionalQuestionsAnswer testAnswer = (OptionalQuestionsAnswer) report
+				.getAnswers().get(answerIndex + 1);
+		PointsQuestion testQuestion = (PointsQuestion) testAnswer
+				.getQuestions().get(0);
+		log.debug("Ensimmäisen vaihtoehtoisen kysymyksen otsikko: "
+				+ testQuestion.getQuestion());
+
+		// TALLENNA ANSWERLIST
+
+		model.addAttribute("report", report);
+		model.addAttribute("initialAnswerIndexCounter", 0);
+		model.addAttribute("editReportPartNumber", 0);
+		return "report/editReport";
 	}
 
 	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)

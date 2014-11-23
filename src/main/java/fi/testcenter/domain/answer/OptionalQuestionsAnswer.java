@@ -1,5 +1,7 @@
 package fi.testcenter.domain.answer;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 
 import fi.testcenter.domain.question.Question;
@@ -7,22 +9,23 @@ import fi.testcenter.domain.question.Question;
 @Entity
 public class OptionalQuestionsAnswer extends Answer {
 
-	Question question;
-	Answer answer;
+	List<Question> questions;
+	List<Answer> answers;
 
-	public Question getQuestion() {
-		return question;
+	public List<Question> getQuestions() {
+		return questions;
 	}
 
-	public void setQuestion(Question question) {
-		this.question = question;
+	public void setQuestions(List<Question> questions) {
+		this.questions = questions;
 	}
 
-	public Answer getAnswer() {
-		return answer;
+	public List<Answer> getAnswers() {
+		return answers;
 	}
 
-	public void setAnswer(Answer answer) {
-		this.answer = answer;
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
 	}
+
 }
