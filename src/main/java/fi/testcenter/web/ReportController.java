@@ -179,15 +179,12 @@ public class ReportController {
 			return "report/editReport";
 
 		} else if (addQuestionToGroup != null) {
-			List<Question> Qlist = report.getReportTemplate().getReportParts()
-					.get(addQuestionToReportPart).getQuestionGroups()
-					.get(addQuestionToGroup).getOptionalQuestions();
+
 			model.addAttribute("optionalQuestions", report.getReportTemplate()
 					.getReportParts().get(addQuestionToReportPart)
 					.getQuestionGroups().get(addQuestionToGroup)
 					.getOptionalQuestions());
-			log.debug("Add to part : " + addQuestionToReportPart + " group "
-					+ addQuestionToGroup + " list size: " + Qlist.size());
+
 			model.addAttribute("addQuestionToReportPart",
 					addQuestionToReportPart);
 			model.addAttribute("addQuestionToGroup", addQuestionToGroup);
@@ -226,9 +223,6 @@ public class ReportController {
 			@ModelAttribute("addQuestionToReportPart") Integer reportPart,
 			@ModelAttribute("addQuestionToGroup") Integer questionGroup) {
 
-		ArrayList<Question> newChosenQuestionsList = new ArrayList<Question>();
-
-		log.debug("Report answer list: " + report.getAnswers().size());
 		List<Question> reportTemplateQuestionsList = report.getReportTemplate()
 				.getReportParts().get(reportPart).getQuestionGroups()
 				.get(questionGroup).getOptionalQuestions();
@@ -252,68 +246,73 @@ public class ReportController {
 
 		}
 
+		log.debug("answer index: " + answerIndex);
+		log.debug("answer class: "
+				+ report.getAnswers().get(answerIndex + 1).getClass());
+		for (int i : chosenQuestions.chosenQuestions) {
+			log.debug("chosen question " + i);
+		}
 		OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer) report
 				.getAnswers().get(answerIndex + 1);
 
 		// Tehdään lista käyttäjän valitsemista kysymyksistä
 
-		ArrayList<Question> chosenQuestionObjectList = new ArrayList<Question>();
-		for (int chosenQuestion : chosenQuestions.getChosenQuestions()) {
-			newChosenQuestionsList.add(reportTemplateQuestionsList
-					.get(chosenQuestion));
-
-		}
-
 		ArrayList<Answer> newAnswerList = new ArrayList<Answer>();
+		ArrayList<Question> newQuestionList = new ArrayList<Question>();
+
+		for (int questionIndex : chosenQuestions.chosenQuestions) {
+
+			Question question = reportTemplateQuestionsList.get(questionIndex);
+
+			newQuestionList.add(question);
+			if (!optionalAnswer.getQuestions().contains(question)) {
+				if (question instanceof MultipleChoiceQuestion) {
+					Answer mca = new MultipleChoiceAnswer();
+					mca.setQuestion(question);
+					newAnswerList.add(mca);
+				}
+				if (question instanceof PointsQuestion) {
+					Answer pa = new PointsAnswer();
+					pa.setQuestion(question);
+					newAnswerList.add(pa);
+				}
+				if (question instanceof TextQuestion) {
+					Answer ta = new TextAnswer();
+					ta.setQuestion(question);
+					newAnswerList.add(ta);
+				}
+				if (question instanceof ImportantPointsQuestion) {
+					Answer imp = new ImportantPointsAnswer();
+					imp.setQuestion(question);
+					newAnswerList.add(imp);
+				}
+				if (question instanceof CostListingQuestion) {
+					Answer cla = new CostListingAnswer();
+					cla.setQuestion(question);
+					newAnswerList.add(cla);
+				}
+			}
+
+			else {
+				Answer oldAnswer = new Answer();
+				for (Answer answer : optionalAnswer.getAnswers()) {
+					if (answer.getQuestion() == question)
+						oldAnswer = answer;
+				}
+				newAnswerList.add(oldAnswer);
+			}
+		}
 
 		// Lisätään OptionalQuestionsAnswerin uusiin listoihin vanhat kysymys-
 		// ja vastaus-oliot
 
-		int i = 0;
-		for (Question existingQuestion : optionalAnswer.getQuestions()) {
-			if (chosenQuestionObjectList.contains(existingQuestion)) {
-				newChosenQuestionsList.add(existingQuestion);
-				newAnswerList.add(optionalAnswer.getAnswers().get(i));
-			} else {
-				// POISTETTAVA KAIKKI VANHAT VASTAUKSET KANNASTA
-
-			}
-
-			// Lisätään OptionalQuestionsAnswerin uusiin listoihin uudet
-			// kysymys- ja vastaus-oliot
-
-			for (Question newQuestion : chosenQuestionObjectList) {
-				if (!newChosenQuestionsList.contains(newQuestion)) {
-					newChosenQuestionsList.add(newQuestion);
-					if (newQuestion instanceof MultipleChoiceQuestion)
-						newAnswerList.add(new MultipleChoiceAnswer());
-					if (newQuestion instanceof PointsQuestion)
-						newAnswerList.add(new PointsAnswer());
-					if (newQuestion instanceof TextQuestion)
-						newAnswerList.add(new TextAnswer());
-					if (newQuestion instanceof ImportantPointsQuestion)
-						newAnswerList.add(new ImportantPointsAnswer());
-					if (newQuestion instanceof CostListingQuestion)
-						newAnswerList.add(new CostListingAnswer());
-
-				}
-			}
-			i++;
-		}
-
 		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
-		newAnswer.setQuestions(newChosenQuestionsList);
+		newAnswer.setQuestions(newQuestionList);
 		newAnswer.setAnswers(newAnswerList);
 
 		List<Answer> reportAnswerList = report.getAnswers();
 		reportAnswerList.set(answerIndex + 1, newAnswer);
 		report.setAnswers(reportAnswerList);
-		OptionalQuestionsAnswer testAnswer = (OptionalQuestionsAnswer) report
-				.getAnswers().get(answerIndex + 1);
-		PointsQuestion testQuestion = (PointsQuestion) testAnswer
-				.getQuestions().get(0);
-		log.debug("Ensimmäisen vaihtoehtoisen kysymyksen otsikko: "
-				+ testQuestion.getQuestion());
 
 		// TALLENNA ANSWERLIST
 

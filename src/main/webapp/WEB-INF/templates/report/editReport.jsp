@@ -420,30 +420,32 @@
 				</div>	
 				<br>			
 			</c:if>
-			
-			<c:if test="${answerIndexCounter < fn:length(report.answers)}">
-				<c:if test="${report.answers[answerIndexCounter + 1] != null}">
-					<c:if test="${report.answers[answerIndexCounter + 1]['class'] == 'class fi.testcenter.domain.question.optionalQuestionsAnswer'}">
-						<p>[show optional answer]</p>
-					</c:if>
-				</c:if>
-			</c:if>
-			<input type="hidden" id="addQuestionToReportPart" name="addQuestionToReportPart" value="${editReportPartNumber}"/>
-			<input type="hidden" id="addQuestionToGroup" name="addQuestionToGroup" />
-			<c:if test="${not empty questionGroup.optionalQuestions}">
-				<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index})" class="btn btn-primary"> Lisää kysymys</a>
-				
-			</c:if>
-				
+		
+		<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" />
+						
 <!-- Questions loop end -->									
 			</c:forEach> 
-		</div>
-		</div>
-		</div>
 		
-	<c:if test="${not empty questionGroup.optionalQuestions}">
-		<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
-	</c:if>				
+		
+		
+		
+	<!-- Optional questions -->
+	
+		<input type="hidden" id="addQuestionToReportPart" name="addQuestionToReportPart" value="${editReportPartNumber}"/>
+		<input type="hidden" id="addQuestionToGroup" name="addQuestionToGroup" />
+		<c:if test='${not empty questionGroup.optionalQuestions}'>
+			
+			<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+			
+			<jsp:include page="/WEB-INF/templates/report/editOptionalQuestions.jsp" />
+			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
+			
+			<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index})" class="btn btn-primary"> Lisää kysymys</a>
+		
+		</c:if>
+		</div>
+		</div>
+	</div>
 <!-- QuestionGroup loop end -->	
 	</c:forEach> 
 	<br><br>
