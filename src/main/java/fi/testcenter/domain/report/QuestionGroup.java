@@ -30,6 +30,11 @@ public class QuestionGroup {
 	@OrderColumn(name = "ORDERINDEX")
 	private List<Question> questions = new ArrayList<Question>();
 
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "QUESTIONGROUP_QUESTION", joinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
+	@OrderColumn(name = "ORDERINDEX")
+	private List<Question> optionalQuestions;
+
 	private boolean showScore;
 	private int score;
 	private int maxScore;
@@ -116,5 +121,13 @@ public class QuestionGroup {
 
 	public void setScoreSmiley(String scoreSmiley) {
 		this.scoreSmiley = scoreSmiley;
+	}
+
+	public List<Question> getOptionalQuestions() {
+		return optionalQuestions;
+	}
+
+	public void setOptionalQuestions(List<Question> optionalQuestions) {
+		this.optionalQuestions = optionalQuestions;
 	}
 }

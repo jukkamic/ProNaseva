@@ -94,6 +94,7 @@ public class AutoasiReportTemplate {
 		questionList2.add(points5);
 
 		questionGroup2.setQuestions(questionList2);
+		questionGroup2.setOptionalQuestions(getOptionalQuestions());
 
 		questionGroups.add(questionGroup2);
 
@@ -1919,5 +1920,19 @@ public class AutoasiReportTemplate {
 		reportTemplate.setReportParts(reportParts);
 
 		return reportTemplate;
+	}
+
+	public static List<Question> getOptionalQuestions() {
+		List<Question> optionalQuestions = new ArrayList<Question>();
+		PointsQuestion optionalPoints1 = new PointsQuestion(
+				"Ensimmäinen valinnainen kysymys", 2);
+		optionalQuestions.add(optionalPoints1);
+		PointsQuestion optionalPoints2 = new PointsQuestion(
+				"Toinen valinnainen kysymys", 2);
+		optionalQuestions.add(optionalPoints2);
+		PointsQuestion optionalPoints3 = new PointsQuestion(
+				"Kolmas valinnainen kysymys", 2);
+		optionalQuestions.add(optionalPoints3);
+		return optionalQuestions;
 	}
 }

@@ -93,6 +93,9 @@ public class Report {
 	@Transient
 	private Long workshopId;
 
+	@Transient
+	private Long optionalQId;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "REPORT_USER", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
 	private User user;
