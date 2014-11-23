@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 
 <body>
@@ -420,6 +421,19 @@
 				<br>			
 			</c:if>
 			
+			<c:if test="${answerIndexCounter < fn:length(report.answers)}">
+				<c:if test="${report.answers[answerIndexCounter + 1] != null}">
+					<c:if test="${report.answers[answerIndexCounter + 1]['class'] == 'class fi.testcenter.domain.question.optionalQuestionsAnswer'}">
+						<p>[show optional answer]</p>
+					</c:if>
+				</c:if>
+			</c:if>
+			<input type="hidden" id="addQuestionToGroup" name="addQuestionToGroup" />
+			<c:if test="${not empty questionGroup.optionalQuestions}">
+				<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index})" class="btn btn-primary"> Lisää kysymys</a>
+				
+			</c:if>
+				
 <!-- Questions loop end -->									
 			</c:forEach> 
 		</div>
@@ -478,6 +492,13 @@ $("[data-toggle='buttons'] .btn").live('click', function(evt){
       document.getElementById("navigateToReportPart").value = reportPartIndex;
       document.getElementById('editReportForm').submit();
    }
+
+   function addOptionalQuestion(questionGroupIndex)
+   {
+		document.getElementById("addQuestionToGroup").value = questionGroupIndex;
+		document.getElementById("editReportForm").submit();
+		
+	   }
 </script>
 
 

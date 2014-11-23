@@ -30,8 +30,8 @@ public class QuestionGroup {
 	@OrderColumn(name = "ORDERINDEX")
 	private List<Question> questions = new ArrayList<Question>();
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "QUESTIONGROUP_QUESTION", joinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "QUESTIONGROUP_OPTIONALQUESTION", joinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"), inverseJoinColumns = @JoinColumn(name = "OPTIONALQUESTION_ID"))
 	@OrderColumn(name = "ORDERINDEX")
 	private List<Question> optionalQuestions;
 

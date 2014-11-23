@@ -110,7 +110,8 @@ public class ReportController {
 	@RequestMapping(value = "/saveReport", method = RequestMethod.POST)
 	public String submitReport(HttpServletRequest request, Model model,
 			@ModelAttribute("report") Report report,
-			@RequestParam("navigateToReportPart") Integer navigateToReportPart) {
+			@RequestParam("navigateToReportPart") Integer navigateToReportPart,
+			@RequestParam("addQuestionToGroup") Integer addQuestionToGroup) {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
@@ -159,7 +160,12 @@ public class ReportController {
 
 			return "report/editReport";
 
-		} else {
+		} else if (addQuestionToGroup != null) {
+			log.debug("add question to Group");
+			return "report/editReport";
+		}
+
+		else {
 
 			model.addAttribute("readyReport", report);
 			model.addAttribute("report", savedReport);
