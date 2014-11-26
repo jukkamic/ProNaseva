@@ -9,6 +9,7 @@
 
 <c:forEach var="question" items="${optionalQuestionsAnswer.questions}" varStatus="counter">	
 <c:set var="questionCounter" value="${questionCount + counter.index}" />
+	
 	<!-- Points question -->
 	<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
 	<h3>${questionCounter}. ${question.question}</h3>

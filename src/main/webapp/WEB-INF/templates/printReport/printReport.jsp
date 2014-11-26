@@ -327,10 +327,18 @@ lisäosana PDFCreator -->
 						<jsp:include page="/WEB-INF/templates/printReport/printReportSubQuestions.jsp" />
 					</div>				
 				</c:if>
-				
+				<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" />
 			</c:forEach> <!-- Question loop end -->
 									
-										
+			<c:if test='${not empty questionGroup.optionalQuestions}'>
+				<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
+				<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+			
+				<jsp:include page="/WEB-INF/templates/printReport/printOptionalQuestions.jsp" />
+				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
+			</c:if>
+			
+			
 			<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
 				<h3 style="padding-top: 24px; text-align: right;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
 				${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore}</h3>
