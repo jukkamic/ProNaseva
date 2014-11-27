@@ -6,18 +6,18 @@
 
 
 <c:forEach var="question" items="${optionalQuestionsAnswer.questions}" varStatus="counter">	
-<c:set var="questionCounter" value="${questionCount + counter.index}" />
+<c:set var="questionCounter" value="${questionOrderNumber + counter.index}" />
 
 <!-- Points question -->
 
 	<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
 		<div class="noPageBreak">
 		<div class="multipleChoice">																	
-		<h3>${questionGroupNumber}.${questionCounter}. ${question.question}</h3>
+		<h3 style="display: inline; text-align: top;">${questionGroupNumber}.${questionCounter}. ${question.question}</h3>
 		
 		<c:if test="${report.answers[answerIndexCounter].answers[counter.index].givenPoints != '-1'}">
 		
-			<h3 style="display: inline; float:right;">${report.answers[answerIndexCounter].answers[counter.index].givenPoints}/${report.answers[answerIndexCounter].questions[counter.index].maxPoints}</h3>
+			<h3 style="display: inline; float:right; text-align: top;">${report.answers[answerIndexCounter].answers[counter.index].givenPoints}/${report.answers[answerIndexCounter].questions[counter.index].maxPoints}</h3>
 		</c:if>
 		
 		</div>
@@ -29,8 +29,7 @@
 			<c:if test="${remarks !='' and remarks != null}"> 
 				<h4 style="padding-left: 0;">Huomioita:</h4>
 				<p style="padding-left: 0;">${report.answers[answerIndexCounter].answers[counter.index].remarks}</p>
-				
-				
+
 			</c:if>
 		</div>
 		

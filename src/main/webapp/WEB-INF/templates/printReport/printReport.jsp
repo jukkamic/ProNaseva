@@ -100,15 +100,18 @@ lisäosana PDFCreator -->
 			
 							
 			<!-- Questions loop -->
-			
+			<c:set var="questionOrderNumber" value="0" scope="request" />
 			<c:forEach var="question" items="${questionGroup.questions}" varStatus="questionCounter">
+			<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
+				<c:set var="questionOrderNumber" value="${questionOrderNumber + 1}" scope="request" />
+			</c:if>
 			
 			<!-- Multiple choice question -->
 				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.MultipleChoiceQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
-			
+					
 					<div class="noPageBreak">
 					<div class="multipleChoice">					
-					<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
+					<h3>${questionGroupCounter.count}.${questionOrderNumber}. ${question.question}</h3>
 					
 					
 					<c:if test="${report.answers[answerIndexCounter].showScore == true}">
@@ -204,17 +207,20 @@ lisäosana PDFCreator -->
 						
 				</c:if>
 
-						
+
 			<!-- Points question -->
 				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.PointsQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 			
 					<div class="noPageBreak">
-					<br>
-					<h3 style="display: inline">${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
-						<c:if test="${report.answers[answerIndexCounter].givenPoints != '-1'}">
-							<h3 style="float: right; display: inline;">${report.answers[answerIndexCounter].givenPoints}/${report.answers[answerIndexCounter].question.maxPoints}</h3>
-						</c:if>
+					<div class="multipleChoice">
 					
+					<h3 style="display: inline; text-align: top;">${questionGroupCounter.count}.${questionOrderNumber}. ${question.question}</h3>
+					
+						<c:if test="${report.answers[answerIndexCounter].givenPoints != '-1'}">
+							<h3 style="display: inline; float:right; text-align: top;">${report.answers[answerIndexCounter].givenPoints}/${report.answers[answerIndexCounter].question.maxPoints}</h3>
+							<br><br>
+						</c:if>
+					</div>
 					</div>
 					
 					<div class = "indentAnswer">
@@ -234,7 +240,7 @@ lisäosana PDFCreator -->
 				
 					<div class="noPageBreak">
 					
-						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
+						<h3>${questionGroupCounter.count}.${questionOrderNumber}. ${question.question}</h3>
 						
 						<p class="indentAnswer">${report.answers[answerIndexCounter].answer}</p> 
 					</div>
@@ -245,7 +251,7 @@ lisäosana PDFCreator -->
 			<!-- Cost listing question -->
 				<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion" and report.answers[answerIndexCounter].removeAnswerFromReport != "true"}'>
 				<div class="costListing">
-					<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.questionTopic}</h3>
+					<h3>${questionGroupCounter.count}.${questionOrderNumber}. ${question.questionTopic}</h3>
 												
 					<table style="width: 550px;">
 					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
@@ -276,7 +282,7 @@ lisäosana PDFCreator -->
 		<div class="importantPoints">
 					<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion" and report.answers[answerIndexCounter].removeAnswerFromReport != "true"}'>
 					<div class="importantPoints">
-						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
+						<h3>${questionGroupCounter.count}.${questionOrderNumber}. ${question.question}</h3>
 						<br>
 						
 						<table style="width: 550px;">
@@ -321,17 +327,19 @@ lisäosana PDFCreator -->
 				<c:if test="${not empty question.subQuestions}">
 					<c:set var="mainQuestion" value="${question}" scope="request" />
 					<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
-					<c:set var="mainQuestionNumber" value="${questionCounter.count}" scope="request" />
+					<c:set var="mainQuestionNumber" value="${questionOrderNumber}" scope="request" />
 					<div style="margin-left: 42px;">
 						<jsp:include page="/WEB-INF/templates/printReport/printReportSubQuestions.jsp" />
 					</div>				
 				</c:if>
-				<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" />
+				
 			</c:forEach> <!-- Question loop end -->
-									
+	
+	<!-- Optional questions -->
 			<c:if test='${not empty questionGroup.optionalQuestions}'>
 				<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
 				<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+				<c:set var="questionOrderNumber" value="${questionOrderNumber + 1}" scope="request" />
 			
 				<jsp:include page="/WEB-INF/templates/printReport/printOptionalQuestions.jsp" />
 				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />

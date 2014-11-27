@@ -68,6 +68,7 @@
 	<c:if test="${subQuestion['class'] == 'class fi.testcenter.domain.question.PointsQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 
 		<div class="noPageBreak">
+		
 		<br>
 		<h3 style="display: inline">${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
 			<c:if test="${report.answers[answerIndexCounter].givenPoints != '-1'}">
