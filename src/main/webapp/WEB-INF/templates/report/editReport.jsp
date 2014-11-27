@@ -542,7 +542,7 @@ $("[data-toggle='buttons'] .btn").live('click', function(evt){
 <script>
    function navigateToReportPart(reportPartIndex)
    {
-      
+	   document.getElementById("navigateToReportPart").value = reportPartIndex;
       document.getElementById('editReportForm').submit();
    }
 

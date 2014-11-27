@@ -170,6 +170,8 @@ public class ReportController {
 					for (Question question : questionGroup.getQuestions()) {
 						answerIndex += question.getSubQuestions().size();
 					}
+					if (questionGroup.getOptionalQuestions().size() > 0)
+						answerIndex++;
 				}
 			}
 			model.addAttribute("initialAnswerIndexCounter", answerIndex);

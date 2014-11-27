@@ -200,16 +200,17 @@
 	</c:if>
 	
 <!-- Cost listing question -->
-		<div class="checkbox" style="font-size: 1.2em;">
-			<label>											
-			<sf:checkbox value='true'
-				path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
-			
-			</label>
-			<br>
-		</div>	
+
 						<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
 							<h3>${subQuestion.questionTopic}</h3>
+									<div class="checkbox" style="font-size: 1.2em;">
+										<label>											
+										<sf:checkbox value='true'
+											path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+										
+										</label>
+										<br>
+									</div>	
 								<c:forEach var="listQuestion" items="${subQuestion.questions}" varStatus="costListingAnswerCounter">
 									<h4>${listQuestion}</h4>
 									<sf:input style="width: 5em" path="answers[${answerIndexCounter}].answers[${costListingAnswerCounter.index}]" /> €
