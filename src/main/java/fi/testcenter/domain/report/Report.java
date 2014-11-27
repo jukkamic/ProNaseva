@@ -435,102 +435,26 @@ public class Report {
 				questionGroupScoreObject.setQuestionGroup(questionGroup);
 
 				for (Question question : questionGroup.getQuestions()) {
-
-					if (question instanceof MultipleChoiceQuestion) {
-						MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
-						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
-								.get(answerIndexCounter);
-						mca.setShowScore(false);
-
-						int maxScore = 0;
-						for (MultipleChoiceOption option : mcq.getOptions()) {
-							if (option.getPoints() != -1
-									&& option.getPoints() > maxScore) {
-								maxScore = option.getPoints();
-
-							}
-						}
-
-						mca.setMaxScore(maxScore); // Asetetaan
-													// monivalintakysymyksen
-													// maksimipistemäärä
-
-						// Lasketaan pisteet jos käyttäjä on tehnyt valinnan ja
-						// monivalinta ei ole sellainen, jota ei pisteytetä
-						// (pistemäärä -1)
-
-						if (mca.getChosenOptionIndex() != -1
-								&& mcq.getOptions()
-										.get(mca.getChosenOptionIndex())
-										.getPoints() != -1) {
-
-							mca.setShowScore(true);
-							mca.setScore(mcq.getOptions()
-									.get(mca.getChosenOptionIndex())
-									.getPoints());
-
-							// Lisätään kysymysryhmän pisteisiin ja asetetaan
-							// kysymysryhmän pisteet näkyviksi raportissa
-
-							questionGroupScoreObject.setShowScore(true);
-							questionGroupScoreObject
-									.setMaxScore(questionGroupScoreObject
-											.getMaxScore() + maxScore);
-
-							questionGroupScoreObject
-									.setScore(questionGroupScoreObject
-											.getScore()
-											+ mcq.getOptions()
-													.get(mca.getChosenOptionIndex())
-													.getPoints());
-
-							reportPartScoreObject.setShowScore(true);
-						}
-
-					}
-
-					if (question instanceof PointsQuestion) {
-
-						PointsQuestion pointsQuestion = (PointsQuestion) question;
-						PointsAnswer pointsAnswer = (PointsAnswer) answers
-								.get(answerIndexCounter);
-						if (pointsAnswer.getGivenPoints() != -1) {
-							questionGroupScoreObject.setShowScore(true);
-							questionGroupScoreObject
-									.setMaxScore(questionGroupScoreObject
-											.getMaxScore()
-											+ pointsQuestion.getMaxPoints());
-							questionGroupScoreObject
-									.setScore(questionGroupScoreObject
-											.getScore()
-											+ pointsAnswer.getGivenPoints());
-							reportPartScoreObject.setShowScore(true);
-
-						}
-					}
-
-					answerIndexCounter++;
-
-					// subQuestions loop
-
-					for (Question subQuestion : question.getSubQuestions()) {
-
-						if (subQuestion instanceof MultipleChoiceQuestion) {
-							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
+					if (answers.get(answerIndexCounter)
+							.isRemoveAnswerFromReport() != true) {
+						if (question instanceof MultipleChoiceQuestion) {
+							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
 							MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
 									.get(answerIndexCounter);
-
-							// Lasketan maksimipisteet
+							mca.setShowScore(false);
 
 							int maxScore = 0;
 							for (MultipleChoiceOption option : mcq.getOptions()) {
 								if (option.getPoints() != -1
 										&& option.getPoints() > maxScore) {
 									maxScore = option.getPoints();
+
 								}
 							}
 
-							mca.setMaxScore(maxScore);
+							mca.setMaxScore(maxScore); // Asetetaan
+														// monivalintakysymyksen
+														// maksimipistemäärä
 
 							// Lasketaan pisteet jos käyttäjä on tehnyt valinnan
 							// ja
@@ -549,8 +473,7 @@ public class Report {
 
 								// Lisätään kysymysryhmän pisteisiin ja
 								// asetetaan
-								// kysymysryhmän ja raportin osan pisteet
-								// näkyviksi raportissa
+								// kysymysryhmän pisteet näkyviksi raportissa
 
 								questionGroupScoreObject.setShowScore(true);
 								questionGroupScoreObject
@@ -565,11 +488,96 @@ public class Report {
 														.getPoints());
 
 								reportPartScoreObject.setShowScore(true);
-
 							}
 
 						}
 
+						if (question instanceof PointsQuestion) {
+
+							PointsQuestion pointsQuestion = (PointsQuestion) question;
+							PointsAnswer pointsAnswer = (PointsAnswer) answers
+									.get(answerIndexCounter);
+							if (pointsAnswer.getGivenPoints() != -1) {
+								questionGroupScoreObject.setShowScore(true);
+								questionGroupScoreObject
+										.setMaxScore(questionGroupScoreObject
+												.getMaxScore()
+												+ pointsQuestion.getMaxPoints());
+								questionGroupScoreObject
+										.setScore(questionGroupScoreObject
+												.getScore()
+												+ pointsAnswer.getGivenPoints());
+								reportPartScoreObject.setShowScore(true);
+
+							}
+						}
+					}
+					answerIndexCounter++;
+
+					// subQuestions loop
+
+					for (Question subQuestion : question.getSubQuestions()) {
+						if (answers.get(answerIndexCounter)
+								.isRemoveAnswerFromReport() != true) {
+
+							if (subQuestion instanceof MultipleChoiceQuestion) {
+								MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
+								MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
+										.get(answerIndexCounter);
+
+								// Lasketan maksimipisteet
+
+								int maxScore = 0;
+								for (MultipleChoiceOption option : mcq
+										.getOptions()) {
+									if (option.getPoints() != -1
+											&& option.getPoints() > maxScore) {
+										maxScore = option.getPoints();
+									}
+								}
+
+								mca.setMaxScore(maxScore);
+
+								// Lasketaan pisteet jos käyttäjä on tehnyt
+								// valinnan
+								// ja
+								// monivalinta ei ole sellainen, jota ei
+								// pisteytetä
+								// (pistemäärä -1)
+
+								if (mca.getChosenOptionIndex() != -1
+										&& mcq.getOptions()
+												.get(mca.getChosenOptionIndex())
+												.getPoints() != -1) {
+
+									mca.setShowScore(true);
+									mca.setScore(mcq.getOptions()
+											.get(mca.getChosenOptionIndex())
+											.getPoints());
+
+									// Lisätään kysymysryhmän pisteisiin ja
+									// asetetaan
+									// kysymysryhmän ja raportin osan pisteet
+									// näkyviksi raportissa
+
+									questionGroupScoreObject.setShowScore(true);
+									questionGroupScoreObject
+											.setMaxScore(questionGroupScoreObject
+													.getMaxScore() + maxScore);
+
+									questionGroupScoreObject
+											.setScore(questionGroupScoreObject
+													.getScore()
+													+ mcq.getOptions()
+															.get(mca.getChosenOptionIndex())
+															.getPoints());
+
+									reportPartScoreObject.setShowScore(true);
+
+								}
+
+							}
+						}
 						answerIndexCounter++;
 					}
 

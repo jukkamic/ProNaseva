@@ -16,16 +16,22 @@
 	<!-- Multiple choice question -->
 
 	<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
-	
-	
-					<h3>${subQuestion.question}</h3>
+			<h3>${subQuestion.question}</h3>
+			<div class="checkbox" style="font-size: 1.2em;">
+				<label>											
+				<sf:checkbox value='true'
+					path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+				
+				</label>
+				<br>
+			</div>	
 					<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 							<label class="checkbox">											
 								<sf:checkbox value='true' path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
 							</label>
 						<br>
 					</c:if>
-					
+				
 						
 		<c:choose>
 			<c:when test="${subQuestion.multipleSelectionsAllowed == true}">
@@ -97,6 +103,14 @@
 	<!-- Points question -->
 	<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
 	<h3>${subQuestion.question}</h3>
+		<div class="checkbox" style="font-size: 1.2em;">
+			<label>											
+			<sf:checkbox value='true'
+				path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+			
+			</label>
+			<br>
+		</div>	
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 			<div class="checkbox" style="font-size: 1.2em;">
 				<label>											
@@ -107,6 +121,7 @@
 			</div>
 			<br>
 		</c:if>
+
 			
 			<div class="Demo-boot" style="padding-top: 15px;">
 					<div class="btn-group" data-toggle="buttons">
@@ -157,13 +172,21 @@
 	<!-- Text question -->
 	<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
 		<h3>${subQuestion.question}</h3>
+		<div class="checkbox" style="font-size: 1.2em;">
+			<label>											
+			<sf:checkbox value='true'
+				path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+			
+			</label>
+			<br>
+		</div>	
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 				<label class="checkbox">											
 				<sf:checkbox value='true' path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
 				</label>
 			<br>
 		</c:if>
-		
+
 		<br>
 		<c:choose>
 				<c:when test="${subQuestion.textAreaInput == true }">
@@ -177,6 +200,14 @@
 	</c:if>
 	
 <!-- Cost listing question -->
+		<div class="checkbox" style="font-size: 1.2em;">
+			<label>											
+			<sf:checkbox value='true'
+				path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+			
+			</label>
+			<br>
+		</div>	
 						<c:if test='${subQuestion["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
 							<h3>${subQuestion.questionTopic}</h3>
 								<c:forEach var="listQuestion" items="${subQuestion.questions}" varStatus="costListingAnswerCounter">

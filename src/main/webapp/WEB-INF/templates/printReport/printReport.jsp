@@ -102,10 +102,9 @@ lisäosana PDFCreator -->
 			<!-- Questions loop -->
 			
 			<c:forEach var="question" items="${questionGroup.questions}" varStatus="questionCounter">
-				
 			
 			<!-- Multiple choice question -->
-				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.MultipleChoiceQuestion'}">
+				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.MultipleChoiceQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 			
 					<div class="noPageBreak">
 					<div class="multipleChoice">					
@@ -207,7 +206,7 @@ lisäosana PDFCreator -->
 
 						
 			<!-- Points question -->
-				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.PointsQuestion'}">
+				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.PointsQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 			
 					<div class="noPageBreak">
 					<br>
@@ -231,7 +230,7 @@ lisäosana PDFCreator -->
 				</c:if>
 									
 	<!-- Text field question -->
-				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.TextQuestion'}">
+				<c:if test="${question['class'] == 'class fi.testcenter.domain.question.TextQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 				
 					<div class="noPageBreak">
 					
@@ -244,7 +243,7 @@ lisäosana PDFCreator -->
 	
 											
 			<!-- Cost listing question -->
-				<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
+				<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion" and report.answers[answerIndexCounter].removeAnswerFromReport != "true"}'>
 				<div class="costListing">
 					<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.questionTopic}</h3>
 												
@@ -275,7 +274,7 @@ lisäosana PDFCreator -->
 										
 		<!-- ListAndScoreImportantPoints -->
 		<div class="importantPoints">
-					<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
+					<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion" and report.answers[answerIndexCounter].removeAnswerFromReport != "true"}'>
 					<div class="importantPoints">
 						<h3>${questionGroupCounter.count}.${questionCounter.count}. ${question.question}</h3>
 						<br>

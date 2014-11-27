@@ -139,6 +139,17 @@
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
 																										
 									<h3>${questionCounter.count}. ${question.question}</h3>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+										<div class="checkbox" style="font-size: 1.2em;">
+											<label>											
+												<sf:checkbox value='true'
+													path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+				
+											</label>
+											<br>
+										</div>
+									</c:if>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
 									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 											<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
@@ -148,8 +159,9 @@
 											</label>
 											
 											</div>
-											<br>
+											
 									</c:if>
+
 									
 								<c:choose>
 								<c:when test="${question.multipleSelectionsAllowed == true}">
@@ -215,6 +227,7 @@
 									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
 									
 									<br><br>
+									</c:if>
 								</c:if>
 
 		<!-- Points question -->
@@ -222,6 +235,17 @@
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
 																										
 									<h3>${questionCounter.count}. ${question.question}</h3>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+										<div class="checkbox" style="font-size: 1.2em;">
+											<label>											
+												<sf:checkbox value='true'
+													path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+				
+											</label>
+											<br>
+										</div>
+									</c:if>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
 									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 											<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
@@ -261,11 +285,23 @@
 									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
 									
 									<br><br>
+									</c:if>
 								</c:if>
 	
 		<!--  Text question -->
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
 									<h3>${questionCounter.count}. ${question.question}</h3>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+										<div class="checkbox" style="font-size: 1.2em;">
+											<label>											
+												<sf:checkbox value='true'
+													path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+				
+											</label>
+											<br>
+										</div>
+									</c:if>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
 									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 											<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
@@ -280,12 +316,24 @@
 									
 									<br>
 									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
+									</c:if>
 								</c:if>
 								
 								
 	<!-- Cost listing question -->
 							<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
 								<h3>${questionCounter.count}. ${question.questionTopic}</h3>
+								<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+									<div class="checkbox" style="font-size: 1.2em;">
+										<label>											
+											<sf:checkbox value='true'
+												path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+			
+										</label>
+										<br>
+									</div>
+								</c:if>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
 									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 											<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
@@ -308,11 +356,23 @@
 										<h4><b>${question.total}</b></h4>
 										<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].total} €</p>
 									<br>
+								</c:if>
 							</c:if>
 								
 <!-- ListAndScoreImportantPoints -->
 							<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
 								<h3>${questionCounter.count}. ${question.question}</h3>
+								<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+									<div class="checkbox" style="font-size: 1.2em;">
+										<label>											
+											<sf:checkbox value='true'
+												path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+			
+										</label>
+										<br>
+									</div>
+								</c:if>
+									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
 								<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 													<div class="checkbox" style="font-size: 1.2em;">
 													<label>											
@@ -388,7 +448,7 @@
 										</table>
 									</div>
 									</c:forEach>
-									
+								</c:if>	
 										
 							</c:if>	
 								

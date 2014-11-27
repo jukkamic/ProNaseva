@@ -135,6 +135,14 @@
 										
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
 		<h3>${questionCounter.count}. ${question.question}</h3>
+		<div class="checkbox" style="font-size: 1.2em;">
+			<label>											
+			<sf:checkbox value='true'
+				path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+			
+			</label>
+			<br>
+		</div>
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 			<div class="checkbox" style="font-size: 1.2em;">
 			<label>											
@@ -144,8 +152,9 @@
 			</label>
 			
 			</div>
-			<br>
+			
 		</c:if>
+
 		<c:choose>
 			<c:when test="${question.multipleSelectionsAllowed == true}">
 				<c:forEach var="option" items="${question.options}">
@@ -214,6 +223,14 @@
 		<!-- Points question -->
 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
 			<h3>${questionCounter.count}. ${question.question}</h3>
+			<div class="checkbox" style="font-size: 1.2em;">
+				<label>											
+				<sf:checkbox value='true'
+					path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+				
+				</label>
+				<br>
+			</div>
 				<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 					<div class="checkbox" style="font-size: 1.2em;">
 						<label>											
@@ -224,7 +241,6 @@
 					</div>
 					<br>
 				</c:if>
-		
 		
 			<div class="Demo-boot" style="padding-top: 15px;">
 					<div class="btn-group" data-toggle="buttons">
@@ -275,6 +291,15 @@
 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
 				
 				<h3>${questionCounter.count}. ${question.question}</h3>
+				
+				<div class="checkbox" style="font-size: 1.2em;">
+					<label>											
+					<sf:checkbox value='true'
+						path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+					
+					</label>
+					<br>
+				</div>
 				<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 								<div class="checkbox" style="font-size: 1.2em;">
 								<label>											
@@ -286,7 +311,8 @@
 								</div>
 								<br>
 				</c:if>
-				
+					
+
 				<c:choose>
 					<c:when test="${question.textAreaInput == true }">
 						<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].answer" />
@@ -301,6 +327,14 @@
 		<!-- Cost listing question -->
 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
 				<h3>${questionCounter.count}. ${question.questionTopic}</h3>
+				<div class="checkbox" style="font-size: 1.2em;">
+					<label>											
+					<sf:checkbox value='true'
+						path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+					
+					</label>
+					<br>
+				</div>
 					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
 						<h4>${listQuestion}</h4>
 						<sf:input style="width: 5em" path="answers[${answerIndexCounter}].answers[${costListingAnswerCounter.index}]" /> €
@@ -315,6 +349,14 @@
 		<!-- ListAndScoreImportantPoints -->
 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
 				<h3>${questionCounter.count}. ${question.question}</h3>
+				<div class="checkbox" style="font-size: 1.2em;">
+					<label>											
+					<sf:checkbox value='true'
+						path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+					
+					</label>
+					<br>
+				</div>
 				<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 									<div class="checkbox" style="font-size: 1.2em;">
 									<label>											
@@ -326,7 +368,14 @@
 									</div>
 									<br>
 					</c:if>
-
+					<div class="checkbox" style="font-size: 1.2em;">
+						<label>											
+						<sf:checkbox value='true'
+							path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+						
+						</label>
+						<br>
+					</div>
 					<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
 					<div style="border-bottom: 3px solid #eee;">
 						<h3>${questionItem}</h3>

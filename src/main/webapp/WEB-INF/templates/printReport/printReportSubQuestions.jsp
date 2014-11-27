@@ -13,7 +13,7 @@
 
 <!-- Multiple choice question -->
 <c:if
-	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.MultipleChoiceQuestion'}">
+	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.MultipleChoiceQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 
 	<div class="noPageBreak">
 	<div class="multipleChoice">
@@ -65,7 +65,7 @@
 </c:if>
 						
 <!-- Points question -->
-	<c:if test="${subQuestion['class'] == 'class fi.testcenter.domain.question.PointsQuestion'}">
+	<c:if test="${subQuestion['class'] == 'class fi.testcenter.domain.question.PointsQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 
 		<div class="noPageBreak">
 		<br>
@@ -90,7 +90,7 @@
 
 <!-- Text question -->
 <c:if
-	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.TextQuestion'}">
+	test="${subQuestion['class'] == 'class fi.testcenter.domain.question.TextQuestion' and report.answers[answerIndexCounter].removeAnswerFromReport != 'true'}">
 	<h3>${questionGroupNumber}.${mainQuestionNumber}.${subQuestionCounter.count}. ${subQuestion.question}</h3>
 	<p class="indentAnswer">${report.answers[answerIndexCounter].answer}</p>
 </c:if> 

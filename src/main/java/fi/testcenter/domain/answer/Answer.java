@@ -20,6 +20,7 @@ public class Answer {
 	private int score;
 	private int maxScore;
 	private boolean highlightAnswer;
+	private boolean removeAnswerFromReport = false;
 
 	public Answer() {
 
@@ -71,6 +72,14 @@ public class Answer {
 
 	public void setMaxScore(int maxScore) {
 		this.maxScore = maxScore;
+	}
+
+	public boolean isRemoveAnswerFromReport() {
+		return removeAnswerFromReport;
+	}
+
+	public void setRemoveAnswerFromReport(boolean removeAnswerFromReport) {
+		this.removeAnswerFromReport = removeAnswerFromReport;
 	}
 
 }
