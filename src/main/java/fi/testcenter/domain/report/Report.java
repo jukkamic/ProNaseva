@@ -390,7 +390,32 @@ public class Report {
 
 					questionCounter++;
 				}
+				if (questionGroup.getOptionalQuestions().size() > 0) {
+					OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) this.answers
+							.get(answerIndexCounter);
+					if (oqa.getQuestions() != null) {
+						int optionalsIndexCounter = 0;
+
+						for (Question question : oqa.getQuestions()) {
+							if (oqa.getAnswers().get(optionalsIndexCounter)
+									.isHighlightAnswer() == true) {
+								ReportHighlight highlight = new ReportHighlight(
+										this, reportPart, questionGroup, oqa
+												.getAnswers().get(
+														optionalsIndexCounter));
+								highlight
+										.setQuestionGroupOrderNumber(questionGroupCounter);
+								highlight
+										.setQuestionOrderNumber(questionCounter);
+								reportHighlightList.add(highlight);
+							}
+							optionalsIndexCounter++;
+						}
+						answerIndexCounter++;
+					}
+				}
 				questionGroupCounter++;
+
 			}
 		}
 
