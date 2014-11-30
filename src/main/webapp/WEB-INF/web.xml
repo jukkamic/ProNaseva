@@ -58,9 +58,24 @@
     </filter-mapping>
     
     <session-config>
-    <session-timeout>120</session-timeout>
-</session-config>
+    	<session-timeout>-1</session-timeout>
+	</session-config>
 
+  <filter>
+    <filter-name>CharsetFilter</filter-name>
+    <filter-class>fi.testcenter.filters.CharsetFilter</filter-class>
+      <init-param>
+        <param-name>requestEncoding</param-name>
+        <param-value>UTF-8</param-value>
+      </init-param>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>CharsetFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  
 	<welcome-file-list>
 		<welcome-file></welcome-file>
 	</welcome-file-list>

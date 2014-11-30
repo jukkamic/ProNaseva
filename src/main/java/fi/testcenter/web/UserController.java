@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.domain.User;
 import fi.testcenter.service.UserAccountService;
 
-@SessionAttributes({ "user", "roles" })
+@SessionAttributes({ "user", "roles", "oldPassword" })
 @Controller
 public class UserController {
 
@@ -93,7 +93,7 @@ public class UserController {
 	@RequestMapping(value = "/admin/newUser", method = RequestMethod.POST)
 	public String processNewUserForm(@ModelAttribute("user") User user,
 			@RequestParam("confirmPassword") String confirmPassword,
-			BindingResult result) {
+			BindingResult result, Model model) {
 
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 		us.saveUser(user);
@@ -103,7 +103,7 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/editUser", method = RequestMethod.GET)
 	public String prepareEditUserForm(Model model,
-			@RequestParam("id") Integer id) {
+			@RequestParam("id") Integer id, @ModelAttribute("user") User user) {
 
 		LinkedHashMap<String, String> roles = new LinkedHashMap<String, String>();
 		roles.put("Testaaja", "ROLE_TESTER");
@@ -111,6 +111,9 @@ public class UserController {
 		roles.put("Admin", "ROLE_ADMIN");
 
 		model.addAttribute("roles", roles);
+		model.addAttribute("oldPassword", user.getPassword());
+		user.setPassword("");
+		model.addAttribute("user", user);
 
 		model.addAttribute("edit", "TRUE");
 
@@ -120,19 +123,29 @@ public class UserController {
 	@RequestMapping(value = "/admin/editUser", method = RequestMethod.POST)
 	public String deleteUser(Model model, @ModelAttribute("user") User user,
 			@RequestParam("confirmPassword") String confirmPassword,
-			@RequestParam("editPassword") boolean editPassword) {
+			@RequestParam("editPassword") boolean editPassword,
+			@ModelAttribute("oldPassword") String password) {
 
 		if (editPassword == true) {
+
 			model.addAttribute("editPassword", true);
-			user.setPassword("");
+
 			return "userWorkshopImporter/editUser";
 		} else {
-			user.setPassword(new BCryptPasswordEncoder().encode(user
-					.getPassword()));
-			us.saveUser(user);
+			if (user.getPassword() == "") {
+				user.setPassword(password);
 
-			return "redirect:/admin/showUser?id=" + user.getId();
+			}
+
+			else {
+				user.setPassword(new BCryptPasswordEncoder().encode(user
+						.getPassword()));
+
+			}
 		}
+		us.saveUser(user);
+
+		return "redirect:/admin/showUser?id=" + user.getId();
 	}
 
 	@RequestMapping(value = "/admin/deleteUser", method = RequestMethod.GET)

@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <jsp:include page="/WEB-INF/templates/includes/header.jsp" />
@@ -18,6 +18,7 @@
 
 			<br>
 			<br>
+			
 
 			<sf:form id="editUserForm" modelAttribute="user" method="post">
 
@@ -53,7 +54,7 @@
 					<input type="password" style="width: 15em; max-width: 100%" id="confirmPassword" name="confirmPassword" value=""/> 
 					<br><br>
 				</c:if>
-				<h3>KORJAA SALASANAN TALLENNUS!!!</h3>
+				
 				<c:if test="${editPassword != 'true' }">
 					<a class="btn btn-large btn-default" href="#" onclick="editPassword();">Vaihda salasana</a>
 					<br><br>
