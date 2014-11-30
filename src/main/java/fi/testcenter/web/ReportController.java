@@ -1,7 +1,6 @@
 package fi.testcenter.web;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,19 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.domain.answer.Answer;
-import fi.testcenter.domain.answer.CostListingAnswer;
-import fi.testcenter.domain.answer.ImportantPointsAnswer;
-import fi.testcenter.domain.answer.MultipleChoiceAnswer;
-import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
-import fi.testcenter.domain.answer.PointsAnswer;
-import fi.testcenter.domain.answer.TextAnswer;
-import fi.testcenter.domain.question.CostListingQuestion;
-import fi.testcenter.domain.question.ImportantPointsQuestion;
-import fi.testcenter.domain.question.MultipleChoiceQuestion;
-import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
-import fi.testcenter.domain.question.TextQuestion;
 import fi.testcenter.domain.report.QuestionGroup;
 import fi.testcenter.domain.report.QuestionGroupScore;
 import fi.testcenter.domain.report.Report;
@@ -234,100 +221,8 @@ public class ReportController {
 			@ModelAttribute("addQuestionToReportPart") Integer reportPart,
 			@ModelAttribute("addQuestionToGroup") Integer questionGroup) {
 
-		List<Question> reportTemplateQuestionsList = report.getReportTemplate()
-				.getReportParts().get(reportPart).getQuestionGroups()
-				.get(questionGroup).getOptionalQuestions();
-
-		// Get Report answers List start index for optional questions
-		int answerIndex = -1;
-
-		for (int i = 0; i < reportPart; i++) {
-			for (QuestionGroup group : report.getReportTemplate()
-					.getReportParts().get(i).getQuestionGroups()) {
-				answerIndex = answerIndex + group.getQuestions().size();
-
-			}
-		}
-
-		for (int i = 0; i <= questionGroup; i++) {
-			answerIndex = answerIndex
-					+ report.getReportTemplate().getReportParts()
-							.get(reportPart).getQuestionGroups().get(i)
-							.getQuestions().size();
-
-		}
-
-		log.debug("answer index: " + answerIndex);
-		log.debug("answer class: "
-				+ report.getAnswers().get(answerIndex + 1).getClass());
-		for (int i : chosenQuestions.chosenQuestions) {
-			log.debug("chosen question " + i);
-		}
-		OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer) report
-				.getAnswers().get(answerIndex + 1);
-
-		// Tehdään lista käyttäjän valitsemista kysymyksistä
-
-		ArrayList<Answer> newAnswerList = new ArrayList<Answer>();
-		ArrayList<Question> newQuestionList = new ArrayList<Question>();
-
-		for (int questionIndex : chosenQuestions.chosenQuestions) {
-
-			Question question = reportTemplateQuestionsList.get(questionIndex);
-
-			newQuestionList.add(question);
-			if (!optionalAnswer.getQuestions().contains(question)) {
-				if (question instanceof MultipleChoiceQuestion) {
-					Answer mca = new MultipleChoiceAnswer();
-					mca.setQuestion(question);
-					newAnswerList.add(mca);
-				}
-				if (question instanceof PointsQuestion) {
-					Answer pa = new PointsAnswer();
-					pa.setQuestion(question);
-					newAnswerList.add(pa);
-				}
-				if (question instanceof TextQuestion) {
-					Answer ta = new TextAnswer();
-					ta.setQuestion(question);
-					newAnswerList.add(ta);
-				}
-				if (question instanceof ImportantPointsQuestion) {
-					Answer imp = new ImportantPointsAnswer();
-					imp.setQuestion(question);
-					newAnswerList.add(imp);
-				}
-				if (question instanceof CostListingQuestion) {
-					Answer cla = new CostListingAnswer();
-					cla.setQuestion(question);
-					newAnswerList.add(cla);
-				}
-			}
-
-			else {
-				Answer oldAnswer = new Answer();
-				for (Answer answer : optionalAnswer.getAnswers()) {
-					if (answer.getQuestion() == question)
-						oldAnswer = answer;
-				}
-				newAnswerList.add(oldAnswer);
-			}
-		}
-
-		// Lisätään OptionalQuestionsAnswerin uusiin listoihin vanhat kysymys-
-		// ja vastaus-oliot
-
-		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
-		newAnswer.setQuestions(newQuestionList);
-		newAnswer.setAnswers(newAnswerList);
-
-		List<Answer> reportAnswerList = report.getAnswers();
-		reportAnswerList.set(answerIndex + 1, newAnswer);
-		report.setAnswers(reportAnswerList);
-
-		// TALLENNA ANSWERLIST
-
-		model.addAttribute("report", report);
+		model.addAttribute("report", report.addOptionalQuestions(
+				chosenQuestions, reportPart, questionGroup));
 		model.addAttribute("initialAnswerIndexCounter", 0);
 		model.addAttribute("editReportPartNumber", 0);
 		return "report/editReport";

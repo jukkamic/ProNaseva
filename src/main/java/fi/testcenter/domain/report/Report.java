@@ -45,6 +45,7 @@ import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
 import fi.testcenter.service.ReportService;
+import fi.testcenter.web.ChosenQuestions;
 
 @Entity
 @NamedQueries({
@@ -836,4 +837,99 @@ public class Report {
 		answers = reportAnswerList;
 
 	}
+
+	// KÄYTTÄJÄN VALITSEMIEN VALINNAISTEN KYSYMYSTEN LISÄYS
+
+	public Report addOptionalQuestions(ChosenQuestions chosenQuestions,
+			int reportPart, int questionGroup) {
+
+		List<Question> reportTemplateQuestionsList = this.reportTemplate
+				.getReportParts().get(reportPart).getQuestionGroups()
+				.get(questionGroup).getOptionalQuestions();
+
+		// Get Report answers List start index for optional questions
+		int answerIndex = -1;
+
+		for (int i = 0; i < reportPart; i++) {
+			for (QuestionGroup group : this.reportTemplate.getReportParts()
+					.get(i).getQuestionGroups()) {
+				answerIndex = answerIndex + group.getQuestions().size();
+
+			}
+		}
+
+		for (int i = 0; i <= questionGroup; i++) {
+			answerIndex = answerIndex
+					+ this.reportTemplate.getReportParts().get(reportPart)
+							.getQuestionGroups().get(i).getQuestions().size();
+
+		}
+
+		for (int i : chosenQuestions.getChosenQuestions()) {
+
+		}
+		OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer) this.answers
+				.get(answerIndex + 1);
+
+		// Tehdään lista käyttäjän valitsemista kysymyksistä
+
+		ArrayList<Answer> newAnswerList = new ArrayList<Answer>();
+		ArrayList<Question> newQuestionList = new ArrayList<Question>();
+
+		for (int questionIndex : chosenQuestions.getChosenQuestions()) {
+
+			Question question = reportTemplateQuestionsList.get(questionIndex);
+
+			newQuestionList.add(question);
+			if (!optionalAnswer.getQuestions().contains(question)) {
+				if (question instanceof MultipleChoiceQuestion) {
+					Answer mca = new MultipleChoiceAnswer();
+					mca.setQuestion(question);
+					newAnswerList.add(mca);
+				}
+				if (question instanceof PointsQuestion) {
+					Answer pa = new PointsAnswer();
+					pa.setQuestion(question);
+					newAnswerList.add(pa);
+				}
+				if (question instanceof TextQuestion) {
+					Answer ta = new TextAnswer();
+					ta.setQuestion(question);
+					newAnswerList.add(ta);
+				}
+				if (question instanceof ImportantPointsQuestion) {
+					Answer imp = new ImportantPointsAnswer();
+					imp.setQuestion(question);
+					newAnswerList.add(imp);
+				}
+				if (question instanceof CostListingQuestion) {
+					Answer cla = new CostListingAnswer();
+					cla.setQuestion(question);
+					newAnswerList.add(cla);
+				}
+			}
+
+			else {
+				Answer oldAnswer = new Answer();
+				for (Answer answer : optionalAnswer.getAnswers()) {
+					if (answer.getQuestion() == question)
+						oldAnswer = answer;
+				}
+				newAnswerList.add(oldAnswer);
+			}
+		}
+
+		// Lisätään OptionalQuestionsAnswerin uusiin listoihin vanhat kysymys-
+		// ja vastaus-oliot
+
+		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
+		newAnswer.setQuestions(newQuestionList);
+		newAnswer.setAnswers(newAnswerList);
+
+		List<Answer> reportAnswerList = this.answers;
+		reportAnswerList.set(answerIndex + 1, newAnswer);
+		this.answers = reportAnswerList;
+		return this;
+	}
+
 }
