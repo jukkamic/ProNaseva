@@ -919,8 +919,8 @@ public class Report {
 			}
 		}
 
-		// Lisätään OptionalQuestionsAnswerin uusiin listoihin vanhat kysymys-
-		// ja vastaus-oliot
+		// Lisätään OptionalQuestionsAnswerin uusiin listoihin vanhat
+		// kysymys ja vastaus-oliot
 
 		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
 		newAnswer.setQuestions(newQuestionList);
@@ -931,5 +931,4 @@ public class Report {
 		this.answers = reportAnswerList;
 		return this;
 	}
-
 }

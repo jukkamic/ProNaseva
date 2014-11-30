@@ -1,6 +1,5 @@
 package fi.testcenter.web;
 
-
 public class ChosenQuestions {
 	int[] chosenQuestions;
 

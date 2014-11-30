@@ -1,6 +1,7 @@
 package fi.testcenter.web;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
+import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.QuestionGroup;
 import fi.testcenter.domain.report.QuestionGroupScore;
@@ -34,7 +36,7 @@ import fi.testcenter.service.WorkshopService;
 @RequestMapping("/")
 @SessionAttributes(value = { "reportTemplate", "report", "formAnswers",
 		"workshops", "readyReport", "addQuestionToGroup", "importers",
-		"addQuestionToReportPart" })
+		"addQuestionToReportPart", "optionalQuestionsAnswerIndex" })
 public class ReportController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
@@ -125,7 +127,8 @@ public class ReportController {
 			@ModelAttribute("report") Report report,
 			@RequestParam("navigateToReportPart") Integer navigateToReportPart,
 			@RequestParam("addQuestionToGroup") Integer addQuestionToGroup,
-			@RequestParam("addQuestionToReportPart") Integer addQuestionToReportPart) {
+			@RequestParam("addQuestionToReportPart") Integer addQuestionToReportPart,
+			@RequestParam("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex) {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
@@ -178,6 +181,36 @@ public class ReportController {
 
 		} else if (addQuestionToGroup != null) {
 
+			// Asetetaan JSP:tä varten chosenQuestions-muuttuujaan aikaisemmin
+			// valitut valinnaiset kysymykset
+
+			List<Question> optionalQuestions = report.getReportTemplate()
+					.getReportParts().get(addQuestionToReportPart)
+					.getQuestionGroups().get(addQuestionToGroup)
+					.getOptionalQuestions();
+			log.debug("answer index : " + optionalQuestionsAnswerIndex);
+			log.debug("Report part : " + addQuestionToReportPart);
+			log.debug("Q group : " + addQuestionToGroup);
+
+			OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
+					.getAnswers().get(optionalQuestionsAnswerIndex);
+			int[] oldQuestions = new int[0];
+			if (oqa.getQuestions() != null) {
+
+				for (Question question : oqa.getQuestions()) {
+					int index = optionalQuestions.indexOf(question);
+					oldQuestions = Arrays.copyOf(oldQuestions,
+							oldQuestions.length + 1);
+					oldQuestions[oldQuestions.length - 1] = index;
+				}
+			}
+
+			ChosenQuestions chosenQ = new ChosenQuestions();
+			chosenQ.setChosenQuestions(oldQuestions);
+			model.addAttribute("chosenQuestions", chosenQ);
+			model.addAttribute("report", report);
+			model.addAttribute("optionalQuestionsAnswerIndex",
+					optionalQuestionsAnswerIndex);
 			model.addAttribute("optionalQuestions", report.getReportTemplate()
 					.getReportParts().get(addQuestionToReportPart)
 					.getQuestionGroups().get(addQuestionToGroup)
@@ -186,9 +219,6 @@ public class ReportController {
 			model.addAttribute("addQuestionToReportPart",
 					addQuestionToReportPart);
 			model.addAttribute("addQuestionToGroup", addQuestionToGroup);
-			model.addAttribute("chosenQuestions", new ChosenQuestions());
-			model.addAttribute("report", report);
-
 			return "report/addOptionalQuestions";
 		}
 
@@ -215,11 +245,14 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/addChosenQuestions", method = RequestMethod.POST)
-	public String addChosenQuestions(Model model,
+	public String addChosenQuestions(
+			Model model,
 			@ModelAttribute("chosenQuestions") ChosenQuestions chosenQuestions,
-			BindingResult result, @ModelAttribute("report") Report report,
+			BindingResult result,
+			@ModelAttribute("report") Report report,
 			@ModelAttribute("addQuestionToReportPart") Integer reportPart,
-			@ModelAttribute("addQuestionToGroup") Integer questionGroup) {
+			@ModelAttribute("addQuestionToGroup") Integer questionGroup,
+			@ModelAttribute("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex) {
 
 		model.addAttribute("report", report.addOptionalQuestions(
 				chosenQuestions, reportPart, questionGroup));

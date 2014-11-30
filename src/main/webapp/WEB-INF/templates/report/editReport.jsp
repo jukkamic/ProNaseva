@@ -475,13 +475,11 @@
 <!-- Questions loop end -->									
 			</c:forEach> 
 		
-		
-		
-		
 	<!-- Optional questions -->
 	
 		<input type="hidden" id="addQuestionToReportPart" name="addQuestionToReportPart" value="${editReportPartNumber}"/>
 		<input type="hidden" id="addQuestionToGroup" name="addQuestionToGroup" />
+		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
 		<c:if test='${not empty questionGroup.optionalQuestions}'>
 			
 			<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
@@ -489,7 +487,7 @@
 			<jsp:include page="/WEB-INF/templates/report/editOptionalQuestions.jsp" />
 			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 			
-			<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index})" class="btn btn-primary"> Lisää kysymys</a>
+			<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index}, ${answerIndexCounter - 1})" class="btn btn-primary"> Lisää kysymys</a>
 		
 		</c:if>
 		</div>
@@ -543,13 +541,15 @@ $("[data-toggle='buttons'] .btn").live('click', function(evt){
    function navigateToReportPart(reportPartIndex)
    {
 	   document.getElementById("navigateToReportPart").value = reportPartIndex;
+	   
       document.getElementById('editReportForm').submit();
    }
 
-   function addOptionalQuestion(questionGroupIndex)
+   function addOptionalQuestion(questionGroupIndex, answerIndex)
    {
 	   
 		document.getElementById("addQuestionToGroup").value = questionGroupIndex;
+		document.getElementById("optionalQuestionsAnswerIndex").value = answerIndex;
 		document.getElementById("editReportForm").submit();
 		
 	   }
