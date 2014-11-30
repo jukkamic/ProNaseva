@@ -46,7 +46,7 @@ import fi.testcenter.service.WorkshopService;
 @Controller
 @RequestMapping("/")
 @SessionAttributes(value = { "reportTemplate", "report", "formAnswers",
-		"workshops", "readyReport", "addQuestionToGroup",
+		"workshops", "readyReport", "addQuestionToGroup", "importers",
 		"addQuestionToReportPart" })
 public class ReportController {
 
@@ -90,6 +90,13 @@ public class ReportController {
 
 		Importer importer = is.finImporterById(importerID.longValue());
 
+		if (importer.getReportTemplateName() == null
+				|| importer.getReportTemplateName() == "") {
+			log.debug("on tyhjä");
+			model.addAttribute("alertMessage",
+					"Maahantuojalle ei ole valittu raporttipohjaa");
+			return "report/newReportSelectImporter";
+		}
 		try {
 			report.setReportTemplate(rts.findReportTemplateByName(importer
 					.getReportTemplateName()));

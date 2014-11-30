@@ -13,9 +13,19 @@
 		&nbsp;
 		<a class="btn btn-default logout" style="text-decoration: none" href="#">Kirjaudu ulos</a>
 </div>
+<br><br>
+<c:choose>
+	<c:when test="${alertMessage != null and alertMessage != ''}">
+				
+				<div class="alert alert-warning">
+					<h4>${alertMessage}</h4>
+				</div>
 
-
-<br><br><br>
+	</c:when>
+	<c:otherwise>
+				<br><br>
+	</c:otherwise>
+</c:choose>
 
 		<script>
         $(document).on("click", ".logout", function(e) {

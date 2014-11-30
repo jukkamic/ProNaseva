@@ -54,10 +54,10 @@
 				<sf:select style="width: auto; max-width: 100%" id="role" path="reportTemplateName"
 					class="form-control">
 					<c:if test="${importer.reportTemplateName == null or importer.reportTemplateName == '' }">
-						<option value='null'>-- Valitse --</option>
+						<option value=''>-- Valitse --</option>
 					</c:if>
 					<c:if test="${importer.reportTemplateName != null and importer.reportTemplateName != '' }">
-						<option value='null'>-- Valitse --</option>
+						<option value=''>-- Valitse --</option>
 					</c:if> 
 					<c:forEach var="template" items="${reportTemplateList}">
 					
