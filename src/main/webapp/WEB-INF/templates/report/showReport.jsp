@@ -84,7 +84,7 @@
 	</c:if>
 	
 	<br>				
-		<c:if test="${not empty report.reportHighlights}">
+	<c:if test="${not empty report.reportHighlights}">
 			<jsp:include page="/WEB-INF/templates/report/showReportHighlightAnswers.jsp" />
 			<c:set var="bootstrapPanelCounter" value="2" scope="request" />
 	</c:if>

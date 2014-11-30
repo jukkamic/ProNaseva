@@ -25,6 +25,7 @@ public class ReportHighlight {
 	@OneToOne
 	private Answer answer;
 
+	@ManyToOne
 	Report report;
 
 	int questionGroupOrderNumber;
@@ -37,6 +38,7 @@ public class ReportHighlight {
 
 	ReportHighlight(Report report, ReportPart reportPart,
 			QuestionGroup questionGroup, Answer answer) {
+		this.report = report;
 		this.reportPart = reportPart;
 		this.questionGroup = questionGroup;
 		this.answer = answer;

@@ -24,6 +24,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.log4j.Logger;
+
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.User;
 import fi.testcenter.domain.Workshop;
@@ -50,6 +52,8 @@ import fi.testcenter.service.ReportService;
 		@NamedQuery(name = "getReportsByImporterId", query = "SELECT r FROM Report r WHERE r.importer.id = :importerId"),
 		@NamedQuery(name = "getReportsByUserId", query = "SELECT r FROM Report r WHERE r.user.id = :userId") })
 public class Report {
+	@Transient
+	Logger log = Logger.getLogger("fi.testcenter.domain.report");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -112,6 +116,7 @@ public class Report {
 	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
+	@JoinTable(name = "REPORT_HIGHLIGHT", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTHIGHLIGHT_ID"))
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();
 
@@ -329,7 +334,7 @@ public class Report {
 	// ASETETAAN HIGHLIGHT-VASTAUKSET KÄYTTÄJÄN RAPORTINMUOKKAUKSESSA TEKEMIEN
 	// JA ANSWER-OLIOIHIN TALLENNETTUJEN VALINTOJEN MUKAAN
 
-	public void setHighlightAnswers(ReportService rs) {
+	public Report setHighlightAnswers(ReportService rs) {
 
 		ArrayList<ReportHighlight> reportHighlightList = new ArrayList<ReportHighlight>();
 		int answerIndexCounter = 0;
@@ -390,7 +395,12 @@ public class Report {
 		}
 
 		this.reportHighlights = reportHighlightList;
-
+		Report savedReport = rs.saveReport(this);
+		log.debug("Saved report highligh list size :"
+				+ savedReport.getReportHighlights().size());
+		log.debug("Saved report first highlight id :"
+				+ savedReport.getReportHighlights().get(0).getId());
+		return savedReport;
 	}
 
 	// LASKETAAN RAPORTIN PISTEET MONIVALINTOJEN POHJALTA:

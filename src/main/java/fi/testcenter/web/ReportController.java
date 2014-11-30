@@ -142,7 +142,7 @@ public class ReportController {
 
 		report.calculateReportScore();
 
-		report.setHighlightAnswers(rs);
+		report = report.setHighlightAnswers(rs);
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -362,7 +362,7 @@ public class ReportController {
 			}
 		}
 
-		report.setHighlightAnswers(rs);
+		report = report.setHighlightAnswers(rs);
 
 		int reportPartScoreIndex = 0;
 
