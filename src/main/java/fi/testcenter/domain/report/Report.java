@@ -396,10 +396,7 @@ public class Report {
 
 		this.reportHighlights = reportHighlightList;
 		Report savedReport = rs.saveReport(this);
-		log.debug("Saved report highligh list size :"
-				+ savedReport.getReportHighlights().size());
-		log.debug("Saved report first highlight id :"
-				+ savedReport.getReportHighlights().get(0).getId());
+
 		return savedReport;
 	}
 
