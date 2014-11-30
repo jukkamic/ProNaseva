@@ -78,12 +78,8 @@ public class ReportController {
 		Report report = new Report();
 
 		Importer importer = is.finImporterById(importerID.longValue());
-		log.debug("importer reportTemplate: "
-				+ importer.getReportTemplateName() + " pituus "
-				+ importer.getReportTemplateName().length());
 		if (importer.getReportTemplateName() == null
 				|| importer.getReportTemplateName().isEmpty()) {
-			log.debug("on tyhjä");
 			model.addAttribute("alertMessage",
 					"Maahantuojalle ei ole valittu raporttipohjaa");
 			return "report/newReportSelectImporter";
@@ -188,9 +184,6 @@ public class ReportController {
 					.getReportParts().get(addQuestionToReportPart)
 					.getQuestionGroups().get(addQuestionToGroup)
 					.getOptionalQuestions();
-			log.debug("answer index : " + optionalQuestionsAnswerIndex);
-			log.debug("Report part : " + addQuestionToReportPart);
-			log.debug("Q group : " + addQuestionToGroup);
 
 			OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
 					.getAnswers().get(optionalQuestionsAnswerIndex);
