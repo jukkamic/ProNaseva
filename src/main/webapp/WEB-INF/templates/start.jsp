@@ -22,7 +22,7 @@
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="userOwnReports">Omat raportit</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="searchReport">Hae raportti</a>
 			<br><br><br>
-			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="importers">Maahantuojat</a>
+			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="showImporterList?page=1">Maahantuojat</a>
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="showWorkshopList?page=1">Korjaamot</a>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/showUserList?page=1">Käyttäjätilit</a>

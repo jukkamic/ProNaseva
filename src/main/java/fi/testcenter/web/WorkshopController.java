@@ -1,7 +1,6 @@
 package fi.testcenter.web;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,55 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.service.ImporterService;
-import fi.testcenter.service.ReportTemplateService;
 import fi.testcenter.service.WorkshopService;
 
-@SessionAttributes(value = { "workshop", "importer" })
+@SessionAttributes(value = "workshop")
 @Controller
-public class ImporterWorkshopController {
-
-	Logger log = Logger
-			.getLogger("fi.testcenter.web.ImporterWorkshopController");
-
-	@Autowired
-	private ImporterService is;
-
-	@Autowired
-	private ReportTemplateService rts;
+public class WorkshopController {
 
 	@Autowired
 	private WorkshopService ws;
-
-	@RequestMapping(value = "/importers", method = RequestMethod.GET)
-	public String prepareImporterPage(Model model) {
-
-		List<Importer> importers = is.getImporters();
-		model.addAttribute("importers", importers);
-
-		return "userWorkshopImporter/importerAdmin";
-	}
-
-	@RequestMapping(value = "/newImporter", method = RequestMethod.GET)
-	public String prepareNewImporterForm(Model model) {
-
-		model.addAttribute("importer", new Importer());
-		model.addAttribute("reportTemplateList",
-				rts.findCurrentReportTemplates());
-
-		return "userWorkshopImporter/editImporter";
-	}
-
-	@RequestMapping(value = "/newImporter", method = RequestMethod.POST)
-	public String processNewImporterForm(
-			@ModelAttribute("importer") Importer importer) {
-
-		is.saveImporter(importer);
-
-		return "redirect:/importers";
-	}
 
 	@RequestMapping(value = "/showWorkshopList", method = RequestMethod.GET)
 	public String prepareWorkshopPage(Model model,
@@ -150,33 +109,4 @@ public class ImporterWorkshopController {
 		ws.deleteWorkshop(workshop);
 		return "redirect:/showWorkshopList?page=1";
 	}
-
-	@RequestMapping(value = "/editImporter", method = RequestMethod.GET)
-	public String prepareEditImporterForm(Model model,
-			@RequestParam("id") Integer id) {
-
-		model.addAttribute("importer", is.finImporterById(id.longValue()));
-		model.addAttribute("edit", "TRUE");
-		model.addAttribute("reportTemplateList",
-				rts.findCurrentReportTemplates());
-
-		return "userWorkshopImporter/editImporter";
-	}
-
-	@RequestMapping(value = "/editImporter", method = RequestMethod.POST)
-	public String processEditImporterForm(
-			@ModelAttribute("importer") Importer importer) {
-
-		is.saveImporter(importer);
-
-		return "redirect:/importers";
-	}
-
-	@RequestMapping(value = "/deleteImporter")
-	public String deleteImporter(@ModelAttribute("importer") Importer importer) {
-
-		is.deleteImporter(importer);
-		return "redirect:/importers";
-	}
-
 }

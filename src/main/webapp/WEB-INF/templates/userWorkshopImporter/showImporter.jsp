@@ -23,38 +23,42 @@ label {
 		<div class="container">
 			<div class="page-header">
 				<jsp:include page="/WEB-INF/templates/includes/pageHeaderRow.jsp" />
-				<h1>Korjaamo</h1>
+				<h1>Maahantuoja</h1>
 			</div>
 
-
 			<br>
 			<br>
-				<label for="name">Korjaamon nimi: </label>
-				<p id="name">${workshop.name}</p> 
+				<label for="name">Maahantuojan nimi: </label>
+				<p id="name">${importer.name}</p> 
 				<br>
 				
 				<label for="address">Katuosoite: </label>
-				<p id="address">${workshop.streetAddress}</p> 
+				<p id="address">${importer.streetAddress}</p> 
 				<br>
 				
 				<label for="poBox">Postilaatikko: </label>
-				<p id="poBox">${workshop.poBox}</p> 
+				<p id="poBox">${importer.poBox}</p> 
 				<br>
 								
 				<label for="zipCode">Postinumero ja postitoimipaikka: </label>
-				<p id="zipCode">${workshop.zipCode} </p> 
+				<p id="zipCode">${importer.zipCode} </p> 
 				<br>
 				
 				<label for="email">Sähköpostiosoite: </label>
-				<p id="email">${workshop.email} </p> 
+				<p id="email">${importer.email} </p> 
 				<br>
 				
 				<label for="telNum">Puhelinnumero: </label>
-				<p id="telNum">${workshop.telNum} </p> 
+				<p id="telNum">${importer.telNum} </p> 
+				<br>
+				<label for="reportTemplate">Raporttipohja: </label>
+				<c:if test="${importer.reportTemplateName != 'null'}">
+					<p id="reportTemplate">${importer.reportTemplateName} </p>
+				</c:if> 
 				<br><br>
 	
-				<a class="btn btn-large btn-primary" href="/ProNaseva/showWorkshopList?page=1"><span class="glyphicon glyphicon-arrow-left" style="text-decoration: none;"></span> Palaa korjaamolistaan</a>
-				<a class="btn btn-large btn-primary" style="text-decoration: none" href="/ProNaseva/admin/editWorkshop?id=${workshop.id}"><span class="glyphicon glyphicon-edit" style="text-decoration: none;"></span> Muokkaa</a>
+				<a class="btn btn-large btn-primary" href="/ProNaseva/showImporterList?page=1"><span class="glyphicon glyphicon-arrow-left" style="text-decoration: none;"></span> Palaa maahantuojalistaan</a>
+				<a class="btn btn-large btn-primary" style="text-decoration: none" href="/ProNaseva/admin/editImporter?id=${importer.id}"><span class="glyphicon glyphicon-edit" style="text-decoration: none;"></span> Muokkaa</a>
 				<a href="#" class="btn btn-large btn-danger deleteAlert" style="text-decoration: none"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>
 	
 		</div>
@@ -64,7 +68,7 @@ label {
 		<script>
         $(document).on("click", ".deleteAlert", function(e) {
             bootbox.dialog({
-          	  message: "Poista korjaamo?",
+          	  message: "Poista maahantuoja?",
           	  title: "Vahvista",
           	  buttons: {
           	    cancel: {
@@ -78,7 +82,7 @@ label {
           	      label: "Poista",
           	      className: "btn-danger",
           	      callback: function() {
-          	    	window.location.href = "/ProNaseva/admin/deleteWorkshop"
+          	    	window.location.href = "/ProNaseva/admin/deleteImporter"
           	      }
           	    }
           	  }
@@ -86,5 +90,3 @@ label {
             });
        </script>
 			
-				
-<jsp:include page="/WEB-INF/templates/includes/footer.jsp" />
