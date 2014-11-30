@@ -124,7 +124,8 @@ public class ReportController {
 			@RequestParam("navigateToReportPart") Integer navigateToReportPart,
 			@RequestParam("addQuestionToGroup") Integer addQuestionToGroup,
 			@RequestParam("addQuestionToReportPart") Integer addQuestionToReportPart,
-			@RequestParam("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex) {
+			@RequestParam("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex,
+			BindingResult result) {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
@@ -248,7 +249,8 @@ public class ReportController {
 			@ModelAttribute("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex) {
 
 		model.addAttribute("report", report.addOptionalQuestions(
-				chosenQuestions, reportPart, questionGroup));
+				chosenQuestions, reportPart, questionGroup,
+				optionalQuestionsAnswerIndex));
 		model.addAttribute("initialAnswerIndexCounter", 0);
 		model.addAttribute("editReportPartNumber", 0);
 		return "report/editReport";

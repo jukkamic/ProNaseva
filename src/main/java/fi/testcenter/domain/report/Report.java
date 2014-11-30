@@ -841,35 +841,14 @@ public class Report {
 	// KÄYTTÄJÄN VALITSEMIEN VALINNAISTEN KYSYMYSTEN LISÄYS
 
 	public Report addOptionalQuestions(ChosenQuestions chosenQuestions,
-			int reportPart, int questionGroup) {
+			int reportPart, int questionGroup, int answerIndex) {
 
 		List<Question> reportTemplateQuestionsList = this.reportTemplate
 				.getReportParts().get(reportPart).getQuestionGroups()
 				.get(questionGroup).getOptionalQuestions();
 
-		// Get Report answers List start index for optional questions
-		int answerIndex = -1;
-
-		for (int i = 0; i < reportPart; i++) {
-			for (QuestionGroup group : this.reportTemplate.getReportParts()
-					.get(i).getQuestionGroups()) {
-				answerIndex = answerIndex + group.getQuestions().size();
-
-			}
-		}
-
-		for (int i = 0; i <= questionGroup; i++) {
-			answerIndex = answerIndex
-					+ this.reportTemplate.getReportParts().get(reportPart)
-							.getQuestionGroups().get(i).getQuestions().size();
-
-		}
-
-		for (int i : chosenQuestions.getChosenQuestions()) {
-
-		}
 		OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer) this.answers
-				.get(answerIndex + 1);
+				.get(answerIndex);
 
 		// Tehdään lista käyttäjän valitsemista kysymyksistä
 
@@ -910,24 +889,21 @@ public class Report {
 			}
 
 			else {
-				Answer oldAnswer = new Answer();
+
 				for (Answer answer : optionalAnswer.getAnswers()) {
 					if (answer.getQuestion() == question)
-						oldAnswer = answer;
+						newAnswerList.add(answer);
 				}
-				newAnswerList.add(oldAnswer);
+
 			}
 		}
-
-		// Lisätään OptionalQuestionsAnswerin uusiin listoihin vanhat
-		// kysymys ja vastaus-oliot
 
 		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
 		newAnswer.setQuestions(newQuestionList);
 		newAnswer.setAnswers(newAnswerList);
 
 		List<Answer> reportAnswerList = this.answers;
-		reportAnswerList.set(answerIndex + 1, newAnswer);
+		reportAnswerList.set(answerIndex, newAnswer);
 		this.answers = reportAnswerList;
 		return this;
 	}

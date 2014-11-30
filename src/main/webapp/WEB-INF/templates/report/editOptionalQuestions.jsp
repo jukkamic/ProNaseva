@@ -12,6 +12,7 @@
 	
 	<!-- Points question -->
 	<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
+	OPTIONAL Q answer index: ${counter.index}
 	<h3>${questionCounter}. ${question.question}</h3>
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 			<div class="checkbox" style="font-size: 1.2em;">
