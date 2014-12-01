@@ -20,9 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportHighlight;
 import fi.testcenter.domain.report.ReportTemplate;
+import fi.testcenter.repository.AnswerRepository;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.repository.ReportRepository;
@@ -48,7 +50,10 @@ public class ReportService {
 	private ReportTemplateService rts;
 
 	@Autowired
-	private ReportHighlightRepository rhls;
+	private ReportHighlightRepository rhlr;
+
+	@Autowired
+	private AnswerRepository ar;
 
 	@PersistenceContext()
 	EntityManager em;
@@ -279,7 +284,25 @@ public class ReportService {
 	}
 
 	public void deleteReportHighlights(List<ReportHighlight> highlights) {
-		rhls.deleteInBatch(highlights);
+		for (ReportHighlight hl : highlights) {
+			Answer a = hl.getAnswer();
+			if (a != null) {
+				a.setReportHighlight(null);
+				ar.save(a);
+			}
+		}
+		rhlr.deleteInBatch(highlights);
 	}
 
+	public void deleteOptionalAnswers(List<Answer> answers) {
+		for (Answer a : answers) {
+			ReportHighlight rh = a.getReportHighlight();
+			if (rh != null) {
+				rh.setAnswer(null);
+				rhlr.save(rh);
+			}
+		}
+		ar.deleteInBatch(answers);
+
+	}
 }

@@ -340,39 +340,28 @@ public class Report {
 		ArrayList<ReportHighlight> reportHighlightList = new ArrayList<ReportHighlight>();
 		int answerIndexCounter = 0;
 
-		if (reportHighlights.size() > 0) {
-
-			try {
-				rs.deleteReportHighlights(reportHighlights);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
 		for (ReportPart reportPart : this.reportTemplate.getReportParts()) {
 			int questionGroupCounter = 1;
 			for (QuestionGroup questionGroup : reportPart.getQuestionGroups()) {
 				int questionCounter = 1;
 				for (Question question : questionGroup.getQuestions()) {
-					if (this.answers.get(answerIndexCounter)
-							.isHighlightAnswer() == true) {
-
-						System.out.println(answerIndexCounter);
+					Answer answerToMainQ = this.answers.get(answerIndexCounter);
+					if (answerToMainQ.isHighlightAnswer() == true) {
 						ReportHighlight highlight = new ReportHighlight(this,
 								reportPart, questionGroup,
 								this.answers.get(answerIndexCounter));
 						highlight
 								.setQuestionGroupOrderNumber(questionGroupCounter);
 						highlight.setQuestionOrderNumber(questionCounter);
-
+						answerToMainQ.setReportHighlight(highlight);
 						reportHighlightList.add(highlight);
 
 					}
 					answerIndexCounter++;
 					int subQuestionCounter = 1;
 					for (Question subQuestion : question.getSubQuestions()) {
-						if (this.answers.get(answerIndexCounter)
-								.isHighlightAnswer() == true) {
+						Answer answer = this.answers.get(answerIndexCounter);
+						if (answer.isHighlightAnswer() == true) {
 							ReportHighlight highlight = new ReportHighlight(
 									this, reportPart, questionGroup,
 									this.answers.get(answerIndexCounter));
@@ -381,7 +370,7 @@ public class Report {
 							highlight.setQuestionOrderNumber(questionCounter);
 							highlight
 									.setSubQuestionOrderNumber(subQuestionCounter);
-
+							answer.setReportHighlight(highlight);
 							reportHighlightList.add(highlight);
 
 						}
@@ -398,8 +387,9 @@ public class Report {
 						int optionalsIndexCounter = 0;
 
 						for (Question question : oqa.getQuestions()) {
-							if (oqa.getAnswers().get(optionalsIndexCounter)
-									.isHighlightAnswer() == true) {
+							Answer optionalAnswer = oqa.getAnswers().get(
+									optionalsIndexCounter);
+							if (optionalAnswer.isHighlightAnswer() == true) {
 								ReportHighlight highlight = new ReportHighlight(
 										this, reportPart, questionGroup, oqa
 												.getAnswers().get(
@@ -408,6 +398,7 @@ public class Report {
 										.setQuestionGroupOrderNumber(questionGroupCounter);
 								highlight
 										.setQuestionOrderNumber(questionCounter);
+								optionalAnswer.setReportHighlight(highlight);
 								reportHighlightList.add(highlight);
 							}
 							optionalsIndexCounter++;
@@ -417,6 +408,15 @@ public class Report {
 				}
 				questionGroupCounter++;
 
+			}
+		}
+
+		if (reportHighlights.size() > 0) {
+
+			try {
+				rs.deleteReportHighlights(this.reportHighlights);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
@@ -841,7 +841,7 @@ public class Report {
 	// KÄYTTÄJÄN VALITSEMIEN VALINNAISTEN KYSYMYSTEN LISÄYS
 
 	public Report addOptionalQuestions(ChosenQuestions chosenQuestions,
-			int reportPart, int questionGroup, int answerIndex) {
+			int reportPart, int questionGroup, int answerIndex, ReportService rs) {
 
 		List<Question> reportTemplateQuestionsList = this.reportTemplate
 				.getReportParts().get(reportPart).getQuestionGroups()
@@ -898,13 +898,21 @@ public class Report {
 			}
 		}
 
+		if (optionalAnswer.getAnswers().size() > 0) {
+
+			try {
+				rs.deleteOptionalAnswers(optionalAnswer.getAnswers());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
 		newAnswer.setQuestions(newQuestionList);
 		newAnswer.setAnswers(newAnswerList);
 
-		List<Answer> reportAnswerList = this.answers;
-		reportAnswerList.set(answerIndex, newAnswer);
-		this.answers = reportAnswerList;
-		return this;
+		this.answers.set(answerIndex, newAnswer);
+
+		return rs.saveReport(this);
 	}
 }

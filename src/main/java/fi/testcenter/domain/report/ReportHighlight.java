@@ -22,7 +22,7 @@ public class ReportHighlight {
 	@ManyToOne
 	private QuestionGroup questionGroup;
 
-	@OneToOne
+	@OneToOne(mappedBy = "reportHighlight")
 	private Answer answer;
 
 	@ManyToOne

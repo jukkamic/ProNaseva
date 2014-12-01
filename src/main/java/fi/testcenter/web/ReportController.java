@@ -141,9 +141,8 @@ public class ReportController {
 			e.printStackTrace();
 		}
 
-		Report savedReport = new Report();
 		try {
-			savedReport = rs.saveReport(report);
+			report = rs.saveReport(report);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,9 +158,8 @@ public class ReportController {
 
 			int answerIndex = 0;
 			for (int i = 0; i < navigateToReportPart; i++) {
-				for (QuestionGroup questionGroup : savedReport
-						.getReportTemplate().getReportParts().get(i)
-						.getQuestionGroups()) {
+				for (QuestionGroup questionGroup : report.getReportTemplate()
+						.getReportParts().get(i).getQuestionGroups()) {
 					answerIndex += questionGroup.getQuestions().size();
 					for (Question question : questionGroup.getQuestions()) {
 						answerIndex += question.getSubQuestions().size();
@@ -171,7 +169,7 @@ public class ReportController {
 				}
 			}
 			model.addAttribute("initialAnswerIndexCounter", answerIndex);
-			model.addAttribute("report", savedReport);
+			model.addAttribute("report", report);
 			model.addAttribute("editReportPartNumber", navigateToReportPart);
 
 			return "report/editReport";
@@ -219,7 +217,7 @@ public class ReportController {
 		else {
 
 			model.addAttribute("readyReport", report);
-			model.addAttribute("report", savedReport);
+			model.addAttribute("report", report);
 
 			if (report.isSmileysSet() == false) {
 
@@ -250,7 +248,7 @@ public class ReportController {
 
 		model.addAttribute("report", report.addOptionalQuestions(
 				chosenQuestions, reportPart, questionGroup,
-				optionalQuestionsAnswerIndex));
+				optionalQuestionsAnswerIndex, rs));
 		model.addAttribute("initialAnswerIndexCounter", 0);
 		model.addAttribute("editReportPartNumber", 0);
 		return "report/editReport";

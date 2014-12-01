@@ -1,11 +1,15 @@
 package fi.testcenter.domain.answer;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.ReportHighlight;
 
 @Entity
 public class Answer {
@@ -15,6 +19,10 @@ public class Answer {
 	private Long id;
 
 	private Question question;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "REPORTHIGHLIGHT_ID")
+	private ReportHighlight reportHighlight;
 
 	private boolean showScore;
 	private int score;
@@ -80,6 +88,14 @@ public class Answer {
 
 	public void setRemoveAnswerFromReport(boolean removeAnswerFromReport) {
 		this.removeAnswerFromReport = removeAnswerFromReport;
+	}
+
+	public ReportHighlight getReportHighlight() {
+		return reportHighlight;
+	}
+
+	public void setReportHighlight(ReportHighlight reportHighlight) {
+		this.reportHighlight = reportHighlight;
 	}
 
 }
