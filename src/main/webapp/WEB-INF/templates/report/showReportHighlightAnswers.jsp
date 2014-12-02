@@ -32,7 +32,7 @@
 			<c:set var="questionGroupTitle" value="${reportHighlight.questionGroup.title}" />
 		</c:if>
 		
-		<!-- Multiple choice answer -->
+<!-- Multiple choice answer -->
 		
 		<c:if test="${reportHighlight.answer['class'] == 'class fi.testcenter.domain.answer.MultipleChoiceAnswer'}">
 			<h3>${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.

@@ -334,17 +334,7 @@
 									</div>
 								</c:if>
 									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
-									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-											<div class="checkbox" style="font-size: 1.2em;">
-											<label>											
-											<sf:checkbox value='true'
-												path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
-											
-											</label>
-											
-											</div>
-											<br>
-									</c:if>
+									
 									
 									<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
 										
@@ -356,7 +346,12 @@
 										<h4><b>${question.total}</b></h4>
 										<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].total} €</p>
 									<br>
-								</c:if>
+									<br>
+									<h4>Huomioita:</h4>
+									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
+		
+									<br><br>
+									</c:if>
 							</c:if>
 								
 <!-- ListAndScoreImportantPoints -->
@@ -373,17 +368,7 @@
 									</div>
 								</c:if>
 									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
-								<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-													<div class="checkbox" style="font-size: 1.2em;">
-													<label>											
-													<sf:checkbox value='true'
-														path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
-													
-													</label>
-													
-													</div>
-													<br>
-									</c:if>
+								
 				
 									<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
 									<div style="border-bottom: 3px solid #eee;">
@@ -449,7 +434,12 @@
 									</div>
 									</c:forEach>
 								</c:if>	
-										
+								<br>
+								<h4>Huomioita:</h4>
+								<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
+	
+								<br><br>
+								
 							</c:if>	
 								
 								

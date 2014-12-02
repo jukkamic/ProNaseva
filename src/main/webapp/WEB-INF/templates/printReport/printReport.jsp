@@ -275,6 +275,15 @@ lisäosana PDFCreator -->
 					</tr>
 							
 					</table>
+					<div class = "indentAnswer">
+						<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+						<c:if test="${remarks !='' and remarks != null}"> 
+							<div class="noPageBreak">
+								<h4>Huomioita:</h4>
+								<p>${report.answers[answerIndexCounter].remarks}</p>
+							</div>
+						</c:if>
+					</div>
 				</div>
 				</c:if>
 										
@@ -319,7 +328,18 @@ lisäosana PDFCreator -->
 									</c:forEach>
 							</tbody>
 								</table>
-							</div>			
+							<br>
+						</div>	
+							<div class = "indentAnswer">
+								<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+								<c:if test="${remarks !='' and remarks != null}"> 
+									<div class="noPageBreak">
+										<h4>Huomioita:</h4>
+										<p>${report.answers[answerIndexCounter].remarks}</p>
+									</div>
+								</c:if>
+							</div>
+							
 				</c:if>	
 				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 	</div>

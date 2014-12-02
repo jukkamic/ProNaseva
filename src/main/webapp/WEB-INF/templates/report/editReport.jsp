@@ -343,6 +343,11 @@
 					<br>
 				<h4><b>${question.total}</b></h4>
 				<sf:input style="width: 5em" path="answers[${answerIndexCounter}].total" /> €
+				<br>
+					<h4>Huomioita:</h4>
+					<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
+						value="report.answers[${answerIndexCounter}].remarks}" />
+				<br><br>
 			</c:if>
 
 		
@@ -357,25 +362,8 @@
 					</label>
 					<br>
 				</div>
-				<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-									<div class="checkbox" style="font-size: 1.2em;">
-									<label>											
-									<sf:checkbox value='true'
-										path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
-									
-									</label>
-									
-									</div>
-									<br>
-					</c:if>
-					<div class="checkbox" style="font-size: 1.2em;">
-						<label>											
-						<sf:checkbox value='true'
-							path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
-						
-						</label>
-						<br>
-					</div>
+
+
 					<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
 					<div style="border-bottom: 3px solid #eee;">
 						<h3>${questionItem}</h3>
@@ -453,8 +441,13 @@
 						
 						</table>
 					</div>
+
 					</c:forEach>
-					
+					<br>
+					<h4>Huomioita:</h4>
+					<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
+						value="report.answers[${answerIndexCounter}].remarks}" />
+					<br><br>
 						
 			</c:if>	
 		<!-- Subquestions --> 

@@ -15,6 +15,8 @@ public class ImportantPointsAnswer extends Answer {
 	@OrderColumn(name = "ORDERINDEX")
 	List<ImportantPointsItem> answerItems;
 
+	String remarks;
+
 	public List<ImportantPointsItem> getAnswerItems() {
 		return answerItems;
 	}
@@ -23,4 +25,11 @@ public class ImportantPointsAnswer extends Answer {
 		this.answerItems = answerItems;
 	}
 
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 }

@@ -9,6 +9,7 @@ public class CostListingAnswer extends Answer {
 
 	List<Float> answers;
 	Float total;
+	String remarks;
 
 	public List<Float> getAnswers() {
 		return answers;
@@ -24,6 +25,14 @@ public class CostListingAnswer extends Answer {
 
 	public void setTotal(Float total) {
 		this.total = total;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 }
