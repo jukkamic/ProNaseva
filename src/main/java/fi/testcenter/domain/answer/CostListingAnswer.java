@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
+//KORJAA VALUUTTA KÄYTTÄEN : http://tutorials.jenkov.com/java-internationalization/numberformat.html
+
 @Entity
 public class CostListingAnswer extends Answer {
 

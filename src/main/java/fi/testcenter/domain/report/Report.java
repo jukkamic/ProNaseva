@@ -346,6 +346,7 @@ public class Report {
 				int questionCounter = 1;
 				for (Question question : questionGroup.getQuestions()) {
 					Answer answerToMainQ = this.answers.get(answerIndexCounter);
+
 					if (answerToMainQ.isHighlightAnswer() == true) {
 						ReportHighlight highlight = new ReportHighlight(this,
 								reportPart, questionGroup,
@@ -357,17 +358,19 @@ public class Report {
 						reportHighlightList.add(highlight);
 
 					}
+
 					answerIndexCounter++;
 					int subQuestionCounter = 1;
 					for (Question subQuestion : question.getSubQuestions()) {
 						Answer answer = this.answers.get(answerIndexCounter);
+
 						if (answer.isHighlightAnswer() == true) {
 							ReportHighlight highlight = new ReportHighlight(
 									this, reportPart, questionGroup,
 									this.answers.get(answerIndexCounter));
 							highlight
 									.setQuestionGroupOrderNumber(questionGroupCounter);
-							highlight.setQuestionOrderNumber(++questionCounter);
+							highlight.setQuestionOrderNumber(questionCounter);
 							highlight
 									.setSubQuestionOrderNumber(subQuestionCounter);
 							answer.setReportHighlight(highlight);
@@ -375,10 +378,12 @@ public class Report {
 
 						}
 						subQuestionCounter++;
+
 						answerIndexCounter++;
 					}
 
 					questionCounter++;
+
 				}
 				if (questionGroup.getOptionalQuestions().size() > 0) {
 					OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) this.answers
@@ -389,6 +394,7 @@ public class Report {
 						for (Question question : oqa.getQuestions()) {
 							Answer optionalAnswer = oqa.getAnswers().get(
 									optionalsIndexCounter);
+
 							if (optionalAnswer.isHighlightAnswer() == true) {
 								ReportHighlight highlight = new ReportHighlight(
 										this, reportPart, questionGroup, oqa
@@ -400,11 +406,13 @@ public class Report {
 										.setQuestionOrderNumber(questionCounter);
 								optionalAnswer.setReportHighlight(highlight);
 								reportHighlightList.add(highlight);
+								questionCounter++;
 							}
 							optionalsIndexCounter++;
 						}
-						answerIndexCounter++;
 					}
+					answerIndexCounter++;
+
 				}
 				questionGroupCounter++;
 
