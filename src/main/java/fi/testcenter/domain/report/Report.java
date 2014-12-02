@@ -367,7 +367,7 @@ public class Report {
 									this.answers.get(answerIndexCounter));
 							highlight
 									.setQuestionGroupOrderNumber(questionGroupCounter);
-							highlight.setQuestionOrderNumber(questionCounter);
+							highlight.setQuestionOrderNumber(++questionCounter);
 							highlight
 									.setSubQuestionOrderNumber(subQuestionCounter);
 							answer.setReportHighlight(highlight);
@@ -914,5 +914,22 @@ public class Report {
 		this.answers.set(answerIndex, newAnswer);
 
 		return rs.saveReport(this);
+	}
+
+	public void setRemovedQuestions() {
+		for (Answer answer : this.answers) {
+			if (answer instanceof MultipleChoiceAnswer
+					&& answer.isRemoveAnswerFromReport()) {
+				MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+				mca.setChosenOptionIndex(-1);
+				mca.setRemarks(null);
+			}
+			if (answer instanceof PointsAnswer
+					&& answer.isRemoveAnswerFromReport()) {
+				PointsAnswer pa = (PointsAnswer) answer;
+				pa.setGivenPoints(-1);
+				pa.setRemarks(null);
+			}
+		}
 	}
 }

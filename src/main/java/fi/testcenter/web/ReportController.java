@@ -129,6 +129,10 @@ public class ReportController {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 
+		report.setRemovedQuestions(); // Nollataan vastaukset
+										// MultipleChoiceQuestion- ja
+										// PointsQuestion-luokan kysymyksiin
+										// jotta ei huomioida pisteytyksessä.
 		report.calculateReportScore();
 
 		report = report.setHighlightAnswers(rs);
