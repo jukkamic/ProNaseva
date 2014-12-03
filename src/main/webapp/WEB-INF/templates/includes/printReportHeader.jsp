@@ -16,7 +16,7 @@
 <style>
 
 body {
-background-image: url('../resources/images/printReportBackground.jpg');
+
 font-family: 'Arial';
  
 }

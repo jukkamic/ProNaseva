@@ -17,10 +17,10 @@ public class ReportHighlight {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private ReportPart reportPart;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private QuestionGroup questionGroup;
 
 	@OneToOne(mappedBy = "reportHighlight", fetch = FetchType.EAGER)
@@ -31,6 +31,10 @@ public class ReportHighlight {
 
 	int questionGroupOrderNumber;
 	int questionOrderNumber;
+
+	int printReportQuestionOrderNumber; // Tulostettaessa huomioidaan raportista
+										// pois jätetyt kysymykset
+										// numeroinnissa.
 	int subQuestionOrderNumber;
 
 	ReportHighlight() {
@@ -107,5 +111,14 @@ public class ReportHighlight {
 
 	public void setReport(Report report) {
 		this.report = report;
+	}
+
+	public int getPrintReportQuestionOrderNumber() {
+		return printReportQuestionOrderNumber;
+	}
+
+	public void setPrintReportQuestionOrderNumber(
+			int printReportQuestionOrderNumber) {
+		this.printReportQuestionOrderNumber = printReportQuestionOrderNumber;
 	}
 }

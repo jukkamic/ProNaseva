@@ -275,22 +275,22 @@ lisäosana PDFCreator -->
 					</tr>
 							
 					</table>
-					<div class = "indentAnswer">
+					
 						<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
 						<c:if test="${remarks !='' and remarks != null}"> 
 							<div class="noPageBreak">
-								<h4>Huomioita:</h4>
+								<h4 style="">Huomioita:</h4>
 								<p>${report.answers[answerIndexCounter].remarks}</p>
 							</div>
 						</c:if>
-					</div>
+					
 				</div>
 				</c:if>
 										
 		<!-- ListAndScoreImportantPoints -->
 		<div class="importantPoints">
 					<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion" and report.answers[answerIndexCounter].removeAnswerFromReport != "true"}'>
-					<div class="importantPoints">
+					
 						<h3>${questionGroupCounter.count}.${questionOrderNumber}. ${question.question}</h3>
 						<br>
 						
@@ -329,16 +329,16 @@ lisäosana PDFCreator -->
 							</tbody>
 								</table>
 							<br>
-						</div>	
-							<div class = "indentAnswer">
+							
+							
 								<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
 								<c:if test="${remarks !='' and remarks != null}"> 
 									<div class="noPageBreak">
 										<h4>Huomioita:</h4>
-										<p>${report.answers[answerIndexCounter].remarks}</p>
+										<p style="text-align: left; padding-left: 0; margin-left: 0;">${report.answers[answerIndexCounter].remarks}</p>
 									</div>
 								</c:if>
-							</div>
+							
 							
 				</c:if>	
 				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />

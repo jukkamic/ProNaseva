@@ -420,6 +420,24 @@ public class Report {
 			}
 		}
 
+		// Asetetaan tulostukseen tarvittavat kysymysten numerot niin, että
+		// raportista pois jätetyt kysymykset eivät vaikuta highlight-kysymysten
+		// numerointiin
+
+		for (ReportHighlight rh : reportHighlightList) {
+			int orderNumber = 1;
+
+			for (Question question : rh.getQuestionGroup().getQuestions()) {
+				if (question == rh.getAnswer().getQuestion())
+					rh.setPrintReportQuestionOrderNumber(orderNumber);
+				for (Answer answer : answers)
+					if (answer.getQuestion() == question
+							&& !answer.isRemoveAnswerFromReport())
+						orderNumber++;
+			}
+
+		}
+
 		try {
 			rs.deleteReportHighlights(reportHighlights);
 		} catch (Exception e) {
@@ -938,4 +956,5 @@ public class Report {
 			}
 		}
 	}
+
 }

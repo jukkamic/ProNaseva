@@ -326,6 +326,7 @@ public class ReportController {
 	@RequestMapping(value = "/printReport")
 	public String printReport(Model model,
 			@ModelAttribute("report") Report report) {
+
 		model.addAttribute("report", report);
 
 		return "printReport/printReport";

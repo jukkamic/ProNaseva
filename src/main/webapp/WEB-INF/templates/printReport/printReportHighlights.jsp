@@ -9,7 +9,7 @@
 <c:forEach var="reportHighlight" items="${report.reportHighlights}">
 
 	<c:if test="${reportHighlight.reportPart.title != reportPartTitle}">
-		<h3>${reportHighlight.reportPart.title}</h3>
+		<h2>${reportHighlight.reportPart.title}</h2>
 		<c:set var="reportPartTitle" value="${reportHighlight.reportPart.title}" />
 	</c:if>
 	
@@ -29,7 +29,7 @@
 			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.${reportHighlight.subQuestionOrderNumber}" />
 		</c:if>
 		<c:if test="${reportHighlight.subQuestionOrderNumber == null or reportHighlight.subQuestionOrderNumber == 0}">
-			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}" />
+			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.printReportQuestionOrderNumber}" />
 		</c:if>
 		<h3>${questionNumber}. ${reportHighlight.answer.question.question}</h3>
 			
@@ -85,7 +85,7 @@
 					<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.${reportHighlight.subQuestionOrderNumber}" />
 				</c:if>
 				<c:if test="${reportHighlight.subQuestionOrderNumber == null or reportHighlight.subQuestionOrderNumber == 0}">
-					<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}" />
+					<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.printReportQuestionOrderNumber}" />
 				</c:if>
 				<br>
 				<h3 style="display: inline; margin-top: 6px;">${questionNumber}. ${reportHighlight.answer.question.question}</h3>
@@ -99,11 +99,11 @@
 			
 			<div class = "indentAnswer">
 				
-				<c:set var="remarks" value="${report.answers[answerIndexCounter].remarks}" />
+				<c:set var="remarks" value="${reportHighlight.answer.remarks}" />
 				<c:if test="${remarks !='' and remarks != null}"> 
 					<div class="noPageBreak">
 						<h4>Huomioita:</h4>
-						<p>${report.answers[answerIndexCounter].remarks}</p>
+						<p>${remarks}</p>
 					</div>
 				</c:if>
 			</div>
@@ -116,7 +116,7 @@
 			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}.${reportHighlight.subQuestionOrderNumber}" />
 		</c:if>
 		<c:if test="${reportHighlight.subQuestionOrderNumber == null or reportHighlight.subQuestionOrderNumber == 0}">
-			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.questionOrderNumber}" />
+			<c:set var="questionNumber" value="${reportHighlight.questionGroupOrderNumber}.${reportHighlight.printReportQuestionOrderNumber}" />
 		</c:if>
 		<h3 style="margin: 0; padding: 0;">${questionNumber}. ${reportHighlight.answer.question.question}</h3>
 		<p class="indentAnswer">${reportHighlight.answer.answer}</p>
