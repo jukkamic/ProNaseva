@@ -284,8 +284,8 @@ public class ReportService {
 	}
 
 	public void deleteReportHighlights(List<ReportHighlight> highlights) {
-		for (ReportHighlight hl : highlights) {
-			Answer a = hl.getAnswer();
+		for (ReportHighlight rh : highlights) {
+			Answer a = rh.getAnswer();
 			if (a != null) {
 				a.setReportHighlight(null);
 				ar.save(a);

@@ -116,8 +116,8 @@ public class Report {
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
-	@JoinTable(name = "REPORT_HIGHLIGHT", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTHIGHLIGHT_ID"))
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "REPORTHIGHLIGHT_ID")
 	@OrderColumn(name = "ORDERINDEX")
 	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();
 
@@ -406,8 +406,9 @@ public class Report {
 										.setQuestionOrderNumber(questionCounter);
 								optionalAnswer.setReportHighlight(highlight);
 								reportHighlightList.add(highlight);
-								questionCounter++;
+
 							}
+							questionCounter++;
 							optionalsIndexCounter++;
 						}
 					}
@@ -419,13 +420,10 @@ public class Report {
 			}
 		}
 
-		if (reportHighlights.size() > 0) {
-
-			try {
-				rs.deleteReportHighlights(this.reportHighlights);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		try {
+			rs.deleteReportHighlights(reportHighlights);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		this.reportHighlights = reportHighlightList;
