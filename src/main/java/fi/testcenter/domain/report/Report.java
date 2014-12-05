@@ -396,6 +396,7 @@ public class Report {
 									optionalsIndexCounter);
 
 							if (optionalAnswer.isHighlightAnswer() == true) {
+								log.debug("is highlight");
 								ReportHighlight highlight = new ReportHighlight(
 										this, reportPart, questionGroup, oqa
 												.getAnswers().get(
@@ -405,7 +406,12 @@ public class Report {
 								highlight
 										.setQuestionOrderNumber(questionCounter);
 								optionalAnswer.setReportHighlight(highlight);
+								oqa = rs.saveOptionalQuestionsAnswer(oqa);
+								highlight.setOptionalAnswer(oqa);
+								highlight = rs.saveHighlight(highlight);
+
 								reportHighlightList.add(highlight);
+								rs.saveReport(this);
 
 							}
 							questionCounter++;
@@ -424,6 +430,23 @@ public class Report {
 		// raportista pois jätetyt kysymykset eivät vaikuta highlight-kysymysten
 		// numerointiin
 
+		log.debug("wtf");
+		for (Answer answeri : answers) {
+			if (answeri instanceof OptionalQuestionsAnswer) {
+				if (((OptionalQuestionsAnswer) answeri).getAnswers() != null) {
+					for (Answer optionalAnswer : ((OptionalQuestionsAnswer) answeri)
+							.getAnswers()) {
+						log.debug("valinnaisen kysymyksen highlight: "
+								+ optionalAnswer.getReportHighlight());
+						if (optionalAnswer.getReportHighlight() != null) {
+							log.debug("highlightin vastaus : "
+									+ optionalAnswer.getReportHighlight()
+											.getOptionalAnswer());
+						}
+					}
+				}
+			}
+		}
 		for (ReportHighlight rh : reportHighlightList) {
 			int orderNumber = 1;
 
@@ -436,6 +459,21 @@ public class Report {
 						orderNumber++;
 			}
 
+			for (Question question : rh.getQuestionGroup()
+					.getOptionalQuestions()) {
+
+				if (question == rh.getAnswer().getQuestion())
+					rh.setPrintReportQuestionOrderNumber(orderNumber);
+				if (rh.getOptionalAnswer() != null
+						&& rh.getOptionalAnswer().getAnswers() != null) {
+					for (Answer optionalAnswer : rh.getOptionalAnswer()
+							.getAnswers()) {
+						if (optionalAnswer.getQuestion() == question
+								&& !optionalAnswer.isRemoveAnswerFromReport())
+							orderNumber++;
+					}
+				}
+			}
 		}
 
 		try {
@@ -445,8 +483,17 @@ public class Report {
 		}
 
 		this.reportHighlights = reportHighlightList;
-		Report savedReport = rs.saveReport(this);
 
+		for (ReportHighlight hl : reportHighlights) {
+			log.debug("report highlight list : " + hl.getOptionalAnswer());
+
+		}
+		Report savedReport = rs.saveReport(this);
+		for (ReportHighlight hl : savedReport.getReportHighlights()) {
+			log.debug("Report-luokka, tallennuksen jälkeen: "
+					+ hl.getOptionalAnswer());
+
+		}
 		return savedReport;
 	}
 
@@ -923,7 +970,10 @@ public class Report {
 		}
 
 		if (optionalAnswer.getAnswers().size() > 0) {
-
+			for (Answer answer : optionalAnswer.getAnswers()) {
+				log.debug("Lisää valinnaiset: valinnaisen kysymyksen high: "
+						+ answer.getReportHighlight());
+			}
 			try {
 				rs.deleteOptionalAnswers(optionalAnswer.getAnswers());
 			} catch (Exception e) {

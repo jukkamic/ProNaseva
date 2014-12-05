@@ -21,11 +21,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.answer.Answer;
+import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportHighlight;
 import fi.testcenter.domain.report.ReportTemplate;
 import fi.testcenter.repository.AnswerRepository;
 import fi.testcenter.repository.ImporterRepository;
+import fi.testcenter.repository.OptionalQuestionsAnswerRepository;
 import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.repository.ReportRepository;
 import fi.testcenter.repository.WorkshopRepository;
@@ -45,6 +47,9 @@ public class ReportService {
 
 	@Autowired
 	private ImporterRepository ir;
+
+	@Autowired
+	private OptionalQuestionsAnswerRepository oqar;
 
 	@Autowired
 	private ReportTemplateService rts;
@@ -85,6 +90,7 @@ public class ReportService {
 		rr.delete(report);
 	}
 
+	@Transactional
 	public List<Report> findSearchReports() {
 		List<Object[]> reports = em
 				.createQuery(
@@ -100,6 +106,7 @@ public class ReportService {
 
 	}
 
+	@Transactional
 	public List<Report> findReportsAwaitingApproval() {
 		List<Object[]> reports = em
 				.createQuery(
@@ -114,6 +121,7 @@ public class ReportService {
 		return resultReports;
 	}
 
+	@Transactional
 	public List<Report> findReportsByUserId(Long userId) {
 		List<Object[]> reports = em
 				.createQuery(
@@ -128,6 +136,7 @@ public class ReportService {
 
 	}
 
+	@Transactional
 	public Long findReportsByWorkshopId(Long id) {
 		TypedQuery<Long> query = em.createNamedQuery("workshopReportCount",
 				Long.class);
@@ -138,6 +147,7 @@ public class ReportService {
 
 	}
 
+	@Transactional
 	public List<Report> findReportsBySearchCriteria(
 			SearchReportCriteria searchReportCriteria) {
 
@@ -283,26 +293,48 @@ public class ReportService {
 		return reportList;
 	}
 
+	@Transactional
 	public void deleteReportHighlights(List<ReportHighlight> highlights) {
 		for (ReportHighlight rh : highlights) {
 			Answer a = rh.getAnswer();
 			if (a != null) {
 				a.setReportHighlight(null);
-				ar.save(a);
+				a = ar.save(a);
 			}
 		}
 		rhlr.deleteInBatch(highlights);
 	}
 
+	@Transactional
 	public void deleteOptionalAnswers(List<Answer> answers) {
+
 		for (Answer a : answers) {
+
 			ReportHighlight rh = a.getReportHighlight();
 			if (rh != null) {
+				log.debug("delete answer : " + rh.getAnswer());
 				rh.setAnswer(null);
-				rhlr.save(rh);
+				rh.setOptionalAnswer(null);
+				rh = rhlr.save(rh);
 			}
 		}
 		ar.deleteInBatch(answers);
 
+	}
+
+	@Transactional
+	public Answer saveAnswer(Answer answer) {
+		return ar.save(answer);
+	}
+
+	@Transactional
+	public ReportHighlight saveHighlight(ReportHighlight highlight) {
+		return rhlr.save(highlight);
+	}
+
+	@Transactional
+	public OptionalQuestionsAnswer saveOptionalQuestionsAnswer(
+			OptionalQuestionsAnswer oqa) {
+		return oqar.save(oqa);
 	}
 }

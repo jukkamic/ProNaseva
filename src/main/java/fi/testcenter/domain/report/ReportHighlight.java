@@ -1,14 +1,17 @@
 package fi.testcenter.domain.report;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import fi.testcenter.domain.answer.Answer;
+import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 
 @Entity
 public class ReportHighlight {
@@ -23,8 +26,13 @@ public class ReportHighlight {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private QuestionGroup questionGroup;
 
-	@OneToOne(mappedBy = "reportHighlight", fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ANSWER_ID")
 	private Answer answer;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "OPTIONALANSWER_ID")
+	private OptionalQuestionsAnswer optionalAnswer;
 
 	@ManyToOne
 	Report report;
@@ -121,4 +129,13 @@ public class ReportHighlight {
 			int printReportQuestionOrderNumber) {
 		this.printReportQuestionOrderNumber = printReportQuestionOrderNumber;
 	}
+
+	public OptionalQuestionsAnswer getOptionalAnswer() {
+		return optionalAnswer;
+	}
+
+	public void setOptionalAnswer(OptionalQuestionsAnswer optionalAnswer) {
+		this.optionalAnswer = optionalAnswer;
+	}
+
 }
