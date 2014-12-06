@@ -100,6 +100,7 @@
 	<c:forEach var="questionGroup" items="${reportPart.questionGroups}" varStatus="questionGroupCounter">
 		
 		<c:set var="bootstrapPanelCounter" value="${bootstrapPanelCounter + 1}" />
+		<c:set var="questionCount" value="1" scope="request" />
 		
 		<div class="panel panel-default">
 			<div class="panel-heading">

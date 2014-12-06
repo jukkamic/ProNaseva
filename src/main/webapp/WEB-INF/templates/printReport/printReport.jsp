@@ -349,7 +349,8 @@ lisäosana PDFCreator -->
 					<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
 					<c:set var="mainQuestionNumber" value="${questionOrderNumber}" scope="request" />
 					<div style="margin-left: 42px;">
-						<jsp:include page="/WEB-INF/templates/printReport/printReportSubQuestions.jsp" />
+						<br>
+						<jsp:include page="/WEB-INF/templates/printReport/printReportSubQuestions.jsp" /> 
 					</div>				
 				</c:if>
 				
