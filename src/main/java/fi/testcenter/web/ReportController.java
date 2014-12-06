@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
+import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.QuestionGroup;
 import fi.testcenter.domain.report.QuestionGroupScore;
@@ -123,8 +123,7 @@ public class ReportController {
 			Model model,
 			@ModelAttribute("report") Report report,
 			@RequestParam("navigateToReportPart") Integer navigateToReportPart,
-			@RequestParam("addQuestionToGroup") Integer addQuestionToGroup,
-			@RequestParam("addQuestionToReportPart") Integer addQuestionToReportPart,
+
 			@RequestParam("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex,
 			BindingResult result) {
 
@@ -154,23 +153,6 @@ public class ReportController {
 
 		}
 
-		for (Answer answeri : report.getAnswers()) {
-			if (answeri instanceof OptionalQuestionsAnswer) {
-				if (((OptionalQuestionsAnswer) answeri).getAnswers() != null) {
-					for (Answer optionalAnswer : ((OptionalQuestionsAnswer) answeri)
-							.getAnswers()) {
-						log.debug("save report jälkeen: valinnaisen kysymyksen highlight: "
-								+ optionalAnswer.getReportHighlight());
-						if (optionalAnswer.getReportHighlight() != null) {
-							log.debug("save report jälkeen: highlightin vastaus : "
-									+ optionalAnswer.getReportHighlight()
-											.getOptionalAnswer());
-						}
-					}
-				}
-			}
-		}
-
 		// Jos käyttäjä on clickannut navigointia toisen raportinosan
 		// muokkaukseen, asetetaan tallennuksen jälkeen tarvittavat muuttujat ja
 		// palataan
@@ -186,8 +168,7 @@ public class ReportController {
 					for (Question question : questionGroup.getQuestions()) {
 						answerIndex += question.getSubQuestions().size();
 					}
-					if (questionGroup.getOptionalQuestions().size() > 0)
-						answerIndex++;
+
 				}
 			}
 			model.addAttribute("initialAnswerIndexCounter", answerIndex);
@@ -196,22 +177,21 @@ public class ReportController {
 
 			return "report/editReport";
 
-		} else if (addQuestionToGroup != null) {
+		} else if (optionalQuestionsAnswerIndex != null) {
 
 			// Asetetaan JSP:tä varten chosenQuestions-muuttuujaan aikaisemmin
 			// valitut valinnaiset kysymykset
 
-			List<Question> optionalQuestions = report.getReportTemplate()
-					.getReportParts().get(addQuestionToReportPart)
-					.getQuestionGroups().get(addQuestionToGroup)
-					.getOptionalQuestions();
-
 			OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
 					.getAnswers().get(optionalQuestionsAnswerIndex);
+			List<Question> optionalQuestions = ((OptionalQuestions) oqa
+					.getQuestion()).getQuestions();
+
 			int[] oldQuestions = new int[0];
 			if (oqa.getQuestions() != null) {
 
 				for (Question question : oqa.getQuestions()) {
+					log.debug("Lisätään vanha valittu kysymys");
 					int index = optionalQuestions.indexOf(question);
 					oldQuestions = Arrays.copyOf(oldQuestions,
 							oldQuestions.length + 1);
@@ -226,31 +206,7 @@ public class ReportController {
 			model.addAttribute("report", report);
 			model.addAttribute("optionalQuestionsAnswerIndex",
 					optionalQuestionsAnswerIndex);
-			model.addAttribute("optionalQuestions", report.getReportTemplate()
-					.getReportParts().get(addQuestionToReportPart)
-					.getQuestionGroups().get(addQuestionToGroup)
-					.getOptionalQuestions());
-
-			model.addAttribute("addQuestionToReportPart",
-					addQuestionToReportPart);
-			model.addAttribute("addQuestionToGroup", addQuestionToGroup);
-
-			for (Answer answeri : report.getAnswers()) {
-				if (answeri instanceof OptionalQuestionsAnswer) {
-					if (((OptionalQuestionsAnswer) answeri).getAnswers() != null) {
-						for (Answer optionalAnswer : ((OptionalQuestionsAnswer) answeri)
-								.getAnswers()) {
-							log.debug("ennen lisää kysymykset jsp: valinnaisen kysymyksen highlight: "
-									+ optionalAnswer.getReportHighlight());
-							if (optionalAnswer.getReportHighlight() != null) {
-								log.debug("ennen lisää kysymykset jsp: highlightin vastaus : "
-										+ optionalAnswer.getReportHighlight()
-												.getOptionalAnswer());
-							}
-						}
-					}
-				}
-			}
+			model.addAttribute("optionalQuestions", optionalQuestions);
 
 			return "report/addOptionalQuestions";
 		}
@@ -283,14 +239,12 @@ public class ReportController {
 			@ModelAttribute("chosenQuestions") ChosenQuestions chosenQuestions,
 			BindingResult result,
 			@ModelAttribute("report") Report report,
-			@ModelAttribute("addQuestionToReportPart") Integer reportPart,
-			@ModelAttribute("addQuestionToGroup") Integer questionGroup,
-			@ModelAttribute("questionIndex") Integer questionIndex,
 			@ModelAttribute("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex) {
 
-		model.addAttribute("report", report.addOptionalQuestions(
-				chosenQuestions, reportPart, questionGroup, questionIndex,
-				optionalQuestionsAnswerIndex, rs));
+		report = report.addOptionalQuestions(chosenQuestions,
+				optionalQuestionsAnswerIndex, rs);
+
+		model.addAttribute("report", report);
 		model.addAttribute("initialAnswerIndexCounter", 0);
 		model.addAttribute("editReportPartNumber", 0);
 		return "report/editReport";

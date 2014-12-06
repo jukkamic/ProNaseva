@@ -348,7 +348,32 @@ public class Report {
 				for (Question question : questionGroup.getQuestions()) {
 					Answer answerToMainQ = this.answers.get(answerIndexCounter);
 
-					if (answerToMainQ.isHighlightAnswer() == true) {
+					if (answerToMainQ instanceof OptionalQuestionsAnswer) {
+						OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answerToMainQ;
+						int optionalsIndexCounter = 0;
+						if (oqa.getAnswers() != null) {
+							for (Answer optionalQAnswer : oqa.getAnswers()) {
+								if (optionalQAnswer.isHighlightAnswer() == true) {
+									ReportHighlight highlight = new ReportHighlight(
+											this, reportPart, questionGroup,
+											oqa.getAnswers().get(
+													optionalsIndexCounter));
+									highlight
+											.setQuestionGroupOrderNumber(questionGroupCounter);
+									highlight
+											.setQuestionOrderNumber(questionCounter);
+									optionalQAnswer
+											.setReportHighlight(highlight);
+									highlight.setOptionalAnswer(oqa);
+									highlight = rs.saveHighlight(highlight);
+
+									reportHighlightList.add(highlight);
+								}
+								optionalsIndexCounter++;
+								questionCounter++;
+							}
+						}
+					} else if (answerToMainQ.isHighlightAnswer() == true) {
 						ReportHighlight highlight = new ReportHighlight(this,
 								reportPart, questionGroup,
 								this.answers.get(answerIndexCounter));
@@ -386,41 +411,7 @@ public class Report {
 					questionCounter++;
 
 				}
-				if (questionGroup.getOptionalQuestions().size() > 0) {
-					OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) this.answers
-							.get(answerIndexCounter);
-					if (oqa.getQuestions() != null) {
-						int optionalsIndexCounter = 0;
 
-						for (Question question : oqa.getQuestions()) {
-							Answer optionalAnswer = oqa.getAnswers().get(
-									optionalsIndexCounter);
-
-							if (optionalAnswer.isHighlightAnswer() == true) {
-								ReportHighlight highlight = new ReportHighlight(
-										this, reportPart, questionGroup, oqa
-												.getAnswers().get(
-														optionalsIndexCounter));
-								highlight
-										.setQuestionGroupOrderNumber(questionGroupCounter);
-								highlight
-										.setQuestionOrderNumber(questionCounter);
-								optionalAnswer.setReportHighlight(highlight);
-								oqa = rs.saveOptionalQuestionsAnswer(oqa);
-								highlight.setOptionalAnswer(oqa);
-								highlight = rs.saveHighlight(highlight);
-
-								reportHighlightList.add(highlight);
-								rs.saveReport(this);
-
-							}
-							questionCounter++;
-							optionalsIndexCounter++;
-						}
-					}
-					answerIndexCounter++;
-
-				}
 				questionGroupCounter++;
 
 			}
@@ -432,8 +423,25 @@ public class Report {
 
 		for (ReportHighlight rh : reportHighlightList) {
 			int orderNumber = 1;
-
 			for (Question question : rh.getQuestionGroup().getQuestions()) {
+				if (question instanceof OptionalQuestions) {
+					for (Question optionalQuestion : ((OptionalQuestions) question)
+							.getQuestions()) {
+						if (optionalQuestion == rh.getAnswer().getQuestion())
+							rh.setPrintReportQuestionOrderNumber(orderNumber);
+						if (rh.getOptionalAnswer() != null
+								&& rh.getOptionalAnswer().getAnswers() != null) {
+							for (Answer optionalAnswer : rh.getOptionalAnswer()
+									.getAnswers()) {
+								if (optionalAnswer.getQuestion() == question
+										&& !optionalAnswer
+												.isRemoveAnswerFromReport())
+									orderNumber++;
+							}
+						}
+					}
+				}
+
 				if (question == rh.getAnswer().getQuestion())
 					rh.setPrintReportQuestionOrderNumber(orderNumber);
 				for (Answer answer : answers)
@@ -442,21 +450,6 @@ public class Report {
 						orderNumber++;
 			}
 
-			for (Question question : rh.getQuestionGroup()
-					.getOptionalQuestions()) {
-
-				if (question == rh.getAnswer().getQuestion())
-					rh.setPrintReportQuestionOrderNumber(orderNumber);
-				if (rh.getOptionalAnswer() != null
-						&& rh.getOptionalAnswer().getAnswers() != null) {
-					for (Answer optionalAnswer : rh.getOptionalAnswer()
-							.getAnswers()) {
-						if (optionalAnswer.getQuestion() == question
-								&& !optionalAnswer.isRemoveAnswerFromReport())
-							orderNumber++;
-					}
-				}
-			}
 		}
 
 		try {
@@ -590,7 +583,111 @@ public class Report {
 
 							}
 						}
+
+						if (question instanceof OptionalQuestions) {
+							OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) this.answers
+									.get(answerIndexCounter);
+							int optionalAnswersCounter = 0;
+							if (oqa.getQuestions() != null) {
+								for (Question optionalQuestion : oqa
+										.getQuestions()) {
+									if (optionalQuestion instanceof MultipleChoiceQuestion) {
+										MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) optionalQuestion;
+										MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
+												.getAnswers()
+												.get(optionalAnswersCounter++);
+										mca.setShowScore(false);
+
+										int maxScore = 0;
+										for (MultipleChoiceOption option : mcq
+												.getOptions()) {
+											if (option.getPoints() != -1
+													&& option.getPoints() > maxScore) {
+												maxScore = option.getPoints();
+
+											}
+										}
+
+										mca.setMaxScore(maxScore); // Asetetaan
+																	// monivalintakysymyksen
+																	// maksimipistemäärä
+
+										// Lasketaan pisteet jos käyttäjä on
+										// tehnyt
+										// valinnan
+										// ja
+										// monivalinta ei ole sellainen, jota ei
+										// pisteytetä
+										// (pistemäärä -1)
+
+										if (mca.getChosenOptionIndex() != -1
+												&& mcq.getOptions()
+														.get(mca.getChosenOptionIndex())
+														.getPoints() != -1) {
+
+											mca.setShowScore(true);
+											mca.setScore(mcq
+													.getOptions()
+													.get(mca.getChosenOptionIndex())
+													.getPoints());
+
+											// Lisätään kysymysryhmän pisteisiin
+											// ja
+											// asetetaan
+											// kysymysryhmän pisteet näkyviksi
+											// raportissa
+
+											questionGroupScoreObject
+													.setShowScore(true);
+											questionGroupScoreObject
+													.setMaxScore(questionGroupScoreObject
+															.getMaxScore()
+															+ maxScore);
+
+											questionGroupScoreObject
+													.setScore(questionGroupScoreObject
+															.getScore()
+															+ mcq.getOptions()
+																	.get(mca.getChosenOptionIndex())
+																	.getPoints());
+
+											reportPartScoreObject
+													.setShowScore(true);
+										}
+
+									}
+
+									if (optionalQuestion instanceof PointsQuestion) {
+
+										PointsQuestion pointsQuestion = (PointsQuestion) optionalQuestion;
+										PointsAnswer pointsAnswer = (PointsAnswer) oqa
+												.getAnswers()
+												.get(optionalAnswersCounter++);
+										if (pointsAnswer.getGivenPoints() != -1) {
+											questionGroupScoreObject
+													.setShowScore(true);
+											questionGroupScoreObject
+													.setMaxScore(questionGroupScoreObject
+															.getMaxScore()
+															+ pointsQuestion
+																	.getMaxPoints());
+											questionGroupScoreObject
+													.setScore(questionGroupScoreObject
+															.getScore()
+															+ pointsAnswer
+																	.getGivenPoints());
+											reportPartScoreObject
+													.setShowScore(true);
+
+										}
+									}
+
+								}
+							}
+						}
+
 					}
+
 					answerIndexCounter++;
 
 					// subQuestions loop
@@ -662,101 +759,6 @@ public class Report {
 
 				}
 
-				// Valinnaiset kysymykset
-
-				if (questionGroup.getOptionalQuestions().size() > 0) {
-					OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) this.answers
-							.get(answerIndexCounter);
-					int optionalAnswersCounter = 0;
-					if (oqa.getQuestions() != null) {
-						for (Question optionalQuestion : oqa.getQuestions()) {
-							if (optionalQuestion instanceof MultipleChoiceQuestion) {
-								MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) optionalQuestion;
-								MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
-										.getAnswers().get(
-												optionalAnswersCounter++);
-								mca.setShowScore(false);
-
-								int maxScore = 0;
-								for (MultipleChoiceOption option : mcq
-										.getOptions()) {
-									if (option.getPoints() != -1
-											&& option.getPoints() > maxScore) {
-										maxScore = option.getPoints();
-
-									}
-								}
-
-								mca.setMaxScore(maxScore); // Asetetaan
-															// monivalintakysymyksen
-															// maksimipistemäärä
-
-								// Lasketaan pisteet jos käyttäjä on tehnyt
-								// valinnan
-								// ja
-								// monivalinta ei ole sellainen, jota ei
-								// pisteytetä
-								// (pistemäärä -1)
-
-								if (mca.getChosenOptionIndex() != -1
-										&& mcq.getOptions()
-												.get(mca.getChosenOptionIndex())
-												.getPoints() != -1) {
-
-									mca.setShowScore(true);
-									mca.setScore(mcq.getOptions()
-											.get(mca.getChosenOptionIndex())
-											.getPoints());
-
-									// Lisätään kysymysryhmän pisteisiin ja
-									// asetetaan
-									// kysymysryhmän pisteet näkyviksi
-									// raportissa
-
-									questionGroupScoreObject.setShowScore(true);
-									questionGroupScoreObject
-											.setMaxScore(questionGroupScoreObject
-													.getMaxScore() + maxScore);
-
-									questionGroupScoreObject
-											.setScore(questionGroupScoreObject
-													.getScore()
-													+ mcq.getOptions()
-															.get(mca.getChosenOptionIndex())
-															.getPoints());
-
-									reportPartScoreObject.setShowScore(true);
-								}
-
-							}
-
-							if (optionalQuestion instanceof PointsQuestion) {
-
-								PointsQuestion pointsQuestion = (PointsQuestion) optionalQuestion;
-								PointsAnswer pointsAnswer = (PointsAnswer) oqa
-										.getAnswers().get(
-												optionalAnswersCounter++);
-								if (pointsAnswer.getGivenPoints() != -1) {
-									questionGroupScoreObject.setShowScore(true);
-									questionGroupScoreObject
-											.setMaxScore(questionGroupScoreObject
-													.getMaxScore()
-													+ pointsQuestion
-															.getMaxPoints());
-									questionGroupScoreObject
-											.setScore(questionGroupScoreObject
-													.getScore()
-													+ pointsAnswer
-															.getGivenPoints());
-									reportPartScoreObject.setShowScore(true);
-
-								}
-							}
-
-						}
-					}
-				}
-
 				// Lisätään kysymysryhmän pisteet Report-luokan olioon.
 
 				questionGroupScoreObject.calculateScorePercentage();
@@ -772,8 +774,6 @@ public class Report {
 								+ questionGroupScoreObject.getMaxScore());
 
 				questionGroupIndex++;
-				if (questionGroup.getOptionalQuestions().size() > 0)
-					answerIndexCounter++;
 
 			}
 
@@ -855,8 +855,59 @@ public class Report {
 					}
 
 					if (question instanceof OptionalQuestions) {
-						Answer answer = new OptionalQuestionsAnswer();
+						OptionalQuestionsAnswer answer = new OptionalQuestionsAnswer();
+						List<Answer> optionalAnswerList = new ArrayList<Answer>();
 						answer.setQuestion(question);
+						OptionalQuestions oq = (OptionalQuestions) question;
+						for (Question loopQuestion : oq.getQuestions()) {
+							if (loopQuestion instanceof TextQuestion) {
+
+								TextAnswer optionalAnswer = new TextAnswer();
+								optionalAnswer.setQuestion(question);
+								optionalAnswerList.add(optionalAnswer);
+
+							}
+
+							if (loopQuestion instanceof MultipleChoiceQuestion) {
+								MultipleChoiceAnswer optionalAnswer = new MultipleChoiceAnswer();
+								optionalAnswer.setQuestion(question);
+								optionalAnswerList.add(optionalAnswer);
+
+							}
+							if (loopQuestion instanceof CostListingQuestion) {
+
+								CostListingAnswer optionalAnswer = new CostListingAnswer();
+								CostListingQuestion clq = (CostListingQuestion) question;
+
+								optionalAnswer.setQuestion(question);
+								List<Float> answerList = new ArrayList<Float>();
+								for (int i = 0; i < clq.getQuestions().size(); i++)
+									answerList.add(new Float(0));
+								optionalAnswer.setAnswers(answerList);
+
+								optionalAnswerList.add(optionalAnswer);
+
+							}
+							if (loopQuestion instanceof ImportantPointsQuestion) {
+								ImportantPointsAnswer optionalAnswer = new ImportantPointsAnswer();
+								ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
+								optionalAnswer.setQuestion(question);
+								List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
+								for (int i = 0; i < listQuestion
+										.getQuestionItems().size(); i++)
+									answerItems.add(new ImportantPointsItem());
+								optionalAnswer.setAnswerItems(answerItems);
+								optionalAnswerList.add(optionalAnswer);
+							}
+							if (loopQuestion instanceof PointsQuestion) {
+								PointsAnswer optionalAnswer = new PointsAnswer();
+								optionalAnswer.setQuestion(question);
+								optionalAnswerList.add(optionalAnswer);
+
+							}
+
+						}
+						answer.setAnswers(optionalAnswerList);
 						reportAnswerList.add(answer);
 
 					}
@@ -890,13 +941,12 @@ public class Report {
 	// KÄYTTÄJÄN VALITSEMIEN VALINNAISTEN KYSYMYSTEN LISÄYS
 
 	public Report addOptionalQuestions(ChosenQuestions chosenQuestions,
-			int reportPart, int questionGroup, int answerIndex, ReportService rs) {
-
-		QuestionGroup group = this.reportTemplate.getReportParts()
-				.get(reportPart).getQuestionGroups().get(questionGroup);
+			int answerIndex, ReportService rs) {
 
 		OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer) this.answers
 				.get(answerIndex);
+		List<Question> reportTemplateQuestionsList = ((OptionalQuestions) optionalAnswer
+				.getQuestion()).getQuestions();
 
 		// Tehdään lista käyttäjän valitsemista kysymyksistä
 
@@ -908,13 +958,16 @@ public class Report {
 			Question question = reportTemplateQuestionsList.get(questionIndex);
 
 			newQuestionList.add(question);
-			if (!optionalAnswer.getQuestions().contains(question)) {
+			if (optionalAnswer.getQuestions() == null
+					|| !(optionalAnswer.getQuestions().contains(question))) {
+
 				if (question instanceof MultipleChoiceQuestion) {
 					Answer mca = new MultipleChoiceAnswer();
 					mca.setQuestion(question);
 					newAnswerList.add(mca);
 				}
 				if (question instanceof PointsQuestion) {
+
 					Answer pa = new PointsAnswer();
 					pa.setQuestion(question);
 					newAnswerList.add(pa);
@@ -947,6 +1000,7 @@ public class Report {
 		}
 
 		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
+		newAnswer.setQuestion(optionalAnswer.getQuestion());
 		newAnswer.setQuestions(newQuestionList);
 		newAnswer.setAnswers(newAnswerList);
 

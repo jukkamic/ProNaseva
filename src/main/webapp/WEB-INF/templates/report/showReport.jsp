@@ -443,7 +443,18 @@
 							</c:if>	
 								
 								
-								
+		<!-- Optional questions -->
+		
+						
+						<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
+							
+							<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+							
+							<jsp:include page="/WEB-INF/templates/report/showOptionalQuestions.jsp" />
+							
+						</c:if>
+							
+							
 			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 								
 		<!-- Show subquestions -->
@@ -459,20 +470,7 @@
 							
 							</c:forEach> <!-- Questions loop end -->
 							
-		<!-- Optional questions -->
-		
-						
-						<c:if test='${not empty questionGroup.optionalQuestions}'>
-							
-							<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
-							
-							<jsp:include page="/WEB-INF/templates/report/showOptionalQuestions.jsp" />
-							<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
-													
-						
-						</c:if>
-							
-							
+
 							
 							
 							<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">

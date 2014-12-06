@@ -7,11 +7,13 @@
 <!-- Multiple choice question -->
 
 
-<c:forEach var="question" items="${optionalQuestionsAnswer.questions}" varStatus="counter">	
+<c:forEach var="question" items="${optionalQuestionsAnswer.questions}" varStatus="counter">
+	
 <c:set var="questionCounter" value="${questionCount + counter.index}" />
 	
 	<!-- Points question -->
 	<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
+	<% System.out.println("Valinnainen on pointsquestion"); %>
 	<h3>${questionCounter}. ${question.question}</h3>
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 			<div class="checkbox" style="font-size: 1.2em;">
@@ -69,6 +71,9 @@
 			value="report.answers[${answerIndexCounter}].answers[${counter.index}].remarks}" />
 		<br><br>
 	</c:if> 
+	
+<!-- MultipleChoiceQUestion -->
+	
 	
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
 	<h3>${questionCounter.count}. ${question.question}</h3>
