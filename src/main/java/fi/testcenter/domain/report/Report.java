@@ -41,6 +41,7 @@ import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.ImportantPointsQuestion;
 import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
+import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
@@ -396,7 +397,6 @@ public class Report {
 									optionalsIndexCounter);
 
 							if (optionalAnswer.isHighlightAnswer() == true) {
-								log.debug("is highlight");
 								ReportHighlight highlight = new ReportHighlight(
 										this, reportPart, questionGroup, oqa
 												.getAnswers().get(
@@ -430,23 +430,6 @@ public class Report {
 		// raportista pois jätetyt kysymykset eivät vaikuta highlight-kysymysten
 		// numerointiin
 
-		log.debug("wtf");
-		for (Answer answeri : answers) {
-			if (answeri instanceof OptionalQuestionsAnswer) {
-				if (((OptionalQuestionsAnswer) answeri).getAnswers() != null) {
-					for (Answer optionalAnswer : ((OptionalQuestionsAnswer) answeri)
-							.getAnswers()) {
-						log.debug("valinnaisen kysymyksen highlight: "
-								+ optionalAnswer.getReportHighlight());
-						if (optionalAnswer.getReportHighlight() != null) {
-							log.debug("highlightin vastaus : "
-									+ optionalAnswer.getReportHighlight()
-											.getOptionalAnswer());
-						}
-					}
-				}
-			}
-		}
 		for (ReportHighlight rh : reportHighlightList) {
 			int orderNumber = 1;
 
@@ -484,16 +467,8 @@ public class Report {
 
 		this.reportHighlights = reportHighlightList;
 
-		for (ReportHighlight hl : reportHighlights) {
-			log.debug("report highlight list : " + hl.getOptionalAnswer());
-
-		}
 		Report savedReport = rs.saveReport(this);
-		for (ReportHighlight hl : savedReport.getReportHighlights()) {
-			log.debug("Report-luokka, tallennuksen jälkeen: "
-					+ hl.getOptionalAnswer());
 
-		}
 		return savedReport;
 	}
 
@@ -879,6 +854,13 @@ public class Report {
 
 					}
 
+					if (question instanceof OptionalQuestions) {
+						Answer answer = new OptionalQuestionsAnswer();
+						answer.setQuestion(question);
+						reportAnswerList.add(answer);
+
+					}
+
 					if (!question.getSubQuestions().isEmpty()) {
 						for (Question subQuestion : question.getSubQuestions()) {
 							if (subQuestion instanceof TextQuestion) {
@@ -898,10 +880,6 @@ public class Report {
 					}
 
 				}
-				List<Question> optionalQuestions = questionGroup
-						.getOptionalQuestions();
-				if (optionalQuestions.size() > 0)
-					reportAnswerList.add(new OptionalQuestionsAnswer());
 
 			}
 		}
@@ -914,9 +892,8 @@ public class Report {
 	public Report addOptionalQuestions(ChosenQuestions chosenQuestions,
 			int reportPart, int questionGroup, int answerIndex, ReportService rs) {
 
-		List<Question> reportTemplateQuestionsList = this.reportTemplate
-				.getReportParts().get(reportPart).getQuestionGroups()
-				.get(questionGroup).getOptionalQuestions();
+		QuestionGroup group = this.reportTemplate.getReportParts()
+				.get(reportPart).getQuestionGroups().get(questionGroup);
 
 		OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer) this.answers
 				.get(answerIndex);
@@ -966,18 +943,6 @@ public class Report {
 						newAnswerList.add(answer);
 				}
 
-			}
-		}
-
-		if (optionalAnswer.getAnswers().size() > 0) {
-			for (Answer answer : optionalAnswer.getAnswers()) {
-				log.debug("Lisää valinnaiset: valinnaisen kysymyksen high: "
-						+ answer.getReportHighlight());
-			}
-			try {
-				rs.deleteOptionalAnswers(optionalAnswer.getAnswers());
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 

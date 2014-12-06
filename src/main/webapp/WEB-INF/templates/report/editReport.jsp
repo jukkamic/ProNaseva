@@ -451,6 +451,22 @@
 					<br><br>
 						
 			</c:if>	
+<!-- Optional questions -->
+	
+		<input type="hidden" id="addQuestionToReportPart" name="addQuestionToReportPart" value="${editReportPartNumber}"/>
+		<input type="hidden" id="addQuestionToGroup" name="addQuestionToGroup" />
+		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
+	<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
+			
+			<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+			
+			<jsp:include page="/WEB-INF/templates/report/editOptionalQuestions.jsp" />
+			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
+			
+			<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index}, ${answerIndexCounter - 1})" class="btn btn-primary"> Lisää kysymys</a>
+		
+		</c:if>
+			
 		<!-- Subquestions --> 
 			
 			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
@@ -464,26 +480,15 @@
 				<br>			
 			</c:if>
 		
+	
+		
+		
 		<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" />
 						
 <!-- Questions loop end -->									
 			</c:forEach> 
 		
-	<!-- Optional questions -->
-	
-		<input type="hidden" id="addQuestionToReportPart" name="addQuestionToReportPart" value="${editReportPartNumber}"/>
-		<input type="hidden" id="addQuestionToGroup" name="addQuestionToGroup" />
-		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
-		<c:if test='${not empty questionGroup.optionalQuestions}'>
-			
-			<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
-			
-			<jsp:include page="/WEB-INF/templates/report/editOptionalQuestions.jsp" />
-			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
-			
-			<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index}, ${answerIndexCounter - 1})" class="btn btn-primary"> Lisää kysymys</a>
-		
-		</c:if>
+
 		</div>
 		</div>
 	</div>

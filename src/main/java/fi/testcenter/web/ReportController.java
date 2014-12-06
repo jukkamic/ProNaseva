@@ -285,27 +285,11 @@ public class ReportController {
 			@ModelAttribute("report") Report report,
 			@ModelAttribute("addQuestionToReportPart") Integer reportPart,
 			@ModelAttribute("addQuestionToGroup") Integer questionGroup,
+			@ModelAttribute("questionIndex") Integer questionIndex,
 			@ModelAttribute("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex) {
 
-		for (Answer answeri : report.getAnswers()) {
-			if (answeri instanceof OptionalQuestionsAnswer) {
-				if (((OptionalQuestionsAnswer) answeri).getAnswers() != null) {
-					for (Answer optionalAnswer : ((OptionalQuestionsAnswer) answeri)
-							.getAnswers()) {
-						log.debug("controller: valinnaisen kysymyksen highlight: "
-								+ optionalAnswer.getReportHighlight());
-						if (optionalAnswer.getReportHighlight() != null) {
-							log.debug("controller: highlightin vastaus : "
-									+ optionalAnswer.getReportHighlight()
-											.getOptionalAnswer());
-						}
-					}
-				}
-			}
-		}
-
 		model.addAttribute("report", report.addOptionalQuestions(
-				chosenQuestions, reportPart, questionGroup,
+				chosenQuestions, reportPart, questionGroup, questionIndex,
 				optionalQuestionsAnswerIndex, rs));
 		model.addAttribute("initialAnswerIndexCounter", 0);
 		model.addAttribute("editReportPartNumber", 0);
