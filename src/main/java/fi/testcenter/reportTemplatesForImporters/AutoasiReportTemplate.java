@@ -1912,11 +1912,6 @@ public class AutoasiReportTemplate {
 		optionalQuestions.add(new PointsQuestion("Akun tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion("Akun kiinnityksen tarkastus",
 				2));
-		optionalQuestions.add(new PointsQuestion(
-				"Lähivalon toiminnan tarkastus", 2));
-		optionalQuestions.add(new PointsQuestion(
-				"Peruutusvalon toiminnan tarkastus", 2));
-		optionalQuestions.add(new PointsQuestion("Pesunesteen tarkastus", 2));
 
 		optionalQuestions.add(new PointsQuestion(
 				"Jarrulevyjen tai -palojen tarkastus", 2));
@@ -1930,10 +1925,16 @@ public class AutoasiReportTemplate {
 		optionalQuestions.add(new PointsQuestion(
 				"Lasinpesurin toiminnan tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion(
+				"Lähivalon toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
 				"Ohjaustehostimen nestemäärän tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion(
 				"Ovien lukkojen, saranoiden ja rajoittimien tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion("Pesunesteen tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion(
+				"Peruutusvalon toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Pesunesteen tarkastus", 2));
+
 		optionalQuestions.add(new PointsQuestion(
 				"Rekisterikilven valon tarkastus", 2));
 		optionalQuestions

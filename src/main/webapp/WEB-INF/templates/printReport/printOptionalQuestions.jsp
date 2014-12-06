@@ -35,6 +35,8 @@
 		
 	</c:if>
 
+<br>
+
 <!--  Text question -->
 	<%-- <c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
 		<h3>${questionCounter}. ${question.question}</h3>
