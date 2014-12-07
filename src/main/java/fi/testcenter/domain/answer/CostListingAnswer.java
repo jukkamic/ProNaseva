@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
+import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.Report;
+
 //KORJAA VALUUTTA KÄYTTÄEN : http://tutorials.jenkov.com/java-internationalization/numberformat.html
 
 @Entity
@@ -12,6 +15,17 @@ public class CostListingAnswer extends Answer {
 	List<Float> answers;
 	Float total;
 	String remarks;
+
+	public CostListingAnswer() {
+	}
+
+	public CostListingAnswer(Question question) {
+		super(question);
+	}
+
+	public CostListingAnswer(Report report, Question question) {
+		super(report, question);
+	}
 
 	public List<Float> getAnswers() {
 		return answers;

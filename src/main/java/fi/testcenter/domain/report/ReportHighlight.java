@@ -1,6 +1,5 @@
 package fi.testcenter.domain.report;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,7 +25,7 @@ public class ReportHighlight {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private QuestionGroup questionGroup;
 
-	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ANSWER_ID")
 	private Answer answer;
 

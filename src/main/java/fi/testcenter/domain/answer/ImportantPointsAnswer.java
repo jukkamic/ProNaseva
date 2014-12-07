@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
+import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.Report;
+
 @Entity
 public class ImportantPointsAnswer extends Answer {
 
@@ -16,6 +19,17 @@ public class ImportantPointsAnswer extends Answer {
 	List<ImportantPointsItem> answerItems;
 
 	String remarks;
+
+	public ImportantPointsAnswer() {
+	}
+
+	public ImportantPointsAnswer(Question question) {
+		super(question);
+	}
+
+	public ImportantPointsAnswer(Report report, Question question) {
+		super(report, question);
+	}
 
 	public List<ImportantPointsItem> getAnswerItems() {
 		return answerItems;

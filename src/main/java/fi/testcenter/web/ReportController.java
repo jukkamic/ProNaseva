@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
+import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.Question;
@@ -106,6 +107,8 @@ public class ReportController {
 			@ModelAttribute("report") Report report) {
 
 		report.prepareAnswerList();
+		for (Answer answer : report.getAnswers())
+			log.debug("Uusi answer list: " + answer.getClass());
 		model.addAttribute("report", report);
 
 		List<Workshop> workshops = ws.getWorkshops();
@@ -390,6 +393,9 @@ public class ReportController {
 		model.addAttribute("report", selectedReport);
 		model.addAttribute("edit", "TRUE");
 		model.addAttribute("readyReport", selectedReport);
+
+		for (Answer answer : selectedReport.getAnswers())
+			log.debug(answer.getClass());
 
 		if (selectedReport.isSmileysSet() == false) {
 

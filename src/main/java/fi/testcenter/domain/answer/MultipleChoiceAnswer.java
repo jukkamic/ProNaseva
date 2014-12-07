@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import fi.testcenter.domain.question.MultipleChoiceOption;
+import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.Report;
 
 @Entity
 public class MultipleChoiceAnswer extends Answer {
@@ -20,6 +22,17 @@ public class MultipleChoiceAnswer extends Answer {
 
 	@Column(length = 1500)
 	private String remarks = "";
+
+	public MultipleChoiceAnswer() {
+	}
+
+	public MultipleChoiceAnswer(Question question) {
+		super(question);
+	}
+
+	public MultipleChoiceAnswer(Report report, Question question) {
+		super(report, question);
+	}
 
 	public String getRemarks() {
 		return remarks;

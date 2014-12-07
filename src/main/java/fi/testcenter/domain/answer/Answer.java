@@ -5,9 +5,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportHighlight;
 
 @Entity
@@ -22,6 +24,9 @@ public class Answer {
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "answer")
 	private ReportHighlight reportHighlight;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	Report report;
+
 	private boolean showScore;
 	private int score;
 	private int maxScore;
@@ -30,6 +35,15 @@ public class Answer {
 
 	public Answer() {
 
+	}
+
+	public Answer(Question question) {
+		this.question = question;
+	}
+
+	public Answer(Report report, Question question) {
+		this.report = report;
+		this.question = question;
 	}
 
 	public boolean isHighlightAnswer() {
@@ -94,6 +108,14 @@ public class Answer {
 
 	public void setReportHighlight(ReportHighlight reportHighlight) {
 		this.reportHighlight = reportHighlight;
+	}
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
 	}
 
 }

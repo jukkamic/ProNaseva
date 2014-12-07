@@ -134,7 +134,7 @@
 							
 							<c:forEach var="question" items="${questionGroup.questions}"
 								varStatus="questionCounter">
-
+							
 	<!-- Multiple choice question -->
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
 																										
@@ -452,7 +452,7 @@
 							
 							<jsp:include page="/WEB-INF/templates/report/showOptionalQuestions.jsp" />
 							
-						</c:if>
+						</c:if> 
 							
 							
 			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />

@@ -64,9 +64,8 @@ public class Report {
 	@OneToOne(fetch = FetchType.EAGER)
 	private ReportTemplate reportTemplate;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORT_ANSWER", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "ANSWER_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
+	@OrderColumn(name = "ANSWERORDER")
 	private List<Answer> answers = new ArrayList<Answer>();
 
 	private int totalScorePercentage;
@@ -810,24 +809,21 @@ public class Report {
 
 					if (question instanceof TextQuestion) {
 
-						Answer answer = new TextAnswer();
-						answer.setQuestion(question);
-						reportAnswerList.add(answer);
+						reportAnswerList.add(new TextAnswer(this, question));
 
 					}
 
 					if (question instanceof MultipleChoiceQuestion) {
-						Answer answer = new MultipleChoiceAnswer();
-						answer.setQuestion(question);
-						reportAnswerList.add(answer);
+
+						reportAnswerList.add(new MultipleChoiceAnswer(this,
+								question));
 
 					}
 					if (question instanceof CostListingQuestion) {
 
-						CostListingAnswer answer = new CostListingAnswer();
+						CostListingAnswer answer = new CostListingAnswer(this,
+								question);
 						CostListingQuestion clq = (CostListingQuestion) question;
-
-						answer.setQuestion(question);
 						List<Float> answerList = new ArrayList<Float>();
 						for (int i = 0; i < clq.getQuestions().size(); i++)
 							answerList.add(new Float(0));
@@ -837,9 +833,9 @@ public class Report {
 
 					}
 					if (question instanceof ImportantPointsQuestion) {
-						ImportantPointsAnswer answer = new ImportantPointsAnswer();
+						ImportantPointsAnswer answer = new ImportantPointsAnswer(
+								this, question);
 						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
-						answer.setQuestion(question);
 						List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
 						for (int i = 0; i < listQuestion.getQuestionItems()
 								.size(); i++)
@@ -848,83 +844,29 @@ public class Report {
 						reportAnswerList.add(answer);
 					}
 					if (question instanceof PointsQuestion) {
-						Answer answer = new PointsAnswer();
-						answer.setQuestion(question);
-						reportAnswerList.add(answer);
+						reportAnswerList.add(new PointsAnswer(this, question));
 
 					}
 
 					if (question instanceof OptionalQuestions) {
-						OptionalQuestionsAnswer answer = new OptionalQuestionsAnswer();
-						List<Answer> optionalAnswerList = new ArrayList<Answer>();
-						answer.setQuestion(question);
-						OptionalQuestions oq = (OptionalQuestions) question;
-						for (Question loopQuestion : oq.getQuestions()) {
-							if (loopQuestion instanceof TextQuestion) {
 
-								TextAnswer optionalAnswer = new TextAnswer();
-								optionalAnswer.setQuestion(question);
-								optionalAnswerList.add(optionalAnswer);
-
-							}
-
-							if (loopQuestion instanceof MultipleChoiceQuestion) {
-								MultipleChoiceAnswer optionalAnswer = new MultipleChoiceAnswer();
-								optionalAnswer.setQuestion(question);
-								optionalAnswerList.add(optionalAnswer);
-
-							}
-							if (loopQuestion instanceof CostListingQuestion) {
-
-								CostListingAnswer optionalAnswer = new CostListingAnswer();
-								CostListingQuestion clq = (CostListingQuestion) question;
-
-								optionalAnswer.setQuestion(question);
-								List<Float> answerList = new ArrayList<Float>();
-								for (int i = 0; i < clq.getQuestions().size(); i++)
-									answerList.add(new Float(0));
-								optionalAnswer.setAnswers(answerList);
-
-								optionalAnswerList.add(optionalAnswer);
-
-							}
-							if (loopQuestion instanceof ImportantPointsQuestion) {
-								ImportantPointsAnswer optionalAnswer = new ImportantPointsAnswer();
-								ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
-								optionalAnswer.setQuestion(question);
-								List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
-								for (int i = 0; i < listQuestion
-										.getQuestionItems().size(); i++)
-									answerItems.add(new ImportantPointsItem());
-								optionalAnswer.setAnswerItems(answerItems);
-								optionalAnswerList.add(optionalAnswer);
-							}
-							if (loopQuestion instanceof PointsQuestion) {
-								PointsAnswer optionalAnswer = new PointsAnswer();
-								optionalAnswer.setQuestion(question);
-								optionalAnswerList.add(optionalAnswer);
-
-							}
-
-						}
-						answer.setAnswers(optionalAnswerList);
-						reportAnswerList.add(answer);
+						reportAnswerList.add(new OptionalQuestionsAnswer(this,
+								question));
 
 					}
 
 					if (!question.getSubQuestions().isEmpty()) {
 						for (Question subQuestion : question.getSubQuestions()) {
 							if (subQuestion instanceof TextQuestion) {
-								Answer answer = new TextAnswer();
-								answer.setQuestion(subQuestion);
-								reportAnswerList.add(answer);
+								reportAnswerList.add(new TextAnswer(this,
+										subQuestion));
 
 							}
 
 							if (subQuestion instanceof MultipleChoiceQuestion) {
-								Answer answer = new MultipleChoiceAnswer();
-								answer.setQuestion(subQuestion);
-								reportAnswerList.add(answer);
+
+								reportAnswerList.add(new MultipleChoiceAnswer(
+										this, subQuestion));
 
 							}
 						}
@@ -962,30 +904,19 @@ public class Report {
 					|| !(optionalAnswer.getQuestions().contains(question))) {
 
 				if (question instanceof MultipleChoiceQuestion) {
-					Answer mca = new MultipleChoiceAnswer();
-					mca.setQuestion(question);
-					newAnswerList.add(mca);
+					newAnswerList.add(new MultipleChoiceAnswer(question));
 				}
 				if (question instanceof PointsQuestion) {
-
-					Answer pa = new PointsAnswer();
-					pa.setQuestion(question);
-					newAnswerList.add(pa);
+					newAnswerList.add(new PointsAnswer(question));
 				}
 				if (question instanceof TextQuestion) {
-					Answer ta = new TextAnswer();
-					ta.setQuestion(question);
-					newAnswerList.add(ta);
+					newAnswerList.add(new TextAnswer(question));
 				}
 				if (question instanceof ImportantPointsQuestion) {
-					Answer imp = new ImportantPointsAnswer();
-					imp.setQuestion(question);
-					newAnswerList.add(imp);
+					newAnswerList.add(new ImportantPointsAnswer(question));
 				}
 				if (question instanceof CostListingQuestion) {
-					Answer cla = new CostListingAnswer();
-					cla.setQuestion(question);
-					newAnswerList.add(cla);
+					newAnswerList.add(new CostListingAnswer(question));
 				}
 			}
 
@@ -999,14 +930,28 @@ public class Report {
 			}
 		}
 
-		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer();
-		newAnswer.setQuestion(optionalAnswer.getQuestion());
+		OptionalQuestionsAnswer newAnswer = new OptionalQuestionsAnswer(this,
+				optionalAnswer.getQuestion());
 		newAnswer.setQuestions(newQuestionList);
 		newAnswer.setAnswers(newAnswerList);
 
-		this.answers.set(answerIndex, newAnswer);
+		Report savedReport = new Report();
+		try {
+			rs.deleteOptionalAnswer(optionalAnswer);
+			this.answers.set(answerIndex,
+					rs.saveOptionalQuestionsAnswer(newAnswer));
 
-		return rs.saveReport(this);
+			// for (ReportHighlight hl : reportHighlights)
+			// hl = null;
+			savedReport = rs.saveReport(this);
+			// rs.deleteReportHighlights(reportHighlights);
+
+			// savedReport = setHighlightAnswers(rs);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return savedReport;
 	}
 
 	public void setRemovedQuestions() {
