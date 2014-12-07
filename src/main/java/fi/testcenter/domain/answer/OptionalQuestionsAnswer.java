@@ -16,7 +16,7 @@ import fi.testcenter.domain.report.Report;
 public class OptionalQuestionsAnswer extends Answer {
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CHOSENQUESTION_ID")
+	@JoinColumn(name = "OPTQUESTIONANSWER_ID")
 	List<Question> optionalQuestions;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

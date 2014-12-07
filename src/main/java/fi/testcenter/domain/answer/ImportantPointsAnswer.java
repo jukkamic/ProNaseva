@@ -15,7 +15,7 @@ import fi.testcenter.domain.report.Report;
 public class ImportantPointsAnswer extends Answer {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@OrderColumn(name = "ORDERINDEX")
+	@OrderColumn
 	List<ImportantPointsItem> answerItems;
 
 	String remarks;

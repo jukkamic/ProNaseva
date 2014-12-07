@@ -19,12 +19,13 @@ public class Answer {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
+	@ManyToOne
 	private Question question;
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "answer")
+	@OneToOne(mappedBy = "answer")
 	private ReportHighlight reportHighlight;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	Report report;
 
 	private boolean showScore;

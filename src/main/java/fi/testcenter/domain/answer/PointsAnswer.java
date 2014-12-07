@@ -17,6 +17,7 @@ public class PointsAnswer extends Answer {
 
 	public PointsAnswer(Question question) {
 		super(question);
+		this.givenPoints = -1;
 	}
 
 	public PointsAnswer(Report report, Question question) {
