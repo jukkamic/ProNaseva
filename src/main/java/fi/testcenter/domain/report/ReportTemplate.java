@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
@@ -22,9 +21,10 @@ public class ReportTemplate {
 	private Long id;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORT_REPORTPART", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTPART_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@JoinColumn(name = "REPORTTEMPLATE_ID")
+	@OrderColumn(name = "REPORTPARTORDER")
 	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
+
 	private String templateName;
 	private boolean current;
 

@@ -6,36 +6,50 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.Report;
 
 @Entity
 public class OptionalQuestionsAnswer extends Answer {
 
 	@OneToMany(fetch = FetchType.EAGER)
-	List<Question> questions;
+	@JoinColumn(name = "OPTQUESTIONANSWER_ID")
+	List<Question> optionalQuestions;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ANSWER_ID")
-	@OrderColumn(name = "ORDERINDEX")
-	List<Answer> answers;
+	@JoinTable(name = "ANSWER_OPTANSWER", joinColumns = @JoinColumn(name = "ANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "OPTANSWER_ID"))
+	@OrderColumn
+	List<Answer> optionalAnswers;
 
-	public List<Question> getQuestions() {
-		return questions;
+	public OptionalQuestionsAnswer() {
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public OptionalQuestionsAnswer(Question question) {
+		super(question);
+	}
+
+	public OptionalQuestionsAnswer(Report report, Question question) {
+		super(report, question);
 	}
 
 	public List<Answer> getAnswers() {
-		return answers;
+		return optionalAnswers;
 	}
 
 	public void setAnswers(List<Answer> answers) {
-		this.answers = answers;
+		this.optionalAnswers = answers;
+	}
+
+	public List<Question> getQuestions() {
+		return optionalQuestions;
+	}
+
+	public void setQuestions(List<Question> questions) {
+		this.optionalQuestions = questions;
 	}
 
 }

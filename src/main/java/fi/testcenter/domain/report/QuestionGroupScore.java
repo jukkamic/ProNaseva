@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class QuestionGroupScore {
@@ -12,7 +14,13 @@ public class QuestionGroupScore {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn
 	QuestionGroup questionGroup;
+
+	@ManyToOne
+	@JoinColumn
+	Report report;
 
 	private int score;
 	private int maxScore;
@@ -23,6 +31,11 @@ public class QuestionGroupScore {
 	private boolean showScore = false;
 
 	public QuestionGroupScore() {
+	}
+
+	public QuestionGroupScore(Report report, QuestionGroup questiongroup) {
+		this.report = report;
+		this.questionGroup = questiongroup;
 	}
 
 	public QuestionGroupScore(int score, int maxScore) {
@@ -100,6 +113,14 @@ public class QuestionGroupScore {
 
 	public void setShowInReportSummary(boolean showInReportSummary) {
 		this.showInReportSummary = showInReportSummary;
+	}
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
 	}
 
 }

@@ -9,8 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Question {
@@ -20,11 +21,9 @@ public class Question {
 	private Long id;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn
+	@OrderColumn
 	List<Question> subQuestions = new ArrayList<Question>();
-
-	// Main question for subquestions
-	@ManyToOne
-	Question mainQuestion;
 
 	public Question() {
 
@@ -44,14 +43,6 @@ public class Question {
 
 	public void setSubQuestions(List<Question> subQuestions) {
 		this.subQuestions = subQuestions;
-	}
-
-	public Question getMainQuestion() {
-		return mainQuestion;
-	}
-
-	public void setMainQuestion(Question mainQuestion) {
-		this.mainQuestion = mainQuestion;
 	}
 
 }

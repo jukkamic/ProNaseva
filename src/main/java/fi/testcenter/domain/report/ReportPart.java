@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
@@ -23,8 +22,8 @@ public class ReportPart {
 
 	private String title;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORTPART_QUESTIONGROUP", joinColumns = @JoinColumn(name = "REPORTPART_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@JoinColumn(name = "REPORTPART_ID")
+	@OrderColumn(name = "QGROUPORDER")
 	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
 
 	boolean showScorePercentage;

@@ -341,8 +341,21 @@ lisäosana PDFCreator -->
 							
 							
 				</c:if>	
-				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
+				
 	</div>
+	
+	<!-- Optional questions -->
+			<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
+				<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
+				<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+				<c:set var="questionOrderNumber" value="${questionOrderNumber}" scope="request" />
+			
+				<jsp:include page="/WEB-INF/templates/printReport/printOptionalQuestions.jsp" />
+				
+			</c:if>
+			
+			
+	<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 	<!-- Subquestions -->
 				<c:if test="${not empty question.subQuestions}">
 					<c:set var="mainQuestion" value="${question}" scope="request" />
@@ -356,17 +369,7 @@ lisäosana PDFCreator -->
 				
 			</c:forEach> <!-- Question loop end -->
 	
-	<!-- Optional questions -->
-			<c:if test='${not empty questionGroup.optionalQuestions}'>
-				<c:set var="questionGroupNumber" value="${questionGroupCounter.count}" scope="request" />
-				<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
-				<c:set var="questionOrderNumber" value="${questionOrderNumber + 1}" scope="request" />
-			
-				<jsp:include page="/WEB-INF/templates/printReport/printOptionalQuestions.jsp" />
-				<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
-			</c:if>
-			
-			
+
 			<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
 				<h3 style="padding-top: 24px; text-align: right;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
 				${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore}</h3>

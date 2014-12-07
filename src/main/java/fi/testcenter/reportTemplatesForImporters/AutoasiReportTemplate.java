@@ -7,6 +7,7 @@ import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.ImportantPointsQuestion;
 import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
+import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
@@ -73,7 +74,11 @@ public class AutoasiReportTemplate {
 		questionGroup2.setTitle("Tarkastuskohteet");
 		questionGroup2.setShowInReportSummary(true);
 
-		questionGroup2.setOptionalQuestions(getOptionalQuestions());
+		Question optionalQuestions = new OptionalQuestions(
+				getOptionalQuestions());
+		List<Question> questions2 = new ArrayList<Question>();
+		questions2.add(optionalQuestions);
+		questionGroup2.setQuestions(questions2);
 
 		questionGroups.add(questionGroup2);
 

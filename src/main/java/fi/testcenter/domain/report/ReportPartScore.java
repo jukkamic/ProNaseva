@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ReportPartScore {
@@ -12,7 +14,13 @@ public class ReportPartScore {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn
 	ReportPart reportPart;
+
+	@ManyToOne
+	@JoinColumn
+	Report report;
 
 	int score;
 	int maxScore;
@@ -22,6 +30,10 @@ public class ReportPartScore {
 	String scoreSmiley;
 
 	public ReportPartScore() {
+	}
+
+	public ReportPartScore(Report report) {
+		this.report = report;
 	}
 
 	public ReportPartScore(int score, int maxScore) {
@@ -91,6 +103,14 @@ public class ReportPartScore {
 
 	public void setScoreSmiley(String scoreSmiley) {
 		this.scoreSmiley = scoreSmiley;
+	}
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
 	}
 
 }

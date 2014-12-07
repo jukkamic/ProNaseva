@@ -136,6 +136,7 @@
 			<div style="border-bottom: 3px solid #eee;">
 			<h3><b>Raportin osien pisteet: </b></h3>
 					<c:forEach var="reportPartScore" items="${readyReport.reportPartScore}" varStatus="reportPartScoreCounter">
+					
 					<c:if test="${reportPartScore.reportPart.showScoreInReportHighlights == 'true' }">
 						<h3>${reportPartScore.reportPart.title}</h3>
 						<c:if test="${reportPartScore.maxScore > 0}">
