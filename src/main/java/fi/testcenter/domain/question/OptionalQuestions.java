@@ -15,7 +15,7 @@ public class OptionalQuestions extends Question {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "QUESTION_ID")
-	@OrderColumn(name = "ORDERINDEX")
+	@OrderColumn(name = "OPTIONAL_Q_ORDER")
 	List<Question> questions = new ArrayList<Question>();
 
 	public OptionalQuestions() {

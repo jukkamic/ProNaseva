@@ -10,6 +10,10 @@ import javax.persistence.NamedQuery;
 @NamedQuery(name = "getLoginUser", query = "SELECT u FROM User u WHERE u.userName = :userName")
 public class User {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
+
 	private String firstName;
 	private String lastName;
 	private String userName;
@@ -19,10 +23,6 @@ public class User {
 	private String role;
 
 	private boolean enabled = true;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
-	private Long id;
 
 	public void user() {
 		this.enabled = true;

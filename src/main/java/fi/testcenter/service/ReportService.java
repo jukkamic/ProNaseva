@@ -308,17 +308,6 @@ public class ReportService {
 	@Transactional
 	public void deleteOptionalAnswers(List<Answer> answers) {
 
-		// for (Answer a : answers) {
-		//
-		// ReportHighlight rh = a.getReportHighlight();
-		// if (rh != null) {
-		// log.debug("delete answer : " + rh.getAnswer());
-		// rh.setAnswer(null);
-		// rh.setOptionalAnswer(null);
-		// rh = rhlr.save(rh);
-		// }
-		// }
-
 		ar.deleteInBatch(answers);
 
 	}
@@ -356,5 +345,10 @@ public class ReportService {
 
 		}
 		rhlr.delete(hl);
+	}
+
+	@Transactional
+	public void deleteAnswer(Answer answer) {
+		ar.delete(answer);
 	}
 }

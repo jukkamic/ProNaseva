@@ -936,11 +936,25 @@ public class Report {
 		newAnswer.setAnswers(newAnswerList);
 
 		Report savedReport = new Report();
-		try {
-			rs.deleteOptionalAnswer(optionalAnswer);
-			this.answers.set(answerIndex,
-					rs.saveOptionalQuestionsAnswer(newAnswer));
 
+		for (ReportHighlight hl : reportHighlights) {
+			if (optionalAnswer.getAnswers() != null
+					&& optionalAnswer.getAnswers().contains(hl.getAnswer())) {
+				try {
+					hl.setAnswer(null);
+					hl.setOptionalAnswer(null);
+					rs.saveHighlight(hl);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+		rs.deleteOptionalAnswer(optionalAnswer);
+		this.answers
+				.set(answerIndex, rs.saveOptionalQuestionsAnswer(newAnswer));
+		try {
 			// for (ReportHighlight hl : reportHighlights)
 			// hl = null;
 			savedReport = rs.saveReport(this);

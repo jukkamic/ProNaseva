@@ -7,9 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderColumn;
 
 @Entity
 public class MultipleChoiceQuestion extends Question {
@@ -17,8 +15,7 @@ public class MultipleChoiceQuestion extends Question {
 	private String question;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "MULTIPLECHOICEQUESTION_MULTIPLECHOICEOPTION", joinColumns = @JoinColumn(name = "MULTIPLECHOICEQUESTION_ID"), inverseJoinColumns = @JoinColumn(name = "MULTIPLECHOICEOPTION_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@JoinColumn(name = "MCQ_ID")
 	private List<MultipleChoiceOption> options = new ArrayList<MultipleChoiceOption>();
 
 	private boolean multipleSelectionsAllowed = false;

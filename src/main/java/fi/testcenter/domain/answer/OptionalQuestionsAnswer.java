@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.Report;
@@ -21,6 +22,7 @@ public class OptionalQuestionsAnswer extends Answer {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "ANSWER_OPTANSWER", joinColumns = @JoinColumn(name = "ANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "OPTANSWER_ID"))
+	@OrderColumn
 	List<Answer> optionalAnswers;
 
 	public OptionalQuestionsAnswer() {

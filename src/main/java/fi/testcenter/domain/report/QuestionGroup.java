@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
@@ -26,8 +25,8 @@ public class QuestionGroup {
 	private String title;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "QUESTIONGROUP_QUESTION", joinColumns = @JoinColumn(name = "QUESTIONGROUP_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@JoinColumn(name = "QUESTIONGROUP_ID")
+	@OrderColumn(name = "QUESTIONORDER")
 	private List<Question> questions = new ArrayList<Question>();
 
 	private boolean showScore;

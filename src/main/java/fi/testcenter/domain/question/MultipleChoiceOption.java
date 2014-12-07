@@ -13,8 +13,10 @@ public class MultipleChoiceOption {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long id;
 
-	@Column(name = "mcqOption")
+	@Column(name = "MCQ_OPTION")
+	// Tarpeen koska OPTION on varattu sana MySQL:ssäS
 	private String option;
+
 	private String radiobuttonText;
 
 	private int points;

@@ -138,8 +138,6 @@ public class ReportController {
 
 		report = report.setHighlightAnswers(rs);
 
-		log.debug("eka part score controllerissa : "
-				+ report.getReportPartScore().get(0).getScore());
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
 		try {
