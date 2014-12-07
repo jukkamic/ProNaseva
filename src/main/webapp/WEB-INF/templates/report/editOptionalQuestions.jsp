@@ -13,7 +13,7 @@
 	
 	<!-- Points question -->
 	<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
-	<% System.out.println("Valinnainen on pointsquestion"); %>
+	
 	<h3>${questionCounter}. ${question.question}</h3>
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 			<div class="checkbox" style="font-size: 1.2em;">

@@ -2,9 +2,7 @@ package fi.testcenter.domain.answer;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.OrderColumn;
 
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.Report;
@@ -14,8 +12,6 @@ import fi.testcenter.domain.report.Report;
 @Entity
 public class CostListingAnswer extends Answer {
 
-	@ElementCollection
-	@OrderColumn
 	List<Float> answers;
 	Float total;
 	String remarks;

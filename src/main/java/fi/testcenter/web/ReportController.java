@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.Question;
@@ -107,8 +106,7 @@ public class ReportController {
 			@ModelAttribute("report") Report report) {
 
 		report.prepareAnswerList();
-		for (Answer answer : report.getAnswers())
-			log.debug("Uusi answer list: " + answer.getClass());
+
 		model.addAttribute("report", report);
 
 		List<Workshop> workshops = ws.getWorkshops();
@@ -136,10 +134,12 @@ public class ReportController {
 										// MultipleChoiceQuestion- ja
 										// PointsQuestion-luokan kysymyksiin
 										// jotta ei huomioida pisteytyksessä.
-		report.calculateReportScore();
+		report = report.calculateReportScore(rs);
 
 		report = report.setHighlightAnswers(rs);
 
+		log.debug("eka part score controllerissa : "
+				+ report.getReportPartScore().get(0).getScore());
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
 		try {
@@ -194,7 +194,7 @@ public class ReportController {
 			if (oqa.getQuestions() != null) {
 
 				for (Question question : oqa.getQuestions()) {
-					log.debug("Lisätään vanha valittu kysymys");
+
 					int index = optionalQuestions.indexOf(question);
 					oldQuestions = Arrays.copyOf(oldQuestions,
 							oldQuestions.length + 1);
@@ -393,9 +393,6 @@ public class ReportController {
 		model.addAttribute("report", selectedReport);
 		model.addAttribute("edit", "TRUE");
 		model.addAttribute("readyReport", selectedReport);
-
-		for (Answer answer : selectedReport.getAnswers())
-			log.debug(answer.getClass());
 
 		if (selectedReport.isSmileysSet() == false) {
 

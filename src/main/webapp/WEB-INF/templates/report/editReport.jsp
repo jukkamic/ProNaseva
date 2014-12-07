@@ -348,7 +348,7 @@
 					<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
 						value="report.answers[${answerIndexCounter}].remarks}" />
 				<br><br>
-			</c:if>
+			</c:if> 
 
 		
 		<!-- ListAndScoreImportantPoints -->

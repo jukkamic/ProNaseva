@@ -7,13 +7,13 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -54,22 +54,14 @@ import fi.testcenter.web.ChosenQuestions;
 		@NamedQuery(name = "getReportsByImporterId", query = "SELECT r FROM Report r WHERE r.importer.id = :importerId"),
 		@NamedQuery(name = "getReportsByUserId", query = "SELECT r FROM Report r WHERE r.user.id = :userId") })
 public class Report {
+
 	@Transient
 	Logger log = Logger.getLogger("fi.testcenter.domain.report");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
-
-	@OneToOne(fetch = FetchType.EAGER)
-	private ReportTemplate reportTemplate;
-
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
-	@OrderColumn(name = "ANSWERORDER")
-	private List<Answer> answers = new ArrayList<Answer>();
-
 	private int totalScorePercentage;
-
 	private String reportStatus; // 'DRAFT', 'AWAIT_APPROVAL', or 'APPROVED'
 	private String vehicleModel;
 	private String vehicleRegistrationNumber;
@@ -85,15 +77,14 @@ public class Report {
 	private String reportDate;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "REPORT_IMPORTER", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "IMPORTER_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@JoinColumn
 	private Importer importer;
 
 	@Transient
 	private Long importerId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "REPORT_WORKSHOP", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "WORKSHOP_ID"))
+	@JoinColumn
 	private Workshop workshop;
 
 	@Transient
@@ -103,26 +94,35 @@ public class Report {
 	private Long optionalQId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinTable(name = "REPORT_USER", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID"))
+	@JoinColumn
 	private User user;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORT_QUESTIONGROUPSCORE", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTIONGROUPSCORE_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn
+	private ReportTemplate reportTemplate;
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
+	@OrderColumn(name = "ANSWERORDER")
+	private List<Answer> answers = new ArrayList<Answer>();
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
+	@OrderColumn(name = "QGSCOREORDER")
 	List<QuestionGroupScore> questionGroupScore = new ArrayList<QuestionGroupScore>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "REPORT_REPORTPARTSCORE", joinColumns = @JoinColumn(name = "REPORT_ID"), inverseJoinColumns = @JoinColumn(name = "REPORTPARTSCORE_ID"))
-	@OrderColumn(name = "ORDERINDEX")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
+	@OrderColumn(name = "RPSCOREORDER")
 	List<ReportPartScore> reportPartScore = new ArrayList<ReportPartScore>();
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "REPORTHIGHLIGHT_ID")
-	@OrderColumn(name = "ORDERINDEX")
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
+	@OrderColumn(name = "HIGHLIGHTORDER")
 	List<ReportHighlight> reportHighlights = new ArrayList<ReportHighlight>();
 
+	@ElementCollection
+	@OrderColumn
 	List<String> reportPartSmileys = new ArrayList<String>();
 
+	@ElementCollection
+	@OrderColumn
 	List<String> questionGroupSmileys = new ArrayList<String>();
 
 	public Report() {
@@ -466,7 +466,7 @@ public class Report {
 
 	// LASKETAAN RAPORTIN PISTEET MONIVALINTOJEN POHJALTA:
 
-	public void calculateReportScore() {
+	public Report calculateReportScore(ReportService rs) {
 		int reportTotalScore = 0;
 		int reportMaxScore = 0;
 		int answerIndexCounter = 0;
@@ -484,7 +484,7 @@ public class Report {
 				reportPartScoreObject.setScorePercentage(0);
 
 			} else {
-				reportPartScoreObject = new ReportPartScore();
+				reportPartScoreObject = new ReportPartScore(this);
 			}
 
 			reportPartScoreObject.setReportPart(reportPart);
@@ -500,10 +500,9 @@ public class Report {
 					questionGroupScoreObject.setMaxScore(0);
 					questionGroupScoreObject.setScorePercentage(0);
 				} else {
-					questionGroupScoreObject = new QuestionGroupScore();
+					questionGroupScoreObject = new QuestionGroupScore(this,
+							questionGroup);
 				}
-
-				questionGroupScoreObject.setQuestionGroup(questionGroup);
 
 				for (Question question : questionGroup.getQuestions()) {
 					if (answers.get(answerIndexCounter)
@@ -779,6 +778,7 @@ public class Report {
 			// Lisätään raportin osan pisteet Report-luokan olioon.
 
 			reportPartScoreObject.calculateScorePercentage();
+
 			reportPartScoreList.add(reportPartScoreObject);
 
 			reportTotalScore = reportTotalScore
@@ -794,7 +794,7 @@ public class Report {
 
 		totalScorePercentage = (int) Math.round((double) reportTotalScore
 				/ (double) reportMaxScore * 100);
-
+		return rs.saveReport(this);
 	}
 
 	public void prepareAnswerList() {

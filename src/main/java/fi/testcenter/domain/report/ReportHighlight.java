@@ -1,7 +1,6 @@
 package fi.testcenter.domain.report;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,21 +18,24 @@ public class ReportHighlight {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@JoinColumn
 	private ReportPart reportPart;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@JoinColumn
 	private QuestionGroup questionGroup;
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "ANSWER_ID")
+	@OneToOne
+	@JoinColumn
 	private Answer answer;
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "OPTIONALANSWER_ID")
+	@OneToOne
+	@JoinColumn
 	private OptionalQuestionsAnswer optionalAnswer;
 
 	@ManyToOne
+	@JoinColumn
 	Report report;
 
 	int questionGroupOrderNumber;
