@@ -17,7 +17,7 @@
 				<div class="checkbox" style="font-size: 1.2em;">
 				<label>											
 				<sf:checkbox value='true'
-					path="answers[${answerIndexCounter}].answers[${counter.index}].highlightAnswer" label="Huomiot-osioon" />  
+					path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].answers[${counter.index}].highlightAnswer" label="Huomiot-osioon" />  
 				
 				</label>
 				
@@ -30,7 +30,7 @@
 				<c:forEach var="points" begin="0" end="${question.maxPoints}">
 						
 					<c:choose>
-						<c:when test="${report.answers[answerIndexCounter].answers[counter.index].givenPoints == points}">
+						<c:when test="${optionalQuestionsAnswer.answers[counter.index].givenPoints == points}">
 							<button class="btn btn-large btn-primary disabled" type="button">
 								${points}
 								
@@ -49,19 +49,19 @@
 
 		<br>
 		<h4>Huomioita:</h4>
-		<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answers[counter.index].remarks}</p>
+		<p style="font-size: 1.2em;">${optionalQuestionsAnswer.answers[counter.index].remarks}</p>
 		
 		<br><br>
 	</c:if>
 
 <!--  Text question -->
-	<%-- <c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
+	<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
 		<h3>${questionCounter}. ${question.question}</h3>
 		<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 				<div class="checkbox" style="font-size: 1.2em;">
 				<label>											
 				<sf:checkbox value='true'
-					path="answers[${answerIndexCounter}].answers[${counter.index}].highlightAnswer" label="Huomiot-osioon" />
+					path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].answers[${counter.index}].highlightAnswer" label="Huomiot-osioon" />
 				
 				</label>
 				
@@ -70,10 +70,10 @@
 		</c:if>
 		
 		<br>
-		<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
+		<p style="font-size: 1.2em;">${optionalQuestionsAnswer.answers[counter.index].answer}</p>
 	</c:if>
 	
-	 --%>
+	 
 <!-- Cost listing question -->
 <%-- <c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
 	<h3>${questionCounter}. ${question.questionTopic}</h3>

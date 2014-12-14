@@ -58,12 +58,12 @@
 		</div>
 		<br>
 	</c:if>
-	<c:if test="${empty report.reportHighlights and loginRole == '[ROLE_ADMIN]'}">
+	<%-- <c:if test="${empty report.reportHighlights and loginRole == '[ROLE_ADMIN]'}">
 		<div class="alert alert-warning">
 			<h4>Valitse raportin huomionarvoiset vastaukset ja tallenna!</h4>
 		</div>
 		<br>
-	</c:if>	
+	</c:if>	 --%>
 	
 	<c:if test="${report.smileysSet != 'true' and loginRole == '[ROLE_ADMIN]'}">
 		<div class="alert alert-warning">
@@ -73,7 +73,7 @@
 	</c:if>			
 
 
-	<c:if test="${editSmileys != 'true' }">
+<%-- 	<c:if test="${editSmileys != 'true' }">
 	<jsp:include page="/WEB-INF/templates/report/showReportSummary.jsp" />
 	</c:if>
 
@@ -81,28 +81,28 @@
 	<c:if test="${editSmileys == 'true'}">
 	
 	<jsp:include page="/WEB-INF/templates/report/showReportSummaryForEdit.jsp" />
-	</c:if>
+	</c:if> --%>
 	
 	<br>				
-	<c:if test="${not empty report.reportHighlights}">
+	<%-- <c:if test="${not empty report.reportHighlights}">
 			<jsp:include page="/WEB-INF/templates/report/showReportHighlightAnswers.jsp" />
 			<c:set var="bootstrapPanelCounter" value="2" scope="request" />
-	</c:if>
+	</c:if> --%>
 		
 
-	<c:set var="answerIndexCounter" value="0" scope="request" />
+	
 	<!-- Report part loop -->
 	
 	
 	<c:set var="questionGroupScoreIndexCounter" value="0" scope="request" />
-	<c:forEach var="reportPart" items="${report.reportTemplate.reportParts}" varStatus="reportPartCounter">
-	<h3>${reportPart.title}</h3>
+	<c:forEach var="reportPart" items="${report.reportParts}" varStatus="reportPartCounter">
+	<h3>${reportPart.reportTemplatePart.title}</h3>
 	<br>			
 						
 						
 			<!-- QuestionGroup loop -->
 			
-			<c:forEach var="questionGroup" items="${reportPart.questionGroups}"
+			<c:forEach var="questionGroup" items="${reportPart.reportQuestionGroups}"
 				varStatus="questionGroupCounter">
 				<c:set var="questionCount" value="1" scope="request" />
 				<c:set var="bootstrapPanelCounter" value="${bootstrapPanelCounter + 1}" />
@@ -119,7 +119,7 @@
 							<a
 								style="font-size: 1.5em; text-decoration: none; display: block;"
 								data-toggle="collapse" data-parent="#accordion"
-								href="#${bootstrapPanelCounter}">${questionGroup.title}
+								href="#${bootstrapPanelCounter}">${questionGroup.reportTemplateQuestionGroup.title}
 							</a>
 						</h4>
 					</div>
@@ -132,43 +132,43 @@
 						
 	<!-- Questions loop -->
 							
-							<c:forEach var="question" items="${questionGroup.questions}"
-								varStatus="questionCounter">
-							
+							<c:forEach var="answer" items="${questionGroup.answers}"
+								varStatus="answerCounter">
+							<c:set var="question" value="${answer.question}" />
 	<!-- Multiple choice question -->
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
 																										
-									<h3>${questionCounter.count}. ${question.question}</h3>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+									<h3>${answerCounter.count}. ${question.question}</h3>
+									<c:if test="${answer.removeAnswerFromReport == 'true'}">
 										<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
 												<sf:checkbox value='true'
-													path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+													path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
 				
 											</label>
 											<br>
 										</div>
-									</c:if>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
+									</c:if> 
+ 									<c:if test="${answer.removeAnswerFromReport == 'false'}">
 									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 											<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
 											<sf:checkbox value='true'
-												path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />  
+												path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].highlightAnswer" label="Huomiot-osioon" />  
 											
 											</label>
 											
-											</div>
+											</div> 
 											
-									</c:if>
+									</c:if> 
 
-									
+	 								
 								<c:choose>
 								<c:when test="${question.multipleSelectionsAllowed == true}">
 												<c:forEach var="option" items="${question.options}">
 													<label class="checkbox" style="">											
 													<sf:checkbox value="${option.option}" 
-														path="answers[${answerIndexCounter}].chosenSelections" label="${option.option}" disabled="true" />
+														path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].chosenSelections" label="${option.option}" disabled="true" />
 													</label>
 													<br>
 												</c:forEach>
@@ -186,7 +186,7 @@
 												<c:choose>
 													<c:when test="${option.radiobuttonText != null }">
 														<c:choose>
-															<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
+															<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
 																<button class="btn btn-large btn-primary disabled" type="button">
 																	${option.radiobuttonText}
 																																																	
@@ -201,7 +201,7 @@
 													</c:when>
 													<c:otherwise>
 														<c:choose>
-															<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}">
+															<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
 																<button class="btn btn-large btn-primary disabled" type="button">
 																	${option.option}
 																	
@@ -224,7 +224,7 @@
 									</c:choose>
 									<br>
 									<h4>Huomioita:</h4>
-									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
+									<p style="font-size: 1.2em;">${answer.remarks}</p>
 									
 									<br><br>
 									</c:if>
@@ -234,23 +234,23 @@
 		
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
 																										
-									<h3>${questionCounter.count}. ${question.question}</h3>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+									<h3>${answerCounter.count}. ${question.question}</h3>
+									<c:if test="${answer.removeAnswerFromReport == 'true'}">
 										<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
 												<sf:checkbox value='true'
-													path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+													path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
 				
 											</label>
 											<br>
 										</div>
 									</c:if>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
+									<c:if test="${answer.removeAnswerFromReport == 'false'}">
 									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 											<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
 											<sf:checkbox value='true'
-												path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />  
+												path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].highlightAnswer" label="Huomiot-osioon" />  
 											
 											</label>
 											
@@ -263,7 +263,7 @@
 											<c:forEach var="points" begin="0" end="${question.maxPoints}">
 													
 												<c:choose>
-													<c:when test="${report.answers[answerIndexCounter].givenPoints == points}">
+													<c:when test="${answer.givenPoints == points}">
 														<button class="btn btn-large btn-primary disabled" type="button">
 															${points}
 															
@@ -282,7 +282,7 @@
 
 									<br>
 									<h4>Huomioita:</h4>
-									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
+									<p style="font-size: 1.2em;">${answer.remarks}</p>
 									
 									<br><br>
 									</c:if>
@@ -290,23 +290,23 @@
 	
 		<!--  Text question -->
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
-									<h3>${questionCounter.count}. ${question.question}</h3>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+									<h3>${answerCounter.count}. ${question.question}</h3>
+									<c:if test="${answer.removeAnswerFromReport == 'true'}">
 										<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
 												<sf:checkbox value='true'
-													path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+													path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
 				
 											</label>
 											<br>
 										</div>
 									</c:if>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
+									<c:if test="${answer.removeAnswerFromReport == 'false'}">
 									<c:if test="${loginRole == '[ROLE_ADMIN]' }">
 											<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
 											<sf:checkbox value='true'
-												path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+												path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].highlightAnswer" label="Huomiot-osioon" />
 											
 											</label>
 											
@@ -315,40 +315,40 @@
 									</c:if>
 									
 									<br>
-									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answer}</p>
+									<p style="font-size: 1.2em;">${answer.answer}</p>
 									</c:if>
 								</c:if>
 								
 								
 	<!-- Cost listing question -->
 							<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
-								<h3>${questionCounter.count}. ${question.questionTopic}</h3>
-								<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+								<h3>${answerCounter.count}. ${question.question}</h3>
+								<c:if test="${answer.removeAnswerFromReport == 'true'}">
 									<div class="checkbox" style="font-size: 1.2em;">
 										<label>											
 											<sf:checkbox value='true'
-												path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+												path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
 			
 										</label>
 										<br>
 									</div>
 								</c:if>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
+									<c:if test="${answer.removeAnswerFromReport == 'false'}">
 									
 									
-									<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
+									<c:forEach var="listQuestion" items="${question.questionItems}" varStatus="costListingAnswerCounter">
 										
 										<h4>${listQuestion}</h4>
-										<c:set var="listingAnswer" value="${report.answers[answerIndexcounter]}" />
-										<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].answers[costListingAnswerCounter.index]} €</p>
+										
+										<p style="font-size: 1.2em;">${answer.answers[costListingAnswerCounter.index]} €</p>
 										<br>
 									</c:forEach>
 										<h4><b>${question.total}</b></h4>
-										<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].total} €</p>
+										<p style="font-size: 1.2em;">${answer.total} €</p>
 									<br>
 									<br>
 									<h4>Huomioita:</h4>
-									<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
+									<p style="font-size: 1.2em;">${answer.remarks}</p>
 		
 									<br><br>
 									</c:if>
@@ -356,18 +356,18 @@
 								
 <!-- ListAndScoreImportantPoints -->
 							<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
-								<h3>${questionCounter.count}. ${question.question}</h3>
-								<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'true'}">
+								<h3>${answerCounter.count}. ${question.question}</h3>
+								<c:if test="${answer.removeAnswerFromReport == 'true'}">
 									<div class="checkbox" style="font-size: 1.2em;">
 										<label>											
 											<sf:checkbox value='true'
-												path="answers[${answerIndexCounter}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
+												path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].removeAnswerFromReport" disabled="true" label="Hylkää kysymys raportista" />
 			
 										</label>
 										<br>
 									</div>
 								</c:if>
-									<c:if test="${report.answers[answerIndexCounter].removeAnswerFromReport == 'false'}">
+									<c:if test="${answer.removeAnswerFromReport == 'false'}">
 								
 				
 									<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
@@ -382,7 +382,7 @@
 
 										<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber">
 											<c:choose>
-												<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
+												<c:when test="${answer.answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
 													<button class="btn btn-large btn-primary disabled" type="button">
 														${importanceNumber.index}
 													</button>
@@ -410,7 +410,7 @@
 										
 											<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
 											<c:choose>
-												<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score == score.index}">
+												<c:when test="${answer.answerItems[questionItemCounter.index].score == score.index}">
 													<button class="btn btn-large btn-primary disabled" type="button">
 														${score.index} 
 													</button>
@@ -436,7 +436,7 @@
 								</c:if>	
 								<br>
 								<h4>Huomioita:</h4>
-								<p style="font-size: 1.2em;">${report.answers[answerIndexCounter].remarks}</p>
+								<p style="font-size: 1.2em;">${answer.remarks}</p>
 	
 								<br><br>
 								
@@ -445,19 +445,19 @@
 								
 		<!-- Optional questions -->
 		
-						
+	 					
 						<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
-							
-							<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+							<c:set var="questionCount" value="${answerCounter.count}" scope="request" />
+							<c:set var="answerCounter" value="${answerCounter}" scope="request" />
+							<c:set var="reportPartCounter" value="${reportPartCounter}" scope="request" />
+							<c:set var="questionGroupCounter" value="${questionGroupCounter}" scope="request" />
+							<c:set var="optionalQuestionsAnswer" value="${answer}" scope="request" />
 							
 							<jsp:include page="/WEB-INF/templates/report/showOptionalQuestions.jsp" />
 							
 						</c:if> 
-							
-							
-			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
 								
-		<!-- Show subquestions -->
+	<%-- 	<!-- Show subquestions -->
 								
 								<c:if test="${not empty question.subQuestions}">
 									<c:set var="mainQuestion" value="${question}" scope="request" />
@@ -467,18 +467,17 @@
 								</c:if> 
 								
 							<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" />
-							
+							 --%>
 							</c:forEach> <!-- Questions loop end -->
+	
 							
-
-							
-							
-							<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
+							 
+<%-- 							<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
 							<br>
 							<h4 style="float: right; font-weight: bold;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
 								${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore} </h4>
 							
-							</c:if>
+							</c:if> --%>
 							
 							</div></div></div>
 			
