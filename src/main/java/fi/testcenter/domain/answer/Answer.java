@@ -1,16 +1,15 @@
 package fi.testcenter.domain.answer;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OrderColumn;
 
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.Report;
-import fi.testcenter.domain.report.ReportHighlight;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 
 @Entity
 public class Answer {
@@ -20,13 +19,20 @@ public class Answer {
 	private Long id;
 
 	@ManyToOne
+	@OrderColumn
 	private Question question;
 
-	@OneToOne(mappedBy = "answer")
-	private ReportHighlight reportHighlight;
+	public ReportQuestionGroup getReportQuestionGroup() {
+		return reportQuestionGroup;
+	}
+
+	public void setReportQuestionGroup(ReportQuestionGroup reportQuestionGroup) {
+		this.reportQuestionGroup = reportQuestionGroup;
+	}
 
 	@ManyToOne
-	Report report;
+	@OrderColumn
+	ReportQuestionGroup reportQuestionGroup;
 
 	private boolean showScore;
 	private int score;
@@ -43,7 +49,6 @@ public class Answer {
 	}
 
 	public Answer(Report report, Question question) {
-		this.report = report;
 		this.question = question;
 	}
 
@@ -101,22 +106,6 @@ public class Answer {
 
 	public void setRemoveAnswerFromReport(boolean removeAnswerFromReport) {
 		this.removeAnswerFromReport = removeAnswerFromReport;
-	}
-
-	public ReportHighlight getReportHighlight() {
-		return reportHighlight;
-	}
-
-	public void setReportHighlight(ReportHighlight reportHighlight) {
-		this.reportHighlight = reportHighlight;
-	}
-
-	public Report getReport() {
-		return report;
-	}
-
-	public void setReport(Report report) {
-		this.report = report;
 	}
 
 }

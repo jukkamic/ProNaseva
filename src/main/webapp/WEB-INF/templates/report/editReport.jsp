@@ -69,10 +69,10 @@
 			<ul class="nav nav-pills nav-stacked" role="tablist">
 				<c:forEach var="navbarReportPart" items="${report.reportTemplate.reportParts}" varStatus="navbarCounter">
 			  		<c:if test="${navbarCounter.index == editReportPartNumber}">
-			  			<li role="presentation" class="active"><a onclick="navigateToReportPart(${navbarCounter.index});">${navbarReportPart.title}</a></li>
+			  			<li role="presentation" class="active"><a onclick="navigateToReportPart(${navbarCounter.index});">${navbarReportPart.reportTemplatePart.title}</a></li>
 			  		</c:if>
 			  		<c:if test="${navbarCounter.index != editReportPartNumber}">
-			  			<li role="presentation"><a onclick="navigateToReportPart(${navbarCounter.index});">${navbarReportPart.title}</a></li>
+			  			<li role="presentation"><a onclick="navigateToReportPart(${navbarCounter.index});">${navbarReportPart.reportTemplatePart.title}</a></li>
 			  		</c:if>
 				</c:forEach>
 			</ul>
@@ -89,15 +89,15 @@
 	<c:set var="answerIndexCounter" value="${initialAnswerIndexCounter}" scope="request" />
 
 	
-	<c:set var="reportPart" value="${report.reportTemplate.reportParts[editReportPartNumber]}" />
+	<c:set var="reportPart" value="${report.reportParts[editReportPartNumber]}" />
 	
-	<h3>${reportPart.title}</h3>
+	<h3>${reportPart.reportTemplatePart.title}</h3>
 	<br>			
 
 <!-- QuestionGroup loop -->
 						
 	
-	<c:forEach var="questionGroup" items="${reportPart.questionGroups}" varStatus="questionGroupCounter">
+	<c:forEach var="questionGroup" items="${reportPart.reportQuestionGroups}" varStatus="questionGroupCounter">
 		
 		<c:set var="bootstrapPanelCounter" value="${bootstrapPanelCounter + 1}" />
 		<c:set var="questionCount" value="1" scope="request" />
@@ -108,7 +108,7 @@
 					<a
 						style="font-size: 1.5em; text-decoration: none; display: block;"
 						data-toggle="collapse" data-parent="#accordion"
-						href="#panel${bootstrapPanelCounter}">${questionGroup.title}
+						href="#panel${bootstrapPanelCounter}">${questionGroup.reportTemplateQuestionGroup.title}
 					</a>
 				</h4>
 			</div>
@@ -127,10 +127,10 @@
 			<div class="panel-body">
 				
 								
-<!-- Questions loop -->
+<!-- Answers loop -->
 									
-			<c:forEach var="question" items="${questionGroup.questions}" varStatus="questionCounter">
-						
+			<c:forEach var="answer" items="${questionGroup.answers}" varStatus="questionCounter">
+			<c:set var="question" value="${answer.question}" />
 		<!-- Multiple choice question -->
 										
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
@@ -138,7 +138,7 @@
 		<div class="checkbox" style="font-size: 1.2em;">
 			<label>											
 			<sf:checkbox value='true'
-				path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+				path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
 			
 			</label>
 			<br>
@@ -147,7 +147,7 @@
 			<div class="checkbox" style="font-size: 1.2em;">
 			<label>											
 			<sf:checkbox value='true'
-				path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+				path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].highlightAnswer" label="Huomiot-osioon" />
 			
 			</label>
 			
@@ -160,7 +160,7 @@
 				<c:forEach var="option" items="${question.options}">
 					<label class="checkbox">											
 						<sf:checkbox value="${option.option}" 
-							path="answers[${answerIndexCounter}].chosenSelections" label="${option.option}" />
+							path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenSelections" label="${option.option}" />
 					</label>
 					<br>
 				</c:forEach>
@@ -173,7 +173,7 @@
 							<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 								raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
 							<c:choose>
-							<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == optionsCounter.index}"> 
+							<c:when test="${answer.chosenOptionIndex == optionsCounter.index}"> 
 								<label class="btn btn-primary active">
 								</c:when>
 							<c:otherwise>
@@ -187,25 +187,25 @@
 									ei ole tägejä -->
 							<c:choose>
 								<c:when test="${option.radiobuttonText != null }">
-									<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex" 
+									<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionIndex" 
 									value="${optionsCounter.index}" /> ${option.radiobuttonText}
 								</c:when>
 								<c:otherwise>
-									<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex"
+									<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionIndex"
 									value="${optionsCounter.index}" /> ${option.option}
 								</c:otherwise>
 								</c:choose>
 							</label>
 						</c:forEach> 
 						 <c:choose>
-								<c:when test="${report.answers[answerIndexCounter].chosenOptionIndex == -1}"> 
+								<c:when test="${answer.chosenOptionIndex == -1}"> 
 									<label class="btn btn-default active">
 									</c:when>
 								<c:otherwise>
 									<label class="btn btn-default">
 								</c:otherwise>
 							</c:choose> 
-							<sf:radiobutton id="button" path="answers[${answerIndexCounter}].chosenOptionIndex" 
+							<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionIndex" 
 									value="-1" /> Ei valintaa
 							
 					</div>
@@ -215,7 +215,7 @@
 			
 				<br>
 				<h4>Huomioita:</h4>
-				<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
+				<sf:textarea rows="5" style="width:100%;" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks" 
 					value="report.answers[${answerIndexCounter}].remarks}" />
 				<br><br>
 			</c:if> 
@@ -226,7 +226,7 @@
 			<div class="checkbox" style="font-size: 1.2em;">
 				<label>											
 				<sf:checkbox value='true'
-					path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+					path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
 				
 				</label>
 				<br>
@@ -235,7 +235,7 @@
 					<div class="checkbox" style="font-size: 1.2em;">
 						<label>											
 							<sf:checkbox value='true'
-								path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+								path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].highlightAnswer" label="Huomiot-osioon" />
 						</label>
 				
 					</div>
@@ -261,7 +261,7 @@
 									varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
 									riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
 									ei ole tägejä -->
-							<sf:radiobutton id="button" path="answers[${answerIndexCounter}].givenPoints"
+							<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].givenPoints"
 									value="${points}" /> ${points}
 
 							</label>
@@ -274,7 +274,7 @@
 									<label class="btn btn-default">
 								</c:otherwise>
 							</c:choose> 
-							<sf:radiobutton id="button" path="answers[${answerIndexCounter}].givenPoints" 
+							<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].givenPoints" 
 									value="-1" /> Ei valintaa
 							
 					</div>
@@ -282,7 +282,7 @@
 				
 				<br>
 				<h4>Huomioita:</h4>
-				<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
+				<sf:textarea rows="5" style="width:100%;" path="eportParts[${editReportPartNumber}].questionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks" 
 					value="report.answers[${answerIndexCounter}].remarks}" />
 				<br><br>
 			</c:if> 
@@ -295,7 +295,7 @@
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
 					<sf:checkbox value='true'
-						path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+						path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
 					
 					</label>
 					<br>
@@ -304,7 +304,7 @@
 								<div class="checkbox" style="font-size: 1.2em;">
 								<label>											
 								<sf:checkbox value='true'
-									path="answers[${answerIndexCounter}].highlightAnswer" label="Huomiot-osioon" />
+									path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].highlightAnswer" label="Huomiot-osioon" />
 								
 								</label>
 								
@@ -318,26 +318,26 @@
 						<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].answer" />
 					</c:when>
 					<c:otherwise>
-						<sf:input class="form-control" path="answers[${answerIndexCounter}].answer" />
+						<sf:input class="form-control" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answer" />
 					</c:otherwise>
 				</c:choose>
 				<br>
 				
 			</c:if>
 		<!-- Cost listing question -->
-			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
+<%-- 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
 				<h3>${questionCounter.count}. ${question.questionTopic}</h3>
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
 					<sf:checkbox value='true'
-						path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+						path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
 					
 					</label>
 					<br>
 				</div>
 					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
 						<h4>${listQuestion}</h4>
-						<sf:input style="width: 5em" path="answers[${answerIndexCounter}].answers[${costListingAnswerCounter.index}]" /> €
+						<sf:input style="width: 5em" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answers[${costListingAnswerCounter.index}]" /> €
 						<br>
 					</c:forEach>
 					<br>
@@ -345,19 +345,19 @@
 				<sf:input style="width: 5em" path="answers[${answerIndexCounter}].total" /> €
 				<br>
 					<h4>Huomioita:</h4>
-					<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
+					<sf:textarea rows="5" style="width:100%;" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].remarks" 
 						value="report.answers[${answerIndexCounter}].remarks}" />
 				<br><br>
-			</c:if> 
+			</c:if>  --%>
 
 		
 		<!-- ListAndScoreImportantPoints -->
-			<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
+<%-- 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
 				<h3>${questionCounter.count}. ${question.question}</h3>
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
 					<sf:checkbox value='true'
-						path="answers[${answerIndexCounter}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+						path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
 					
 					</label>
 					<br>
@@ -383,7 +383,7 @@
 										<label class="btn btn-primary">
 									</c:otherwise>
 								</c:choose>  
-								<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].importance"
+								<sf:radiobutton id="button" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].importance"
 										value="${importanceNumber.index}" /> ${importanceNumber.index} 
 										</label>
 							</c:forEach>
@@ -395,7 +395,7 @@
 										<label class="btn btn-default">
 									</c:otherwise>
 								</c:choose>  
-								<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].importance"
+								<sf:radiobutton id="button" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].importance"
 										value="-1" /> Ei valintaa
 								</label>
 							
@@ -430,7 +430,7 @@
 										<label class="btn btn-default">
 									</c:otherwise>
 								</c:choose>  
-								<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].score"
+								<sf:radiobutton id="button" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].score"
 										value="-1" /> Ei valinta
 										</label>
 							
@@ -445,14 +445,14 @@
 					</c:forEach>
 					<br>
 					<h4>Huomioita:</h4>
-					<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].remarks" 
+					<sf:textarea rows="5" style="width:100%;" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].remarks" 
 						value="report.answers[${answerIndexCounter}].remarks}" />
 					<br><br>
 						
-			</c:if>	
+			</c:if>	 --%>
 			
 <!-- Optional questions -->
- 		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
+<%--  		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
 			
 			<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
@@ -476,7 +476,7 @@
 				<br>			
 			</c:if>
 
-		<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" />
+		<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" /> --%>
 						
 <!-- Questions loop end -->									
 			</c:forEach> 

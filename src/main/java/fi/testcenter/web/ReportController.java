@@ -1,7 +1,6 @@
 package fi.testcenter.web;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,14 +18,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
-import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
-import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.Question;
-import fi.testcenter.domain.report.QuestionGroup;
-import fi.testcenter.domain.report.QuestionGroupScore;
 import fi.testcenter.domain.report.Report;
-import fi.testcenter.domain.report.ReportPartScore;
 import fi.testcenter.domain.report.ReportTemplate;
+import fi.testcenter.domain.report.ReportTemplateQuestionGroup;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.ReportTemplateService;
@@ -77,7 +72,6 @@ public class ReportController {
 			@RequestParam("importerID") Integer importerID) {
 
 		Report report = new Report();
-
 		Importer importer = is.finImporterById(importerID.longValue());
 		if (importer.getReportTemplateName() == null
 				|| importer.getReportTemplateName().isEmpty()) {
@@ -86,12 +80,13 @@ public class ReportController {
 			return "report/newReportSelectImporter";
 		}
 		try {
-			report.setReportTemplate(rts.findReportTemplateByName(importer
-					.getReportTemplateName()));
+			report = new Report(rts.findReportTemplateByName(importer
+					.getReportTemplateName()), rs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+		log.debug("ReportPart count: " + report.getReportParts().size());
 		report.setUser(us.findLoginUser());
 		report.setImporter(importer);
 		report.setImporterId(importerID.longValue());
@@ -104,9 +99,6 @@ public class ReportController {
 	@RequestMapping(value = "/prepareReport")
 	public String prepareForm(Model model,
 			@ModelAttribute("report") Report report) {
-
-		report.prepareAnswerList();
-
 		model.addAttribute("report", report);
 
 		List<Workshop> workshops = ws.getWorkshops();
@@ -136,8 +128,6 @@ public class ReportController {
 										// jotta ei huomioida pisteytyksessä.
 		report = report.calculateReportScore(rs);
 
-		report = report.setHighlightAnswers(rs);
-
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
 		try {
@@ -163,8 +153,9 @@ public class ReportController {
 
 			int answerIndex = 0;
 			for (int i = 0; i < navigateToReportPart; i++) {
-				for (QuestionGroup questionGroup : report.getReportTemplate()
-						.getReportParts().get(i).getQuestionGroups()) {
+				for (ReportTemplateQuestionGroup questionGroup : report
+						.getReportTemplate().getReportParts().get(i)
+						.getQuestionGroups()) {
 					answerIndex += questionGroup.getQuestions().size();
 					for (Question question : questionGroup.getQuestions()) {
 						answerIndex += question.getSubQuestions().size();
@@ -180,34 +171,35 @@ public class ReportController {
 
 		} else if (optionalQuestionsAnswerIndex != null) {
 
-			// Asetetaan JSP:tä varten chosenQuestions-muuttuujaan aikaisemmin
-			// valitut valinnaiset kysymykset
-
-			OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
-					.getAnswers().get(optionalQuestionsAnswerIndex);
-			List<Question> optionalQuestions = ((OptionalQuestions) oqa
-					.getQuestion()).getQuestions();
-
-			int[] oldQuestions = new int[0];
-			if (oqa.getQuestions() != null) {
-
-				for (Question question : oqa.getQuestions()) {
-
-					int index = optionalQuestions.indexOf(question);
-					oldQuestions = Arrays.copyOf(oldQuestions,
-							oldQuestions.length + 1);
-					oldQuestions[oldQuestions.length - 1] = index;
-				}
-			}
-
-			ChosenQuestions chosenQ = new ChosenQuestions();
-			chosenQ.setChosenQuestions(oldQuestions);
-			model.addAttribute("chosenQuestions", chosenQ);
-			model.addAttribute("readyReport", report);
-			model.addAttribute("report", report);
-			model.addAttribute("optionalQuestionsAnswerIndex",
-					optionalQuestionsAnswerIndex);
-			model.addAttribute("optionalQuestions", optionalQuestions);
+			// // Asetetaan JSP:tä varten chosenQuestions-muuttuujaan
+			// aikaisemmin
+			// // valitut valinnaiset kysymykset
+			//
+			// OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
+			// .getAnswers().get(optionalQuestionsAnswerIndex);
+			// List<Question> optionalQuestions = ((OptionalQuestions) oqa
+			// .getQuestion()).getQuestions();
+			//
+			// int[] oldQuestions = new int[0];
+			// if (oqa.getQuestions() != null) {
+			//
+			// for (Question question : oqa.getQuestions()) {
+			//
+			// int index = optionalQuestions.indexOf(question);
+			// oldQuestions = Arrays.copyOf(oldQuestions,
+			// oldQuestions.length + 1);
+			// oldQuestions[oldQuestions.length - 1] = index;
+			// }
+			// }
+			//
+			// ChosenQuestions chosenQ = new ChosenQuestions();
+			// chosenQ.setChosenQuestions(oldQuestions);
+			// model.addAttribute("chosenQuestions", chosenQ);
+			// model.addAttribute("readyReport", report);
+			// model.addAttribute("report", report);
+			// model.addAttribute("optionalQuestionsAnswerIndex",
+			// optionalQuestionsAnswerIndex);
+			// model.addAttribute("optionalQuestions", optionalQuestions);
 
 			return "report/addOptionalQuestions";
 		}
@@ -273,46 +265,47 @@ public class ReportController {
 			@ModelAttribute("readyReport") Report formReport,
 			@ModelAttribute("report") Report report) {
 
-		if (report.getReportHighlights().size() > 0) {
-
-			try {
-				rs.deleteReportHighlights(report.getReportHighlights());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		report = report.setHighlightAnswers(rs);
-
-		int reportPartScoreIndex = 0;
-
-		for (ReportPartScore reportPartScore : formReport.getReportPartScore()) {
-
-			report.getReportPartScore().get(reportPartScoreIndex++)
-					.setScoreSmiley(reportPartScore.getScoreSmiley());
-
-		}
-
-		int questionGroupScoreIndex = 0;
-		for (QuestionGroupScore questionGroupScore : formReport
-				.getQuestionGroupScore()) {
-			report.getQuestionGroupScore().get(questionGroupScoreIndex++)
-					.setScoreSmiley(questionGroupScore.getScoreSmiley());
-
-		}
-
-		report.setSmileysSet(true);
-		Report savedReport = new Report();
-		try {
-			savedReport = rs.saveReport(report);
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-
-		model.addAttribute("editSmileys", false);
-		model.addAttribute("readyReport", savedReport);
-		model.addAttribute("report", savedReport);
+		// if (report.getReportHighlights().size() > 0) {
+		//
+		// try {
+		// rs.deleteReportHighlights(report.getReportHighlights());
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// }
+		//
+		// report = report.setHighlightAnswers(rs);
+		//
+		// int reportPartScoreIndex = 0;
+		//
+		// for (ReportPartScore reportPartScore :
+		// formReport.getReportPartScore()) {
+		//
+		// report.getReportPartScore().get(reportPartScoreIndex++)
+		// .setScoreSmiley(reportPartScore.getScoreSmiley());
+		//
+		// }
+		//
+		// int questionGroupScoreIndex = 0;
+		// for (QuestionGroupScore questionGroupScore : formReport
+		// .getQuestionGroupScore()) {
+		// report.getQuestionGroupScore().get(questionGroupScoreIndex++)
+		// .setScoreSmiley(questionGroupScore.getScoreSmiley());
+		//
+		// }
+		//
+		// report.setSmileysSet(true);
+		// Report savedReport = new Report();
+		// try {
+		// savedReport = rs.saveReport(report);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		//
+		// }
+		//
+		// model.addAttribute("editSmileys", false);
+		// model.addAttribute("readyReport", savedReport);
+		// model.addAttribute("report", savedReport);
 		return "report/showReport";
 	}
 

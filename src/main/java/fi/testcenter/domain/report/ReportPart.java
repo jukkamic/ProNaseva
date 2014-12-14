@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
@@ -20,31 +21,26 @@ public class ReportPart {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	private String title;
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "REPORTPART_ID")
-	@OrderColumn(name = "QGROUPORDER")
-	private List<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
+	int score;
+	int maxScore;
+	int scorePercentage;
+	boolean showScore = false;
 
-	boolean showScorePercentage;
-	private int scorePercentage;
+	String scoreSmiley = "";
 
-	private boolean showScoreInReportHighlights = true;
+	@ManyToOne
+	@JoinColumn
+	Report report;
 
-	public String getTitle() {
-		return title;
-	}
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn
+	ReportTemplatePart reportTemplatePart;
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "reportPart", cascade = CascadeType.ALL)
+	@OrderColumn
+	List<ReportQuestionGroup> reportQuestionGroups = new ArrayList<ReportQuestionGroup>();
 
-	public List<QuestionGroup> getQuestionGroups() {
-		return questionGroups;
-	}
-
-	public void setQuestionGroups(List<QuestionGroup> questionGroups) {
-		this.questionGroups = questionGroups;
+	public ReportPart() {
 	}
 
 	public Long getId() {
@@ -55,12 +51,20 @@ public class ReportPart {
 		this.id = id;
 	}
 
-	public boolean isShowScorePercentage() {
-		return showScorePercentage;
+	public int getScore() {
+		return score;
 	}
 
-	public void setShowScorePercentage(boolean showScorePercentage) {
-		this.showScorePercentage = showScorePercentage;
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(int maxScore) {
+		this.maxScore = maxScore;
 	}
 
 	public int getScorePercentage() {
@@ -71,13 +75,45 @@ public class ReportPart {
 		this.scorePercentage = scorePercentage;
 	}
 
-	public boolean isShowScoreInReportHighlights() {
-		return showScoreInReportHighlights;
+	public boolean isShowScore() {
+		return showScore;
 	}
 
-	public void setShowScoreInReportHighlights(
-			boolean showScoreInReportHighlights) {
-		this.showScoreInReportHighlights = showScoreInReportHighlights;
+	public void setShowScore(boolean showScore) {
+		this.showScore = showScore;
+	}
+
+	public String getScoreSmiley() {
+		return scoreSmiley;
+	}
+
+	public void setScoreSmiley(String scoreSmiley) {
+		this.scoreSmiley = scoreSmiley;
+	}
+
+	public List<ReportQuestionGroup> getReportQuestionGroups() {
+		return reportQuestionGroups;
+	}
+
+	public void setReportQuestionGroups(
+			List<ReportQuestionGroup> reportQuestionGroups) {
+		this.reportQuestionGroups = reportQuestionGroups;
+	}
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
+	}
+
+	public ReportTemplatePart getReportTemplatePart() {
+		return reportTemplatePart;
+	}
+
+	public void setReportTemplatePart(ReportTemplatePart reportTemplatePart) {
+		this.reportTemplatePart = reportTemplatePart;
 	}
 
 }

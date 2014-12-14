@@ -23,7 +23,7 @@ public class ReportTemplate {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "REPORTTEMPLATE_ID")
 	@OrderColumn(name = "REPORTPARTORDER")
-	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
+	private List<ReportTemplatePart> reportParts = new ArrayList<ReportTemplatePart>();
 
 	private String templateName;
 	private boolean current;
@@ -36,11 +36,11 @@ public class ReportTemplate {
 		this.id = id;
 	}
 
-	public List<ReportPart> getReportParts() {
+	public List<ReportTemplatePart> getReportParts() {
 		return reportParts;
 	}
 
-	public void setReportParts(List<ReportPart> reportParts) {
+	public void setReportParts(List<ReportTemplatePart> reportParts) {
 		this.reportParts = reportParts;
 	}
 

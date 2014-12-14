@@ -11,8 +11,8 @@ import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
-import fi.testcenter.domain.report.QuestionGroup;
-import fi.testcenter.domain.report.ReportPart;
+import fi.testcenter.domain.report.ReportTemplateQuestionGroup;
+import fi.testcenter.domain.report.ReportTemplatePart;
 import fi.testcenter.domain.report.ReportTemplate;
 
 public class AutoasiReportTemplate {
@@ -21,18 +21,18 @@ public class AutoasiReportTemplate {
 		ReportTemplate reportTemplate = new ReportTemplate();
 		reportTemplate.setCurrent(true);
 		reportTemplate.setTemplateName("Autoasi raporttipohja");
-		ArrayList<ReportPart> reportParts = new ArrayList<ReportPart>();
+		ArrayList<ReportTemplatePart> reportParts = new ArrayList<ReportTemplatePart>();
 
-		ReportPart reportPart1 = new ReportPart();
+		ReportTemplatePart reportPart1 = new ReportTemplatePart();
 		reportPart1.setTitle("Yhteenveto");
 		reportPart1.setShowScoreInReportHighlights(false);
 
-		ArrayList<QuestionGroup> questionGroups = new ArrayList<QuestionGroup>();
+		ArrayList<ReportTemplateQuestionGroup> questionGroups = new ArrayList<ReportTemplateQuestionGroup>();
 
 		// Yhteenveto
 		// Yhteenveto - Testiauton tiedot
 
-		QuestionGroup questionGroup1 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup1 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questions1 = new ArrayList<Question>();
 		questionGroup1.setTitle("Testiauton tiedot");
 
@@ -70,7 +70,7 @@ public class AutoasiReportTemplate {
 
 		// Yhteenveto - Tarkastuskohteet
 
-		QuestionGroup questionGroup2 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup2 = new ReportTemplateQuestionGroup();
 		questionGroup2.setTitle("Tarkastuskohteet");
 		questionGroup2.setShowInReportSummary(true);
 
@@ -84,7 +84,7 @@ public class AutoasiReportTemplate {
 
 		// Yhteenveto - Palvelun pisteet
 
-		QuestionGroup questionGroup3 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup3 = new ReportTemplateQuestionGroup();
 		questionGroup3.setTitle("TCT-palvelun pisteet");
 		questionGroup3.setShowInReportSummary(true);
 		ArrayList<Question> questionList3 = new ArrayList<Question>();
@@ -194,7 +194,7 @@ public class AutoasiReportTemplate {
 		questionGroup3.setQuestions(questionList3);
 		questionGroups.add(questionGroup3);
 
-		QuestionGroup questionGroupYhteenveto31 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroupYhteenveto31 = new ReportTemplateQuestionGroup();
 		questionGroupYhteenveto31.setTitle("Kustannukset");
 
 		List<Question> questionGroupYhteenveto31Questions = new ArrayList<Question>();
@@ -229,7 +229,7 @@ public class AutoasiReportTemplate {
 				.setQuestions(questionGroupYhteenveto31Questions);
 		questionGroups.add(questionGroupYhteenveto31);
 
-		QuestionGroup questionGroupYhteenveto32 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroupYhteenveto32 = new ReportTemplateQuestionGroup();
 		questionGroupYhteenveto32
 				.setTitle("Asiakkaan tärkeäksi kokemat asiat huollon prosessissa");
 		List<Question> questionGroupYhteenveto32Questions = new ArrayList<Question>();
@@ -291,11 +291,11 @@ public class AutoasiReportTemplate {
 
 		// RAPORTIN OSA A - TYÖN VASTAANOTTO
 
-		ReportPart reportPart2 = new ReportPart();
+		ReportTemplatePart reportPart2 = new ReportTemplatePart();
 		reportPart2.setTitle("Osa A - Ajanvaraus korjaamolle");
 
-		ArrayList<QuestionGroup> questionGroups2 = new ArrayList<QuestionGroup>();
-		QuestionGroup questionGroup4 = new QuestionGroup();
+		ArrayList<ReportTemplateQuestionGroup> questionGroups2 = new ArrayList<ReportTemplateQuestionGroup>();
+		ReportTemplateQuestionGroup questionGroup4 = new ReportTemplateQuestionGroup();
 
 		questionGroup4.setTitle("Ajanvaraus korjaamolle");
 		ArrayList<Question> questionList4 = new ArrayList<Question>();
@@ -382,7 +382,7 @@ public class AutoasiReportTemplate {
 
 		// A-5 - Asiakastietojen hallinta
 
-		QuestionGroup questionGroup5 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup5 = new ReportTemplateQuestionGroup();
 
 		questionGroup5.setTitle("Asiakastietojen hallinta");
 		ArrayList<Question> questionList5 = new ArrayList<Question>();
@@ -478,7 +478,7 @@ public class AutoasiReportTemplate {
 
 		// A-3 - Tilattava huolto
 
-		QuestionGroup questionGroup6 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup6 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList6 = new ArrayList<Question>();
 
 		questionGroup6.setTitle("Tilattava huolto");
@@ -530,7 +530,7 @@ public class AutoasiReportTemplate {
 
 		// A-4 - Sijaiskulkuneuvo
 
-		QuestionGroup questionGroup7 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup7 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList7 = new ArrayList<Question>();
 
 		questionGroup7.setTitle("Sijaiskulkuneuvo");
@@ -585,7 +585,7 @@ public class AutoasiReportTemplate {
 
 		// A-5 - Asiakkaan informoiminen
 
-		QuestionGroup questionGroup8 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup8 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList8 = new ArrayList<Question>();
 
 		questionGroup8.setTitle("Asiakkaan informoiminen");
@@ -767,11 +767,11 @@ public class AutoasiReportTemplate {
 		// Osa B - Työnvastaanotto
 		// B-1 - Työnvastaanotossa
 
-		ReportPart reportPart3 = new ReportPart();
+		ReportTemplatePart reportPart3 = new ReportTemplatePart();
 		reportPart3.setTitle("Osa B - Työnvastaanotto");
 
-		ArrayList<QuestionGroup> questionGroups3 = new ArrayList<QuestionGroup>();
-		QuestionGroup questionGroup9 = new QuestionGroup();
+		ArrayList<ReportTemplateQuestionGroup> questionGroups3 = new ArrayList<ReportTemplateQuestionGroup>();
+		ReportTemplateQuestionGroup questionGroup9 = new ReportTemplateQuestionGroup();
 
 		questionGroup9.setTitle("Työnvastaanotossa");
 		ArrayList<Question> questionList9 = new ArrayList<Question>();
@@ -843,7 +843,7 @@ public class AutoasiReportTemplate {
 
 		// B-2 - Keskustelu työnvastaanotossa
 
-		QuestionGroup questionGroup10 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup10 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList10 = new ArrayList<Question>();
 
 		questionGroup10.setTitle("Keskustelu työnvastaanotossa");
@@ -935,7 +935,7 @@ public class AutoasiReportTemplate {
 
 		// // B-3 - Töiden kirjaaminen
 		//
-		QuestionGroup questionGroup11 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup11 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList11 = new ArrayList<Question>();
 
 		questionGroup11.setTitle("Töiden kirjaaminen");
@@ -1240,12 +1240,12 @@ public class AutoasiReportTemplate {
 
 		// // Osa C - Auton luovutus
 		//
-		ReportPart reportPart4 = new ReportPart();
+		ReportTemplatePart reportPart4 = new ReportTemplatePart();
 		reportPart4.setTitle("Osa C - Yhteydenotto huollon aikana");
 
-		ArrayList<QuestionGroup> questionGroups4 = new ArrayList<QuestionGroup>();
+		ArrayList<ReportTemplateQuestionGroup> questionGroups4 = new ArrayList<ReportTemplateQuestionGroup>();
 
-		QuestionGroup questionGroup12 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup12 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList12 = new ArrayList<Question>();
 
 		questionGroup12.setTitle("Yhteydenotto auton ollessa korjaamolla");
@@ -1362,12 +1362,12 @@ public class AutoasiReportTemplate {
 
 		// // Osa D - Auton luovutus
 		//
-		ReportPart reportPart5 = new ReportPart();
+		ReportTemplatePart reportPart5 = new ReportTemplatePart();
 		reportPart5.setTitle("Osa D - Auton luovutus");
 
-		ArrayList<QuestionGroup> questionGroups5 = new ArrayList<QuestionGroup>();
+		ArrayList<ReportTemplateQuestionGroup> questionGroups5 = new ArrayList<ReportTemplateQuestionGroup>();
 
-		QuestionGroup questionGroup13 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup13 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList13 = new ArrayList<Question>();
 
 		questionGroup13.setTitle("Työnvastaanotossa auton luovutus");
@@ -1440,7 +1440,7 @@ public class AutoasiReportTemplate {
 
 		// // D - 3 - Lasku
 		//
-		QuestionGroup questionGroup14 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup14 = new ReportTemplateQuestionGroup();
 		ArrayList<Question> questionList14 = new ArrayList<Question>();
 
 		questionGroup14.setTitle("Lasku");
@@ -1493,7 +1493,7 @@ public class AutoasiReportTemplate {
 		//
 		// // D - 4 - Asiakkaan neuvonta
 		//
-		QuestionGroup questionGroup15 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup15 = new ReportTemplateQuestionGroup();
 
 		questionGroup15.setTitle("Asiakkaan neuvonta");
 
@@ -1592,7 +1592,7 @@ public class AutoasiReportTemplate {
 		//
 		// // D 5 - Asiakaspalveluhenkinen toiminta
 		//
-		QuestionGroup questionGroup16 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup16 = new ReportTemplateQuestionGroup();
 
 		questionGroup16.setTitle("Asiakaspalveluhenkinen toiminta");
 
@@ -1615,13 +1615,13 @@ public class AutoasiReportTemplate {
 		//
 		// // Osa E Korjaamon yhteistyö
 		//
-		ReportPart reportPart6 = new ReportPart();
+		ReportTemplatePart reportPart6 = new ReportTemplatePart();
 		reportPart6.setTitle("Osa E - Korjaamon yhteistyö");
 		reportPart6.setShowScoreInReportHighlights(false);
 
-		ArrayList<QuestionGroup> questionGroups6 = new ArrayList<QuestionGroup>();
+		ArrayList<ReportTemplateQuestionGroup> questionGroups6 = new ArrayList<ReportTemplateQuestionGroup>();
 
-		QuestionGroup questionGroup17 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup17 = new ReportTemplateQuestionGroup();
 
 		questionGroup17.setTitle("Työmääräyksen merkinnät");
 
@@ -1692,7 +1692,7 @@ public class AutoasiReportTemplate {
 		//
 		// // E 2 - Mekaanikon tekninen suoritus
 		//
-		QuestionGroup questionGroup18 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup18 = new ReportTemplateQuestionGroup();
 
 		questionGroup18.setTitle("Mekaanikon tekninen suoritus");
 
@@ -1787,7 +1787,7 @@ public class AutoasiReportTemplate {
 
 		// // E 3 - Varaosapalvelun toimivuus
 		//
-		QuestionGroup questionGroup19 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup19 = new ReportTemplateQuestionGroup();
 
 		questionGroup19.setTitle("Varaosapalvelun toimivuus");
 
@@ -1844,7 +1844,7 @@ public class AutoasiReportTemplate {
 		//
 		// // E 3 - Varaosapalvelun toimivuus
 		//
-		QuestionGroup questionGroup20 = new QuestionGroup();
+		ReportTemplateQuestionGroup questionGroup20 = new ReportTemplateQuestionGroup();
 
 		questionGroup20
 				.setTitle("Huoltoneuvojan ja mekaanikon yhteistyön toimivuus");
@@ -1917,7 +1917,8 @@ public class AutoasiReportTemplate {
 		optionalQuestions.add(new PointsQuestion("Akun tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion("Akun kiinnityksen tarkastus",
 				2));
-
+		optionalQuestions
+				.add(new PointsQuestion("Huoltovälinäytön nollaus", 2));
 		optionalQuestions.add(new PointsQuestion(
 				"Jarrulevyjen tai -palojen tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion("Jarrunesteen tarkastus", 2));
@@ -1927,6 +1928,7 @@ public class AutoasiReportTemplate {
 				"Jäähdytysnestemäärän tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion(
 				"Kaukovalon toiminnan tarkastus", 2));
+		optionalQuestions.add(new PointsQuestion("Korin kunnon tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion(
 				"Lasinpesurin toiminnan tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion(
@@ -1967,6 +1969,7 @@ public class AutoasiReportTemplate {
 				"Varapyörän ilmanpaineen tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion(
 				"Varapyörä tai renkaantäyttölaite puuttuu - huomioidaanko", 2));
+		optionalQuestions.add(new PointsQuestion("Vikamuistin lukeminen", 2));
 		optionalQuestions.add(new PointsQuestion(
 				"Äänimerkin toiminnan tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion("Muu vika", 2));

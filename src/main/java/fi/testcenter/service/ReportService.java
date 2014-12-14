@@ -23,12 +23,10 @@ import org.springframework.transaction.annotation.Transactional;
 import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.report.Report;
-import fi.testcenter.domain.report.ReportHighlight;
 import fi.testcenter.domain.report.ReportTemplate;
 import fi.testcenter.repository.AnswerRepository;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.OptionalQuestionsAnswerRepository;
-import fi.testcenter.repository.ReportHighlightRepository;
 import fi.testcenter.repository.ReportRepository;
 import fi.testcenter.repository.WorkshopRepository;
 import fi.testcenter.web.SearchReportCriteria;
@@ -53,9 +51,6 @@ public class ReportService {
 
 	@Autowired
 	private ReportTemplateService rts;
-
-	@Autowired
-	private ReportHighlightRepository rhlr;
 
 	@Autowired
 	private AnswerRepository ar;
@@ -294,18 +289,6 @@ public class ReportService {
 	}
 
 	@Transactional
-	public void deleteReportHighlights(List<ReportHighlight> highlights) {
-		for (ReportHighlight rh : highlights) {
-			Answer a = rh.getAnswer();
-			if (a != null) {
-				a.setReportHighlight(null);
-				a = ar.save(a);
-			}
-		}
-		rhlr.deleteInBatch(highlights);
-	}
-
-	@Transactional
 	public void deleteOptionalAnswers(List<Answer> answers) {
 
 		ar.deleteInBatch(answers);
@@ -315,11 +298,6 @@ public class ReportService {
 	@Transactional
 	public Answer saveAnswer(Answer answer) {
 		return ar.save(answer);
-	}
-
-	@Transactional
-	public ReportHighlight saveHighlight(ReportHighlight highlight) {
-		return rhlr.save(highlight);
 	}
 
 	@Transactional
@@ -333,18 +311,6 @@ public class ReportService {
 	public void deleteOptionalAnswer(OptionalQuestionsAnswer answer) {
 
 		oqar.delete(answer);
-	}
-
-	@Transactional
-	public void deleteReportHighlight(ReportHighlight hl) {
-
-		Answer a = hl.getAnswer();
-		if (a != null) {
-			a.setReportHighlight(null);
-			a = ar.save(a);
-
-		}
-		rhlr.delete(hl);
 	}
 
 	@Transactional

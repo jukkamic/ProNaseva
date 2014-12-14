@@ -9,7 +9,7 @@
 		<class>fi.testcenter.domain.report.ReportTemplate</class>
 		<class>fi.testcenter.domain.Importer</class>
 		<class>fi.testcenter.domain.Workshop</class>
-		<class>fi.testcenter.domain.report.QuestionGroup</class>
+		<class>fi.testcenter.domain.report.ReportTemplateQuestionGroup</class>
 		<class>fi.testcenter.domain.question.Question</class>
 		<class>fi.testcenter.domain.question.TextQuestion</class>
 		<class>fi.testcenter.domain.question.MultipleChoiceQuestion</class>

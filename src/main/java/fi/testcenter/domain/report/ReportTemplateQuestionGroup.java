@@ -16,7 +16,7 @@ import javax.persistence.OrderColumn;
 import fi.testcenter.domain.question.Question;
 
 @Entity
-public class QuestionGroup {
+public class ReportTemplateQuestionGroup {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
