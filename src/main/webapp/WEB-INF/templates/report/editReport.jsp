@@ -327,7 +327,7 @@
 			</c:if>
 		<!-- Cost listing question -->
   			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
-				<h3>${questionCounter.count}. ${question.questionTopic}</h3>
+				<h3>${questionCounter.count}. ${question.question}</h3>
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
 					<sf:checkbox value='true'
@@ -336,7 +336,7 @@
 					</label>
 					<br>
 				</div>
-					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
+					<c:forEach var="listQuestion" items="${question.questionItems}" varStatus="costListingAnswerCounter">
 						<h4>${listQuestion}</h4>
 						<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answers[${costListingAnswerCounter.index}]" /> €
 						<br>
@@ -364,7 +364,6 @@
 					<br>
 				</div>
 
- 
 					<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
 						<div style="border-bottom: 3px solid #eee;">
 						<h3>${questionItem}</h3>
@@ -377,7 +376,7 @@
 						
 							<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber"> 
 								<c:choose>
-									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
+									<c:when test="${answer.answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
 										<label class="btn btn-primary active">
 										</c:when>
 									<c:otherwise>
@@ -392,7 +391,7 @@
 							
 
 							<c:choose>
-									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].importance == -1}"> 
+									<c:when test="${answer.answerItems[questionItemCounter.index].importance == -1}"> 
 										<label class="btn btn-default active">
 										</c:when>
 									<c:otherwise>
@@ -415,26 +414,26 @@
 						
  	 						<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
 								<c:choose>
-									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].score == score.index}"> 
+									<c:when test="${answer.answerItems[questionItemCounter.index].score == score.index}"> 
 										<label class="btn btn-primary active">
 										</c:when>
 									<c:otherwise>
 										<label class="btn btn-primary">
 									</c:otherwise>
 								</c:choose>  
-								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].score"
+								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].score"
 										value="${score.index}" /> &nbsp&nbsp${score.index}&nbsp&nbsp 
 										</label>
 							</c:forEach>  
 							<c:choose>
- 									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].score == -1}"> 
+ 									<c:when test="${answer.answerItems[questionItemCounter.index].score == -1}"> 
 										<label class="btn btn-default active">
 										</c:when>
 									<c:otherwise>
 										<label class="btn btn-default">
 									</c:otherwise>
 								</c:choose>   
-								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].score"
+								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].score"
 										value="-1" /> Ei valinta
 										</label> 
 							
@@ -456,21 +455,24 @@
 			</c:if>	    
 			
 <!-- Optional questions -->
-<%--  		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
+  		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
+  		<input type="hidden" id="addOptionalToQuestionGroup" name="addOptionalToQuestionGroup" />
+  		
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
 			
-			<c:set var="optionalQuestionsAnswer" value="${reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}]}" scope="request" />
+			<c:set var="optionalQuestionsAnswer" value="${answer}" scope="request" />
+			<c:set var="questionGroupCounter" value="${questionGroupCounter}" scope="request" />
+			<c:set var="reportPartCounter" value="${reportPartCounter}" scope="request" />
+			<c:set var="questionCounter" value="${questionCounter}" scope="request" />
 			
 			<jsp:include page="/WEB-INF/templates/report/editOptionalQuestions.jsp" />
 						
-			<a href="#" onclick="addOptionalQuestion(${answerIndexCounter})" class="btn btn-primary"> Valitse kysymykset</a>
+			<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index}, ${questionCounter.index})" class="btn btn-primary"> Valitse kysymykset</a>
 		
 		</c:if> 
 			
 		<!-- Subquestions --> 
-			
-			<c:set var="answerIndexCounter" value="${answerIndexCounter + 1}" scope="request" />
-			
+<%-- 			
 			<c:if test="${not empty question.subQuestions}">
 				
 				<c:set var="mainQuestion" value="${question}" scope="request" />
@@ -478,14 +480,10 @@
 					<jsp:include page="/WEB-INF/templates/report/editReportSubQuestions.jsp" />
 				</div>	
 				<br>			
-			</c:if>
-
-		<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" /> --%>
+			</c:if> --%>
 						
 <!-- Questions loop end -->									
 			</c:forEach> 
-		
-
 		</div>
 		</div>
 	</div>
@@ -506,8 +504,6 @@
 </sf:form>
 				
 </div>
-		
-		
 
 <script type="text/javascript">
             // When the document is ready
@@ -517,15 +513,9 @@
                    
                     language: "fi",
         			autoclose: true
-                    
-                });  
-            
+              });  
             });
-
-
 </script>
-
-
 <script>
    function navigateToReportPart(reportPartIndex)
    {
@@ -534,8 +524,10 @@
       document.getElementById('editReportForm').submit();
    }
 
-   function addOptionalQuestion(answerIndex)
+   function addOptionalQuestion(questionGroup, answerIndex)
    {
+	 
+	   document.getElementById("addOptionalToQuestionGroup").value = questionGroup;
 	   document.getElementById("optionalQuestionsAnswerIndex").value = answerIndex;
 		document.getElementById("editReportForm").submit();
 		

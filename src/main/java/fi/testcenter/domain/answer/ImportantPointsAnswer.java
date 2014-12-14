@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
@@ -15,6 +16,7 @@ import fi.testcenter.domain.report.Report;
 public class ImportantPointsAnswer extends Answer {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "IMPORTANTPOINTANSWER")
 	@OrderColumn
 	List<ImportantPointsItem> answerItems;
 

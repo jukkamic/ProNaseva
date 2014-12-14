@@ -20,6 +20,8 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
+	String question;
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn
 	@OrderColumn
@@ -45,4 +47,11 @@ public class Question {
 		this.subQuestions = subQuestions;
 	}
 
+	public String getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(String question) {
+		this.question = question;
+	}
 }

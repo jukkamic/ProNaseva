@@ -12,8 +12,6 @@ import javax.persistence.OneToMany;
 @Entity
 public class MultipleChoiceQuestion extends Question {
 
-	private String question;
-
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "MCQ_ID")
 	private List<MultipleChoiceOption> options = new ArrayList<MultipleChoiceOption>();
@@ -34,14 +32,6 @@ public class MultipleChoiceQuestion extends Question {
 
 	public void setOptions(ArrayList<MultipleChoiceOption> options) {
 		this.options = options;
-	}
-
-	public String getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
 	}
 
 	public boolean isMultipleSelectionsAllowed() {

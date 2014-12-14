@@ -7,24 +7,15 @@ import javax.persistence.Entity;
 @Entity
 public class CostListingQuestion extends Question {
 
-	String questionTopic;
-	List<String> questions;
+	List<String> questionItems;
 	String total;
 
-	public String getQuestionTopic() {
-		return questionTopic;
+	public List<String> getQuestionItems() {
+		return questionItems;
 	}
 
-	public void setQuestionTopic(String questionTopic) {
-		this.questionTopic = questionTopic;
-	}
-
-	public List<String> getQuestions() {
-		return questions;
-	}
-
-	public void setQuestions(List<String> questions) {
-		this.questions = questions;
+	public void setQuestionItems(List<String> questionItems) {
+		this.questionItems = questionItems;
 	}
 
 	public String getTotal() {

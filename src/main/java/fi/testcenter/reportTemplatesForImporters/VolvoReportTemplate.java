@@ -9,9 +9,9 @@ import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
-import fi.testcenter.domain.report.ReportTemplateQuestionGroup;
-import fi.testcenter.domain.report.ReportTemplatePart;
 import fi.testcenter.domain.report.ReportTemplate;
+import fi.testcenter.domain.report.ReportTemplatePart;
+import fi.testcenter.domain.report.ReportTemplateQuestionGroup;
 
 public class VolvoReportTemplate {
 	public static ReportTemplate getReportTemplate() {
@@ -249,7 +249,7 @@ public class VolvoReportTemplate {
 		List<Question> questionGroupYhteenveto31Questions = new ArrayList<Question>();
 
 		CostListingQuestion costQuestion1 = new CostListingQuestion();
-		costQuestion1.setQuestionTopic("Huollon kustannukset:");
+		costQuestion1.setQuestion("Huollon kustannukset:");
 		List<String> costQuestionList1 = new ArrayList<String>();
 		costQuestionList1
 				.add("Kustannusarvio huollolle, jakohihnan vaihdolle (jos on) ja lisätöille");
@@ -270,7 +270,7 @@ public class VolvoReportTemplate {
 		costQuestionList1.add("Jätemaksu");
 		costQuestionList1.add("Loppusumman pyöristys ym.");
 		costQuestionList1.add("Laskun loppusumma");
-		costQuestion1.setQuestions(costQuestionList1);
+		costQuestion1.setQuestionItems(costQuestionList1);
 		costQuestion1
 				.setTotal("Huolto- ja lisätyöt osineen, jotka sisältyvät annettuun kustannusarvioon");
 		questionGroupYhteenveto31Questions.add(costQuestion1);

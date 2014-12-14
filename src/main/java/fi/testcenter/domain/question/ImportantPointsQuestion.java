@@ -7,18 +7,9 @@ import javax.persistence.Entity;
 @Entity
 public class ImportantPointsQuestion extends Question {
 
-	String question;
 	List<String> questionItems;
 	int maxScoreForQuestionItem;
 	int numberOfItemsToChoose;
-
-	public String getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
-	}
 
 	public List<String> getQuestionItems() {
 		return questionItems;

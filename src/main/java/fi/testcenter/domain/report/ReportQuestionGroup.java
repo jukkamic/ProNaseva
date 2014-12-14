@@ -23,10 +23,6 @@ public class ReportQuestionGroup {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	@ManyToOne
-	@JoinColumn
-	Report report;
-
 	private int score;
 
 	private int maxScore;
@@ -57,14 +53,6 @@ public class ReportQuestionGroup {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Report getReport() {
-		return report;
-	}
-
-	public void setReport(Report report) {
-		this.report = report;
 	}
 
 	public int getScore() {

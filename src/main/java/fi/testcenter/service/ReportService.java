@@ -21,10 +21,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.answer.Answer;
+import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportTemplate;
 import fi.testcenter.repository.AnswerRepository;
+import fi.testcenter.repository.ImpPtItemRepository;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.OptionalQuestionsAnswerRepository;
 import fi.testcenter.repository.ReportRepository;
@@ -54,6 +56,9 @@ public class ReportService {
 
 	@Autowired
 	private AnswerRepository ar;
+
+	@Autowired
+	private ImpPtItemRepository ipr;
 
 	@PersistenceContext()
 	EntityManager em;
@@ -298,6 +303,19 @@ public class ReportService {
 	@Transactional
 	public Answer saveAnswer(Answer answer) {
 		return ar.save(answer);
+	}
+
+	@Transactional
+	public void deleteAnswers(List<Answer> answers) {
+		for (Answer answer : answers) {
+			if (answer instanceof ImportantPointsAnswer
+					&& ((ImportantPointsAnswer) answer).getAnswerItems() != null) {
+				ipr.deleteInBatch(((ImportantPointsAnswer) answer)
+						.getAnswerItems());
+			}
+
+		}
+		ar.deleteInBatch(answers);
 	}
 
 	@Transactional

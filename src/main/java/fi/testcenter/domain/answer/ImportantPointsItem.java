@@ -10,7 +10,7 @@ public class ImportantPointsItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
-	private long id;
+	private Long id;
 
 	String item;
 	int importance;

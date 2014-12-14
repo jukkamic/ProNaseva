@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.OrderColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -44,7 +43,6 @@ import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
 import fi.testcenter.service.ReportService;
-import fi.testcenter.web.ChosenQuestions;
 
 @Entity
 @NamedQueries({
@@ -95,11 +93,11 @@ public class Report {
 	@JoinColumn
 	private User user;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn
 	private ReportTemplate reportTemplate;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
 	@OrderColumn
 	private List<ReportPart> reportParts = new ArrayList<ReportPart>();
 
@@ -113,6 +111,7 @@ public class Report {
 
 	public Report(ReportTemplate reportTemplate, ReportService rs) {
 
+		this.reportTemplate = reportTemplate;
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 		this.reportDate = DATE_FORMAT.format(new Date());
 		this.reportStatus = "DRAFT";
@@ -152,7 +151,7 @@ public class Report {
 								question);
 						CostListingQuestion clq = (CostListingQuestion) question;
 						List<Float> answerList = new ArrayList<Float>();
-						for (int i = 0; i < clq.getQuestions().size(); i++)
+						for (int i = 0; i < clq.getQuestionItems().size(); i++)
 							answerList.add(new Float(0));
 						answer.setAnswers(answerList);
 
@@ -179,7 +178,7 @@ public class Report {
 					if (question instanceof OptionalQuestions) {
 
 						reportQuestionGroupAnswerList
-								.add(new OptionalQuestionsAnswer(this, question));
+								.add(new OptionalQuestionsAnswer(question));
 
 					}
 
@@ -718,99 +717,6 @@ public class Report {
 		// totalScorePercentage = (int) Math.round((double) reportTotalScore
 		// / (double) reportMaxScore * 100);
 		// return rs.saveReport(this);
-		return this;
-	}
-
-	// KÄYTTÄJÄN VALITSEMIEN VALINNAISTEN KYSYMYSTEN LISÄYS
-
-	public Report addOptionalQuestions(ChosenQuestions chosenQuestions,
-			int answerIndex, ReportService rs) {
-
-		// // OptionalQuestionsAnswer optionalAnswer = (OptionalQuestionsAnswer)
-		// this.answers
-		// // .get(answerIndex);
-		// // List<Question> reportTemplateQuestionsList = ((OptionalQuestions)
-		// optionalAnswer
-		// // .getQuestion()).getQuestions();
-		// //
-		// // // Tehdään lista käyttäjän valitsemista kysymyksistä
-		// //
-		// // ArrayList<Answer> newAnswerList = new ArrayList<Answer>();
-		// // ArrayList<Question> newQuestionList = new ArrayList<Question>();
-		// //
-		// // for (int questionIndex : chosenQuestions.getChosenQuestions()) {
-		// //
-		// // Question question =
-		// reportTemplateQuestionsList.get(questionIndex);
-		// //
-		// // newQuestionList.add(question);
-		// // if (optionalAnswer.getQuestions() == null
-		// // || !(optionalAnswer.getQuestions().contains(question))) {
-		// //
-		// // if (question instanceof MultipleChoiceQuestion) {
-		// // newAnswerList.add(new MultipleChoiceAnswer(question));
-		// // }
-		// // if (question instanceof PointsQuestion) {
-		// // newAnswerList.add(new PointsAnswer(question));
-		// // }
-		// // if (question instanceof TextQuestion) {
-		// // newAnswerList.add(new TextAnswer(question));
-		// // }
-		// // if (question instanceof ImportantPointsQuestion) {
-		// // newAnswerList.add(new ImportantPointsAnswer(question));
-		// // }
-		// // if (question instanceof CostListingQuestion) {
-		// // newAnswerList.add(new CostListingAnswer(question));
-		// // }
-		// // }
-		// //
-		// // else {
-		// //
-		// // for (Answer answer : optionalAnswer.getAnswers()) {
-		// // if (answer.getQuestion() == question)
-		// // newAnswerList.add(answer);
-		// // }
-		// //
-		// // }
-		// // }
-		// //
-		// // OptionalQuestionsAnswer newAnswer = new
-		// OptionalQuestionsAnswer(this,
-		// // optionalAnswer.getQuestion());
-		// // newAnswer.setQuestions(newQuestionList);
-		// // newAnswer.setAnswers(newAnswerList);
-		// //
-		// // Report savedReport = new Report();
-		// //
-		// // for (ReportHighlight hl : reportHighlights) {
-		// // if (optionalAnswer.getAnswers() != null
-		// // && optionalAnswer.getAnswers().contains(hl.getAnswer())) {
-		// // try {
-		// // hl.setAnswer(null);
-		// // hl.setOptionalAnswer(null);
-		// // rs.saveHighlight(hl);
-		// //
-		// // } catch (Exception e) {
-		// // e.printStackTrace();
-		// // }
-		// // }
-		// // }
-		// //
-		// // rs.deleteOptionalAnswer(optionalAnswer);
-		// // this.answers
-		// // .set(answerIndex, rs.saveOptionalQuestionsAnswer(newAnswer));
-		// // try {
-		// // // for (ReportHighlight hl : reportHighlights)
-		// // // hl = null;
-		// // savedReport = rs.saveReport(this);
-		// // // rs.deleteReportHighlights(reportHighlights);
-		// //
-		// // // savedReport = setHighlightAnswers(rs);
-		// //
-		// // } catch (Exception e) {
-		// // e.printStackTrace();
-		// // }
-		// return savedReport;
 		return this;
 	}
 
