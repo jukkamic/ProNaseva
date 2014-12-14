@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 
 import fi.testcenter.domain.question.Question;
-import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 
 //KORJAA VALUUTTA KÄYTTÄEN : http://tutorials.jenkov.com/java-internationalization/numberformat.html
 
@@ -23,8 +23,9 @@ public class CostListingAnswer extends Answer {
 		super(question);
 	}
 
-	public CostListingAnswer(Report report, Question question) {
-		super(report, question);
+	public CostListingAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question) {
+		super(reportQuestionGroup, question);
 	}
 
 	public List<Float> getAnswers() {

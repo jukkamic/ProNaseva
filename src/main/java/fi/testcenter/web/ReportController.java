@@ -33,9 +33,10 @@ import fi.testcenter.service.WorkshopService;
 @Controller
 @RequestMapping("/")
 @SessionAttributes(value = { "reportTemplate", "report", "formAnswers",
-		"workshops", "readyReport", "addQuestionToGroup", "importers",
+		"workshops", "readyReport", "addOptionalToQuestionGroup", "importers",
 		"addQuestionToReportPart", "optionalQuestionsAnswerIndex",
-		"editReportPartNumber", "addQuestionsToOptionalAnswer" })
+		"editReportPartNumber", "addQuestionsToOptionalAnswer",
+		"optionalQuestionsAnswer" })
 public class ReportController {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
@@ -189,6 +190,11 @@ public class ReportController {
 			model.addAttribute("chosenQuestions", chosenQ);
 			model.addAttribute("readyReport", report);
 			model.addAttribute("report", report);
+			model.addAttribute("editReportPartNumber", addOptionalToReportPart);
+			model.addAttribute("addOptionalToQuestionGroup",
+					addOptionalToQuestionGroup);
+			model.addAttribute("optionalQuestionsAnswerIndex",
+					optionalQuestionsAnswerIndex);
 
 			model.addAttribute("optionalQuestions", optionalQuestions);
 
@@ -221,11 +227,16 @@ public class ReportController {
 	public String addChosenQuestions(
 			Model model,
 			@ModelAttribute("chosenQuestions") ChosenQuestions chosenQuestions,
-			BindingResult result,
 			@ModelAttribute("report") Report report,
 			@ModelAttribute("addQuestionsToOptionalAnswer") OptionalQuestionsAnswer optionalQuestionsAnswer) {
 
 		optionalQuestionsAnswer.addOptionalQuestions(chosenQuestions, rs);
+
+		try {
+			report = rs.saveReport(report);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		model.addAttribute("report", report);
 		model.addAttribute("initialAnswerIndexCounter", 0);

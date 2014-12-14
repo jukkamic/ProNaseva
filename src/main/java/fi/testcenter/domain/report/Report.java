@@ -134,21 +134,22 @@ public class Report {
 
 					if (question instanceof TextQuestion) {
 
-						reportQuestionGroupAnswerList.add(new TextAnswer(this,
-								question));
+						reportQuestionGroupAnswerList.add(new TextAnswer(
+								reportQuestionGroup, question));
 
 					}
 
 					if (question instanceof MultipleChoiceQuestion) {
 
 						reportQuestionGroupAnswerList
-								.add(new MultipleChoiceAnswer(this, question));
+								.add(new MultipleChoiceAnswer(
+										reportQuestionGroup, question));
 
 					}
 					if (question instanceof CostListingQuestion) {
 
-						CostListingAnswer answer = new CostListingAnswer(this,
-								question);
+						CostListingAnswer answer = new CostListingAnswer(
+								reportQuestionGroup, question);
 						CostListingQuestion clq = (CostListingQuestion) question;
 						List<Float> answerList = new ArrayList<Float>();
 						for (int i = 0; i < clq.getQuestionItems().size(); i++)
@@ -160,7 +161,7 @@ public class Report {
 					}
 					if (question instanceof ImportantPointsQuestion) {
 						ImportantPointsAnswer answer = new ImportantPointsAnswer(
-								this, question);
+								reportQuestionGroup, question);
 						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
 						List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
 						for (int i = 0; i < listQuestion.getQuestionItems()
@@ -171,14 +172,15 @@ public class Report {
 					}
 					if (question instanceof PointsQuestion) {
 						reportQuestionGroupAnswerList.add(new PointsAnswer(
-								this, question));
+								reportQuestionGroup, question));
 
 					}
 
 					if (question instanceof OptionalQuestions) {
 
 						reportQuestionGroupAnswerList
-								.add(new OptionalQuestionsAnswer(question));
+								.add(new OptionalQuestionsAnswer(
+										reportQuestionGroup, question));
 
 					}
 
@@ -186,14 +188,17 @@ public class Report {
 						for (Question subQuestion : question.getSubQuestions()) {
 							if (subQuestion instanceof TextQuestion) {
 								reportQuestionGroupAnswerList
-										.add(new TextAnswer(this, subQuestion));
+										.add(new TextAnswer(
+												reportQuestionGroup,
+												subQuestion));
 
 							}
 
 							if (subQuestion instanceof MultipleChoiceQuestion) {
 
 								reportQuestionGroupAnswerList
-										.add(new MultipleChoiceAnswer(this,
+										.add(new MultipleChoiceAnswer(
+												reportQuestionGroup,
 												subQuestion));
 
 							}

@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import fi.testcenter.domain.question.Question;
-import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 
 @Entity
 public class MultipleChoiceAnswer extends Answer {
@@ -23,8 +23,9 @@ public class MultipleChoiceAnswer extends Answer {
 		super(question);
 	}
 
-	public MultipleChoiceAnswer(Report report, Question question) {
-		super(report, question);
+	public MultipleChoiceAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question) {
+		super(reportQuestionGroup, question);
 	}
 
 	public String getRemarks() {

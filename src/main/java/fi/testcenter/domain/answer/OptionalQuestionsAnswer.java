@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
@@ -20,6 +21,7 @@ import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.web.ChosenQuestions;
 
@@ -30,19 +32,23 @@ public class OptionalQuestionsAnswer extends Answer {
 	Logger log = Logger.getLogger("fi.testcenter.domain.report");
 
 	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn
+	@JoinTable(name = "OPTIONALANSWER_QUESTION", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
 	List<Question> optionalQuestions;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn
+	@JoinTable(name = "OPTIONALANSWER_ANSWER", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "ANSWER_ID"))
 	@OrderColumn
-	List<Answer> optionalAnswers;
+	List<Answer> optionalAnswers = new ArrayList<Answer>();
 
 	public OptionalQuestionsAnswer() {
 	}
 
 	public OptionalQuestionsAnswer(Question question) {
 		super(question);
+	}
+
+	public OptionalQuestionsAnswer(ReportQuestionGroup group, Question question) {
+		super(group, question);
 	}
 
 	public List<Answer> getAnswers() {
@@ -61,8 +67,8 @@ public class OptionalQuestionsAnswer extends Answer {
 		this.optionalQuestions = questions;
 	}
 
-	public void addOptionalQuestions(ChosenQuestions chosenQuestions,
-			ReportService rs) {
+	public OptionalQuestionsAnswer addOptionalQuestions(
+			ChosenQuestions chosenQuestions, ReportService rs) {
 
 		// Tehdään lista käyttäjän valitsemista kysymyksistä
 
@@ -112,13 +118,15 @@ public class OptionalQuestionsAnswer extends Answer {
 		}
 
 		optionalQuestions = newQuestionList;
+		OptionalQuestionsAnswer savedAnswer = new OptionalQuestionsAnswer();
 		try {
 			List<Answer> deleteAnswers = optionalAnswers;
 			optionalAnswers = newAnswerList;
-			rs.saveOptionalQuestionsAnswer(this);
+			savedAnswer = rs.saveOptionalQuestionsAnswer(this);
 			rs.deleteAnswers(deleteAnswers);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return savedAnswer;
 	}
 }

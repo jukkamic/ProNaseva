@@ -22,14 +22,6 @@ public class Answer {
 	@OrderColumn
 	private Question question;
 
-	public ReportQuestionGroup getReportQuestionGroup() {
-		return reportQuestionGroup;
-	}
-
-	public void setReportQuestionGroup(ReportQuestionGroup reportQuestionGroup) {
-		this.reportQuestionGroup = reportQuestionGroup;
-	}
-
 	@ManyToOne
 	@OrderColumn
 	ReportQuestionGroup reportQuestionGroup;
@@ -48,8 +40,17 @@ public class Answer {
 		this.question = question;
 	}
 
-	public Answer(Report report, Question question) {
+	public Answer(ReportQuestionGroup reportQuestionGroup, Question question) {
 		this.question = question;
+		this.reportQuestionGroup = reportQuestionGroup;
+	}
+
+	public ReportQuestionGroup getReportQuestionGroup() {
+		return reportQuestionGroup;
+	}
+
+	public void setReportQuestionGroup(ReportQuestionGroup reportQuestionGroup) {
+		this.reportQuestionGroup = reportQuestionGroup;
 	}
 
 	public boolean isHighlightAnswer() {

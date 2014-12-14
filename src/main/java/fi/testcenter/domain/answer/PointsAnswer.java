@@ -3,7 +3,7 @@ package fi.testcenter.domain.answer;
 import javax.persistence.Entity;
 
 import fi.testcenter.domain.question.Question;
-import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 
 @Entity
 public class PointsAnswer extends Answer {
@@ -20,8 +20,9 @@ public class PointsAnswer extends Answer {
 		this.givenPoints = -1;
 	}
 
-	public PointsAnswer(Report report, Question question) {
-		super(report, question);
+	public PointsAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question) {
+		super(reportQuestionGroup, question);
 		this.givenPoints = -1;
 	}
 

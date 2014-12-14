@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 import fi.testcenter.domain.question.Question;
-import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 
 @Entity
 public class ImportantPointsAnswer extends Answer {
@@ -29,8 +29,9 @@ public class ImportantPointsAnswer extends Answer {
 		super(question);
 	}
 
-	public ImportantPointsAnswer(Report report, Question question) {
-		super(report, question);
+	public ImportantPointsAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question) {
+		super(reportQuestionGroup, question);
 	}
 
 	public List<ImportantPointsItem> getAnswerItems() {
