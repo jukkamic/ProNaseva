@@ -113,6 +113,10 @@ public class Report {
 
 	public Report(ReportTemplate reportTemplate, ReportService rs) {
 
+		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+		this.reportDate = DATE_FORMAT.format(new Date());
+		this.reportStatus = "DRAFT";
+
 		for (ReportTemplatePart reportTemplatePart : reportTemplate
 				.getReportParts()) {
 			ReportPart reportPart = new ReportPart();

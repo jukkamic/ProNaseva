@@ -28,7 +28,7 @@
 				<tr>
 					<th />
 					<th>Nimi</th>
-					<th>Osoite</th>
+					<th>Kaupunki</th>
 				</tr>						
 			
 				<c:forEach var="workshop" begin="${workshopListStart}" end="${workshopListEnd}" items="${workshops}">
@@ -36,7 +36,7 @@
 							<td><a class="btn btn-default" style="text-decoration: none;" href="showWorkshop?id=${workshop.id}">
 								Valitse</a></td>
 							<td>${workshop.name}</td>
-							<td>${workshop.streetAddress}</td>
+							<td>${workshop.city}</td>
 
 						</tr>
 				</c:forEach>

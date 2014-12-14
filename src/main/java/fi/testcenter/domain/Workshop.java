@@ -16,6 +16,7 @@ public class Workshop {
 	private String streetAddress;
 	private String poBox;
 	private String zipCode;
+	private String city;
 	private String email;
 	private String telNum;
 
@@ -92,6 +93,14 @@ public class Workshop {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 	public String toString() {

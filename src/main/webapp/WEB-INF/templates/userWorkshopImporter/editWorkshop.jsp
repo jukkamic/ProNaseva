@@ -37,10 +37,16 @@
 				<sf:input type="text" style="width: 15em; max-width: 100%" id="poBox" path="poBox" value="${workshop.poBox}" /> 
 				<br><br>
 				
-				<label for="zipCode">Postinumero ja -toimipaikka: </label>
+				<label for="zipCode">Postinumero: </label>
 				<br>
 				<sf:input type="text" style="width: 15em; max-width: 100%" id="zipCode" path="zipCode" value="${workshop.zipCode} "/> 
 				<br><br>
+				
+				<label for="city">Postitoimipaikka: </label>
+				<br>
+				<sf:input type="text" style="width: 15em; max-width: 100%" id="city" path="city" value="${workshop.city} "/> 
+				<br><br>
+				
 				
 				<label for="email">Sähköpostiosoite: </label>
 				<br>

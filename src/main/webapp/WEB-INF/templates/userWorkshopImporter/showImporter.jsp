@@ -40,8 +40,12 @@ label {
 				<p id="poBox">${importer.poBox}</p> 
 				<br>
 								
-				<label for="zipCode">Postinumero ja postitoimipaikka: </label>
+				<label for="zipCode">Postinumero: </label>
 				<p id="zipCode">${importer.zipCode} </p> 
+				<br>
+				
+				<label for="city">Postitoimipaikka: </label>
+				<p id="city">${importer.city} </p> 
 				<br>
 				
 				<label for="email">Sähköpostiosoite: </label>

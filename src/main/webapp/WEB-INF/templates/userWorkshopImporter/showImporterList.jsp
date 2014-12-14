@@ -37,7 +37,7 @@
 							<td><a class="btn btn-default" style="text-decoration: none;" href="showImporter?id=${importer.id}">
 								Valitse</a></td>
 							<td>${importer.name}</td>
-							<td>${importer.streetAddress}</td>
+							<td>${importer.streetAddress}<br>${importer.poBox}<br>${importer.zipCode} ${importer.city}</td>
 
 						</tr>
 				</c:forEach>

@@ -44,6 +44,10 @@ label {
 				<label for="zipCode">Postinumero ja postitoimipaikka: </label>
 				<p id="zipCode">${workshop.zipCode} </p> 
 				<br>
+												
+				<label for="city">Postitoimipaikka: </label>
+				<p id="city">${workshop.city} </p> 
+				<br>
 				
 				<label for="email">Sähköpostiosoite: </label>
 				<p id="email">${workshop.email} </p> 

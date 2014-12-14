@@ -36,9 +36,14 @@
 				<sf:input type="text" style="width: 15em; max-width: 100%" id="poBox" path="poBox" value="${importer.poBox}"/> 
 				<br><br>
 				
-				<label for="zipCode">Postinumero ja -toimipaikka: </label>
+				<label for="zipCode">Postinumero: </label>
 				<br>
 				<sf:input type="text" style="width: 15em; max-width: 100%" id="zipCode" path="zipCode" value="${importer.zipCode}" /> 
+				<br><br>
+				
+				<label for="city">Postitoimipaikka: </label>
+				<br>
+				<sf:input type="text" style="width: 15em; max-width: 100%" id="city" path="city" value="${importer.city}" /> 
 				<br><br>
 				
 				<label for="email">Sähköpostiosoite: </label>

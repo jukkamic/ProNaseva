@@ -16,6 +16,7 @@ public class Importer {
 	private String streetAddress;
 	private String poBox;
 	private String zipCode;
+	private String city;
 	private String email;
 	private String telNum;
 	private String reportTemplateName;
@@ -101,6 +102,14 @@ public class Importer {
 
 	public void setReportTemplateName(String reportTemplateName) {
 		this.reportTemplateName = reportTemplateName;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
 }

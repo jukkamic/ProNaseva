@@ -67,7 +67,7 @@
 
 <input type="hidden" id="navigateToReportPart" name="navigateToReportPart">
 			<ul class="nav nav-pills nav-stacked" role="tablist">
-				<c:forEach var="navbarReportPart" items="${report.reportTemplate.reportParts}" varStatus="navbarCounter">
+				<c:forEach var="navbarReportPart" items="${report.reportParts}" varStatus="navbarCounter">
 			  		<c:if test="${navbarCounter.index == editReportPartNumber}">
 			  			<li role="presentation" class="active"><a onclick="navigateToReportPart(${navbarCounter.index});">${navbarReportPart.reportTemplatePart.title}</a></li>
 			  		</c:if>
@@ -129,9 +129,10 @@
 								
 <!-- Answers loop -->
 									
-			<c:forEach var="answer" items="${questionGroup.answers}" varStatus="questionCounter">
+		<c:forEach var="answer" items="${questionGroup.answers}" varStatus="questionCounter">
 			<c:set var="question" value="${answer.question}" />
-		<!-- Multiple choice question -->
+
+<!-- Multiple choice question -->
 										
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
 		<h3>${questionCounter.count}. ${question.question}</h3>
@@ -216,7 +217,7 @@
 				<br>
 				<h4>Huomioita:</h4>
 				<sf:textarea rows="5" style="width:100%;" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks" 
-					value="report.answers[${answerIndexCounter}].remarks}" />
+					value="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks}" />
 				<br><br>
 			</c:if> 
 		
@@ -249,7 +250,7 @@
 							<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 									raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
 								<c:choose>
-								<c:when test="${report.answers[answerIndexCounter].givenPoints == points}"> 
+								<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].givenPoints == points}"> 
 									<label class="btn btn-primary active">
 									</c:when>
 								<c:otherwise>
@@ -262,12 +263,12 @@
 									riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
 									ei ole tägejä -->
 							<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].givenPoints"
-									value="${points}" /> ${points}
+									value="${points}" /> &nbsp&nbsp${points}&nbsp&nbsp
 
 							</label>
 						</c:forEach> 
 						 <c:choose>
-								<c:when test="${report.answers[answerIndexCounter].givenPoints == -1}"> 
+								<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].givenPoints == -1}"> 
 									<label class="btn btn-default active">
 									</c:when>
 								<c:otherwise>
@@ -283,7 +284,7 @@
 				<br>
 				<h4>Huomioita:</h4>
 				<sf:textarea rows="5" style="width:100%;" path="eportParts[${editReportPartNumber}].questionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks" 
-					value="report.answers[${answerIndexCounter}].remarks}" />
+					value="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks}" />
 				<br><br>
 			</c:if> 
 		
@@ -315,7 +316,7 @@
 
 				<c:choose>
 					<c:when test="${question.textAreaInput == true }">
-						<sf:textarea rows="5" style="width:100%;" path="answers[${answerIndexCounter}].answer" />
+						<sf:textarea rows="5" style="width:100%;" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answer" />
 					</c:when>
 					<c:otherwise>
 						<sf:input class="form-control" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answer" />
@@ -325,80 +326,83 @@
 				
 			</c:if>
 		<!-- Cost listing question -->
-<%-- 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
+  			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
 				<h3>${questionCounter.count}. ${question.questionTopic}</h3>
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
 					<sf:checkbox value='true'
-						path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+						path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
 					
 					</label>
 					<br>
 				</div>
 					<c:forEach var="listQuestion" items="${question.questions}" varStatus="costListingAnswerCounter">
 						<h4>${listQuestion}</h4>
-						<sf:input style="width: 5em" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answers[${costListingAnswerCounter.index}]" /> €
+						<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answers[${costListingAnswerCounter.index}]" /> €
 						<br>
 					</c:forEach>
 					<br>
 				<h4><b>${question.total}</b></h4>
-				<sf:input style="width: 5em" path="answers[${answerIndexCounter}].total" /> €
+				<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].total" /> €
 				<br>
 					<h4>Huomioita:</h4>
-					<sf:textarea rows="5" style="width:100%;" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].remarks" 
-						value="report.answers[${answerIndexCounter}].remarks}" />
+					<sf:textarea rows="5" style="width:100%;" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks" 
+						value="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks}" />
 				<br><br>
-			</c:if>  --%>
+			</c:if>  
 
 		
 		<!-- ListAndScoreImportantPoints -->
-<%-- 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
-				<h3>${questionCounter.count}. ${question.question}</h3>
+	   			<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
+	 			<h3>${questionCounter.count}. ${question.question}</h3>
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
-					<sf:checkbox value='true'
-						path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
-					
+					- <sf:checkbox value='true'
+						path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].removeAnswerFromReport" label="Hylkää kysymys raportista" />
+					 
 					</label>
 					<br>
 				</div>
 
-
+ 
 					<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
-					<div style="border-bottom: 3px solid #eee;">
+						<div style="border-bottom: 3px solid #eee;">
 						<h3>${questionItem}</h3>
 						<table>
 						<tr>
 						<td width="40%" style="padding-bottom: 2em">
 						<h4>Tärkeys: </h4>
 						<div class="Demo-boot" style="padding-top: 15px;">
-						<div class="btn-group" data-toggle="buttons">
+						<div class="btn-group" data-toggle="buttons"> 
 						
-							<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber">
+							<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber"> 
 								<c:choose>
-									<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
+									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
 										<label class="btn btn-primary active">
 										</c:when>
 									<c:otherwise>
 										<label class="btn btn-primary">
 									</c:otherwise>
 								</c:choose>  
-								<sf:radiobutton id="button" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].importance"
-										value="${importanceNumber.index}" /> ${importanceNumber.index} 
+							
+ 								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].importance"
+										value="${importanceNumber.index}" /> &nbsp&nbsp${importanceNumber.index}&nbsp&nbsp 
 										</label>
 							</c:forEach>
+							
+
 							<c:choose>
-									<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].importance == -1}"> 
+									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].importance == -1}"> 
 										<label class="btn btn-default active">
 										</c:when>
 									<c:otherwise>
 										<label class="btn btn-default">
 									</c:otherwise>
 								</c:choose>  
-								<sf:radiobutton id="button" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].importance"
+								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].importance"
 										value="-1" /> Ei valintaa
 								</label>
-							
+							 
 							<br><br>
 						</div>
 						</div>
@@ -409,30 +413,30 @@
 						<div class="Demo-boot" style="padding-top: 15px;">
 						<div class="btn-group" data-toggle="buttons">
 						
-							<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
+ 	 						<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
 								<c:choose>
-									<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score == score.index}"> 
+									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].score == score.index}"> 
 										<label class="btn btn-primary active">
 										</c:when>
 									<c:otherwise>
 										<label class="btn btn-primary">
 									</c:otherwise>
 								</c:choose>  
-								<sf:radiobutton id="button" path="answers[${answerIndexCounter}].answerItems[${questionItemCounter.index}].score"
-										value="${score.index}" /> ${score.index} 
+								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].score"
+										value="${score.index}" /> &nbsp&nbsp${score.index}&nbsp&nbsp 
 										</label>
-							</c:forEach>
-								<c:choose>
-									<c:when test="${report.answers[answerIndexCounter].answerItems[questionItemCounter.index].score == -1}"> 
+							</c:forEach>  
+							<c:choose>
+ 									<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].answerItems[questionItemCounter.index].score == -1}"> 
 										<label class="btn btn-default active">
 										</c:when>
 									<c:otherwise>
 										<label class="btn btn-default">
 									</c:otherwise>
-								</c:choose>  
-								<sf:radiobutton id="button" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].answerItems[${questionItemCounter.index}].score"
+								</c:choose>   
+								<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].score"
 										value="-1" /> Ei valinta
-										</label>
+										</label> 
 							
 							<br><br>
 						</div>
@@ -445,17 +449,17 @@
 					</c:forEach>
 					<br>
 					<h4>Huomioita:</h4>
-					<sf:textarea rows="5" style="width:100%;" path="reportParts[editReportPartNumber].questionGroups[questionGroupCounter.index].answers[${questionCounter.index}].remarks" 
-						value="report.answers[${answerIndexCounter}].remarks}" />
+					<sf:textarea rows="5" style="width:100%;" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks" 
+						value="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks}" /> 
 					<br><br>
-						
-			</c:if>	 --%>
+					 
+			</c:if>	    
 			
 <!-- Optional questions -->
 <%--  		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
 			
-			<c:set var="optionalQuestionsAnswer" value="${report.answers[answerIndexCounter]}" scope="request" />
+			<c:set var="optionalQuestionsAnswer" value="${reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}]}" scope="request" />
 			
 			<jsp:include page="/WEB-INF/templates/report/editOptionalQuestions.jsp" />
 						
@@ -519,13 +523,6 @@
             });
 
 
-</script>
-
-
-<script>
-$("[data-toggle='buttons'] .btn").live('click', function(evt){
-    $(this).removeClass('active');
-});
 </script>
 
 
