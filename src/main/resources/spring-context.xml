@@ -23,16 +23,6 @@
 	<!-- Tietokanta-asetukset -->
 	<import resource="spring-database.xml" />
 
-	<!-- Lokalistaatio -->
-	<bean id="localeResolver"
-		class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-		<property name="defaultLocale" value="fi" />
-	</bean>
 
-	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="defaultEncoding" value="UTF-8" />
-		<property name="basename" value="locale/messages" />
-	</bean>
 
 </beans>

@@ -19,13 +19,17 @@ public class CostListingAnswer extends Answer {
 	public CostListingAnswer() {
 	}
 
+	public CostListingAnswer(Question question, int answerOrderNumber) {
+		super(question, answerOrderNumber);
+	}
+
 	public CostListingAnswer(Question question) {
 		super(question);
 	}
 
 	public CostListingAnswer(ReportQuestionGroup reportQuestionGroup,
-			Question question) {
-		super(reportQuestionGroup, question);
+			Question question, int answerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber);
 	}
 
 	public List<Float> getAnswers() {

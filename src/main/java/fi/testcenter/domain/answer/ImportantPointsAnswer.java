@@ -29,9 +29,13 @@ public class ImportantPointsAnswer extends Answer {
 		super(question);
 	}
 
+	public ImportantPointsAnswer(Question question, int answerOrderNumber) {
+		super(question, answerOrderNumber);
+	}
+
 	public ImportantPointsAnswer(ReportQuestionGroup reportQuestionGroup,
-			Question question) {
-		super(reportQuestionGroup, question);
+			Question question, int answerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber);
 	}
 
 	public List<ImportantPointsItem> getAnswerItems() {

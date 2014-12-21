@@ -23,9 +23,25 @@ public class MultipleChoiceAnswer extends Answer {
 		super(question);
 	}
 
+	public MultipleChoiceAnswer(Question question, int answerOrderNumber) {
+		super(question, answerOrderNumber);
+	}
+
 	public MultipleChoiceAnswer(ReportQuestionGroup reportQuestionGroup,
 			Question question) {
 		super(reportQuestionGroup, question);
+	}
+
+	public MultipleChoiceAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question, int answerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber);
+	}
+
+	public MultipleChoiceAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question, int answerOrderNumber,
+			int subquestionAnswerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber,
+				subquestionAnswerOrderNumber);
 	}
 
 	public String getRemarks() {

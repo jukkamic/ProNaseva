@@ -19,8 +19,20 @@ public class TextAnswer extends Answer {
 		super(question);
 	}
 
-	public TextAnswer(ReportQuestionGroup reportQuestionGroup, Question question) {
-		super(reportQuestionGroup, question);
+	public TextAnswer(Question question, int answerOrderNumber) {
+		super(question, answerOrderNumber);
+	}
+
+	public TextAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question, int answerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber);
+	}
+
+	public TextAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question, int answerOrderNumber,
+			int subquestionAnswerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber,
+				subquestionAnswerOrderNumber);
 	}
 
 	public String getAnswer() {

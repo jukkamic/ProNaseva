@@ -65,6 +65,7 @@ public class Report {
 	private String vehicleMileage;
 	private String overallResultSmiley;
 	private boolean smileysSet = false;
+	private boolean highlightsSet = false;
 
 	@Column
 	@Temporal(TemporalType.DATE)
@@ -115,27 +116,35 @@ public class Report {
 		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 		this.reportDate = DATE_FORMAT.format(new Date());
 		this.reportStatus = "DRAFT";
+		int reportTemplatePartOrderNumber = 1;
 
 		for (ReportTemplatePart reportTemplatePart : reportTemplate
 				.getReportParts()) {
 			ReportPart reportPart = new ReportPart();
+			reportPart
+					.setReportPartOrderNumber(reportTemplatePartOrderNumber++);
 			reportPart.setReportTemplatePart(reportTemplatePart);
 			reportPart.setReport(this);
 			List<ReportQuestionGroup> reportQuestionGroupList = new ArrayList<ReportQuestionGroup>();
+			int questionGroupOrderNumber = 1;
 			for (ReportTemplateQuestionGroup reportTemplateQuestionGroup : reportTemplatePart
 					.getQuestionGroups()) {
 				ReportQuestionGroup reportQuestionGroup = new ReportQuestionGroup();
 				reportQuestionGroup
+						.setQuestionGroupOrderNumber(questionGroupOrderNumber++);
+				reportQuestionGroup
 						.setReportTemplateQuestionGroup(reportTemplateQuestionGroup);
 				reportQuestionGroup.setReportPart(reportPart);
 				List<Answer> reportQuestionGroupAnswerList = new ArrayList<Answer>();
+				int answerOrderNumber = 1;
 				for (Question question : reportTemplateQuestionGroup
 						.getQuestions()) {
 
 					if (question instanceof TextQuestion) {
 
 						reportQuestionGroupAnswerList.add(new TextAnswer(
-								reportQuestionGroup, question));
+								reportQuestionGroup, question,
+								answerOrderNumber++));
 
 					}
 
@@ -143,13 +152,15 @@ public class Report {
 
 						reportQuestionGroupAnswerList
 								.add(new MultipleChoiceAnswer(
-										reportQuestionGroup, question));
+										reportQuestionGroup, question,
+										answerOrderNumber++));
 
 					}
 					if (question instanceof CostListingQuestion) {
 
 						CostListingAnswer answer = new CostListingAnswer(
-								reportQuestionGroup, question);
+								reportQuestionGroup, question,
+								answerOrderNumber++);
 						CostListingQuestion clq = (CostListingQuestion) question;
 						List<Float> answerList = new ArrayList<Float>();
 						for (int i = 0; i < clq.getQuestionItems().size(); i++)
@@ -161,7 +172,8 @@ public class Report {
 					}
 					if (question instanceof ImportantPointsQuestion) {
 						ImportantPointsAnswer answer = new ImportantPointsAnswer(
-								reportQuestionGroup, question);
+								reportQuestionGroup, question,
+								answerOrderNumber++);
 						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
 						List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
 						for (int i = 0; i < listQuestion.getQuestionItems()
@@ -172,7 +184,8 @@ public class Report {
 					}
 					if (question instanceof PointsQuestion) {
 						reportQuestionGroupAnswerList.add(new PointsAnswer(
-								reportQuestionGroup, question));
+								reportQuestionGroup, question,
+								answerOrderNumber++));
 
 					}
 
@@ -185,12 +198,14 @@ public class Report {
 					}
 
 					if (!question.getSubQuestions().isEmpty()) {
+						int subquestionOrderNumber = 1;
 						for (Question subQuestion : question.getSubQuestions()) {
 							if (subQuestion instanceof TextQuestion) {
 								reportQuestionGroupAnswerList
 										.add(new TextAnswer(
 												reportQuestionGroup,
-												subQuestion));
+												subQuestion, answerOrderNumber,
+												subquestionOrderNumber++));
 
 							}
 
@@ -199,7 +214,18 @@ public class Report {
 								reportQuestionGroupAnswerList
 										.add(new MultipleChoiceAnswer(
 												reportQuestionGroup,
-												subQuestion));
+												subQuestion, answerOrderNumber,
+												subquestionOrderNumber++));
+
+							}
+
+							if (subQuestion instanceof PointsQuestion) {
+
+								reportQuestionGroupAnswerList
+										.add(new PointsAnswer(
+												reportQuestionGroup,
+												subQuestion, answerOrderNumber,
+												subquestionOrderNumber++));
 
 							}
 						}
@@ -288,6 +314,14 @@ public class Report {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public boolean isHighlightsSet() {
+		return highlightsSet;
+	}
+
+	public void setHighlightsSet(boolean highlightsSet) {
+		this.highlightsSet = highlightsSet;
 	}
 
 	public Importer getImporter() {
@@ -742,4 +776,26 @@ public class Report {
 		// }
 	}
 
+	public void checkReportHighlights() {
+		this.highlightsSet = false;
+		for (ReportPart part : this.reportParts) {
+			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+				for (Answer answer : group.getAnswers()) {
+					if (answer.isHighlightAnswer())
+						this.highlightsSet = true;
+					if (answer instanceof OptionalQuestionsAnswer) {
+						OptionalQuestionsAnswer opa = (OptionalQuestionsAnswer) answer;
+						if (opa.getAnswers() != null) {
+							for (Answer loopAnswer : opa
+									.getAnswers()) {
+								if (loopAnswer.isHighlightAnswer())
+									this.highlightsSet = true;
+							}
+
+						}
+					}
+				}
+			}
+		}
+	}
 }

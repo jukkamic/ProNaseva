@@ -4,11 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OrderColumn;
 
 import fi.testcenter.domain.question.Question;
-import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportQuestionGroup;
 
 @Entity
@@ -19,11 +18,11 @@ public class Answer {
 	private Long id;
 
 	@ManyToOne
-	@OrderColumn
+	@JoinColumn
 	private Question question;
 
 	@ManyToOne
-	@OrderColumn
+	@JoinColumn(nullable = true)
 	ReportQuestionGroup reportQuestionGroup;
 
 	private boolean showScore;
@@ -31,6 +30,9 @@ public class Answer {
 	private int maxScore;
 	private boolean highlightAnswer;
 	private boolean removeAnswerFromReport = false;
+
+	int answerOrderNumber;
+	int subquestionAnswerOrderNumber;
 
 	public Answer() {
 
@@ -40,9 +42,31 @@ public class Answer {
 		this.question = question;
 	}
 
+	public Answer(Question question, int answerOrderNumber) {
+		this.question = question;
+		this.answerOrderNumber = answerOrderNumber;
+
+	}
+
 	public Answer(ReportQuestionGroup reportQuestionGroup, Question question) {
 		this.question = question;
 		this.reportQuestionGroup = reportQuestionGroup;
+
+	}
+
+	public Answer(ReportQuestionGroup reportQuestionGroup, Question question,
+			int answerOrderNumber) {
+		this.question = question;
+		this.reportQuestionGroup = reportQuestionGroup;
+		this.answerOrderNumber = answerOrderNumber;
+	}
+
+	public Answer(ReportQuestionGroup reportQuestionGroup, Question question,
+			int answerOrderNumber, int subquestionAnswerOrderNumber) {
+		this.question = question;
+		this.reportQuestionGroup = reportQuestionGroup;
+		this.answerOrderNumber = answerOrderNumber;
+		this.subquestionAnswerOrderNumber = subquestionAnswerOrderNumber;
 	}
 
 	public ReportQuestionGroup getReportQuestionGroup() {
@@ -107,6 +131,22 @@ public class Answer {
 
 	public void setRemoveAnswerFromReport(boolean removeAnswerFromReport) {
 		this.removeAnswerFromReport = removeAnswerFromReport;
+	}
+
+	public int getAnswerOrderNumber() {
+		return answerOrderNumber;
+	}
+
+	public void setAnswerOrderNumber(int answerOrderNumber) {
+		this.answerOrderNumber = answerOrderNumber;
+	}
+
+	public int getSubquestionAnswerOrderNumber() {
+		return subquestionAnswerOrderNumber;
+	}
+
+	public void setSubquestionAnswerOrderNumber(int subquestionAnswerOrderNumber) {
+		this.subquestionAnswerOrderNumber = subquestionAnswerOrderNumber;
 	}
 
 }

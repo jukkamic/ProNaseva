@@ -20,9 +20,22 @@ public class PointsAnswer extends Answer {
 		this.givenPoints = -1;
 	}
 
+	public PointsAnswer(Question question, int answerOrderNumber) {
+		super(question, answerOrderNumber);
+		this.givenPoints = -1;
+	}
+
 	public PointsAnswer(ReportQuestionGroup reportQuestionGroup,
-			Question question) {
-		super(reportQuestionGroup, question);
+			Question question, int answerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber);
+		this.givenPoints = -1;
+	}
+
+	public PointsAnswer(ReportQuestionGroup reportQuestionGroup,
+			Question question, int answerOrderNumber,
+			int subquestionAnswerOrderNumber) {
+		super(reportQuestionGroup, question, answerOrderNumber,
+				subquestionAnswerOrderNumber);
 		this.givenPoints = -1;
 	}
 

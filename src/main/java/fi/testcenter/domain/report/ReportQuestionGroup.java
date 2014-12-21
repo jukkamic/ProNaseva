@@ -44,6 +44,8 @@ public class ReportQuestionGroup {
 	@JoinColumn
 	ReportTemplateQuestionGroup reportTemplateQuestionGroup;
 
+	int questionGroupOrderNumber;
+
 	public ReportQuestionGroup() {
 	}
 
@@ -126,6 +128,14 @@ public class ReportQuestionGroup {
 	public void setReportTemplateQuestionGroup(
 			ReportTemplateQuestionGroup reportTemplateQuestionGroup) {
 		this.reportTemplateQuestionGroup = reportTemplateQuestionGroup;
+	}
+
+	public int getQuestionGroupOrderNumber() {
+		return questionGroupOrderNumber;
+	}
+
+	public void setQuestionGroupOrderNumber(int questionGroupOrderNumber) {
+		this.questionGroupOrderNumber = questionGroupOrderNumber;
 	}
 
 }

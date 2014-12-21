@@ -40,6 +40,8 @@ public class ReportPart {
 	@OrderColumn
 	List<ReportQuestionGroup> reportQuestionGroups = new ArrayList<ReportQuestionGroup>();
 
+	int reportPartOrderNumber;
+
 	public ReportPart() {
 	}
 
@@ -114,6 +116,14 @@ public class ReportPart {
 
 	public void setReportTemplatePart(ReportTemplatePart reportTemplatePart) {
 		this.reportTemplatePart = reportTemplatePart;
+	}
+
+	public int getReportPartOrderNumber() {
+		return reportPartOrderNumber;
+	}
+
+	public void setReportPartOrderNumber(int reportPartOrderNumber) {
+		this.reportPartOrderNumber = reportPartOrderNumber;
 	}
 
 }

@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 
@@ -31,11 +31,11 @@ public class OptionalQuestionsAnswer extends Answer {
 	@Transient
 	Logger log = Logger.getLogger("fi.testcenter.domain.report");
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "OPTIONALANSWER_QUESTION", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
 	List<Question> optionalQuestions;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "OPTIONALANSWER_ANSWER", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "ANSWER_ID"))
 	@OrderColumn
 	List<Answer> optionalAnswers = new ArrayList<Answer>();
@@ -75,6 +75,9 @@ public class OptionalQuestionsAnswer extends Answer {
 		ArrayList<Answer> newAnswerList = new ArrayList<Answer>();
 		ArrayList<Question> newQuestionList = new ArrayList<Question>();
 
+		int optionalAnswerOrderNumber = (this.reportQuestionGroup.getAnswers()
+				.indexOf(this)) + 1;
+
 		for (int questionIndex : chosenQuestions.getChosenQuestions()) {
 			Question question = ((OptionalQuestions) this.getQuestion())
 					.getQuestions().get(questionIndex);
@@ -84,19 +87,24 @@ public class OptionalQuestionsAnswer extends Answer {
 					|| !(optionalQuestions.contains(question))) {
 
 				if (question instanceof MultipleChoiceQuestion) {
-					newAnswerList.add(new MultipleChoiceAnswer(question));
+					newAnswerList.add(new MultipleChoiceAnswer(question,
+							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof PointsQuestion) {
-					newAnswerList.add(new PointsAnswer(question));
+					newAnswerList.add(new PointsAnswer(question,
+							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof TextQuestion) {
-					newAnswerList.add(new TextAnswer(question));
+					newAnswerList.add(new TextAnswer(question,
+							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof ImportantPointsQuestion) {
-					newAnswerList.add(new ImportantPointsAnswer(question));
+					newAnswerList.add(new ImportantPointsAnswer(question,
+							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof CostListingQuestion) {
-					CostListingAnswer answer = new CostListingAnswer(question);
+					CostListingAnswer answer = new CostListingAnswer(question,
+							optionalAnswerOrderNumber++);
 					CostListingQuestion clq = (CostListingQuestion) question;
 					List<Float> answerList = new ArrayList<Float>();
 					for (int i = 0; i < clq.getQuestionItems().size(); i++)
@@ -110,8 +118,12 @@ public class OptionalQuestionsAnswer extends Answer {
 			else {
 
 				for (Answer answer : optionalAnswers) {
-					if (answer.getQuestion() == question)
+					if (answer != null && answer.getQuestion() == question) {
 						newAnswerList.add(answer);
+						optionalAnswers.set(optionalAnswers.indexOf(answer),
+								null);
+					}
+
 				}
 
 			}
@@ -120,10 +132,18 @@ public class OptionalQuestionsAnswer extends Answer {
 		optionalQuestions = newQuestionList;
 		OptionalQuestionsAnswer savedAnswer = new OptionalQuestionsAnswer();
 		try {
-			List<Answer> deleteAnswers = optionalAnswers;
+
+			for (Answer answer : optionalAnswers) {
+				if (answer != null) {
+					optionalAnswers.set(optionalAnswers.indexOf(answer), null);
+					rs.saveOptionalQuestionsAnswer(this);
+					rs.deleteAnswer(answer);
+				}
+
+			}
 			optionalAnswers = newAnswerList;
 			savedAnswer = rs.saveOptionalQuestionsAnswer(this);
-			rs.deleteAnswers(deleteAnswers);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

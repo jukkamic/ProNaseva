@@ -58,12 +58,13 @@
 		</div>
 		<br>
 	</c:if>
-	<%-- <c:if test="${empty report.reportHighlights and loginRole == '[ROLE_ADMIN]'}">
+	
+	<c:if test="${report.highlightsSet == 'false' and loginRole == '[ROLE_ADMIN]'}">
 		<div class="alert alert-warning">
 			<h4>Valitse raportin huomionarvoiset vastaukset ja tallenna!</h4>
 		</div>
 		<br>
-	</c:if>	 --%>
+	</c:if>	 
 	
 	<c:if test="${report.smileysSet != 'true' and loginRole == '[ROLE_ADMIN]'}">
 		<div class="alert alert-warning">
@@ -84,10 +85,10 @@
 	</c:if> --%>
 	
 	<br>				
-	<%-- <c:if test="${not empty report.reportHighlights}">
+	<c:if test="${report.highlightsSet == 'true'}">
 			<jsp:include page="/WEB-INF/templates/report/showReportHighlightAnswers.jsp" />
 			<c:set var="bootstrapPanelCounter" value="2" scope="request" />
-	</c:if> --%>
+	</c:if> 
 		
 
 	

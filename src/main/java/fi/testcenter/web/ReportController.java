@@ -125,7 +125,7 @@ public class ReportController {
 			BindingResult result) {
 
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
-
+		report.checkReportHighlights();
 		report.setRemovedQuestions(); // Nollataan vastaukset
 										// MultipleChoiceQuestion- ja
 										// PointsQuestion-luokan kysymyksiin
@@ -265,6 +265,10 @@ public class ReportController {
 	public String saveSmileyAndHighlights(Model model,
 			@ModelAttribute("readyReport") Report formReport,
 			@ModelAttribute("report") Report report) {
+
+		// report.checkReportHighlights();
+		//
+		//
 
 		// if (report.getReportHighlights().size() > 0) {
 		//
