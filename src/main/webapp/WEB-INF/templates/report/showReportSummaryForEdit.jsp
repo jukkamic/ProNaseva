@@ -102,8 +102,9 @@
 								
 								<c:if test="${questionGroup.score != -1 }">
 									<c:set var="highlightGroupsScore" value="${highlightGroupsScore + questionGroup.score}" />
+									<c:set var="highlightGroupsMaxScore" value="${highlightGroupsMaxScore + questionGroup.maxScore}" />
 								</c:if>
-								<c:set var="highlightGroupsMaxScore" value="${highlightGroupsMaxScore + questionGroup.maxScore}" />
+							
 								
 								<c:if test="${questionGroup.maxScore > 0 }">
 									<div class="Demo-boot" style="padding-top: 15px;">

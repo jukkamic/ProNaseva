@@ -40,6 +40,7 @@ public class ReportTemplateService {
 		return null;
 	}
 
+	@Transactional
 	public List<ReportTemplate> findCurrentReportTemplates() {
 		String query = "SELECT rt FROM ReportTemplate rt WHERE rt.current = 'true'";
 		return em.createQuery(query, ReportTemplate.class).getResultList();

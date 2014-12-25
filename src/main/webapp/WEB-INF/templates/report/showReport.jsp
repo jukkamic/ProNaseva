@@ -130,10 +130,11 @@
 				
 						<div class="panel-body">
 						
-	<!-- Questions loop -->
+	<!-- Answers loop -->
 							
 							<c:forEach var="answer" items="${questionGroup.answers}"
 								varStatus="answerCounter">
+							
 							<c:set var="question" value="${answer.question}" />
 							
 							<br>
@@ -457,6 +458,7 @@
 		
 	 					
 						<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
+							
 							<c:set var="questionCount" value="${answerCounter.count}" scope="request" />
 							<c:set var="answerCounter" value="${answerCounter}" scope="request" />
 							<c:set var="reportPartCounter" value="${reportPartCounter}" scope="request" />

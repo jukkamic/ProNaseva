@@ -42,6 +42,7 @@ public class UserAccountService {
 		return ur.findAll();
 	}
 
+	@Transactional
 	public List<User> findActiveUsers() {
 		List<Object[]> userList = em
 				.createQuery(
@@ -54,6 +55,7 @@ public class UserAccountService {
 		return userReturnList;
 	}
 
+	@Transactional
 	public List<User> findUsersInAlphaOrder() {
 		List<Object[]> userList = em.createQuery(
 				"SELECT u.lastName, u FROM User u ORDER BY u.lastName ASC")

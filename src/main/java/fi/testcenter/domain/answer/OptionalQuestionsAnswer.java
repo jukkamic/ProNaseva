@@ -34,10 +34,10 @@ public class OptionalQuestionsAnswer extends Answer {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "OPTIONALANSWER_QUESTION", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
+	@OrderColumn
 	List<Question> optionalQuestions;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn
 	@OrderColumn
 	List<Answer> optionalAnswers = new ArrayList<Answer>();
 
@@ -88,13 +88,11 @@ public class OptionalQuestionsAnswer extends Answer {
 					|| !(optionalQuestions.contains(question))) {
 
 				if (question instanceof MultipleChoiceQuestion) {
-					newAnswerList.add(new MultipleChoiceAnswer(
-							reportQuestionGroup, question,
+					newAnswerList.add(new MultipleChoiceAnswer(question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof PointsQuestion) {
-					newAnswerList.add(rs.saveAnswer(new PointsAnswer(
-							reportQuestionGroup, question,
+					newAnswerList.add(rs.saveAnswer(new PointsAnswer(question,
 							optionalAnswerOrderNumber++)));
 				}
 				if (question instanceof TextQuestion) {
@@ -102,13 +100,11 @@ public class OptionalQuestionsAnswer extends Answer {
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof ImportantPointsQuestion) {
-					newAnswerList.add(new ImportantPointsAnswer(
-							reportQuestionGroup, question,
+					newAnswerList.add(new ImportantPointsAnswer(question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof CostListingQuestion) {
-					CostListingAnswer answer = new CostListingAnswer(
-							reportQuestionGroup, question,
+					CostListingAnswer answer = new CostListingAnswer(question,
 							optionalAnswerOrderNumber++);
 					CostListingQuestion clq = (CostListingQuestion) question;
 					List<Float> answerList = new ArrayList<Float>();

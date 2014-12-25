@@ -6,6 +6,7 @@
 						
 
 <c:forEach var="question" items="${optionalQuestionsAnswer.questions}" varStatus="counter">	
+
 <c:set var="questionCounter" value="${questionCount + counter.index}" />
 
 <!-- Points question -->
