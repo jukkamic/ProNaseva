@@ -140,7 +140,7 @@
 							<br>
 							<c:if test="${question.question != null}">
 								<h3 style="display: inline; padding-right: 0; margin-right: 0;">${answer.answerOrderNumber}.</h3>
-								<c:if test="${answer.subquestionAnswerOrderNumber != 'null' && answer.subquestionAnswerOrderNumber != 0}">
+								<c:if test="${answer.subquestionAnswerOrderNumber != null && answer.subquestionAnswerOrderNumber != 0}">
 									<h3 style="display: inline; padding-left: 0; margin-left: 0; padding-right: 0; margin-right: 0;">${answer.subquestionAnswerOrderNumber}.</h3>
 								</c:if>
 								<h3 style="display: inline; padding-left: 0; margin-left: 0; "> ${question.question}</h3>
