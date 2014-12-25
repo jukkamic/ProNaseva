@@ -102,6 +102,7 @@ public class ReportService {
 						oqa.setReportQuestionGroup(null);
 						if (deleteList != null) {
 							try {
+								saveOptionalQuestionsAnswer(oqa);
 								deleteAnswers(deleteList);
 
 							} catch (Exception e) {

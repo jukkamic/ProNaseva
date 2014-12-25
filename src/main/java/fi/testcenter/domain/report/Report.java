@@ -643,8 +643,7 @@ public class Report {
 			if (part.getScore() != -1) {
 				reportTotalScore += part.getScore();
 				reportMaxScore += part.getMaxScore();
-				log.debug("part score : " + part.getScore());
-				log.debug("part max score : " + part.getMaxScore());
+
 			}
 		}
 
@@ -695,5 +694,6 @@ public class Report {
 				}
 			}
 		}
+
 	}
 }

@@ -271,51 +271,22 @@ public class ReportController {
 			@ModelAttribute("readyReport") Report formReport,
 			@ModelAttribute("report") Report report) {
 
-		// report.checkReportHighlights();
-		//
-		//
+		report.checkReportHighlights();
+		if (report.getOverallResultSmiley() != null
+				&& report.getOverallResultSmiley() != "") {
+			report.setSmileysSet(true);
+			model.addAttribute("editSmileys", false);
+		} else
+			model.addAttribute("editSmileys", true);
+		try {
+			report = rs.saveReport(report);
+		} catch (Exception e) {
+			e.printStackTrace();
 
-		// if (report.getReportHighlights().size() > 0) {
-		//
-		// try {
-		// rs.deleteReportHighlights(report.getReportHighlights());
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// }
-		//
-		// report = report.setHighlightAnswers(rs);
-		//
-		// int reportPartScoreIndex = 0;
-		//
-		// for (ReportPartScore reportPartScore :
-		// formReport.getReportPartScore()) {
-		//
-		// report.getReportPartScore().get(reportPartScoreIndex++)
-		// .setScoreSmiley(reportPartScore.getScoreSmiley());
-		//
-		// }
-		//
-		// int questionGroupScoreIndex = 0;
-		// for (QuestionGroupScore questionGroupScore : formReport
-		// .getQuestionGroupScore()) {
-		// report.getQuestionGroupScore().get(questionGroupScoreIndex++)
-		// .setScoreSmiley(questionGroupScore.getScoreSmiley());
-		//
-		// }
-		//
-		// report.setSmileysSet(true);
-		// Report savedReport = new Report();
-		// try {
-		// savedReport = rs.saveReport(report);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		//
-		// }
-		//
-		// model.addAttribute("editSmileys", false);
-		// model.addAttribute("readyReport", savedReport);
-		// model.addAttribute("report", savedReport);
+		}
+
+		model.addAttribute("readyReport", report);
+		model.addAttribute("report", report);
 		return "report/showReport";
 	}
 
