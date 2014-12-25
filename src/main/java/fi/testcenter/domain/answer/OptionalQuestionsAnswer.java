@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
 
@@ -35,8 +36,8 @@ public class OptionalQuestionsAnswer extends Answer {
 	@JoinTable(name = "OPTIONALANSWER_QUESTION", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))
 	List<Question> optionalQuestions;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "OPTIONALANSWER_ANSWER", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "ANSWER_ID"))
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn
 	@OrderColumn
 	List<Answer> optionalAnswers = new ArrayList<Answer>();
 
@@ -87,23 +88,27 @@ public class OptionalQuestionsAnswer extends Answer {
 					|| !(optionalQuestions.contains(question))) {
 
 				if (question instanceof MultipleChoiceQuestion) {
-					newAnswerList.add(new MultipleChoiceAnswer(question,
+					newAnswerList.add(new MultipleChoiceAnswer(
+							reportQuestionGroup, question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof PointsQuestion) {
-					newAnswerList.add(new PointsAnswer(question,
-							optionalAnswerOrderNumber++));
+					newAnswerList.add(rs.saveAnswer(new PointsAnswer(
+							reportQuestionGroup, question,
+							optionalAnswerOrderNumber++)));
 				}
 				if (question instanceof TextQuestion) {
 					newAnswerList.add(new TextAnswer(question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof ImportantPointsQuestion) {
-					newAnswerList.add(new ImportantPointsAnswer(question,
+					newAnswerList.add(new ImportantPointsAnswer(
+							reportQuestionGroup, question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof CostListingQuestion) {
-					CostListingAnswer answer = new CostListingAnswer(question,
+					CostListingAnswer answer = new CostListingAnswer(
+							reportQuestionGroup, question,
 							optionalAnswerOrderNumber++);
 					CostListingQuestion clq = (CostListingQuestion) question;
 					List<Float> answerList = new ArrayList<Float>();

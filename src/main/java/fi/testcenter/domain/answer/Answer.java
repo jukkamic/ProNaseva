@@ -22,11 +22,10 @@ public class Answer {
 	private Question question;
 
 	@ManyToOne
-	@JoinColumn(nullable = true)
+	@JoinColumn
 	ReportQuestionGroup reportQuestionGroup;
 
-	private boolean showScore;
-	private int score;
+	private int score = -1;
 	private int maxScore;
 	private boolean highlightAnswer;
 	private boolean removeAnswerFromReport = false;
@@ -99,14 +98,6 @@ public class Answer {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public boolean isShowScore() {
-		return showScore;
-	}
-
-	public void setShowScore(boolean showScore) {
-		this.showScore = showScore;
 	}
 
 	public int getScore() {

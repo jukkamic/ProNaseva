@@ -144,7 +144,7 @@ public class Report {
 
 						reportQuestionGroupAnswerList.add(new TextAnswer(
 								reportQuestionGroup, question,
-								answerOrderNumber++));
+								answerOrderNumber));
 
 					}
 
@@ -153,14 +153,14 @@ public class Report {
 						reportQuestionGroupAnswerList
 								.add(new MultipleChoiceAnswer(
 										reportQuestionGroup, question,
-										answerOrderNumber++));
+										answerOrderNumber));
 
 					}
 					if (question instanceof CostListingQuestion) {
 
 						CostListingAnswer answer = new CostListingAnswer(
 								reportQuestionGroup, question,
-								answerOrderNumber++);
+								answerOrderNumber);
 						CostListingQuestion clq = (CostListingQuestion) question;
 						List<Float> answerList = new ArrayList<Float>();
 						for (int i = 0; i < clq.getQuestionItems().size(); i++)
@@ -173,7 +173,7 @@ public class Report {
 					if (question instanceof ImportantPointsQuestion) {
 						ImportantPointsAnswer answer = new ImportantPointsAnswer(
 								reportQuestionGroup, question,
-								answerOrderNumber++);
+								answerOrderNumber);
 						ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
 						List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
 						for (int i = 0; i < listQuestion.getQuestionItems()
@@ -185,7 +185,7 @@ public class Report {
 					if (question instanceof PointsQuestion) {
 						reportQuestionGroupAnswerList.add(new PointsAnswer(
 								reportQuestionGroup, question,
-								answerOrderNumber++));
+								answerOrderNumber));
 
 					}
 
@@ -230,6 +230,7 @@ public class Report {
 							}
 						}
 					}
+					answerOrderNumber++;
 
 				}
 				reportQuestionGroup.setAnswers(reportQuestionGroupAnswerList);
@@ -428,75 +429,43 @@ public class Report {
 		// int answerIndexCounter = 0;
 		// int reportPartIndex = 0;
 		// int questionGroupIndex = 0;
-		// List<QuestionGroupScore> questionGroupScoreList = new
-		// ArrayList<QuestionGroupScore>();
-		// List<ReportPartScore> reportPartScoreList = new
-		// ArrayList<ReportPartScore>();
 		//
-		// for (ReportTemplatePart reportPart : this.reportTemplate
-		// .getReportParts()) {
-		// ReportPartScore reportPartScoreObject;
-		// if (reportPartScore.size() > 0) {
-		// reportPartScoreObject = reportPartScore.get(reportPartIndex);
-		// reportPartScoreObject.setScore(0);
-		// reportPartScoreObject.setMaxScore(0);
-		// reportPartScoreObject.setScorePercentage(0);
+		// for (ReportPart reportPart : this.reportParts) {
+		// int reportPartMaxScore;
+		// int reportPartScore;
+		// for (ReportQuestionGroup questionGroup : reportPart
+		// .getReportQuestionGroups()) {
 		//
-		// } else {
-		// reportPartScoreObject = new ReportPartScore(this);
-		// }
+		// int questionGroupMaxScore;
+		// int questionGroupScore;
+		// for (Answer answer : questionGroup.getAnswers()) {
+		// if (answer.isRemoveAnswerFromReport() != true) {
+		// if (answer instanceof MultipleChoiceAnswer) {
+		// MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+		// MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) mca
+		// .getQuestion();
 		//
-		// reportPartScoreObject.setReportPart(reportPart);
-		//
-		// for (ReportTemplateQuestionGroup questionGroup : reportPart
-		// .getQuestionGroups()) {
-		//
-		// QuestionGroupScore questionGroupScoreObject;
-		//
-		// if (questionGroupScore.size() > 0) {
-		// questionGroupScoreObject = questionGroupScore
-		// .get(questionGroupIndex);
-		// questionGroupScoreObject.setScore(0);
-		// questionGroupScoreObject.setMaxScore(0);
-		// questionGroupScoreObject.setScorePercentage(0);
-		// } else {
-		// questionGroupScoreObject = new QuestionGroupScore(this,
-		// questionGroup);
-		// }
-		//
-		// for (Question question : questionGroup.getQuestions()) {
-		// if (answers.get(answerIndexCounter)
-		// .isRemoveAnswerFromReport() != true) {
-		// if (question instanceof MultipleChoiceQuestion) {
-		// MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) question;
-		// MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
-		// .get(answerIndexCounter);
-		// mca.setShowScore(false);
-		//
-		// int maxScore = 0;
+		// int questionMaxScore = 0;
 		// for (MultipleChoiceOption option : mcq.getOptions()) {
 		// if (option.getPoints() != -1
-		// && option.getPoints() > maxScore) {
-		// maxScore = option.getPoints();
+		// && option.getPoints() > questionMaxScore) {
+		// questionMaxScore = option.getPoints();
 		//
 		// }
 		// }
 		//
-		// mca.setMaxScore(maxScore); // Asetetaan
+		// mca.setMaxScore(questionMaxScore); // Asetetaan
 		// // monivalintakysymyksen
 		// // maksimipistemäärä
 		//
 		// // Lasketaan pisteet jos käyttäjä on tehnyt valinnan
-		// // ja
-		// // monivalinta ei ole sellainen, jota ei pisteytetä
-		// // (pistemäärä -1)
+		// // ja monivalinta ei ole sellainen, jonka vastausta
+		// // ei pisteytetä (pistemäärä -1)
 		//
 		// if (mca.getChosenOptionIndex() != -1
 		// && mcq.getOptions()
 		// .get(mca.getChosenOptionIndex())
 		// .getPoints() != -1) {
-		//
-		// mca.setShowScore(true);
 		// mca.setScore(mcq.getOptions()
 		// .get(mca.getChosenOptionIndex())
 		// .getPoints());
@@ -504,25 +473,18 @@ public class Report {
 		// // Lisätään kysymysryhmän pisteisiin ja
 		// // asetetaan
 		// // kysymysryhmän pisteet näkyviksi raportissa
-		//
-		// questionGroupScoreObject.setShowScore(true);
-		// questionGroupScoreObject
-		// .setMaxScore(questionGroupScoreObject
-		// .getMaxScore() + maxScore);
-		//
-		// questionGroupScoreObject
-		// .setScore(questionGroupScoreObject
-		// .getScore()
+		// questionGroupMaxScore = questionGroupMaxScore
+		// + questionMaxScore;
+		// questionGroupScore = questionGroupScore
 		// + mcq.getOptions()
 		// .get(mca.getChosenOptionIndex())
-		// .getPoints());
-		//
-		// reportPartScoreObject.setShowScore(true);
-		// }
+		// .getPoints();
 		//
 		// }
 		//
-		// if (question instanceof PointsQuestion) {
+		// }
+		//
+		// if (answer instanceof PointsAnswer) {
 		//
 		// PointsQuestion pointsQuestion = (PointsQuestion) question;
 		// PointsAnswer pointsAnswer = (PointsAnswer) answers
@@ -542,7 +504,7 @@ public class Report {
 		// }
 		// }
 		//
-		// if (question instanceof OptionalQuestions) {
+		// if (answer instanceof OptionalQuestionsAnswer) {
 		// OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) this.answers
 		// .get(answerIndexCounter);
 		// int optionalAnswersCounter = 0;
@@ -760,20 +722,24 @@ public class Report {
 	}
 
 	public void setRemovedQuestions() {
-		// for (Answer answer : this.answers) {
-		// if (answer instanceof MultipleChoiceAnswer
-		// && answer.isRemoveAnswerFromReport()) {
-		// MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
-		// mca.setChosenOptionIndex(-1);
-		// mca.setRemarks(null);
-		// }
-		// if (answer instanceof PointsAnswer
-		// && answer.isRemoveAnswerFromReport()) {
-		// PointsAnswer pa = (PointsAnswer) answer;
-		// pa.setGivenPoints(-1);
-		// pa.setRemarks(null);
-		// }
-		// }
+		for (ReportPart part : reportParts) {
+			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+				for (Answer answer : group.getAnswers()) {
+					if (answer instanceof MultipleChoiceAnswer
+							&& answer.isRemoveAnswerFromReport()) {
+						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+						mca.setChosenOptionIndex(-1);
+						mca.setRemarks(null);
+					}
+					if (answer instanceof PointsAnswer
+							&& answer.isRemoveAnswerFromReport()) {
+						PointsAnswer pa = (PointsAnswer) answer;
+						pa.setGivenPoints(-1);
+						pa.setRemarks(null);
+					}
+				}
+			}
+		}
 	}
 
 	public void checkReportHighlights() {
@@ -786,8 +752,7 @@ public class Report {
 					if (answer instanceof OptionalQuestionsAnswer) {
 						OptionalQuestionsAnswer opa = (OptionalQuestionsAnswer) answer;
 						if (opa.getAnswers() != null) {
-							for (Answer loopAnswer : opa
-									.getAnswers()) {
+							for (Answer loopAnswer : opa.getAnswers()) {
 								if (loopAnswer.isHighlightAnswer())
 									this.highlightsSet = true;
 							}

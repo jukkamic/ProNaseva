@@ -23,14 +23,13 @@ public class ReportQuestionGroup {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	private int score;
+	private int score = -1;
 
 	private int maxScore;
 	private int scorePercentage;
 
 	private String scoreSmiley;
 	private boolean showInReportSummary = false;
-	private boolean showScore = false;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "reportQuestionGroup")
 	@OrderColumn
@@ -95,14 +94,6 @@ public class ReportQuestionGroup {
 
 	public void setShowInReportSummary(boolean showInReportSummary) {
 		this.showInReportSummary = showInReportSummary;
-	}
-
-	public boolean isShowScore() {
-		return showScore;
-	}
-
-	public void setShowScore(boolean showScore) {
-		this.showScore = showScore;
 	}
 
 	public List<Answer> getAnswers() {

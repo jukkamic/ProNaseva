@@ -136,10 +136,20 @@
 							<c:forEach var="answer" items="${questionGroup.answers}"
 								varStatus="answerCounter">
 							<c:set var="question" value="${answer.question}" />
+							
+							<br>
+							<c:if test="${question.question != null}">
+								<h3 style="display: inline; padding-right: 0; margin-right: 0;">${answer.answerOrderNumber}.</h3>
+								<c:if test="${answer.subquestionAnswerOrderNumber != 'null' && answer.subquestionAnswerOrderNumber != 0}">
+									<h3 style="display: inline; padding-left: 0; margin-left: 0; padding-right: 0; margin-right: 0;">${answer.subquestionAnswerOrderNumber}.</h3>
+								</c:if>
+								<h3 style="display: inline; padding-left: 0; margin-left: 0; "> ${question.question}</h3>
+							</c:if>
+							
 	<!-- Multiple choice question -->
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
 																										
-									<h3>${answerCounter.count}. ${question.question}</h3>
+									
 									<c:if test="${answer.removeAnswerFromReport == 'true'}">
 										<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
@@ -235,7 +245,7 @@
 		
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
 																										
-									<h3>${answerCounter.count}. ${question.question}</h3>
+									
 									<c:if test="${answer.removeAnswerFromReport == 'true'}">
 										<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
@@ -291,7 +301,7 @@
 	
 		<!--  Text question -->
 								<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
-									<h3>${answerCounter.count}. ${question.question}</h3>
+									
 									<c:if test="${answer.removeAnswerFromReport == 'true'}">
 										<div class="checkbox" style="font-size: 1.2em;">
 											<label>											
@@ -323,7 +333,7 @@
 								
 	<!-- Cost listing question -->
 							<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
-								<h3>${answerCounter.count}. ${question.question}</h3>
+								
 								<c:if test="${answer.removeAnswerFromReport == 'true'}">
 									<div class="checkbox" style="font-size: 1.2em;">
 										<label>											
@@ -357,7 +367,7 @@
 								
 <!-- ListAndScoreImportantPoints -->
 							<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
-								<h3>${answerCounter.count}. ${question.question}</h3>
+								
 								<c:if test="${answer.removeAnswerFromReport == 'true'}">
 									<div class="checkbox" style="font-size: 1.2em;">
 										<label>											
@@ -458,18 +468,8 @@
 							
 						</c:if> 
 								
-	<%-- 	<!-- Show subquestions -->
-								
-								<c:if test="${not empty question.subQuestions}">
-									<c:set var="mainQuestion" value="${question}" scope="request" />
-									<div style="margin-left: 3em;">
-										<jsp:include page="/WEB-INF/templates/report/showReportSubQuestions.jsp" />
-									</div>				
-								</c:if> 
-								
-							<c:set var="questionCount" value="${questionCounter.count + 1}" scope="request" />
-							 --%>
-							</c:forEach> <!-- Questions loop end -->
+
+						</c:forEach> <!-- Questions loop end -->
 	
 							
 							 

@@ -24,11 +24,14 @@ import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportPart;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 import fi.testcenter.domain.report.ReportTemplate;
 import fi.testcenter.repository.AnswerRepository;
 import fi.testcenter.repository.ImpPtItemRepository;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.OptionalQuestionsAnswerRepository;
+import fi.testcenter.repository.ReportQuestionGroupRepository;
 import fi.testcenter.repository.ReportRepository;
 import fi.testcenter.repository.WorkshopRepository;
 import fi.testcenter.web.SearchReportCriteria;
@@ -53,6 +56,9 @@ public class ReportService {
 
 	@Autowired
 	private ReportTemplateService rts;
+
+	@Autowired
+	private ReportQuestionGroupRepository rqgr;
 
 	@Autowired
 	private AnswerRepository ar;
@@ -86,7 +92,27 @@ public class ReportService {
 
 	@Transactional
 	public void deleteReport(Report report) {
+		for (ReportPart part : report.getReportParts()) {
+			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+				for (Answer answer : group.getAnswers()) {
+					if (answer instanceof OptionalQuestionsAnswer) {
+						OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
+						List<Answer> deleteList = oqa.getAnswers();
+						oqa.setAnswers(null);
+						oqa.setReportQuestionGroup(null);
+						if (deleteList != null) {
+							try {
+								deleteAnswers(deleteList);
 
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+
+					}
+				}
+			}
+		}
 		rr.delete(report);
 	}
 
@@ -322,7 +348,7 @@ public class ReportService {
 	public OptionalQuestionsAnswer saveOptionalQuestionsAnswer(
 			OptionalQuestionsAnswer oqa) {
 
-		return ar.save(oqa);
+		return oqar.save(oqa);
 	}
 
 	@Transactional

@@ -132,10 +132,19 @@
 		<c:forEach var="answer" items="${questionGroup.answers}" varStatus="questionCounter">
 			<c:set var="question" value="${answer.question}" />
 
+		<br>
+		<c:if test="${question.question != null}">
+			<h3 style="display: inline; padding-right: 0; margin-right: 0;">${answer.answerOrderNumber}.</h3>
+			<c:if test="${answer.subquestionAnswerOrderNumber != 'null' && answer.subquestionAnswerOrderNumber != 0}">
+				<h3 style="display: inline; padding-left: 0; margin-left: 0; padding-right: 0; margin-right: 0;">${answer.subquestionAnswerOrderNumber}.</h3>
+			</c:if>
+			<h3 style="display: inline; padding-left: 0; margin-left: 0; "> ${question.question}</h3>
+		</c:if>
+		
 <!-- Multiple choice question -->
 										
 		<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
-		<h3>${questionCounter.count}. ${question.question}</h3>
+		
 		<div class="checkbox" style="font-size: 1.2em;">
 			<label>											
 			<sf:checkbox value='true'
@@ -223,7 +232,7 @@
 		
 		<!-- Points question -->
 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
-			<h3>${questionCounter.count}. ${question.question}</h3>
+			
 			<div class="checkbox" style="font-size: 1.2em;">
 				<label>											
 				<sf:checkbox value='true'
@@ -291,7 +300,6 @@
 		<!-- Text question -->
 			<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
 				
-				<h3>${questionCounter.count}. ${question.question}</h3>
 				
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
@@ -327,7 +335,7 @@
 			</c:if>
 		<!-- Cost listing question -->
   			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
-				<h3>${questionCounter.count}. ${question.question}</h3>
+				
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
 					<sf:checkbox value='true'
@@ -354,7 +362,7 @@
 		
 		<!-- ListAndScoreImportantPoints -->
 	   			<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
-	 			<h3>${questionCounter.count}. ${question.question}</h3>
+	 			
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
 					- <sf:checkbox value='true'
@@ -470,17 +478,6 @@
 			<a href="#" onclick="addOptionalQuestion(${questionGroupCounter.index}, ${questionCounter.index})" class="btn btn-primary"> Valitse kysymykset</a>
 		
 		</c:if> 
-			
-		<!-- Subquestions --> 
-<%-- 			
-			<c:if test="${not empty question.subQuestions}">
-				
-				<c:set var="mainQuestion" value="${question}" scope="request" />
-				<div style="margin-left: 3em;">
-					<jsp:include page="/WEB-INF/templates/report/editReportSubQuestions.jsp" />
-				</div>	
-				<br>			
-			</c:if> --%>
 						
 <!-- Questions loop end -->									
 			</c:forEach> 

@@ -21,10 +21,9 @@ public class ReportPart {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long id;
 
-	int score;
+	int score = -1;
 	int maxScore;
 	int scorePercentage;
-	boolean showScore = false;
 
 	String scoreSmiley = "";
 
@@ -75,14 +74,6 @@ public class ReportPart {
 
 	public void setScorePercentage(int scorePercentage) {
 		this.scorePercentage = scorePercentage;
-	}
-
-	public boolean isShowScore() {
-		return showScore;
-	}
-
-	public void setShowScore(boolean showScore) {
-		this.showScore = showScore;
 	}
 
 	public String getScoreSmiley() {
