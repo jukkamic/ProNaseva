@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
+import fi.testcenter.domain.answer.TextAnswer;
 import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.Report;
@@ -124,6 +125,10 @@ public class ReportController {
 			@RequestParam("addOptionalToQuestionGroup") Integer addOptionalToQuestionGroup,
 			BindingResult result) {
 
+		String auto = ((TextAnswer) report.getReportParts().get(0)
+				.getReportQuestionGroups().get(0).getAnswers().get(0))
+				.getAnswer();
+		model.addAttribute("auto", auto);
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
 		report.checkReportHighlights();
 		report.setRemovedQuestions(); // Nollataan vastaukset

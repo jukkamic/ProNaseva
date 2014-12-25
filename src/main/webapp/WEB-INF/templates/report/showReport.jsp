@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <jsp:include page="/WEB-INF/templates/includes/header.jsp" />  
@@ -19,7 +19,6 @@
 				<h1>Raportti</h1>
 			
 			</div>
-
 
 <sf:form modelAttribute="readyReport" action="saveSmileysAndHighlights" method="post"> 
 
