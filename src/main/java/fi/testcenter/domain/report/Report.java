@@ -37,6 +37,7 @@ import fi.testcenter.domain.answer.PointsAnswer;
 import fi.testcenter.domain.answer.TextAnswer;
 import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.ImportantPointsQuestion;
+import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
 import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.PointsQuestion;
@@ -424,301 +425,233 @@ public class Report {
 	// LASKETAAN RAPORTIN PISTEET MONIVALINTOJEN POHJALTA:
 
 	public Report calculateReportScore(ReportService rs) {
-		// int reportTotalScore = 0;
-		// int reportMaxScore = 0;
-		// int answerIndexCounter = 0;
-		// int reportPartIndex = 0;
-		// int questionGroupIndex = 0;
-		//
-		// for (ReportPart reportPart : this.reportParts) {
-		// int reportPartMaxScore;
-		// int reportPartScore;
-		// for (ReportQuestionGroup questionGroup : reportPart
-		// .getReportQuestionGroups()) {
-		//
-		// int questionGroupMaxScore;
-		// int questionGroupScore;
-		// for (Answer answer : questionGroup.getAnswers()) {
-		// if (answer.isRemoveAnswerFromReport() != true) {
-		// if (answer instanceof MultipleChoiceAnswer) {
-		// MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
-		// MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) mca
-		// .getQuestion();
-		//
-		// int questionMaxScore = 0;
-		// for (MultipleChoiceOption option : mcq.getOptions()) {
-		// if (option.getPoints() != -1
-		// && option.getPoints() > questionMaxScore) {
-		// questionMaxScore = option.getPoints();
-		//
-		// }
-		// }
-		//
-		// mca.setMaxScore(questionMaxScore); // Asetetaan
-		// // monivalintakysymyksen
-		// // maksimipistemäärä
-		//
-		// // Lasketaan pisteet jos käyttäjä on tehnyt valinnan
-		// // ja monivalinta ei ole sellainen, jonka vastausta
-		// // ei pisteytetä (pistemäärä -1)
-		//
-		// if (mca.getChosenOptionIndex() != -1
-		// && mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints() != -1) {
-		// mca.setScore(mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints());
-		//
-		// // Lisätään kysymysryhmän pisteisiin ja
-		// // asetetaan
-		// // kysymysryhmän pisteet näkyviksi raportissa
-		// questionGroupMaxScore = questionGroupMaxScore
-		// + questionMaxScore;
-		// questionGroupScore = questionGroupScore
-		// + mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints();
-		//
-		// }
-		//
-		// }
-		//
-		// if (answer instanceof PointsAnswer) {
-		//
-		// PointsQuestion pointsQuestion = (PointsQuestion) question;
-		// PointsAnswer pointsAnswer = (PointsAnswer) answers
-		// .get(answerIndexCounter);
-		// if (pointsAnswer.getGivenPoints() != -1) {
-		// questionGroupScoreObject.setShowScore(true);
-		// questionGroupScoreObject
-		// .setMaxScore(questionGroupScoreObject
-		// .getMaxScore()
-		// + pointsQuestion.getMaxPoints());
-		// questionGroupScoreObject
-		// .setScore(questionGroupScoreObject
-		// .getScore()
-		// + pointsAnswer.getGivenPoints());
-		// reportPartScoreObject.setShowScore(true);
-		//
-		// }
-		// }
-		//
-		// if (answer instanceof OptionalQuestionsAnswer) {
-		// OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) this.answers
-		// .get(answerIndexCounter);
-		// int optionalAnswersCounter = 0;
-		// if (oqa.getQuestions() != null) {
-		// for (Question optionalQuestion : oqa
-		// .getQuestions()) {
-		// if (optionalQuestion instanceof MultipleChoiceQuestion) {
-		// MultipleChoiceQuestion mcq = (MultipleChoiceQuestion)
-		// optionalQuestion;
-		// MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
-		// .getAnswers()
-		// .get(optionalAnswersCounter++);
-		// mca.setShowScore(false);
-		//
-		// int maxScore = 0;
-		// for (MultipleChoiceOption option : mcq
-		// .getOptions()) {
-		// if (option.getPoints() != -1
-		// && option.getPoints() > maxScore) {
-		// maxScore = option.getPoints();
-		//
-		// }
-		// }
-		//
-		// mca.setMaxScore(maxScore); // Asetetaan
-		// // monivalintakysymyksen
-		// // maksimipistemäärä
-		//
-		// // Lasketaan pisteet jos käyttäjä on
-		// // tehnyt
-		// // valinnan
-		// // ja
-		// // monivalinta ei ole sellainen, jota ei
-		// // pisteytetä
-		// // (pistemäärä -1)
-		//
-		// if (mca.getChosenOptionIndex() != -1
-		// && mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints() != -1) {
-		//
-		// mca.setShowScore(true);
-		// mca.setScore(mcq
-		// .getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints());
-		//
-		// // Lisätään kysymysryhmän pisteisiin
-		// // ja
-		// // asetetaan
-		// // kysymysryhmän pisteet näkyviksi
-		// // raportissa
-		//
-		// questionGroupScoreObject
-		// .setShowScore(true);
-		// questionGroupScoreObject
-		// .setMaxScore(questionGroupScoreObject
-		// .getMaxScore()
-		// + maxScore);
-		//
-		// questionGroupScoreObject
-		// .setScore(questionGroupScoreObject
-		// .getScore()
-		// + mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints());
-		//
-		// reportPartScoreObject
-		// .setShowScore(true);
-		// }
-		//
-		// }
-		//
-		// if (optionalQuestion instanceof PointsQuestion) {
-		//
-		// PointsQuestion pointsQuestion = (PointsQuestion) optionalQuestion;
-		// PointsAnswer pointsAnswer = (PointsAnswer) oqa
-		// .getAnswers()
-		// .get(optionalAnswersCounter++);
-		// if (pointsAnswer.getGivenPoints() != -1) {
-		// questionGroupScoreObject
-		// .setShowScore(true);
-		// questionGroupScoreObject
-		// .setMaxScore(questionGroupScoreObject
-		// .getMaxScore()
-		// + pointsQuestion
-		// .getMaxPoints());
-		// questionGroupScoreObject
-		// .setScore(questionGroupScoreObject
-		// .getScore()
-		// + pointsAnswer
-		// .getGivenPoints());
-		// reportPartScoreObject
-		// .setShowScore(true);
-		//
-		// }
-		// }
-		//
-		// }
-		// }
-		// }
-		//
-		// }
-		//
-		// answerIndexCounter++;
-		//
-		// // subQuestions loop
-		//
-		// for (Question subQuestion : question.getSubQuestions()) {
-		// if (answers.get(answerIndexCounter)
-		// .isRemoveAnswerFromReport() != true) {
-		//
-		// if (subQuestion instanceof MultipleChoiceQuestion) {
-		// MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) subQuestion;
-		// MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answers
-		// .get(answerIndexCounter);
-		//
-		// // Lasketan maksimipisteet
-		//
-		// int maxScore = 0;
-		// for (MultipleChoiceOption option : mcq
-		// .getOptions()) {
-		// if (option.getPoints() != -1
-		// && option.getPoints() > maxScore) {
-		// maxScore = option.getPoints();
-		// }
-		// }
-		//
-		// mca.setMaxScore(maxScore);
-		//
-		// // Lasketaan pisteet jos käyttäjä on tehnyt
-		// // valinnan
-		// // ja
-		// // monivalinta ei ole sellainen, jota ei
-		// // pisteytetä
-		// // (pistemäärä -1)
-		//
-		// if (mca.getChosenOptionIndex() != -1
-		// && mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints() != -1) {
-		//
-		// mca.setShowScore(true);
-		// mca.setScore(mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints());
-		//
-		// // Lisätään kysymysryhmän pisteisiin ja
-		// // asetetaan
-		// // kysymysryhmän ja raportin osan pisteet
-		// // näkyviksi raportissa
-		//
-		// questionGroupScoreObject.setShowScore(true);
-		// questionGroupScoreObject
-		// .setMaxScore(questionGroupScoreObject
-		// .getMaxScore() + maxScore);
-		//
-		// questionGroupScoreObject
-		// .setScore(questionGroupScoreObject
-		// .getScore()
-		// + mcq.getOptions()
-		// .get(mca.getChosenOptionIndex())
-		// .getPoints());
-		//
-		// reportPartScoreObject.setShowScore(true);
-		//
-		// }
-		//
-		// }
-		// }
-		// answerIndexCounter++;
-		// }
-		//
-		// }
-		//
-		// // Lisätään kysymysryhmän pisteet Report-luokan olioon.
-		//
-		// questionGroupScoreObject.calculateScorePercentage();
-		// questionGroupScoreList.add(questionGroupScoreObject);
-		//
-		// // Lisätään kysymysryhmän pisteet ja maksimipisteet raportin
-		// // osan pisteisiin
-		//
-		// reportPartScoreObject.setScore(reportPartScoreObject.getScore()
-		// + questionGroupScoreObject.getScore());
-		// reportPartScoreObject
-		// .setMaxScore(reportPartScoreObject.getMaxScore()
-		// + questionGroupScoreObject.getMaxScore());
-		//
-		// questionGroupIndex++;
-		//
-		// }
-		//
-		// // Lisätään raportin osan pisteet Report-luokan olioon.
-		//
-		// reportPartScoreObject.calculateScorePercentage();
-		//
-		// reportPartScoreList.add(reportPartScoreObject);
-		//
-		// reportTotalScore = reportTotalScore
-		// + reportPartScoreObject.getScore();
-		// reportMaxScore = reportMaxScore
-		// + reportPartScoreObject.getMaxScore();
-		//
-		// reportPartIndex++;
-		// }
-		//
-		// questionGroupScore = questionGroupScoreList;
-		// reportPartScore = reportPartScoreList;
-		//
-		// totalScorePercentage = (int) Math.round((double) reportTotalScore
-		// / (double) reportMaxScore * 100);
-		// return rs.saveReport(this);
-		return this;
+
+		for (ReportPart reportPart : this.reportParts) {
+			reportPart.setMaxScore(0);
+			reportPart.setScore(-1);
+
+			for (ReportQuestionGroup questionGroup : reportPart
+					.getReportQuestionGroups()) {
+
+				questionGroup.setScore(-1);
+				questionGroup.setMaxScore(0);
+
+				for (Answer answer : questionGroup.getAnswers()) {
+					if (answer.isRemoveAnswerFromReport() != true) {
+						if (answer instanceof MultipleChoiceAnswer) {
+							MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) mca
+									.getQuestion();
+
+							int questionMaxScore = 0;
+							for (MultipleChoiceOption option : mcq.getOptions()) {
+								if (option.getPoints() != -1
+										&& option.getPoints() > questionMaxScore) {
+									questionMaxScore = option.getPoints();
+
+								}
+							}
+
+							mca.setMaxScore(questionMaxScore); // Asetetaan
+							// monivalintakysymyksen
+							// maksimipistemäärä
+
+							// Lasketaan pisteet jos käyttäjä on tehnyt valinnan
+							// ja monivalinta ei ole sellainen, jonka vastausta
+							// ei pisteytetä (pistemäärä -1)
+
+							if (mca.getChosenOptionIndex() != -1
+									&& mcq.getOptions()
+											.get(mca.getChosenOptionIndex())
+											.getPoints() != -1) {
+
+								mca.setScore(mcq.getOptions()
+										.get(mca.getChosenOptionIndex())
+										.getPoints());
+
+								// Lisätään kysymysryhmän pisteisiin ja
+								// asetetaan
+								// kysymysryhmän pisteet näkyviksi raportissa
+
+								if (questionGroup.getScore() == -1)
+									questionGroup.setScore(0);
+								if (reportPart.getScore() == -1)
+									reportPart.setScore(0);
+
+								questionGroup.setMaxScore(questionGroup
+										.getMaxScore() + mca.getMaxScore());
+								questionGroup
+										.setScore(questionGroup.getScore()
+												+ mcq.getOptions()
+														.get(mca.getChosenOptionIndex())
+														.getPoints());
+
+							}
+
+						}
+
+						if (answer instanceof PointsAnswer) {
+
+							PointsQuestion pointsQuestion = (PointsQuestion) answer
+									.getQuestion();
+							PointsAnswer pointsAnswer = (PointsAnswer) answer;
+							if (pointsAnswer.getGivenPoints() != -1) {
+
+								if (questionGroup.getScore() == -1)
+									questionGroup.setScore(0);
+								if (reportPart.getScore() == -1)
+									reportPart.setScore(0);
+								questionGroup.setMaxScore(questionGroup
+										.getMaxScore()
+										+ pointsQuestion.getMaxPoints());
+								questionGroup.setScore(questionGroup.getScore()
+										+ pointsAnswer.getGivenPoints());
+
+							}
+						}
+
+						if (answer instanceof OptionalQuestionsAnswer) {
+							OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
+							int optionalAnswersCounter = 0;
+							if (oqa.getQuestions() != null) {
+								for (Question optionalQuestion : oqa
+										.getQuestions()) {
+									if (optionalQuestion instanceof MultipleChoiceQuestion) {
+										MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) optionalQuestion;
+										MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
+												.getAnswers()
+												.get(optionalAnswersCounter++);
+
+										int maxScore = 0;
+										for (MultipleChoiceOption option : mcq
+												.getOptions()) {
+											if (option.getPoints() != -1
+													&& option.getPoints() > maxScore) {
+												maxScore = option.getPoints();
+
+											}
+										}
+
+										mca.setMaxScore(maxScore); // Asetetaan
+										// monivalintakysymyksen
+										// maksimipistemäärä
+
+										// Lasketaan pisteet jos käyttäjä on
+										// tehnyt
+										// valinnan
+										// ja
+										// monivalinta ei ole sellainen, jota ei
+										// pisteytetä
+										// (pistemäärä -1)
+
+										if (mca.getChosenOptionIndex() != -1
+												&& mcq.getOptions()
+														.get(mca.getChosenOptionIndex())
+														.getPoints() != -1) {
+
+											mca.setScore(mcq
+													.getOptions()
+													.get(mca.getChosenOptionIndex())
+													.getPoints());
+											if (questionGroup.getScore() == -1)
+												questionGroup.setScore(0);
+
+											if (reportPart.getScore() == -1)
+												reportPart.setScore(0);
+											// Lisätään kysymysryhmän pisteisiin
+											// ja
+											// asetetaan
+											// kysymysryhmän pisteet näkyviksi
+											// raportissa
+
+											questionGroup
+													.setMaxScore(questionGroup
+															.getMaxScore()
+															+ maxScore);
+
+											questionGroup
+													.setScore(questionGroup
+															.getScore()
+															+ mcq.getOptions()
+																	.get(mca.getChosenOptionIndex())
+																	.getPoints());
+
+										}
+
+									}
+
+									if (optionalQuestion instanceof PointsQuestion) {
+
+										PointsQuestion pointsQuestion = (PointsQuestion) optionalQuestion;
+										PointsAnswer pointsAnswer = (PointsAnswer) oqa
+												.getAnswers()
+												.get(optionalAnswersCounter++);
+										if (pointsAnswer.getGivenPoints() != -1) {
+
+											if (questionGroup.getScore() == -1)
+												questionGroup.setScore(0);
+											if (reportPart.getScore() == -1)
+												reportPart.setScore(0);
+											questionGroup
+													.setMaxScore(questionGroup
+															.getMaxScore()
+															+ pointsQuestion
+																	.getMaxPoints());
+											questionGroup
+													.setScore(questionGroup
+															.getScore()
+															+ pointsAnswer
+																	.getGivenPoints());
+
+										}
+									}
+
+								}
+							}
+						}
+
+					}
+
+				}
+
+				// Lisätään kysymysryhmän pisteet ja maksimipisteet raportin
+				// osan pisteisiin
+
+				if (questionGroup.getScore() != -1) {
+					reportPart.setScore(reportPart.getScore()
+							+ questionGroup.getScore());
+					reportPart.setMaxScore(reportPart.getMaxScore()
+							+ questionGroup.getMaxScore());
+					reportPart.setScorePercentage((int) Math
+							.round((double) reportPart.getScore()
+									/ (double) reportPart.getMaxScore() * 100));
+
+				}
+
+			}
+
+			if (reportPart.getScore() != -1)
+				reportPart.setScorePercentage((int) Math
+						.round((double) reportPart.getScore()
+								/ (double) reportPart.getMaxScore() * 100));
+
+		}
+
+		int reportTotalScore = 0;
+		int reportMaxScore = 0;
+		for (ReportPart part : reportParts) {
+			if (part.getScore() != -1) {
+				reportTotalScore += part.getScore();
+				reportMaxScore += part.getMaxScore();
+				log.debug("part score : " + part.getScore());
+				log.debug("part max score : " + part.getMaxScore());
+			}
+		}
+
+		totalScorePercentage = (int) Math.round((double) reportTotalScore
+				/ (double) reportMaxScore * 100);
+		return rs.saveReport(this);
+
 	}
 
 	public void setRemovedQuestions() {

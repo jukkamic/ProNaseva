@@ -68,51 +68,51 @@
 				<c:set var="showQuestionGroupHighlightsTitle" value="false" />
 				<div style="border-bottom: 3px solid #eee;">
 				
-				
-				<c:forEach var="questionGroupScore" items="${readyReport.questionGroupScore}" varStatus="questionGroupScoreCounter">
+				<c:forEach var="reportPart" items="${readyReport.reportParts}">
+				<c:forEach var="questionGroup" items="${reportPart.reportQuestionGroups}" varStatus="questionGroupCounter">
 					
-						<c:if test="${questionGroupScore.questionGroup.showInReportSummary == true}">
+						<c:if test="${questionGroup.reportTemplateQuestionGroup.showInReportSummary == true}">
 								<c:if test="${showQuestionGroupHighlightsTitle == 'false'}">
 									<h3><b>Yhteenveto: </b></h3>
 									
 									<c:set var="showQuestionGroupHighlightsTitle" value="true" />
 								</c:if>
-								<h3>${questionGroupScore.questionGroup.title}</h3>
+								<h3>${questionGroup.reportTemplateQuestionGroup.title}</h3>
 																
-								<c:if test="${questionGroupScore.maxScore > 0}">
-									<h4>Pisteet: ${questionGroupScore.score}/${questionGroupScore.maxScore}</h4>
+								<c:if test="${questionGroup.maxScore > 0}">
+									<h4>Pisteet: ${questionGroup.score}/${questionGroup.maxScore}</h4>
 								</c:if>
 						
-								<c:if test="${questionGroupScore.maxScore == 0}">
+								<c:if test="${questionGroup.maxScore == 0}">
 									<h4>Pisteet: --</h4>
 								</c:if>
-							<c:set var="highlightGroupsScore" value="${highlightGroupsScore + questionGroupScore.score}" />
-								<c:set var="highlightGroupsMaxScore" value="${highlightGroupsMaxScore + questionGroupScore.maxScore}" />
+							<c:set var="highlightGroupsScore" value="${highlightGroupsScore + questionGroup.score}" />
+								<c:set var="highlightGroupsMaxScore" value="${highlightGroupsMaxScore + questionGroup.maxScore}" />
 								
-								<c:if test="${questionGroupScore.maxScore > 0 }">
+								<c:if test="${questionGroup.maxScore > 0 }">
 									<div class="Demo-boot" style="padding-top: 15px;">
 									<div class="btn-group" data-toggle="buttons">
 									
-										<c:if test="${questionGroupScore.scoreSmiley == 'SMILE' }"> 
+										<c:if test="${questionGroup.scoreSmiley == 'SMILE' }"> 
 											<button class="btn btn-primary disabled" type="button"><i class="fa fa-smile-o fa-2x"></i></button>
 				 						</c:if>
-										<c:if test="${questionGroupScore.scoreSmiley != 'SMILE' }"> 
+										<c:if test="${questionGroup.scoreSmiley != 'SMILE' }"> 
 											<button class="btn btn-default" type="button" disabled><i class="fa fa-smile-o fa-2x"></i></button>
 				 						</c:if>
 									
 									
-										<c:if test="${questionGroupScore.scoreSmiley == 'NEUTRAL' }"> 
+										<c:if test="${questionGroup.scoreSmiley == 'NEUTRAL' }"> 
 											<button class="btn btn-primary disabled" type="button"><i class="fa fa-meh-o fa-2x"></i></button>
 				 						</c:if>
-										<c:if test="${questionGroupScore.scoreSmiley != 'NEUTRAL' }"> 
+										<c:if test="${questionGroup.scoreSmiley != 'NEUTRAL' }"> 
 											<button class="btn btn-default" type="button" disabled><i class="fa fa-meh-o fa-2x"></i></button>
 				 						</c:if>
 				 						
 				 															
-										<c:if test="${questionGroupScore.scoreSmiley == 'FROWN' }"> 
+										<c:if test="${questionGroup.scoreSmiley == 'FROWN' }"> 
 											<button class="btn btn-primary disabled" type="button"><i class="fa fa-frown-o fa-2x"></i></button>
 				 						</c:if>
-										<c:if test="${questionGroupScore.scoreSmiley != 'FROWN' }"> 
+										<c:if test="${questionGroup.scoreSmiley != 'FROWN' }"> 
 											<button class="btn btn-default" type="button" disabled><i class="fa fa-frown-o fa-2x"></i></button>
 				 						</c:if>
 
@@ -123,6 +123,7 @@
 						</c:if>
 						
 					</c:forEach>
+				</c:forEach>
 								
 				<br>
 				<c:if test="${showQuestionGroupHighlightsTitle == 'true'}">
@@ -133,7 +134,7 @@
 				</c:if>			
 			</div>
 			<br>
-			<div style="border-bottom: 3px solid #eee;">
+<%-- 			<div style="border-bottom: 3px solid #eee;">
 			<h3><b>Raportin osien pisteet: </b></h3>
 					<c:forEach var="reportPartScore" items="${readyReport.reportPartScore}" varStatus="reportPartScoreCounter">
 					
@@ -194,7 +195,7 @@
 								
 			</div>
 			<br>
-			
+			 --%>
 			<c:set var="bootstrapPanelCounter" value="2" scope="request" />
-			</div>
+			<!-- </div> -->
 			</div>

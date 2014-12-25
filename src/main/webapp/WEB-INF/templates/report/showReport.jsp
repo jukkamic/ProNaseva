@@ -73,7 +73,7 @@
 	</c:if>			
 
 
-<%-- 	<c:if test="${editSmileys != 'true' }">
+	<c:if test="${editSmileys != true }">
 	<jsp:include page="/WEB-INF/templates/report/showReportSummary.jsp" />
 	</c:if>
 
@@ -81,7 +81,7 @@
 	<c:if test="${editSmileys == 'true'}">
 	
 	<jsp:include page="/WEB-INF/templates/report/showReportSummaryForEdit.jsp" />
-	</c:if> --%>
+	</c:if> 
 	
 	<br>				
 	<c:if test="${report.highlightsSet == 'true'}">

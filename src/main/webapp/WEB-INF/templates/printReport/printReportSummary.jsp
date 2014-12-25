@@ -22,9 +22,9 @@
 <c:set var="hasQuestionGroupHighlights" value="false" />
 
 
-		<c:forEach var="questionGroupScore" items="${report.questionGroupScore}">
+		<c:forEach var="questionGroup" items="${report.reportQuestionGroup}">
 			
-			<c:if test="${questionGroupScore.questionGroup.showInReportSummary == true}">
+			<c:if test="${questionGroup.questionGroup.showInReportSummary == true}">
 				<c:set var="hasQuestionGroupHighlights" value="true" />
 					<tr>
 						<td style="padding-top: 0.5em; padding-bottom: 0.5em;">
