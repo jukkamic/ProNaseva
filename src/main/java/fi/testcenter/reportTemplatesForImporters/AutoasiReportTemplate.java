@@ -1974,50 +1974,6 @@ public class AutoasiReportTemplate {
 				"Äänimerkin toiminnan tarkastus", 2));
 		optionalQuestions.add(new PointsQuestion("Muu vika", 2));
 
-		MultipleChoiceQuestion testi = new MultipleChoiceQuestion();
-		ArrayList<MultipleChoiceOption> testiOptions = new ArrayList<MultipleChoiceOption>();
-		testi.setQuestion("Kysyttiinkö lupaa jollekin seuraavista lisätöistä?");
-		testiOptions.add(new MultipleChoiceOption("Kyllä", 2));
-		testiOptions.add(new MultipleChoiceOption("Ei", 0));
-		testi.setOptions(testiOptions);
-
-		optionalQuestions.add(testi);
-
-		TextQuestion testi2 = new TextQuestion();
-		testi2.setQuestion("Rekisteritunnus");
-		optionalQuestions.add(testi2);
-
-		CostListingQuestion costQuestion2 = new CostListingQuestion();
-		costQuestion2.setQuestion("Huollon kustannukset:");
-		List<String> costQuestionList2 = new ArrayList<String>();
-		costQuestionList2
-				.add("Kustannusarvio huollolle, jakohihnan vaihdolle (jos on) ja lisätöille");
-		costQuestionList2.add("Huoltotyö (sisältää jakohihnan vaihdon jos on)");
-		costQuestionList2
-				.add("Huoltotyöhön kuuluvat osat (sisältää jakohihnan vaihdon osat)");
-
-		costQuestion2.setQuestionItems(costQuestionList2);
-		costQuestion2
-				.setTotal("Huolto- ja lisätyöt osineen, jotka sisältyvät annettuun kustannusarvioon");
-		optionalQuestions.add(costQuestion2);
-
-		ImportantPointsQuestion listImportant2 = new ImportantPointsQuestion();
-		listImportant2
-				.setQuestion("Numeroi mielestäsi viisi tärkeintä asiaa huollossa, "
-						+ "viitosella tärkein. Arvioi sen jälkeen, kuinka kyseiset viisi asiaa "
-						+ "onnistuivat tällä kertaa arvosanoilla 1-5, 5 on erittäin hyvin ja 1 erittäin heikosti.");
-
-		List<String> questionItems2 = new ArrayList<String>();
-		questionItems2.add("Liikkeen sijainti");
-		questionItems2.add("Huollon pysäköinti");
-		questionItems2.add("Liikkeen aukioloajat");
-
-		listImportant2.setQuestionItems(questionItems2);
-
-		listImportant2.setMaxScoreForQuestionItem(5);
-		listImportant2.setNumberOfItemsToChoose(5);
-		optionalQuestions.add(listImportant2);
-
 		return optionalQuestions;
 
 	}

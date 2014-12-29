@@ -102,7 +102,7 @@
 						</div>
 					</div>
 					
-					<c:if test="${answer.remarks != '' and reportHighlight.answer.remarks != null}">
+					<c:if test="${answer.remarks != '' and answer.remarks != null}">
 						<br>
 						<h4>Huomioita:</h4>
 						<p style="font-size: 1.2em;">${answer.remarks}</p>
