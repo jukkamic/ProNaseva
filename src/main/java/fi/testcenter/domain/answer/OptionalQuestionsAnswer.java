@@ -107,10 +107,10 @@ public class OptionalQuestionsAnswer extends Answer {
 					CostListingAnswer answer = new CostListingAnswer(question,
 							optionalAnswerOrderNumber++);
 					CostListingQuestion clq = (CostListingQuestion) question;
-					List<Float> answerList = new ArrayList<Float>();
+					List<String> answersInList = new ArrayList<String>();
 					for (int i = 0; i < clq.getQuestionItems().size(); i++)
-						answerList.add(new Float(0));
-					answer.setAnswers(answerList);
+						answersInList.add(new String(""));
+					answer.setAnswersIn(answersInList);
 					newAnswerList.add(answer);
 
 				}

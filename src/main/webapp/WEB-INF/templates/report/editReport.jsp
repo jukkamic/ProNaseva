@@ -346,7 +346,7 @@
 				</div>
 					<c:forEach var="listQuestion" items="${question.questionItems}" varStatus="costListingAnswerCounter">
 						<h4>${listQuestion}</h4>
-						<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answers[${costListingAnswerCounter.index}]" /> €
+						<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answersIn[${costListingAnswerCounter.index}]" /> €
 						<br>
 					</c:forEach>
 					<br>

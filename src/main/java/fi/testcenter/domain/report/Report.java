@@ -88,9 +88,6 @@ public class Report {
 	@Transient
 	private Long workshopId;
 
-	@Transient
-	private Long optionalQId;
-
 	@ManyToOne
 	@JoinColumn
 	private User user;
@@ -163,10 +160,10 @@ public class Report {
 								reportQuestionGroup, question,
 								answerOrderNumber);
 						CostListingQuestion clq = (CostListingQuestion) question;
-						List<Float> answerList = new ArrayList<Float>();
+						List<String> answerList = new ArrayList<String>();
 						for (int i = 0; i < clq.getQuestionItems().size(); i++)
-							answerList.add(new Float(0));
-						answer.setAnswers(answerList);
+							answerList.add(new String(""));
+						answer.setAnswersIn(answerList);
 
 						reportQuestionGroupAnswerList.add(answer);
 
@@ -368,14 +365,6 @@ public class Report {
 
 	public void setLog(Logger log) {
 		this.log = log;
-	}
-
-	public Long getOptionalQId() {
-		return optionalQId;
-	}
-
-	public void setOptionalQId(Long optionalQId) {
-		this.optionalQId = optionalQId;
 	}
 
 	public List<ReportPart> getReportParts() {

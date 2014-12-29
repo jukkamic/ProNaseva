@@ -19,11 +19,15 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
+import fi.testcenter.domain.answer.Answer;
+import fi.testcenter.domain.answer.CostListingAnswer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.answer.TextAnswer;
 import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.ReportPart;
+import fi.testcenter.domain.report.ReportQuestionGroup;
 import fi.testcenter.domain.report.ReportTemplate;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
@@ -136,6 +140,28 @@ public class ReportController {
 										// PointsQuestion-luokan kysymyksiin
 										// jotta ei huomioida pisteytyksessä.
 		report = report.calculateReportScore(rs);
+
+		for (ReportPart part : report.getReportParts()) {
+			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+				for (Answer answer : group.getAnswers()) {
+					if (answer instanceof CostListingAnswer)
+						((CostListingAnswer) answer).formatCurrency();
+
+				}
+			}
+		}
+
+		for (ReportPart part : report.getReportParts()) {
+			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+				for (Answer answer : group.getAnswers()) {
+					if (answer instanceof CostListingAnswer)
+						for (String output : ((CostListingAnswer) answer)
+								.getAnswersOut())
+							log.debug(output);
+
+				}
+			}
+		}
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
