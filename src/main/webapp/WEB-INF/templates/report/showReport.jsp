@@ -351,7 +351,7 @@
 										
 										<h4>${listQuestion}</h4>
 										
-										<p style="font-size: 1.2em;">${answer.answers[costListingAnswerCounter.index]} €</p>
+										<p style="font-size: 1.2em;">${answer.answersOut[costListingAnswerCounter.index]}</p>
 										<br>
 									</c:forEach>
 										<h4><b>${question.total}</b></h4>

@@ -351,7 +351,7 @@
 					</c:forEach>
 					<br>
 				<h4><b>${question.total}</b></h4>
-				<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].total" /> €
+				<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].totalIn" /> €
 				<br>
 					<h4>Huomioita:</h4>
 					<sf:textarea rows="5" style="width:100%;" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].remarks" 

@@ -145,19 +145,7 @@ public class ReportController {
 			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
 				for (Answer answer : group.getAnswers()) {
 					if (answer instanceof CostListingAnswer)
-						((CostListingAnswer) answer).formatCurrency();
-
-				}
-			}
-		}
-
-		for (ReportPart part : report.getReportParts()) {
-			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
-				for (Answer answer : group.getAnswers()) {
-					if (answer instanceof CostListingAnswer)
-						for (String output : ((CostListingAnswer) answer)
-								.getAnswersOut())
-							log.debug(output);
+						((CostListingAnswer) answer).formatCurrencies();
 
 				}
 			}
