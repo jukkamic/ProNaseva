@@ -1,6 +1,7 @@
 package fi.testcenter.domain.answer;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +131,7 @@ public class CostListingAnswer extends Answer {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return currencyIn;
+			return currencyIn.setScale(2, RoundingMode.HALF_UP);
 		} else
 			return BigDecimal.valueOf(0);
 	}
