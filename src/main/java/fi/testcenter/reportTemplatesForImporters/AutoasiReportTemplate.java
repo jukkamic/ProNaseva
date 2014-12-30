@@ -911,7 +911,7 @@ public class AutoasiReportTemplate {
 		b14.setQuestion("Onnistuiko keskustelu häiriöittä?");
 		optionsB14.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB14.add(new MultipleChoiceOption("Ei", 0));
-		b14.setOptionsList(optionsB13);
+		b14.setOptionsList(optionsB14);
 
 		ArrayList<Question> subQListb14 = new ArrayList<Question>();
 
