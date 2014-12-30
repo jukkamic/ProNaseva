@@ -1,5 +1,6 @@
 package fi.testcenter.domain.report;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +51,12 @@ import fi.testcenter.service.ReportService;
 		@NamedQuery(name = "workshopReportCount", query = "SELECT COUNT(r) FROM Report r WHERE r.workshop.id = :workshopId"),
 		@NamedQuery(name = "getReportsByImporterId", query = "SELECT r FROM Report r WHERE r.importer.id = :importerId"),
 		@NamedQuery(name = "getReportsByUserId", query = "SELECT r FROM Report r WHERE r.user.id = :userId") })
-public class Report {
+public class Report implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Transient
 	Logger log = Logger.getLogger("fi.testcenter.domain.report");
@@ -433,7 +439,8 @@ public class Report {
 									.getQuestion();
 
 							int questionMaxScore = 0;
-							for (MultipleChoiceOption option : mcq.getOptions()) {
+							for (MultipleChoiceOption option : mcq
+									.getOptionsList()) {
 								if (option.getPoints() != -1
 										&& option.getPoints() > questionMaxScore) {
 									questionMaxScore = option.getPoints();
@@ -450,11 +457,11 @@ public class Report {
 							// ei pisteytetä (pistemäärä -1)
 
 							if (mca.getChosenOptionIndex() != -1
-									&& mcq.getOptions()
+									&& mcq.getOptionsList()
 											.get(mca.getChosenOptionIndex())
 											.getPoints() != -1) {
 
-								mca.setScore(mcq.getOptions()
+								mca.setScore(mcq.getOptionsList()
 										.get(mca.getChosenOptionIndex())
 										.getPoints());
 
@@ -471,7 +478,7 @@ public class Report {
 										.getMaxScore() + mca.getMaxScore());
 								questionGroup
 										.setScore(questionGroup.getScore()
-												+ mcq.getOptions()
+												+ mcq.getOptionsList()
 														.get(mca.getChosenOptionIndex())
 														.getPoints());
 
@@ -513,7 +520,7 @@ public class Report {
 
 										int maxScore = 0;
 										for (MultipleChoiceOption option : mcq
-												.getOptions()) {
+												.getOptionsList()) {
 											if (option.getPoints() != -1
 													&& option.getPoints() > maxScore) {
 												maxScore = option.getPoints();
@@ -534,12 +541,12 @@ public class Report {
 										// (pistemäärä -1)
 
 										if (mca.getChosenOptionIndex() != -1
-												&& mcq.getOptions()
+												&& mcq.getOptionsList()
 														.get(mca.getChosenOptionIndex())
 														.getPoints() != -1) {
 
 											mca.setScore(mcq
-													.getOptions()
+													.getOptionsList()
 													.get(mca.getChosenOptionIndex())
 													.getPoints());
 											if (questionGroup.getScore() == -1)
@@ -561,7 +568,7 @@ public class Report {
 											questionGroup
 													.setScore(questionGroup
 															.getScore()
-															+ mcq.getOptions()
+															+ mcq.getOptionsList()
 																	.get(mca.getChosenOptionIndex())
 																	.getPoints());
 

@@ -80,7 +80,7 @@ public class VolvoReportTemplate {
 		options17.add(new MultipleChoiceOption("0 p", 0));
 		options17.add(new MultipleChoiceOption("1 p", 1));
 		options17.add(new MultipleChoiceOption("2 p", 2));
-		q40.setOptions(options17);
+		q40.setOptionsList(options17);
 		questionList2.add(q40);
 
 		MultipleChoiceQuestion q41 = new MultipleChoiceQuestion();
@@ -89,7 +89,7 @@ public class VolvoReportTemplate {
 		options18.add(new MultipleChoiceOption("0 p", 0));
 		options18.add(new MultipleChoiceOption("1 p", 1));
 		options18.add(new MultipleChoiceOption("2 p", 2));
-		q41.setOptions(options18);
+		q41.setOptionsList(options18);
 		questionList2.add(q41);
 
 		MultipleChoiceQuestion q42 = new MultipleChoiceQuestion();
@@ -98,7 +98,7 @@ public class VolvoReportTemplate {
 		options19.add(new MultipleChoiceOption("0 p", 0));
 		options19.add(new MultipleChoiceOption("1 p", 1));
 		options19.add(new MultipleChoiceOption("2 p", 2));
-		q42.setOptions(options19);
+		q42.setOptionsList(options19);
 		questionList2.add(q42);
 
 		MultipleChoiceQuestion q42uusi2 = new MultipleChoiceQuestion();
@@ -107,7 +107,7 @@ public class VolvoReportTemplate {
 		options19uusi2.add(new MultipleChoiceOption("0 p", 0));
 		options19uusi2.add(new MultipleChoiceOption("1 p", 1));
 		options19uusi2.add(new MultipleChoiceOption("2 p", 2));
-		q42uusi2.setOptions(options19uusi2);
+		q42uusi2.setOptionsList(options19uusi2);
 		questionList2.add(q42uusi2);
 
 		MultipleChoiceQuestion q7 = new MultipleChoiceQuestion();
@@ -116,7 +116,7 @@ public class VolvoReportTemplate {
 		options1.add(new MultipleChoiceOption("0 p", 0));
 		options1.add(new MultipleChoiceOption("1 p", 1));
 		options1.add(new MultipleChoiceOption("2 p", 2));
-		q7.setOptions(options1);
+		q7.setOptionsList(options1);
 		questionList2.add(q7);
 
 		MultipleChoiceQuestion q7uusi = new MultipleChoiceQuestion();
@@ -124,7 +124,7 @@ public class VolvoReportTemplate {
 		q7uusi.setQuestion("Oliko Service 2.0 hengari ripustettu peiliin?");
 		optionsQ7uusi.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsQ7uusi.add(new MultipleChoiceOption("Ei", -1));
-		q7uusi.setOptions(optionsQ7uusi);
+		q7uusi.setOptionsList(optionsQ7uusi);
 		questionList2.add(q7uusi);
 
 		questionGroup2.setQuestions(questionList2);
@@ -144,7 +144,7 @@ public class VolvoReportTemplate {
 		options7.add(new MultipleChoiceOption("Alle minuutissa", 2));
 		options7.add(new MultipleChoiceOption("1-3 minuuttia", 1));
 		options7.add(new MultipleChoiceOption("Yli 3 minuuttia", 0));
-		q19.setOptions(options7);
+		q19.setOptionsList(options7);
 		questionList3.add(q19);
 
 		MultipleChoiceQuestion q21 = new MultipleChoiceQuestion();
@@ -153,7 +153,7 @@ public class VolvoReportTemplate {
 		options8.add(new MultipleChoiceOption("Aikaa varattaessa", 2));
 		options8.add(new MultipleChoiceOption("Huoltoon tuotaessa", 1));
 		options8.add(new MultipleChoiceOption("Ei kysytä", 0));
-		q21.setOptions(options8);
+		q21.setOptionsList(options8);
 		questionList3.add(q21);
 
 		MultipleChoiceQuestion q23 = new MultipleChoiceQuestion();
@@ -162,7 +162,7 @@ public class VolvoReportTemplate {
 		options9.add(new MultipleChoiceOption(
 				"Soitetaan tai kysytään huoltoon tuotaessa", 2));
 		options9.add(new MultipleChoiceOption("Ei kysytä", 0));
-		q23.setOptions(options9);
+		q23.setOptionsList(options9);
 		questionList3.add(q23);
 
 		MultipleChoiceQuestion q25 = new MultipleChoiceQuestion();
@@ -171,7 +171,7 @@ public class VolvoReportTemplate {
 		options10.add(new MultipleChoiceOption("Pyydetään allekirjoitus", 2));
 		options10.add(new MultipleChoiceOption(
 				"Ei pyydetä/pyydetään huollon jälkeen", 0));
-		q25.setOptions(options10);
+		q25.setOptionsList(options10);
 		questionList3.add(q25);
 
 		MultipleChoiceQuestion q27 = new MultipleChoiceQuestion();
@@ -187,7 +187,7 @@ public class VolvoReportTemplate {
 				"Varmistetaan vain osittain/ <br> vain suullisesti", 1));
 		options11.add(new MultipleChoiceOption("Ei varmisteta mitään",
 				"Ei varmisteta mitään <br> &nbsp", 0));
-		q27.setOptions(options11);
+		q27.setOptionsList(options11);
 		questionList3.add(q27);
 
 		MultipleChoiceQuestion q29 = new MultipleChoiceQuestion();
@@ -197,7 +197,7 @@ public class VolvoReportTemplate {
 		options12
 				.add(new MultipleChoiceOption("Ilmoitetaan myöhästymisestä", 1));
 		options12.add(new MultipleChoiceOption("Huolto myöhästyy", 0));
-		q29.setOptions(options12);
+		q29.setOptionsList(options12);
 		questionList3.add(q29);
 
 		MultipleChoiceQuestion q31 = new MultipleChoiceQuestion();
@@ -206,7 +206,7 @@ public class VolvoReportTemplate {
 		options13.add(new MultipleChoiceOption("Käydään läpi riveittäin", 2));
 		options13.add(new MultipleChoiceOption("Pääpiirteittäin", 1));
 		options13.add(new MultipleChoiceOption("Ei ollenkaan", 0));
-		q31.setOptions(options13);
+		q31.setOptionsList(options13);
 		questionList3.add(q31);
 
 		MultipleChoiceQuestion q33 = new MultipleChoiceQuestion();
@@ -219,7 +219,7 @@ public class VolvoReportTemplate {
 				"Puutteellisesti täytetty/<br> väärä huoltoseloste", 1));
 		options14.add(new MultipleChoiceOption("Ei saada ollenkaan",
 				"Ei saada ollenkaan <br> &nbsp", 0));
-		q33.setOptions(options14);
+		q33.setOptionsList(options14);
 		questionList3.add(q33);
 
 		MultipleChoiceQuestion q35 = new MultipleChoiceQuestion();
@@ -228,7 +228,7 @@ public class VolvoReportTemplate {
 		options15.add(new MultipleChoiceOption("Sovittu summa", 2));
 		options15.add(new MultipleChoiceOption("Ylittyy alle 15%", 1));
 		options15.add(new MultipleChoiceOption("Ylittyy yli 15", 0));
-		q35.setOptions(options15);
+		q35.setOptionsList(options15);
 		questionList3.add(q35);
 
 		MultipleChoiceQuestion q37 = new MultipleChoiceQuestion();
@@ -237,7 +237,7 @@ public class VolvoReportTemplate {
 		options16.add(new MultipleChoiceOption("Hyvä", 2));
 		options16.add(new MultipleChoiceOption("Tyydyttävä", 1));
 		options16.add(new MultipleChoiceOption("Heikko", 0));
-		q37.setOptions(options16);
+		q37.setOptionsList(options16);
 		questionList3.add(q37);
 
 		questionGroup3.setQuestions(questionList3);
@@ -363,7 +363,7 @@ public class VolvoReportTemplate {
 		optionsA3.add(new MultipleChoiceOption("Puhelimitse", -1));
 		optionsA3.add(new MultipleChoiceOption("Korjaamolla", -1));
 		optionsA3.add(new MultipleChoiceOption("Internetissä", -1));
-		a3.setOptions(optionsA3);
+		a3.setOptionsList(optionsA3);
 		questionList4.add(a3);
 
 		TextQuestion a4 = new TextQuestion();
@@ -375,7 +375,7 @@ public class VolvoReportTemplate {
 		a5.setQuestion("Onnistuiko ajanvaraus ensimmäisellä yrityksellä?");
 		optionsA5.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA5.add(new MultipleChoiceOption("Ei", 0));
-		a5.setOptions(optionsA5);
+		a5.setOptionsList(optionsA5);
 		subQListA5.add(a5);
 		a4.setSubQuestions(subQListA5);
 		questionList4.add(a4);
@@ -385,7 +385,7 @@ public class VolvoReportTemplate {
 		a6.setQuestion("Asiakkaan tavoittaessa huoltoneuvojan, kuinka monta kertaa puhelin hälytti ennen vastaamista?");
 		optionsA6.add(new MultipleChoiceOption("Alle 5", 2));
 		optionsA6.add(new MultipleChoiceOption("Yli 5", 0));
-		a6.setOptions(optionsA6);
+		a6.setOptionsList(optionsA6);
 
 		ArrayList<Question> subQListA6 = new ArrayList<Question>();
 
@@ -394,7 +394,7 @@ public class VolvoReportTemplate {
 		a8.setQuestion("Yhdistettiinkö puhelu useammin kuin kerran uudelleen?");
 		optionsA8.add(new MultipleChoiceOption("Kyllä", 0));
 		optionsA8.add(new MultipleChoiceOption("Ei", 2));
-		a8.setOptions(optionsA8);
+		a8.setOptionsList(optionsA8);
 		subQListA6.add(a8);
 
 		MultipleChoiceQuestion a9 = new MultipleChoiceQuestion();
@@ -403,7 +403,7 @@ public class VolvoReportTemplate {
 		optionsA9.add(new MultipleChoiceOption("Alle 1 minuutti", 2));
 		optionsA9.add(new MultipleChoiceOption("1-3 minuuttia", 1));
 		optionsA9.add(new MultipleChoiceOption("Yli 3 minuuttia", 0));
-		a9.setOptions(optionsA9);
+		a9.setOptionsList(optionsA9);
 		subQListA6.add(a9);
 
 		a6.setSubQuestions(subQListA6);
@@ -415,7 +415,7 @@ public class VolvoReportTemplate {
 		optionsA10.add(new MultipleChoiceOption("Alle 1 minuutti", 2));
 		optionsA10.add(new MultipleChoiceOption("1-3 minuuttia", 1));
 		optionsA10.add(new MultipleChoiceOption("Yli 3 minuuttia", 0));
-		a10.setOptions(optionsA10);
+		a10.setOptionsList(optionsA10);
 		questionList4.add(a10);
 
 		MultipleChoiceQuestion a11 = new MultipleChoiceQuestion();
@@ -423,7 +423,7 @@ public class VolvoReportTemplate {
 		a11.setQuestion("Varattaessa aika internetistä, saiko asiakas vastauksen/vahvistuksen vuorokauden sisällä?");
 		optionsA11.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA11.add(new MultipleChoiceOption("Ei", 0));
-		a11.setOptions(optionsA11);
+		a11.setOptionsList(optionsA11);
 		questionList4.add(a11);
 
 		questionGroup4.setQuestions(questionList4);
@@ -441,7 +441,7 @@ public class VolvoReportTemplate {
 		a12.setQuestion("Olivatko asiakas- ja autotiedot jo liikkeen tiedossa?");
 		optionsA12.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsA12.add(new MultipleChoiceOption("Ei", -1));
-		a12.setOptions(optionsA12);
+		a12.setOptionsList(optionsA12);
 
 		ArrayList<Question> subQListA12 = new ArrayList<Question>();
 
@@ -450,7 +450,7 @@ public class VolvoReportTemplate {
 		a13.setQuestion("Jos kyllä: varmistettiinko puhelinnumero?");
 		optionsA13.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA13.add(new MultipleChoiceOption("Ei", 0));
-		a13.setOptions(optionsA13);
+		a13.setOptionsList(optionsA13);
 		subQListA12.add(a13);
 
 		MultipleChoiceQuestion a14 = new MultipleChoiceQuestion();
@@ -458,7 +458,7 @@ public class VolvoReportTemplate {
 		a14.setQuestion("Jos kyllä: tunnistettiinko auto rekisterinumerolla?");
 		optionsA14.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA14.add(new MultipleChoiceOption("Ei", 0));
-		a14.setOptions(optionsA14);
+		a14.setOptionsList(optionsA14);
 		subQListA12.add(a14);
 
 		MultipleChoiceQuestion a15 = new MultipleChoiceQuestion();
@@ -473,7 +473,7 @@ public class VolvoReportTemplate {
 		optionsA15.add(new MultipleChoiceOption(
 				"Kyllä, mutta asiakas ei halunnut antaa osoitetta",
 				"Kyllä, mutta asiakas ei<br>halunnut antaa osoitetta", 2));
-		a15.setOptions(optionsA15);
+		a15.setOptionsList(optionsA15);
 		subQListA12.add(a15);
 
 		a12.setSubQuestions(subQListA12);
@@ -484,7 +484,7 @@ public class VolvoReportTemplate {
 		a17.setQuestion("Jos asiakas- ja autotiedot eivät olleet liikkeellä, kysyttiinkö osoite?");
 		optionsA17.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA17.add(new MultipleChoiceOption("Ei", 0));
-		a17.setOptions(optionsA17);
+		a17.setOptionsList(optionsA17);
 
 		ArrayList<Question> subQListA17 = new ArrayList<Question>();
 
@@ -493,7 +493,7 @@ public class VolvoReportTemplate {
 		a18.setQuestion("Kysyttiinkö puhelinnumero?");
 		optionsA18.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA18.add(new MultipleChoiceOption("Ei", 0));
-		a18.setOptions(optionsA18);
+		a18.setOptionsList(optionsA18);
 		subQListA17.add(a18);
 
 		MultipleChoiceQuestion a19 = new MultipleChoiceQuestion();
@@ -501,7 +501,7 @@ public class VolvoReportTemplate {
 		a19.setQuestion("Kysyttiinkö rekisterinumero?");
 		optionsA19.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA19.add(new MultipleChoiceOption("Ei", 0));
-		a19.setOptions(optionsA19);
+		a19.setOptionsList(optionsA19);
 		subQListA17.add(a19);
 
 		MultipleChoiceQuestion a20 = new MultipleChoiceQuestion();
@@ -516,7 +516,7 @@ public class VolvoReportTemplate {
 		optionsA20.add(new MultipleChoiceOption(
 				"Kyllä, mutta ei halunnut antaa osoitetta",
 				"Kyllä, mutta asiakas ei<br>halunnut antaa osoitetta", 2));
-		a20.setOptions(optionsA20);
+		a20.setOptionsList(optionsA20);
 		subQListA17.add(a20);
 
 		a17.setSubQuestions(subQListA17);
@@ -552,7 +552,7 @@ public class VolvoReportTemplate {
 		optionsA34.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
 		optionsA34.add(new MultipleChoiceOption("Asiakas kertoi kysymättä",
 				"Asiakas kertoi<br>kysymättä", -1));
-		a34.setOptions(optionsA34);
+		a34.setOptionsList(optionsA34);
 		questionList6.add(a34);
 
 		MultipleChoiceQuestion a35 = new MultipleChoiceQuestion();
@@ -563,7 +563,7 @@ public class VolvoReportTemplate {
 		optionsA35.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
 		optionsA35.add(new MultipleChoiceOption("Asiakas kertoi kysymättä",
 				"Asiakas kertoi<br>kysymättä", -1));
-		a35.setOptions(optionsA35);
+		a35.setOptionsList(optionsA35);
 		questionList6.add(a35);
 
 		MultipleChoiceQuestion a36 = new MultipleChoiceQuestion();
@@ -571,7 +571,7 @@ public class VolvoReportTemplate {
 		a36.setQuestion("Saiko asiakas mielestään huoltoajan kohtuullisen ajan sisällä?");
 		optionsA36.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA36.add(new MultipleChoiceOption("Ei", 0));
-		a36.setOptions(optionsA36);
+		a36.setOptionsList(optionsA36);
 		questionList6.add(a36);
 
 		questionGroup6.setQuestions(questionList6);
@@ -592,7 +592,7 @@ public class VolvoReportTemplate {
 		optionsA37.add(new MultipleChoiceOption("Ei", "Ei <br> &nbsp", 0));
 		optionsA37.add(new MultipleChoiceOption("Asiakas kertoi odottavansa",
 				"Asiakas kertoi<br>odottavansa", -1));
-		a37.setOptions(optionsA37);
+		a37.setOptionsList(optionsA37);
 		questionList7.add(a37);
 
 		MultipleChoiceQuestion a38 = new MultipleChoiceQuestion();
@@ -605,7 +605,7 @@ public class VolvoReportTemplate {
 		optionsA38.add(new MultipleChoiceOption("Taksikuljetus", -1));
 		optionsA38
 				.add(new MultipleChoiceOption("Julkiset liikennevälineet", -1));
-		a38.setOptions(optionsA38);
+		a38.setOptionsList(optionsA38);
 
 		ArrayList<Question> subQListA38 = new ArrayList<Question>();
 
@@ -626,7 +626,7 @@ public class VolvoReportTemplate {
 		optionsA38uusi.add(new MultipleChoiceOption(
 				"Kyllä, mutta asiakas valitsi toisen vaihtoehdon",
 				"Kyllä mutta asiakas valitsi<br>toisen vaihtoehdon", -1));
-		a38uusi.setOptions(optionsA38uusi);
+		a38uusi.setOptionsList(optionsA38uusi);
 		questionList7.add(a38uusi);
 
 		questionGroup7.setQuestions(questionList7);
@@ -644,7 +644,7 @@ public class VolvoReportTemplate {
 		a555.setQuestion("Muistutettiinko asiakasta ottamaan huoltokirja mukaan?");
 		optionsA555.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA555.add(new MultipleChoiceOption("Ei", 0));
-		a555.setOptions(optionsA555);
+		a555.setOptionsList(optionsA555);
 		questionList8.add(a555);
 
 		MultipleChoiceQuestion a41 = new MultipleChoiceQuestion();
@@ -653,7 +653,7 @@ public class VolvoReportTemplate {
 				+ "kävikö nimi ilmi (mikäli varattiin paikanpäällä)?");
 		optionsA41.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA41.add(new MultipleChoiceOption("Ei", 0));
-		a41.setOptions(optionsA41);
+		a41.setOptionsList(optionsA41);
 
 		ArrayList<Question> subQListA41 = new ArrayList<Question>();
 
@@ -670,7 +670,7 @@ public class VolvoReportTemplate {
 		a43.setQuestion("Autossa on huolto-/leasing-sopimus?");
 		optionsA43.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsA43.add(new MultipleChoiceOption("Ei", -1));
-		a43.setOptions(optionsA43);
+		a43.setOptionsList(optionsA43);
 		questionList8.add(a43);
 
 		MultipleChoiceQuestion a44 = new MultipleChoiceQuestion();
@@ -678,7 +678,7 @@ public class VolvoReportTemplate {
 		a44.setQuestion("Kertoiko huoltoneuvoja kysymättä kustannusarvion?");
 		optionsA44.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA44.add(new MultipleChoiceOption("Ei", 0));
-		a44.setOptions(optionsA44);
+		a44.setOptionsList(optionsA44);
 
 		ArrayList<Question> subQListA44 = new ArrayList<Question>();
 
@@ -687,7 +687,7 @@ public class VolvoReportTemplate {
 		a45.setQuestion("Olisiko asiakas halunnut huoltoneuvojan kertovan kustannusarvion kysymättä?");
 		optionsA45.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsA45.add(new MultipleChoiceOption("Ei", -1));
-		a45.setOptions(optionsA45);
+		a45.setOptionsList(optionsA45);
 		subQListA44.add(a45);
 
 		MultipleChoiceQuestion a46 = new MultipleChoiceQuestion();
@@ -695,7 +695,7 @@ public class VolvoReportTemplate {
 		a46.setQuestion("Kysyikö asiakas kustannusarvion?");
 		optionsA46.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsA46.add(new MultipleChoiceOption("Ei", -1));
-		a46.setOptions(optionsA46);
+		a46.setOptionsList(optionsA46);
 		subQListA44.add(a46);
 
 		MultipleChoiceQuestion a47 = new MultipleChoiceQuestion();
@@ -704,7 +704,7 @@ public class VolvoReportTemplate {
 				+ "kustannusarvion?");
 		optionsA47.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA47.add(new MultipleChoiceOption("Ei", 0));
-		a47.setOptions(optionsA47);
+		a47.setOptionsList(optionsA47);
 		subQListA44.add(a47);
 
 		TextQuestion a48 = new TextQuestion();
@@ -719,7 +719,7 @@ public class VolvoReportTemplate {
 		a49.setQuestion("Kertoiko huoltoneuvoja kysymättä huollon valmistumisajan?");
 		optionsA49.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA49.add(new MultipleChoiceOption("Ei", 0));
-		a49.setOptions(optionsA49);
+		a49.setOptionsList(optionsA49);
 
 		ArrayList<Question> subQListA49 = new ArrayList<Question>();
 
@@ -728,7 +728,7 @@ public class VolvoReportTemplate {
 		a50.setQuestion("Jos ei kertonut: kysyikö asiakas itse?");
 		optionsA50.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsA50.add(new MultipleChoiceOption("Ei", -1));
-		a50.setOptions(optionsA50);
+		a50.setOptionsList(optionsA50);
 		subQListA49.add(a50);
 
 		MultipleChoiceQuestion a51 = new MultipleChoiceQuestion();
@@ -737,7 +737,7 @@ public class VolvoReportTemplate {
 				+ "valmistumisajan?");
 		optionsA51.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA51.add(new MultipleChoiceOption("Ei", 0));
-		a51.setOptions(optionsA51);
+		a51.setOptionsList(optionsA51);
 		subQListA49.add(a51);
 
 		TextQuestion a52 = new TextQuestion();
@@ -753,7 +753,7 @@ public class VolvoReportTemplate {
 		a53.setQuestion("Tilattiinko huollon lisäksi lisätöitä?");
 		optionsA53.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsA53.add(new MultipleChoiceOption("Ei", -1));
-		a53.setOptions(optionsA53);
+		a53.setOptionsList(optionsA53);
 
 		ArrayList<Question> subQListA53 = new ArrayList<Question>();
 
@@ -766,7 +766,7 @@ public class VolvoReportTemplate {
 		a55.setQuestion("Ehdittiinkö korjaamolla tekemään tilatut lisätyöt?");
 		optionsA55.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA55.add(new MultipleChoiceOption("Ei", 0));
-		a55.setOptions(optionsA55);
+		a55.setOptionsList(optionsA55);
 		subQListA53.add(a55);
 
 		MultipleChoiceQuestion a56 = new MultipleChoiceQuestion();
@@ -776,7 +776,7 @@ public class VolvoReportTemplate {
 		optionsA56.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA56.add(new MultipleChoiceOption("Ei", 0));
 		optionsA56.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		a56.setOptions(optionsA56);
+		a56.setOptionsList(optionsA56);
 		subQListA53.add(a56);
 
 		a53.setSubQuestions(subQListA53);
@@ -787,7 +787,7 @@ public class VolvoReportTemplate {
 		a57.setQuestion("Lähetettiinkö tekstiviestinä varmistus/muistutus huollosta?");
 		optionsA57.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA57.add(new MultipleChoiceOption("Ei", 0));
-		a57.setOptions(optionsA57);
+		a57.setOptionsList(optionsA57);
 		questionList8.add(a57);
 
 		MultipleChoiceQuestion a58 = new MultipleChoiceQuestion();
@@ -795,7 +795,7 @@ public class VolvoReportTemplate {
 		a58.setQuestion("Saiko asiakas varmistuksen/muistutuksen tilatuista lisätöistä?");
 		optionsA58.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA58.add(new MultipleChoiceOption("Ei", 0));
-		a58.setOptions(optionsA58);
+		a58.setOptionsList(optionsA58);
 		questionList8.add(a58);
 
 		MultipleChoiceQuestion a59 = new MultipleChoiceQuestion();
@@ -803,7 +803,7 @@ public class VolvoReportTemplate {
 		a59.setQuestion("Saiko asiakas toimintaohjeet ilmoittaa uusista lisätöistä?");
 		optionsA59.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsA59.add(new MultipleChoiceOption("Ei", 0));
-		a59.setOptions(optionsA59);
+		a59.setOptionsList(optionsA59);
 		questionList8.add(a59);
 
 		questionGroup8.setQuestions(questionList8);
@@ -842,7 +842,7 @@ public class VolvoReportTemplate {
 		b4.setQuestion("Löytyikö korjaamon pihalta vapaa asiakaspysäköintipaikka?");
 		optionsB4.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB4.add(new MultipleChoiceOption("Ei", 0));
-		b4.setOptions(optionsB4);
+		b4.setOptionsList(optionsB4);
 		questionList9.add(b4);
 
 		MultipleChoiceQuestion b5 = new MultipleChoiceQuestion();
@@ -850,7 +850,7 @@ public class VolvoReportTemplate {
 		b5.setQuestion("Löysikö asikas helposti korjaamon työnvastaanottoon?");
 		optionsB5.add(new MultipleChoiceOption("Kyllä", 4));
 		optionsB5.add(new MultipleChoiceOption("Ei", 0));
-		b5.setOptions(optionsB5);
+		b5.setOptionsList(optionsB5);
 		questionList9.add(b5);
 
 		MultipleChoiceQuestion b6 = new MultipleChoiceQuestion();
@@ -858,7 +858,7 @@ public class VolvoReportTemplate {
 		b6.setQuestion("Pääsikö asiakas suoraan huoltoneuvojan palveltavaksi?");
 		optionsB6.add(new MultipleChoiceOption("Kyllä", 4));
 		optionsB6.add(new MultipleChoiceOption("Ei", 0));
-		b6.setOptions(optionsB6);
+		b6.setOptionsList(optionsB6);
 
 		ArrayList<Question> subQListb7 = new ArrayList<Question>();
 
@@ -869,7 +869,7 @@ public class VolvoReportTemplate {
 		optionsB7.add(new MultipleChoiceOption("3-5 minuuttia", 2));
 		optionsB7.add(new MultipleChoiceOption("5-10 minuuttia", 1));
 		optionsB7.add(new MultipleChoiceOption("Yli 10 minuuttia", 0));
-		b7.setOptions(optionsB7);
+		b7.setOptionsList(optionsB7);
 		subQListb7.add(b7);
 
 		MultipleChoiceQuestion b8 = new MultipleChoiceQuestion();
@@ -880,7 +880,7 @@ public class VolvoReportTemplate {
 				"Henkilökuntaa ei ollut paikalla", -1));
 		optionsB8.add(new MultipleChoiceOption(
 				"Huoltoneuvoja puhui puhelimessa", -1));
-		b8.setOptions(optionsB8);
+		b8.setOptionsList(optionsB8);
 		subQListb7.add(b8);
 
 		b6.setSubQuestions(subQListb7);
@@ -902,7 +902,7 @@ public class VolvoReportTemplate {
 		b9.setQuestion("Kävikö palvelleen huoltoneuvojan nimi ilmi?");
 		optionsB9.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB9.add(new MultipleChoiceOption("Ei", 0));
-		b9.setOptions(optionsB9);
+		b9.setOptionsList(optionsB9);
 
 		ArrayList<Question> subQListb9 = new ArrayList<Question>();
 
@@ -918,7 +918,7 @@ public class VolvoReportTemplate {
 		b9uusi.setQuestion("Saiko asiakas huoltoneuvojan yhteystiedot?");
 		optionsB9uusi.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB9uusi.add(new MultipleChoiceOption("Ei", 0));
-		b9uusi.setOptions(optionsB9uusi);
+		b9uusi.setOptionsList(optionsB9uusi);
 		questionList10.add(b9uusi);
 
 		MultipleChoiceQuestion b11 = new MultipleChoiceQuestion();
@@ -927,7 +927,7 @@ public class VolvoReportTemplate {
 				+ "(huolto, tilatut lisätyöt, hinta- ja aika-arvio)?");
 		optionsB11.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB11.add(new MultipleChoiceOption("Ei", 0));
-		b11.setOptions(optionsB11);
+		b11.setOptionsList(optionsB11);
 		questionList10.add(b11);
 
 		MultipleChoiceQuestion b12 = new MultipleChoiceQuestion();
@@ -940,7 +940,7 @@ public class VolvoReportTemplate {
 		optionsB12.add(new MultipleChoiceOption(
 				"Asiakas otti huoltokirjan pyytämättä",
 				"Asiakas otti <br> huoltokirjan pyytämättä", -1));
-		b12.setOptions(optionsB12);
+		b12.setOptionsList(optionsB12);
 
 		ArrayList<Question> subQListB12 = new ArrayList<Question>();
 
@@ -949,7 +949,7 @@ public class VolvoReportTemplate {
 		b13.setQuestion("Jos ei: kysyikö korjaamon edustaja luvan ottaa se autosta?");
 		optionsB13.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB13.add(new MultipleChoiceOption("Ei", 0));
-		b13.setOptions(optionsB13);
+		b13.setOptionsList(optionsB13);
 		subQListB12.add(b13);
 		b12.setSubQuestions(subQListB12);
 
@@ -960,7 +960,7 @@ public class VolvoReportTemplate {
 		b14.setQuestion("Onnistuiko keskustelu häiriöittä?");
 		optionsB14.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB14.add(new MultipleChoiceOption("Ei", 0));
-		b14.setOptions(optionsB13);
+		b14.setOptionsList(optionsB13);
 
 		ArrayList<Question> subQListb14 = new ArrayList<Question>();
 
@@ -973,7 +973,7 @@ public class VolvoReportTemplate {
 		optionsB15.add(new MultipleChoiceOption("Toinen työntekijä", -1));
 		optionsB15.add(new MultipleChoiceOption("Korjaamon meteli", -1));
 		optionsB15.add(new MultipleChoiceOption("Yleinen meteli", -1));
-		b15.setOptions(optionsB15);
+		b15.setOptionsList(optionsB15);
 		subQListb14.add(b15);
 		b14.setSubQuestions(subQListb14);
 
@@ -994,7 +994,7 @@ public class VolvoReportTemplate {
 		b16.setQuestion("Oliko työmääräys valmiina?");
 		optionsB16.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB16.add(new MultipleChoiceOption("Ei", 0));
-		b16.setOptions(optionsB16);
+		b16.setOptionsList(optionsB16);
 		questionList11.add(b16);
 
 		MultipleChoiceQuestion b17 = new MultipleChoiceQuestion();
@@ -1002,7 +1002,7 @@ public class VolvoReportTemplate {
 		b17.setQuestion("Kysyttiinkö lupaa jollekin seuraavista lisätöistä?");
 		optionsB17.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB17.add(new MultipleChoiceOption("Ei", 0));
-		b17.setOptions(optionsB17);
+		b17.setOptionsList(optionsB17);
 
 		ArrayList<Question> subQListB17 = new ArrayList<Question>();
 
@@ -1019,7 +1019,7 @@ public class VolvoReportTemplate {
 				"Kysyttiin lupa tietylle summalle", -1));
 		optionsB18.add(new MultipleChoiceOption(
 				"Autossa on huolto- tai leasingsopimus", -1));
-		b18.setOptions(optionsB18);
+		b18.setOptionsList(optionsB18);
 		subQListB17.add(b18);
 		b17.setSubQuestions(subQListB17);
 		questionList11.add(b17);
@@ -1030,7 +1030,7 @@ public class VolvoReportTemplate {
 		optionsB19.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB19.add(new MultipleChoiceOption("Ei", 0));
 		optionsB19.add(new MultipleChoiceOption("Ei kaikkia mahdollisia", 1));
-		b19.setOptions(optionsB19);
+		b19.setOptionsList(optionsB19);
 
 		ArrayList<Question> subQListB19 = new ArrayList<Question>();
 
@@ -1046,7 +1046,7 @@ public class VolvoReportTemplate {
 		b21.setQuestion("Oliko tilattuja lisätöitä huollon lisäksi?");
 		optionsB21.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsB21.add(new MultipleChoiceOption("Ei", -1));
-		b21.setOptions(optionsB21);
+		b21.setOptionsList(optionsB21);
 
 		ArrayList<Question> subQListB21 = new ArrayList<Question>();
 
@@ -1055,7 +1055,7 @@ public class VolvoReportTemplate {
 		b22.setQuestion("Tuliko niihin muutoksia?");
 		optionsB22.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsB22.add(new MultipleChoiceOption("Ei", -1));
-		b22.setOptions(optionsB22);
+		b22.setOptionsList(optionsB22);
 		subQListB21.add(b22);
 		b21.setSubQuestions(subQListB21);
 
@@ -1066,7 +1066,7 @@ public class VolvoReportTemplate {
 		b23.setQuestion("Oliko tilattujen lisätöiden lisäksi uusia lisätöitä?");
 		optionsB23.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsB23.add(new MultipleChoiceOption("Ei", -1));
-		b23.setOptions(optionsB23);
+		b23.setOptionsList(optionsB23);
 		questionList11.add(b23);
 
 		TextQuestion b24 = new TextQuestion();
@@ -1078,7 +1078,7 @@ public class VolvoReportTemplate {
 		b25.setQuestion("Ehditäänkö korjaamolla tekemään uudet lisätyöt?");
 		optionsB25.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB25.add(new MultipleChoiceOption("Ei", 0));
-		b25.setOptions(optionsB25);
+		b25.setOptionsList(optionsB25);
 		questionList11.add(b25);
 
 		MultipleChoiceQuestion b26 = new MultipleChoiceQuestion();
@@ -1088,7 +1088,7 @@ public class VolvoReportTemplate {
 		optionsB26.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB26.add(new MultipleChoiceOption("Ei", 0));
 		optionsB26.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		b26.setOptions(optionsB26);
+		b26.setOptionsList(optionsB26);
 		questionList11.add(b26);
 
 		MultipleChoiceQuestion b27 = new MultipleChoiceQuestion();
@@ -1096,7 +1096,7 @@ public class VolvoReportTemplate {
 		b27.setQuestion("Kirjattiinko työmääräykseen tehtävä huolto?");
 		optionsB27.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB27.add(new MultipleChoiceOption("Ei", 0));
-		b27.setOptions(optionsB27);
+		b27.setOptionsList(optionsB27);
 
 		ArrayList<Question> subQListB27 = new ArrayList<Question>();
 
@@ -1106,7 +1106,7 @@ public class VolvoReportTemplate {
 		optionsB28.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB28.add(new MultipleChoiceOption("Ei", 0));
 		optionsB28.add(new MultipleChoiceOption("Ei pyydetty lupaa", -1));
-		b28.setOptions(optionsB28);
+		b28.setOptionsList(optionsB28);
 		subQListB27.add(b28);
 
 		MultipleChoiceQuestion b29 = new MultipleChoiceQuestion();
@@ -1115,7 +1115,7 @@ public class VolvoReportTemplate {
 		optionsB29.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB29.add(new MultipleChoiceOption("Ei", 0));
 		optionsB29.add(new MultipleChoiceOption("Ei kaikkia", 1));
-		b29.setOptions(optionsB29);
+		b29.setOptionsList(optionsB29);
 		subQListB27.add(b29);
 
 		MultipleChoiceQuestion b30 = new MultipleChoiceQuestion();
@@ -1124,7 +1124,7 @@ public class VolvoReportTemplate {
 		optionsB30.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB30.add(new MultipleChoiceOption("Ei", 0));
 		optionsB30.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		b30.setOptions(optionsB30);
+		b30.setOptionsList(optionsB30);
 		subQListB27.add(b30);
 
 		b27.setSubQuestions(subQListB27);
@@ -1136,7 +1136,7 @@ public class VolvoReportTemplate {
 		b31.setQuestion("Kysyttiinkö/varmistettiinko puhelinnumero?");
 		optionsB31.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB31.add(new MultipleChoiceOption("Ei", 0));
-		b31.setOptions(optionsB31);
+		b31.setOptionsList(optionsB31);
 		questionList11.add(b31);
 
 		MultipleChoiceQuestion b32 = new MultipleChoiceQuestion();
@@ -1151,7 +1151,7 @@ public class VolvoReportTemplate {
 		optionsB32.add(new MultipleChoiceOption(
 				"Kyllä mutta asiakas ei halunnut antaa osoitetta",
 				"Kyllä, mutta asiakas ei<br>halunnut antaa osoitetta", -1));
-		b32.setOptions(optionsB32);
+		b32.setOptionsList(optionsB32);
 		questionList11.add(b32);
 
 		MultipleChoiceQuestion b33 = new MultipleChoiceQuestion();
@@ -1159,7 +1159,7 @@ public class VolvoReportTemplate {
 		b33.setQuestion("Käytiinkö työmääräys läpi paperilta/tietokoneelta asiakkaalle?");
 		optionsB33.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB33.add(new MultipleChoiceOption("Ei", 0));
-		b33.setOptions(optionsB33);
+		b33.setOptionsList(optionsB33);
 		questionList11.add(b33);
 
 		MultipleChoiceQuestion b34 = new MultipleChoiceQuestion();
@@ -1167,7 +1167,7 @@ public class VolvoReportTemplate {
 		b34.setQuestion("Pyydettiinkö työmääräykseen allekirjoitus?");
 		optionsB34.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB34.add(new MultipleChoiceOption("Ei", 0));
-		b34.setOptions(optionsB34);
+		b34.setOptionsList(optionsB34);
 		questionList11.add(b34);
 
 		MultipleChoiceQuestion b35 = new MultipleChoiceQuestion();
@@ -1179,7 +1179,7 @@ public class VolvoReportTemplate {
 		optionsB35.add(new MultipleChoiceOption(
 				"Työnvastaanotossa ohje, jonka mukaan saa pyydettäessä",
 				"Työnvastaanotossa ohje, jonka<br>mukaan saa pyydettäessä", 1));
-		b35.setOptions(optionsB35);
+		b35.setOptionsList(optionsB35);
 		questionList11.add(b35);
 
 		MultipleChoiceQuestion b36 = new MultipleChoiceQuestion();
@@ -1187,7 +1187,7 @@ public class VolvoReportTemplate {
 		b36.setQuestion("Autossa on huolto-/leasing-sopimus?");
 		optionsB36.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsB36.add(new MultipleChoiceOption("Ei", -1));
-		b36.setOptions(optionsB36);
+		b36.setOptionsList(optionsB36);
 		questionList11.add(b36);
 
 		MultipleChoiceQuestion b37 = new MultipleChoiceQuestion();
@@ -1200,7 +1200,7 @@ public class VolvoReportTemplate {
 				"Ajanvarauksessa sovittua kustannusarviota ei varmistettu",
 				"Ajanvarauksessa sovittua<br>kustannusarviota ei varmistettu",
 				2));
-		b37.setOptions(optionsB37);
+		b37.setOptionsList(optionsB37);
 
 		ArrayList<Question> subQListb37 = new ArrayList<Question>();
 
@@ -1209,7 +1209,7 @@ public class VolvoReportTemplate {
 		b38.setQuestion("Jos ei kerrottu/varmistettu: kysyikö asiakas itse huollon kustannusarvion?");
 		optionsB38.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsB38.add(new MultipleChoiceOption("Ei", -1));
-		b38.setOptions(optionsB38);
+		b38.setOptionsList(optionsB38);
 		subQListb37.add(b38);
 
 		MultipleChoiceQuestion b39 = new MultipleChoiceQuestion();
@@ -1217,7 +1217,7 @@ public class VolvoReportTemplate {
 		b39.setQuestion("Saiko asiakas halutessaan riittävän selkeän/tarkan kustannusarvion?");
 		optionsB39.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB39.add(new MultipleChoiceOption("Ei", 0));
-		b39.setOptions(optionsB39);
+		b39.setOptionsList(optionsB39);
 		subQListb37.add(b39);
 
 		TextQuestion b40 = new TextQuestion();
@@ -1234,7 +1234,7 @@ public class VolvoReportTemplate {
 		optionsB41.add(new MultipleChoiceOption("Ei", 0));
 		optionsB41.add(new MultipleChoiceOption(
 				"Ajanvarauksessa sovittua valmistumisaikaa ei varmistettu", 0));
-		b41.setOptions(optionsB41);
+		b41.setOptionsList(optionsB41);
 
 		ArrayList<Question> subQListb41 = new ArrayList<Question>();
 
@@ -1243,7 +1243,7 @@ public class VolvoReportTemplate {
 		b42.setQuestion("Jos ei kysytty: kysyikö asiakas itse?");
 		optionsB42.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsB42.add(new MultipleChoiceOption("Ei", -1));
-		b42.setOptions(optionsB42);
+		b42.setOptionsList(optionsB42);
 		subQListb41.add(b42);
 
 		MultipleChoiceQuestion b43 = new MultipleChoiceQuestion();
@@ -1251,7 +1251,7 @@ public class VolvoReportTemplate {
 		b43.setQuestion("Saiko asiakas halutessaan riittävän selkeän valmistumisajan?");
 		optionsB43.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB43.add(new MultipleChoiceOption("Ei", 0));
-		b43.setOptions(optionsB43);
+		b43.setOptionsList(optionsB43);
 		subQListb41.add(b43);
 
 		b41.setSubQuestions(subQListb41);
@@ -1267,7 +1267,7 @@ public class VolvoReportTemplate {
 		b45.setQuestion("Luvattiinko huollon valmistumisesta ilmoittaa?");
 		optionsB45.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsB45.add(new MultipleChoiceOption("Ei", 0));
-		b45.setOptions(optionsB45);
+		b45.setOptionsList(optionsB45);
 		questionList11.add(b45);
 
 		MultipleChoiceQuestion b45uusi = new MultipleChoiceQuestion();
@@ -1277,7 +1277,7 @@ public class VolvoReportTemplate {
 		optionsB45uusi.add(new MultipleChoiceOption("Ei", 0));
 		optionsB45uusi.add(new MultipleChoiceOption(
 				"Asiakasta ei kiinnostanut sijaintiauton merkki", -1));
-		b45uusi.setOptions(optionsB45uusi);
+		b45uusi.setOptionsList(optionsB45uusi);
 		questionList11.add(b45uusi);
 
 		questionGroup11.setQuestions(questionList11);
@@ -1304,7 +1304,7 @@ public class VolvoReportTemplate {
 		c1.setQuestion("Havaittiinko auton ollessa korjaamolla korjausta vaativia vikoja?");
 		optionsC1.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsC1.add(new MultipleChoiceOption("Ei", -1));
-		c1.setOptions(optionsC1);
+		c1.setOptionsList(optionsC1);
 
 		ArrayList<Question> subQListC1 = new ArrayList<Question>();
 
@@ -1320,7 +1320,7 @@ public class VolvoReportTemplate {
 		optionsC2.add(new MultipleChoiceOption(
 				"Lupa pyydetty huoltoon tuotaessa",
 				"Lupa pyydetty huoltoon<br>tuotaessa", -1));
-		c2.setOptions(optionsC2);
+		c2.setOptionsList(optionsC2);
 
 		subQListC1.add(c2);
 
@@ -1342,7 +1342,7 @@ public class VolvoReportTemplate {
 		optionsC5.add(new MultipleChoiceOption("Kyllä kaikille", 2));
 		optionsC5.add(new MultipleChoiceOption("Kyllä osalle", 1));
 		optionsC5.add(new MultipleChoiceOption("Ei", 0));
-		c5.setOptions(optionsC5);
+		c5.setOptionsList(optionsC5);
 
 		ArrayList<Question> subQListC5 = new ArrayList<Question>();
 
@@ -1359,7 +1359,7 @@ public class VolvoReportTemplate {
 		optionsC7.add(new MultipleChoiceOption("Kyllä kaikki", -1));
 		optionsC7.add(new MultipleChoiceOption("Kyllä osan", -1));
 		optionsC7.add(new MultipleChoiceOption("Ei", -1));
-		c7.setOptions(optionsC7);
+		c7.setOptionsList(optionsC7);
 
 		ArrayList<Question> subQListC7 = new ArrayList<Question>();
 
@@ -1370,7 +1370,7 @@ public class VolvoReportTemplate {
 		optionsC8.add(new MultipleChoiceOption("Ei", 0));
 		optionsC8.add(new MultipleChoiceOption("Ei vaikuta valmistumisaikaan",
 				-11));
-		c8.setOptions(optionsC8);
+		c8.setOptionsList(optionsC8);
 		subQListC7.add(c8);
 
 		TextQuestion c9 = new TextQuestion();
@@ -1383,7 +1383,7 @@ public class VolvoReportTemplate {
 				+ "laiminlyömisen mahdolliset seuraukset?");
 		optionsC10.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsC10.add(new MultipleChoiceOption("Ei", 0));
-		c10.setOptions(optionsC10);
+		c10.setOptionsList(optionsC10);
 
 		subQListC7.add(c10);
 		c7.setSubQuestions(subQListC7);
@@ -1398,7 +1398,7 @@ public class VolvoReportTemplate {
 		optionsC11.add(new MultipleChoiceOption(
 				"Sovittu että valmistumisesta ei tarvitse ilmoittaa",
 				"Sovittu että valmistumisesta<br>ei tarvitse ilmoittaa", -1));
-		c11.setOptions(optionsC11);
+		c11.setOptionsList(optionsC11);
 
 		questionList12.add(c11);
 
@@ -1440,7 +1440,7 @@ public class VolvoReportTemplate {
 						0));
 		optionsC14.add(new MultipleChoiceOption("Ei sovittua valmistumisaikaa",
 				-1));
-		c14.setOptions(optionsC14);
+		c14.setOptionsList(optionsC14);
 
 		questionList13.add(c14);
 
@@ -1449,7 +1449,7 @@ public class VolvoReportTemplate {
 		c15.setQuestion("Pääsikö asiakas suoraan huoltoneuvojan palveltavaksi?");
 		optionsC15.add(new MultipleChoiceOption("Kyllä", 4));
 		optionsC15.add(new MultipleChoiceOption("Ei", 0));
-		c15.setOptions(optionsC15);
+		c15.setOptionsList(optionsC15);
 
 		ArrayList<Question> subQListC15 = new ArrayList<Question>();
 
@@ -1460,7 +1460,7 @@ public class VolvoReportTemplate {
 		optionsC16.add(new MultipleChoiceOption("3-5 minuuttia", 2));
 		optionsC16.add(new MultipleChoiceOption("5-10 minuuttia", 1));
 		optionsC16.add(new MultipleChoiceOption("Yli 10 minuuttia", 0));
-		c16.setOptions(optionsC16);
+		c16.setOptionsList(optionsC16);
 
 		subQListC15.add(c16);
 
@@ -1473,7 +1473,7 @@ public class VolvoReportTemplate {
 		optionsC17.add(new MultipleChoiceOption(
 				"Huoltoneuvoja puhui puhelimessa", -1));
 
-		c17.setOptions(optionsC17);
+		c17.setOptionsList(optionsC17);
 		subQListC15.add(c17);
 
 		TextQuestion c18 = new TextQuestion();
@@ -1501,7 +1501,7 @@ public class VolvoReportTemplate {
 		optionsD1.add(new MultipleChoiceOption("Ei", 0));
 		optionsD1.add(new MultipleChoiceOption(
 				"Asiakas saapui sovittua aikaisemmin", -1));
-		d1.setOptions(optionsD1);
+		d1.setOptionsList(optionsD1);
 		questionList14.add(d1);
 
 		MultipleChoiceQuestion d2 = new MultipleChoiceQuestion();
@@ -1510,7 +1510,7 @@ public class VolvoReportTemplate {
 		optionsD2.add(new MultipleChoiceOption("Käydään läpi riveittäin", 6));
 		optionsD2.add(new MultipleChoiceOption("Pääpiirteittäin", 3));
 		optionsD2.add(new MultipleChoiceOption("Ei ollenkaan", 0));
-		d2.setOptions(optionsD2);
+		d2.setOptionsList(optionsD2);
 		questionList14.add(d2);
 
 		MultipleChoiceQuestion d3 = new MultipleChoiceQuestion();
@@ -1524,7 +1524,7 @@ public class VolvoReportTemplate {
 		optionsD3.add(new MultipleChoiceOption("Ei saatu vaikka kysyttiin", 0));
 		optionsD3.add(new MultipleChoiceOption("Ei kysytty", -1));
 		optionsD3.add(new MultipleChoiceOption("Huolto-/leasingsopimus", -1));
-		d3.setOptions(optionsD3);
+		d3.setOptionsList(optionsD3);
 		questionList14.add(d3);
 
 		MultipleChoiceQuestion d4 = new MultipleChoiceQuestion();
@@ -1534,7 +1534,7 @@ public class VolvoReportTemplate {
 		optionsD4.add(new MultipleChoiceOption("Kyllä osa", 1));
 		optionsD4.add(new MultipleChoiceOption("Ei", 0));
 		optionsD4.add(new MultipleChoiceOption("Ei huomautettavaa", -1));
-		d4.setOptions(optionsD4);
+		d4.setOptionsList(optionsD4);
 		questionList14.add(d4);
 
 		questionGroup14.setQuestions(questionList14);
@@ -1554,7 +1554,7 @@ public class VolvoReportTemplate {
 		optionsD5.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsD5.add(new MultipleChoiceOption("Ei", 0));
 
-		d5.setOptions(optionsD5);
+		d5.setOptionsList(optionsD5);
 		questionList15.add(d5);
 
 		MultipleChoiceQuestion d6 = new MultipleChoiceQuestion();
@@ -1564,7 +1564,7 @@ public class VolvoReportTemplate {
 		optionsD6.add(new MultipleChoiceOption("Kyllä osasta", 1));
 		optionsD6.add(new MultipleChoiceOption("Ei", 0));
 		optionsD6.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		d6.setOptions(optionsD6);
+		d6.setOptionsList(optionsD6);
 		questionList15.add(d6);
 
 		MultipleChoiceQuestion d7 = new MultipleChoiceQuestion();
@@ -1574,7 +1574,7 @@ public class VolvoReportTemplate {
 		optionsD7.add(new MultipleChoiceOption("Kyllä osasta", 1));
 		optionsD7.add(new MultipleChoiceOption("Ei", 0));
 		optionsD7.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		d7.setOptions(optionsD7);
+		d7.setOptionsList(optionsD7);
 		questionList15.add(d7);
 
 		MultipleChoiceQuestion d8 = new MultipleChoiceQuestion();
@@ -1582,7 +1582,7 @@ public class VolvoReportTemplate {
 		d8.setQuestion("Annettiinko huollon tarkastuslista?");
 		optionsD8.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsD8.add(new MultipleChoiceOption("Ei", 0));
-		d8.setOptions(optionsD8);
+		d8.setOptionsList(optionsD8);
 		questionList15.add(d8);
 
 		MultipleChoiceQuestion d9 = new MultipleChoiceQuestion();
@@ -1590,7 +1590,7 @@ public class VolvoReportTemplate {
 		d9.setQuestion("Esiteltiinkö huollon tarkastuslistan merkintöjä?");
 		optionsD9.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsD9.add(new MultipleChoiceOption("Ei", 0));
-		d9.setOptions(optionsD9);
+		d9.setOptionsList(optionsD9);
 		questionList15.add(d9);
 
 		MultipleChoiceQuestion d90 = new MultipleChoiceQuestion();
@@ -1599,7 +1599,7 @@ public class VolvoReportTemplate {
 		optionsD90.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsD90.add(new MultipleChoiceOption("Ei", 0));
 		optionsD90.add(new MultipleChoiceOption("Ei leimattu", -1));
-		d90.setOptions(optionsD90);
+		d90.setOptionsList(optionsD90);
 		questionList15.add(d90);
 
 		MultipleChoiceQuestion d10 = new MultipleChoiceQuestion();
@@ -1608,7 +1608,7 @@ public class VolvoReportTemplate {
 		optionsD10.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsD10.add(new MultipleChoiceOption("Ei", 0));
 		optionsD10.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		d10.setOptions(optionsD10);
+		d10.setOptionsList(optionsD10);
 		questionList15.add(d10);
 
 		MultipleChoiceQuestion d11 = new MultipleChoiceQuestion();
@@ -1616,7 +1616,7 @@ public class VolvoReportTemplate {
 		d11.setQuestion("Ehdittiinkö korjaamolla tekemään kaikki sovitut työt?");
 		optionsD11.add(new MultipleChoiceOption("Kyllä", 4));
 		optionsD11.add(new MultipleChoiceOption("Ei", 0));
-		d11.setOptions(optionsD11);
+		d11.setOptionsList(optionsD11);
 		questionList15.add(d11);
 
 		MultipleChoiceQuestion d12 = new MultipleChoiceQuestion();
@@ -1625,7 +1625,7 @@ public class VolvoReportTemplate {
 				+ "ei ollut tarvittavia osia, tarjottiinko uutta aikaa?");
 		optionsD12.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsD12.add(new MultipleChoiceOption("Ei", 0));
-		d12.setOptions(optionsD12);
+		d12.setOptionsList(optionsD12);
 		questionList15.add(d12);
 
 		MultipleChoiceQuestion d12uusi = new MultipleChoiceQuestion();
@@ -1633,7 +1633,7 @@ public class VolvoReportTemplate {
 		d12uusi.setQuestion("Kerrottiinko asiakkaalle Tiepalvelun olemassaolosta?");
 		optionsD12uusi.add(new MultipleChoiceOption("Kyllä", 2));
 		optionsD12uusi.add(new MultipleChoiceOption("Ei", 0));
-		d12uusi.setOptions(optionsD12uusi);
+		d12uusi.setOptionsList(optionsD12uusi);
 		questionList15.add(d12uusi);
 
 		questionGroup15.setQuestions(questionList15);
@@ -1653,7 +1653,7 @@ public class VolvoReportTemplate {
 		optionsD13.add(new MultipleChoiceOption("Hyvä", 8));
 		optionsD13.add(new MultipleChoiceOption("Tyydyttävä", 3));
 		optionsD13.add(new MultipleChoiceOption("Heikko", 0));
-		d13.setOptions(optionsD13);
+		d13.setOptionsList(optionsD13);
 		questionList16.add(d13);
 
 		questionGroup16.setQuestions(questionList16);
@@ -1681,7 +1681,7 @@ public class VolvoReportTemplate {
 		d14uusi.setQuestion("Leimaus käytössä?");
 		optionsD14uusi.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsD14uusi.add(new MultipleChoiceOption("Ei", -1));
-		d14uusi.setOptions(optionsD14uusi);
+		d14uusi.setOptionsList(optionsD14uusi);
 		questionList17.add(d14uusi);
 
 		TextQuestion d14uusi2 = new TextQuestion();
@@ -1699,7 +1699,7 @@ public class VolvoReportTemplate {
 		optionsD14.add(new MultipleChoiceOption("Ei", -1));
 		optionsD14.add(new MultipleChoiceOption("Ei sovittua valmistumisaikaa",
 				-1));
-		d14.setOptions(optionsD14);
+		d14.setOptionsList(optionsD14);
 		questionList17.add(d14);
 
 		MultipleChoiceQuestion d15 = new MultipleChoiceQuestion();
@@ -1707,7 +1707,7 @@ public class VolvoReportTemplate {
 		d15.setQuestion("Asiakkaan nimi ja puhelinnumero kirjattu");
 		optionsD15.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsD15.add(new MultipleChoiceOption("Ei", -1));
-		d15.setOptions(optionsD15);
+		d15.setOptionsList(optionsD15);
 		questionList17.add(d15);
 
 		MultipleChoiceQuestion d16 = new MultipleChoiceQuestion();
@@ -1715,7 +1715,7 @@ public class VolvoReportTemplate {
 		d16.setQuestion("Asiakkaan allekirjoitus löytyy");
 		optionsD16.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsD16.add(new MultipleChoiceOption("Ei", -1));
-		d16.setOptions(optionsD16);
+		d16.setOptionsList(optionsD16);
 		questionList17.add(d16);
 
 		MultipleChoiceQuestion d17 = new MultipleChoiceQuestion();
@@ -1723,7 +1723,7 @@ public class VolvoReportTemplate {
 		d17.setQuestion("Työn vastaanottaneen henkilön nimi työmääräyksessä");
 		optionsD17.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsD17.add(new MultipleChoiceOption("Ei", -1));
-		d17.setOptions(optionsD17);
+		d17.setOptionsList(optionsD17);
 		questionList17.add(d17);
 
 		MultipleChoiceQuestion d18 = new MultipleChoiceQuestion();
@@ -1733,7 +1733,7 @@ public class VolvoReportTemplate {
 		optionsD18.add(new MultipleChoiceOption("Ei", -1));
 		optionsD18.add(new MultipleChoiceOption("Ei tarvetta yhteydenottoon",
 				-1));
-		d18.setOptions(optionsD18);
+		d18.setOptionsList(optionsD18);
 		questionList17.add(d18);
 
 		questionGroup17.setQuestions(questionList17);
@@ -1756,7 +1756,7 @@ public class VolvoReportTemplate {
 		e1.setQuestion("Huollon tarkastuslista täytetty oikein");
 		optionsE1.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE1.add(new MultipleChoiceOption("Ei", -1));
-		e1.setOptions(optionsE1);
+		e1.setOptionsList(optionsE1);
 		questionList18.add(e1);
 
 		MultipleChoiceQuestion e2 = new MultipleChoiceQuestion();
@@ -1764,7 +1764,7 @@ public class VolvoReportTemplate {
 		e2.setQuestion("Työmääräykseen merkitty todelliset ajokilometrit");
 		optionsE2.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE2.add(new MultipleChoiceOption("Ei", -1));
-		e2.setOptions(optionsE2);
+		e2.setOptionsList(optionsE2);
 		questionList18.add(e2);
 
 		MultipleChoiceQuestion e2uusi = new MultipleChoiceQuestion();
@@ -1773,7 +1773,7 @@ public class VolvoReportTemplate {
 		optionsE2uusi.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE2uusi.add(new MultipleChoiceOption("Ei", -1));
 		optionsE2uusi.add(new MultipleChoiceOption("Ei takuukorjauksia", -1));
-		e2uusi.setOptions(optionsE2uusi);
+		e2uusi.setOptionsList(optionsE2uusi);
 		questionList18.add(e2uusi);
 
 		MultipleChoiceQuestion e3 = new MultipleChoiceQuestion();
@@ -1781,7 +1781,7 @@ public class VolvoReportTemplate {
 		e3.setQuestion("Tarvittavat huollon asiakirjat työmääräyksen mukana");
 		optionsE3.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE3.add(new MultipleChoiceOption("Ei", -1));
-		e3.setOptions(optionsE3);
+		e3.setOptionsList(optionsE3);
 		questionList18.add(e3);
 
 		MultipleChoiceQuestion e4 = new MultipleChoiceQuestion();
@@ -1790,7 +1790,7 @@ public class VolvoReportTemplate {
 		optionsE4.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE4.add(new MultipleChoiceOption("Ei", -1));
 		optionsE4.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		e4.setOptions(optionsE4);
+		e4.setOptionsList(optionsE4);
 		questionList18.add(e4);
 
 		MultipleChoiceQuestion e5 = new MultipleChoiceQuestion();
@@ -1799,7 +1799,7 @@ public class VolvoReportTemplate {
 		optionsE5.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE5.add(new MultipleChoiceOption("Ei", -1));
 		optionsE5.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		e5.setOptions(optionsE5);
+		e5.setOptionsList(optionsE5);
 		questionList18.add(e5);
 
 		MultipleChoiceQuestion e6 = new MultipleChoiceQuestion();
@@ -1809,7 +1809,7 @@ public class VolvoReportTemplate {
 		optionsE6.add(new MultipleChoiceOption("Ei", -1));
 		optionsE6.add(new MultipleChoiceOption(
 				"Ei asiakkaalle kerrottavia huomautuksia", -1));
-		e6.setOptions(optionsE6);
+		e6.setOptionsList(optionsE6);
 		questionList18.add(e6);
 
 		MultipleChoiceQuestion e7 = new MultipleChoiceQuestion();
@@ -1819,7 +1819,7 @@ public class VolvoReportTemplate {
 		optionsE7.add(new MultipleChoiceOption("Ei", -1));
 		optionsE7.add(new MultipleChoiceOption(
 				"Ei varaosia vaativia lisätöitä/korjauksia", -1));
-		e7.setOptions(optionsE7);
+		e7.setOptionsList(optionsE7);
 		questionList18.add(e7);
 
 		MultipleChoiceQuestion e8 = new MultipleChoiceQuestion();
@@ -1828,7 +1828,7 @@ public class VolvoReportTemplate {
 		optionsE8.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE8.add(new MultipleChoiceOption("Ei", -1));
 		optionsE8.add(new MultipleChoiceOption("Ei tarpeellista", -1));
-		e8.setOptions(optionsE8);
+		e8.setOptionsList(optionsE8);
 		questionList18.add(e8);
 
 		questionGroup18.setQuestions(questionList18);
@@ -1848,7 +1848,7 @@ public class VolvoReportTemplate {
 		optionsE9.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE9.add(new MultipleChoiceOption("Ei", -1));
 		optionsE9.add(new MultipleChoiceOption("Varaosia ei kerätä", -1));
-		e9.setOptions(optionsE9);
+		e9.setOptionsList(optionsE9);
 		questionList19.add(e9);
 
 		MultipleChoiceQuestion e10 = new MultipleChoiceQuestion();
@@ -1856,7 +1856,7 @@ public class VolvoReportTemplate {
 		e10.setQuestion("Huoltoon tarvittavat varaosat olivat oikeat");
 		optionsE10.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE10.add(new MultipleChoiceOption("Ei", -1));
-		e10.setOptions(optionsE10);
+		e10.setOptionsList(optionsE10);
 		questionList19.add(e10);
 
 		MultipleChoiceQuestion e11 = new MultipleChoiceQuestion();
@@ -1866,7 +1866,7 @@ public class VolvoReportTemplate {
 		optionsE11.add(new MultipleChoiceOption("Ei", -1));
 		optionsE11.add(new MultipleChoiceOption(
 				"Ei ennalta tilattuja varaosia vaativia lisätöitä", -1));
-		e11.setOptions(optionsE11);
+		e11.setOptionsList(optionsE11);
 		questionList19.add(e11);
 
 		MultipleChoiceQuestion e12 = new MultipleChoiceQuestion();
@@ -1875,7 +1875,7 @@ public class VolvoReportTemplate {
 		optionsE12.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE12.add(new MultipleChoiceOption("Ei", -1));
 		optionsE12.add(new MultipleChoiceOption("Ei tarvetta varaosille", -1));
-		e12.setOptions(optionsE12);
+		e12.setOptionsList(optionsE12);
 		questionList19.add(e12);
 
 		MultipleChoiceQuestion e13 = new MultipleChoiceQuestion();
@@ -1885,7 +1885,7 @@ public class VolvoReportTemplate {
 		optionsE13.add(new MultipleChoiceOption("Ei", -1));
 		optionsE13.add(new MultipleChoiceOption(
 				"Ei tarvetta asioida varaosissa", -1));
-		e13.setOptions(optionsE13);
+		e13.setOptionsList(optionsE13);
 		questionList19.add(e13);
 
 		questionGroup19.setQuestions(questionList19);
@@ -1907,7 +1907,7 @@ public class VolvoReportTemplate {
 		optionsE14.add(new MultipleChoiceOption("Ei", -1));
 		optionsE14.add(new MultipleChoiceOption(
 				"Ei tarvetta asioida huoltoneuvojan kanssa", -1));
-		e14.setOptions(optionsE14);
+		e14.setOptionsList(optionsE14);
 		questionList20.add(e14);
 
 		MultipleChoiceQuestion e15 = new MultipleChoiceQuestion();
@@ -1917,7 +1917,7 @@ public class VolvoReportTemplate {
 		optionsE15.add(new MultipleChoiceOption("Ei", -1));
 		optionsE15.add(new MultipleChoiceOption(
 				"Ei tarpeellista kysyä auton sijaintia asiakkaalta", -1));
-		e15.setOptions(optionsE15);
+		e15.setOptionsList(optionsE15);
 		questionList20.add(e15);
 
 		MultipleChoiceQuestion e16 = new MultipleChoiceQuestion();
@@ -1925,7 +1925,7 @@ public class VolvoReportTemplate {
 		e16.setQuestion("Oliko työmääräyksen teksti ymmärrettävässä muodossa");
 		optionsE16.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE16.add(new MultipleChoiceOption("Ei", -1));
-		e16.setOptions(optionsE16);
+		e16.setOptionsList(optionsE16);
 		questionList20.add(e16);
 
 		MultipleChoiceQuestion e17 = new MultipleChoiceQuestion();
@@ -1933,7 +1933,7 @@ public class VolvoReportTemplate {
 		e17.setQuestion("Oliko työmääräyksessä riittävästi tietoa");
 		optionsE17.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE17.add(new MultipleChoiceOption("Ei", -1));
-		e17.setOptions(optionsE17);
+		e17.setOptionsList(optionsE17);
 		questionList20.add(e17);
 
 		MultipleChoiceQuestion e18 = new MultipleChoiceQuestion();
@@ -1941,7 +1941,7 @@ public class VolvoReportTemplate {
 		e18.setQuestion("Oliko työmääräykseen merkitty kaikki tilatut työt");
 		optionsE18.add(new MultipleChoiceOption("Kyllä", -1));
 		optionsE18.add(new MultipleChoiceOption("Ei", -1));
-		e18.setOptions(optionsE18);
+		e18.setOptionsList(optionsE18);
 		questionList20.add(e18);
 
 		questionGroup20.setQuestions(questionList20);

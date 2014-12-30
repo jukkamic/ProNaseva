@@ -1,6 +1,5 @@
 package fi.testcenter.domain.question;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +12,7 @@ public class MultipleChoiceOption {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long id;
 
-	@Column(name = "MCQ_OPTION")
-	// Tarpeen koska OPTION on varattu sana MySQL:ssäS
-	private String option;
+	private String multipleChoiceOption;
 
 	private String radiobuttonText;
 
@@ -26,22 +23,22 @@ public class MultipleChoiceOption {
 
 	public MultipleChoiceOption(String option, String radiobuttonText,
 			int points) {
-		this.option = option;
+		this.multipleChoiceOption = option;
 		this.radiobuttonText = radiobuttonText;
 		this.points = points;
 	}
 
 	public MultipleChoiceOption(String option, int points) {
-		this.option = option;
+		this.multipleChoiceOption = option;
 		this.points = points;
 	}
 
-	public String getOption() {
-		return option;
+	public String getMultipleChoiceOption() {
+		return multipleChoiceOption;
 	}
 
-	public void setOption(String option) {
-		this.option = option;
+	public void setMultipleChoiceOption(String option) {
+		this.multipleChoiceOption = option;
 	}
 
 	public long getChoiceId() {
@@ -69,7 +66,7 @@ public class MultipleChoiceOption {
 	}
 
 	public String toString() {
-		return this.option;
+		return this.multipleChoiceOption;
 	}
 
 }

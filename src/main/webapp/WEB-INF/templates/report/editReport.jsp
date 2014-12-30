@@ -167,10 +167,10 @@
 
 		<c:choose>
 			<c:when test="${question.multipleSelectionsAllowed == true}">
-				<c:forEach var="option" items="${question.options}">
+				<c:forEach var="option" items="${question.optionsList}">
 					<label class="checkbox">											
-						<sf:checkbox value="${option.option}" 
-							path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenSelections" label="${option.option}" />
+						<sf:checkbox value="${option.multipleChoiceOption}" 
+							path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenSelections" label="${option.multipleChoiceOption}" />
 					</label>
 					<br>
 				</c:forEach>
@@ -178,7 +178,7 @@
 			<c:otherwise>
 				<div class="Demo-boot" style="padding-top: 15px;">
 					<div class="btn-group" data-toggle="buttons">
-						<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
+						<c:forEach var="option" items="${question.optionsList}" varStatus="optionsCounter">
 							
 							<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 								raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
@@ -202,7 +202,7 @@
 								</c:when>
 								<c:otherwise>
 									<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionIndex"
-									value="${optionsCounter.index}" /> ${option.option}
+									value="${optionsCounter.index}" /> ${option.multipleChoiceOption}
 								</c:otherwise>
 								</c:choose>
 							</label>

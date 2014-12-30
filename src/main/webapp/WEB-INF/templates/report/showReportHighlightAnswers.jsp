@@ -58,7 +58,7 @@
 		
 					<div class="Demo-boot" style="padding-top: 15px;">
 						<div class="btn-group" data-toggle="buttons">
-							<c:forEach var="option" items="${answer.question.options}" varStatus="optionsCounter">
+							<c:forEach var="option" items="${answer.question.optionsList}" varStatus="optionsCounter">
 																						
 								<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
 										varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
@@ -84,13 +84,13 @@
 										<c:choose>
 											<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
 												<button class="btn btn-large btn-primary disabled" type="button">
-													${option.option}
+													${option.multipleChoiceOption}
 													
 												</button>
 											</c:when>
 											<c:otherwise>
 												<button class="btn btn-large btn-default" type="button" disabled>
-													${option.option}
+													${option.multipleChoiceOption}
 												</button>
 											</c:otherwise>
 										</c:choose>	

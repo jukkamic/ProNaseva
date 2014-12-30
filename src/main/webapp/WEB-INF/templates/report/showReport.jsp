@@ -176,10 +176,10 @@
 	 								
 								<c:choose>
 								<c:when test="${question.multipleSelectionsAllowed == true}">
-												<c:forEach var="option" items="${question.options}">
+												<c:forEach var="option" items="${question.optionsList}">
 													<label class="checkbox" style="">											
-													<sf:checkbox value="${option.option}" 
-														path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].chosenSelections" label="${option.option}" disabled="true" />
+													<sf:checkbox value="${option.multipleChoiceOption}" 
+														path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].chosenSelections" label="${option.multipleChoiceOption}" disabled="true" />
 													</label>
 													<br>
 												</c:forEach>
@@ -187,7 +187,7 @@
 								<c:otherwise>
 								<div class="Demo-boot" style="padding-top: 15px;">
 										<div class="btn-group" data-toggle="buttons">
-											<c:forEach var="option" items="${question.options}" varStatus="optionsCounter">
+											<c:forEach var="option" items="${question.optionsList}" varStatus="optionsCounter">
 
 												
 												<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
@@ -214,13 +214,13 @@
 														<c:choose>
 															<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
 																<button class="btn btn-large btn-primary disabled" type="button">
-																	${option.option}
+																	${option.multipleChoiceOption}
 																	
 																</button>
 															</c:when>
 															<c:otherwise>
 																<button class="btn btn-large btn-default" type="button" disabled>
-																	${option.option}
+																	${option.multipleChoiceOption}
 																</button>
 															</c:otherwise>
 														</c:choose>	

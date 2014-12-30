@@ -8,13 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class MultipleChoiceQuestion extends Question {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "MCQ_ID")
-	private List<MultipleChoiceOption> options = new ArrayList<MultipleChoiceOption>();
+	@JoinColumn
+	@OrderColumn
+	private List<MultipleChoiceOption> optionsList = new ArrayList<MultipleChoiceOption>();
 
 	private boolean multipleSelectionsAllowed = false;
 
@@ -22,16 +24,16 @@ public class MultipleChoiceQuestion extends Question {
 
 	}
 
-	public void setOptions(List<MultipleChoiceOption> options) {
-		this.options = options;
+	public void setOptionsList(List<MultipleChoiceOption> options) {
+		this.optionsList = options;
 	}
 
-	public List<MultipleChoiceOption> getOptions() {
-		return options;
+	public List<MultipleChoiceOption> getOptionsList() {
+		return optionsList;
 	}
 
-	public void setOptions(ArrayList<MultipleChoiceOption> options) {
-		this.options = options;
+	public void setOptionsList(ArrayList<MultipleChoiceOption> options) {
+		this.optionsList = options;
 	}
 
 	public boolean isMultipleSelectionsAllowed() {
