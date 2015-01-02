@@ -622,6 +622,10 @@ public class Report implements Serializable {
 							.round((double) reportPart.getScore()
 									/ (double) reportPart.getMaxScore() * 100));
 
+					questionGroup.setScorePercentage((int) Math
+							.round((double) questionGroup.getScore()
+									/ (double) questionGroup.getMaxScore()
+									* 100));
 				}
 
 			}

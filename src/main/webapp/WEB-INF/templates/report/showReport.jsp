@@ -484,6 +484,7 @@
 							</div></div></div>
 			
 				<c:set var="questionGroupScoreIndexCounter" value="${questionGroupScoreIndexCounter + 1}" scope="request" />
+				
 			</c:forEach> <!-- Question group loop end -->
 			
 			<br><br>

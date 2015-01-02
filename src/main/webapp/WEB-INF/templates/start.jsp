@@ -27,6 +27,7 @@
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/showUserList?page=1">Käyttäjätilit</a>
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/reportTemplates">Raporttipohjat</a>
+			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="admin/reportsSummary">Yhteenveto</a>
 			</security:authorize>
 			</div>
 			<br>

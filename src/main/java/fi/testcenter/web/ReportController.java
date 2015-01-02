@@ -67,6 +67,19 @@ public class ReportController {
 		return "start";
 	}
 
+	@RequestMapping(value = "/admin/reportsSummary", method = RequestMethod.GET)
+	public String summary(Model model) {
+
+		List<Report> reports = rs.findAllReports();
+		ReportTemplate template = rts
+				.findReportTemplateByName("Autoasi raporttipohja");
+
+		model.addAttribute("reportsList", reports);
+		model.addAttribute("template", template);
+
+		return "report/reportsSummary";
+	}
+
 	@RequestMapping(value = "/addNewReport", method = RequestMethod.GET)
 	public String prepareNewReportBasicInfoForm(Model model) {
 
