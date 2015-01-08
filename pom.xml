@@ -138,6 +138,15 @@
 			<artifactId>hsqldb</artifactId>
 			<version>2.2.4</version>
 		</dependency>
+		
+		<!-- iText -->
+		
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.3</version>
+		</dependency>
+		
 
 		<!-- Servlet -->
 		<dependency>

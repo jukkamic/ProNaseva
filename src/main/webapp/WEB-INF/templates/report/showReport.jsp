@@ -504,11 +504,11 @@
 			<a class="btn btn-primary" href="/ProNaseva/approveReport/"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Vahvista raportti</a>
 		</c:if>
 		<c:if test="${loginRole == '[ROLE_ADMIN]'}">
-			<button type="submit" class="btn btn-primary" href="/ProNaseva/saveSmileyAndHighlights/"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> 
+			<button type="submit" class="btn btn-primary" href="/ProNaseva/saveSmileyAndHighlights/"><span class="glyphicon glyphicon-download-alt" style="text-decoration: none;"></span> 
 				Tallenna</button>
 		</c:if>
 		
-		<a class="btn btn-primary" href="/ProNaseva/printReport/"><span class="glyphicon glyphicon-print" style="text-decoration: none;"></span> Tulosta</a>
+		<a class="btn btn-primary" href="/ProNaseva/getPdf/"><span class="glyphicon glyphicon-download" style="text-decoration: none;"></span> Lataa pdf</a>
 		
 		<c:if test="${loginRole == '[ROLE_ADMIN]' or report.reportStatus == 'DRAFT' or report.reportStatus == 'AWAIT_APPROVAL'}">
 			<a href="#" class="btn btn-large btn btn-danger deleteReport"><span class="glyphicon glyphicon-remove" style="text-decoration: none;"></span> Poista</a>

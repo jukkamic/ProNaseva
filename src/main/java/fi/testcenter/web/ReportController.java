@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,14 +25,18 @@ import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.CostListingAnswer;
+import fi.testcenter.domain.answer.ImportantPointsAnswer;
+import fi.testcenter.domain.answer.ImportantPointsItem;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.answer.TextAnswer;
+import fi.testcenter.domain.question.ImportantPointsQuestion;
 import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportPart;
 import fi.testcenter.domain.report.ReportQuestionGroup;
 import fi.testcenter.domain.report.ReportTemplate;
+import fi.testcenter.pdf.ReportPdfCreator;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.ReportTemplateService;
@@ -60,6 +68,9 @@ public class ReportController {
 
 	@Autowired
 	private UserAccountService us;
+
+	@Autowired
+	private ReportPdfCreator pdfCreator;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm() {
@@ -317,13 +328,45 @@ public class ReportController {
 		return "report/showReport";
 	}
 
-	@RequestMapping(value = "/printReport")
-	public String printReport(Model model,
-			@ModelAttribute("report") Report report) {
+	@RequestMapping(value = "/getPdf", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getPdf(@ModelAttribute("report") Report report) {
+		try {
 
-		model.addAttribute("report", report);
+			// POISTA TÄMÄ:
+			for (ReportPart part : report.getReportParts()) {
+				for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+					for (Answer answer : group.getAnswers())
+						if (answer instanceof ImportantPointsAnswer) {
+							int index = 0;
+							for (ImportantPointsItem item : ((ImportantPointsAnswer) answer)
+									.getAnswerItems()) {
+								item.setItem(((ImportantPointsQuestion) answer
+										.getQuestion()).getQuestionItems().get(
+										index++));
+							}
+							rs.saveAnswer(answer);
+						}
+				}
+			}
 
-		return "printReport/printReport";
+			report = rs.getReportById(report.getId());
+			byte[] contents;
+			contents = pdfCreator.generateReportPdf(report).toByteArray();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.parseMediaType("application/pdf"));
+			String filename = report.getWorkshop().getName() + "-"
+					+ report.getReportDate().replace('.', '-') + ".pdf";
+			headers.setContentDispositionFormData(filename, filename);
+			headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+			ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+					contents, headers, HttpStatus.OK);
+			return response;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 	@RequestMapping(value = "/printDone")
