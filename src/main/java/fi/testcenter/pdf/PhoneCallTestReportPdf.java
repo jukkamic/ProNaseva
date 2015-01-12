@@ -94,7 +94,6 @@ public class PhoneCallTestReportPdf {
 
 			doc.add(new Paragraph(Chunk.NEWLINE));
 
-			System.out.println(writer.getVerticalPosition(true));
 			if (writer.getVerticalPosition(true) < 150)
 				doc.newPage();
 		}
