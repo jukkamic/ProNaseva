@@ -18,8 +18,7 @@
 				<h1>Raportti</h1>
 			
 			</div>
-
-
+<sf:form modelAttribute="report" >
 
 	<br>
 	<br>
@@ -45,9 +44,9 @@
 		<br><br>
 		</div>
 		<br>
-<sf:form modelAttribute="report" >
+
 	<div class="panel-group" id="accordion"> 
-			<c:set var="bootstrapPanelCounter" value="0" scope="request" />
+			<c:set var="bootstrapPanelCounter" value="0" />
 					
 		<c:if test="${successMessage != null and message != ''}">
 			<div class="alert alert-success">
@@ -78,15 +77,23 @@
 				<a
 					style="font-size: 1.5em; text-decoration: none; display: block;"
 					data-toggle="collapse" data-parent="#accordion"
-					href="#${bootstrapPanelCounter}">${questionGroup.reportTemplateQuestionGroup.title}
+					href="#panel${bootstrapPanelCounter}">${questionGroup.reportTemplateQuestionGroup.title}
 				</a>
 			</h4>
 		</div>
 
 
-		<div id="${bootstrapPanelCounter}" class="panel-collapse collapse">
-
-
+	<!-- Ensimmäisen kysymysryhmän luokka on "collapse start" jotta javascript 
+		tietää mihin nostaa näkymä avattaessa Accordion Menun paneeleja. -->
+		
+	<c:choose>
+		<c:when test="${questionGroupCounter.count == 1}">
+			<div id="panel${bootstrapPanelCounter}" class="panel-collapse collapse start">
+		</c:when>
+		<c:otherwise>
+			<div id="panel${bootstrapPanelCounter}" class="panel-collapse collapse">
+	</c:otherwise>
+	</c:choose>
 <div class="panel-body">
 						
 	<!-- Answers loop -->
@@ -120,18 +127,7 @@
 				</div>
 			</c:if> 
 				<c:if test="${answer.removeAnswerFromReport == 'false'}">
-			<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-					<div class="checkbox" style="font-size: 1.2em;">
-					<label>											
-					<sf:checkbox value='true'
-						path="reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].highlightAnswer" label="Huomiot-osioon" />  
-					
-					</label>
-					
-					</div> 
-					
-			</c:if> 
-
+		
 				
 		<c:choose>
 		<c:when test="${question.multipleSelectionsAllowed == true}">
@@ -216,17 +212,7 @@
 				</div>
 			</c:if>
 			<c:if test="${answer.removeAnswerFromReport == 'false'}">
-			<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-					<div class="checkbox" style="font-size: 1.2em;">
-					<label>											
-					<sf:checkbox value='true'
-						path="reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].highlightAnswer" label="Huomiot-osioon" />  
-					
-					</label>
-					
-					</div>
-					<br>
-			</c:if>
+
 										
 		<div class="Demo-boot" style="padding-top: 15px;">
 				<div class="btn-group" data-toggle="buttons">
@@ -272,18 +258,7 @@
 				</div>
 			</c:if>
 			<c:if test="${answer.removeAnswerFromReport == 'false'}">
-			<c:if test="${loginRole == '[ROLE_ADMIN]' }">
-					<div class="checkbox" style="font-size: 1.2em;">
-					<label>											
-					<sf:checkbox value='true'
-						path="reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].highlightAnswer" label="Huomiot-osioon" />
-					
-					</label>
-					
-					</div>
-					<br>
-			</c:if>
-			
+
 			<br>
 			<p style="font-size: 1.2em;">${answer.answer}</p>
 			</c:if>
@@ -412,13 +387,8 @@
 			
 		</c:if>	
 			
-
-				
-
 </c:forEach> <!-- Questions loop end -->
-
-							
-							 
+		 
 		<c:if test="${questionGroup.score != -1}">
 		<br>
 		<h4 style="float: right; font-weight: bold;">Pisteet: ${questionGroup.score} / 
@@ -447,10 +417,7 @@
 			
 			<a class="btn btn-primary" href="/ProNaseva/approveReport/"><span class="glyphicon glyphicon-ok" style="text-decoration: none;"></span> Vahvista raportti</a>
 		</c:if>
-		<c:if test="${loginRole == '[ROLE_ADMIN]'}">
-			<button type="submit" class="btn btn-primary" href="/ProNaseva/saveSmileyAndHighlights/"><span class="glyphicon glyphicon-download-alt" style="text-decoration: none;"></span> 
-				Tallenna</button>
-		</c:if>
+		
 		
 		<a class="btn btn-primary" href="/ProNaseva/getPdf/"><span class="glyphicon glyphicon-download" style="text-decoration: none;"></span> Lataa pdf</a>
 		
@@ -460,9 +427,8 @@
 						
 		<br><br>
 		<br>
-
-		</div>
 </sf:form>
+</div>
 		<script>
         $(document).on("click", ".deleteReport", function(e) {
             bootbox.dialog({

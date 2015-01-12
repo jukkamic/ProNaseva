@@ -132,10 +132,13 @@ public class ImporterController {
 		ArrayList<ReportTemplate> templateList = new ArrayList<ReportTemplate>();
 		for (String chosenTemplate : chosenTemplates) {
 			templateList.add(rts.findReportTemplateByName(chosenTemplate));
+
 		}
 
 		importer.setReportTemplates(templateList);
 
+		for (ReportTemplate t : importer.getReportTemplates())
+			log.debug("Importer chosen template class: " + t.getClass());
 		return is.saveImporter(importer);
 	}
 

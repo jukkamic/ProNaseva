@@ -20,7 +20,7 @@
 			</div>
 			<br><br>
 			
-<sf:form id="editReportForm" modelAttribute="report" action="saveReport" method="post">
+<sf:form id="editReportForm" modelAttribute="report" action="savePhoneCallTestReport" method="post">
 
 <input type="hidden" id="navigateToReportPart" name="navigateToReportPart" value=""/>
 <input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex"  value=""/>

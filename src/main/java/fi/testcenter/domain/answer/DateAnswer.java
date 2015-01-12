@@ -37,12 +37,15 @@ public class DateAnswer extends Answer {
 	public void setDateString(String date) {
 
 		this.dateString = date;
-		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
-		try {
-			this.date = DATE_FORMAT.parse(date);
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (date != null && date != "") {
+			SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+
+			try {
+				this.date = DATE_FORMAT.parse(date);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -56,8 +59,11 @@ public class DateAnswer extends Answer {
 
 	public void setDate(Date date) {
 		this.date = date;
-		SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
-		dateString = DATE_FORMAT.format(date);
+		if (date != null) {
+			SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+			dateString = DATE_FORMAT.format(date);
+		}
+
 	}
 
 }

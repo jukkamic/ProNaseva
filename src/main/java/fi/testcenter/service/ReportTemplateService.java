@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.reportTemplate.ReportTemplate;
 import fi.testcenter.reportTemplatesForImporters.AudiCallTestTemplate;
 import fi.testcenter.reportTemplatesForImporters.AutoasiReportTemplate;
@@ -38,6 +39,9 @@ public class ReportTemplateService {
 	@Autowired
 	private ImporterRepository ir;
 
+	@Autowired
+	private ImporterService is;
+
 	public ReportTemplate createReportTemplate(String name) {
 		switch (name) {
 		case "Volvo Auto raporttipohja":
@@ -62,6 +66,8 @@ public class ReportTemplateService {
 		List<ReportTemplate> resultList = em.createQuery(queryString)
 				.getResultList();
 
+		for (ReportTemplate t : resultList)
+			log.debug("Templateluokka " + t.getClass());
 		// for (ReportTemplate template : resultList) {
 		// if (template instanceof WorkshopVisitReportTemplate) {
 		// returnList.add((WorkshopVisitReportTemplate) template);
@@ -105,11 +111,10 @@ public class ReportTemplateService {
 	public ReportTemplate findReportTemplateByName(String name) {
 		ReportTemplate template = new ReportTemplate();
 		try {
-			TypedQuery query = em
-					.createQuery(
-							"SELECT rt FROM ReportTemplate rt WHERE rt.templateName = :name AND rt.current = true",
-							ReportTemplate.class);
+			Query query = em
+					.createQuery("SELECT rt FROM ReportTemplate rt WHERE rt.templateName = :name AND rt.current = true");
 			query.setParameter("name", name);
+
 			template = (ReportTemplate) query.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,17 +155,22 @@ public class ReportTemplateService {
 
 	@Transactional
 	public void deleteReportTemplateById(Long id) {
-		// ReportTemplate template = rtr.findOne(id);
-		// String query =
-		// "SELECT i FROM Importer i WHERE i.reportTemplateName = :TemplateName";
-		// TypedQuery typedQuery = em.createQuery(query, Importer.class);
-		// typedQuery.setParameter("TemplateName", template.getTemplateName());
-		// List<Importer> importerList = typedQuery.getResultList();
-		// for (Importer importer : importerList) {
-		// importer.setReportTemplateName(null);
-		// ir.save(importer);
-		// }
-		// rtr.delete(template);
-		//
+		ReportTemplate template = rtr.findOne(id);
+		String query = "SELECT i FROM Importer i WHERE :template MEMBER OF i.reportTemplates";
+		TypedQuery typedQuery = em.createQuery(query, Importer.class);
+		typedQuery.setParameter("template", template);
+		List<Importer> importerList = typedQuery.getResultList();
+		for (Importer importer : importerList) {
+			if (importer.getReportTemplates().contains(template)) {
+				List<ReportTemplate> newTemplateList = importer
+						.getReportTemplates();
+				newTemplateList.remove(template);
+				importer.setReportTemplates(newTemplateList);
+				ir.save(importer);
+			}
+
+		}
+		rtr.delete(template);
+
 	}
 }

@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
+import fi.testcenter.domain.report.PhoneCallTestReport;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportPart;
 import fi.testcenter.domain.report.ReportQuestionGroup;
@@ -86,42 +87,56 @@ public class ReportService {
 	}
 
 	@Transactional
-	public void deleteReport(WorkshopVisitReport report) {
-		for (ReportPart part : report.getReportParts()) {
-			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
-				for (Answer answer : group.getAnswers()) {
-					if (answer instanceof OptionalQuestionsAnswer) {
-						OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
-						List<Answer> deleteList = oqa.getAnswers();
-						oqa.setAnswers(null);
-						oqa.setReportQuestionGroup(null);
-						if (deleteList != null) {
-							try {
-								saveOptionalQuestionsAnswer(oqa);
-								deleteAnswers(deleteList);
-
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-
-					}
-				}
+	public void deleteReport(Report report) {
+		if (report instanceof WorkshopVisitReport) {
+			for (ReportPart part : ((WorkshopVisitReport) report)
+					.getReportParts()) {
+				removeOptionalAnswers(part.getReportQuestionGroups());
 			}
+
 		}
+		if (report instanceof PhoneCallTestReport)
+			removeOptionalAnswers(((PhoneCallTestReport) report)
+					.getReportQuestionGroups());
+
 		rr.delete(report);
 	}
 
 	@Transactional
-	public List<WorkshopVisitReport> findSearchReports() {
+	public void removeOptionalAnswers(List<ReportQuestionGroup> groups) {
+		for (ReportQuestionGroup group : groups) {
+			for (Answer answer : group.getAnswers()) {
+				if (answer instanceof OptionalQuestionsAnswer) {
+					OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
+					List<Answer> deleteList = oqa.getAnswers();
+					oqa.setAnswers(null);
+					oqa.setReportQuestionGroup(null);
+					if (deleteList != null) {
+						try {
+							saveOptionalQuestionsAnswer(oqa);
+							deleteAnswers(deleteList);
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+
+				}
+			}
+		}
+
+	}
+
+	@Transactional
+	public List<Report> findSearchReports() {
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM WorkshopVisitReport r ORDER BY r.date DESC")
+						"SELECT r.testDate, NEW fi.testcenter.domain.Report(r.id, r.testDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r ORDER BY r.testDate DESC")
 				.getResultList();
 
-		ArrayList<WorkshopVisitReport> resultReports = new ArrayList<WorkshopVisitReport>();
+		ArrayList<Report> resultReports = new ArrayList<Report>();
 		for (Object[] result : reports) {
-			resultReports.add((WorkshopVisitReport) result[1]);
+			resultReports.add((Report) result[1]);
 		}
 
 		return resultReports;
@@ -129,32 +144,55 @@ public class ReportService {
 	}
 
 	@Transactional
-	public List<WorkshopVisitReport> findReportsAwaitingApproval() {
+	public List<Report> findReportsAwaitingApproval() {
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.report.WorkshopVisitReport(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM WorkshopVisitReport r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.date DESC")
+						"SELECT r.testDate, NEW fi.testcenter.service.report.WorkshopVisitReport(r.id, r.testDate, r.importer, r.workshop, r.user, r.reportStatus) FROM WorkshopVisitReport r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.testDate DESC")
 				.getResultList();
 
-		ArrayList<WorkshopVisitReport> resultReports = new ArrayList<WorkshopVisitReport>();
+		ArrayList<Report> resultReports = new ArrayList<Report>();
 		for (Object[] result : reports) {
-			resultReports.add((WorkshopVisitReport) result[1]);
+			resultReports.add((Report) result[1]);
 		}
 
 		return resultReports;
 	}
 
 	@Transactional
-	public List<WorkshopVisitReport> findReportsByUserId(Long userId) {
+	public List<ReportQueryObject> findUserOwnReportList(Long userId) {
+
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.report.WorkshopVisitReport(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM WorkshopVisitReport r WHERE r.user.id = :userId ORDER BY r.date DESC")
+						"SELECT r.testDate, NEW fi.testcenter.service.ReportQueryObject(r.id, r.testDateString, r.importer, r.workshop, r.user, r.reportStatus, TYPE(r)) "
+								+ "FROM Report r WHERE r.user.id = :userId ORDER BY r.testDate DESC")
 				.setParameter("userId", userId).getResultList();
 
-		ArrayList<WorkshopVisitReport> resultReports = new ArrayList<WorkshopVisitReport>();
+		ArrayList<ReportQueryObject> resultReports = new ArrayList<ReportQueryObject>();
 		for (Object[] result : reports) {
-			resultReports.add((WorkshopVisitReport) result[1]);
+			resultReports.add((ReportQueryObject) result[1]);
 		}
+
 		return resultReports;
+
+	}
+
+	@Transactional
+	public List<Report> findReportsByUserId(Long userId) {
+		//
+		// List<Object[]> reports = em
+		// .createQuery(
+		// "SELECT r.testDate, NEW fi.testcenter.service.ReportQueryObject(r.id, r.testDateString, r.importer, r.workshop, r.user, r.reportStatus, TYPE(r)) "
+		// + "FROM Report r WHERE r.user.id = :userId ORDER BY r.testDate DESC")
+		// .setParameter("userId", userId).getResultList();
+		//
+		// ArrayList<ReportQueryObject> resultReports = new
+		// ArrayList<ReportQueryObject>();
+		// for (Object[] result : reports) {
+		// resultReports.add((ReportQueryObject) result[1]);
+		// }
+		// for (ReportQueryObject o : resultReports)
+		// log.debug("query object class: " + o.getReportClass());
+		return null;
 
 	}
 
@@ -170,15 +208,15 @@ public class ReportService {
 	}
 
 	@Transactional
-	public List<WorkshopVisitReport> findReportsBySearchCriteria(
+	public List<ReportQueryObject> findReportsBySearchCriteria(
 			SearchReportCriteria searchReportCriteria) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Object[]> q = cb.createQuery(Object[].class);
-		Root<WorkshopVisitReport> report = q.from(WorkshopVisitReport.class);
-		q.multiselect(report.get("date"), cb.construct(
-				WorkshopVisitReport.class, report.get("id"),
-				report.get("reportDate"), report.get("importer"),
+		Root<Report> report = q.from(Report.class);
+		q.multiselect(report.get("testDate"), report.type(), cb.construct(
+				ReportQueryObject.class, report.get("id"),
+				report.get("testDateString"), report.get("importer"),
 				report.get("workshop"), report.get("user"),
 				report.get("reportStatus")));
 
@@ -208,7 +246,7 @@ public class ReportService {
 				&& (searchReportCriteria.getEndDate() == null || searchReportCriteria
 						.getEndDate() == "")) {
 			ParameterExpression<Date> p = cb.parameter(Date.class, "startDate");
-			Path<Date> datePath = report.get("date");
+			Path<Date> datePath = report.get("testDate");
 			criteria = cb.and(criteria, cb.greaterThanOrEqualTo(datePath, p));
 		}
 
@@ -232,13 +270,13 @@ public class ReportService {
 
 			ParameterExpression<Date> endDate = cb.parameter(Date.class,
 					"endDate");
-			Path<Date> datePath = report.get("date");
+			Path<Date> datePath = report.get("testDate");
 			criteria = cb
 					.and(criteria, cb.lessThanOrEqualTo(datePath, endDate));
 		}
 
 		q.where(criteria);
-		q.orderBy(cb.desc(report.get("date")));
+		q.orderBy(cb.desc(report.get("testDate")));
 
 		// SET PARAMETERS
 
@@ -307,10 +345,17 @@ public class ReportService {
 		}
 
 		List<Object[]> resultList = typedQuery.getResultList();
-		List<WorkshopVisitReport> reportList = new ArrayList<WorkshopVisitReport>();
+		List<ReportQueryObject> reportList = new ArrayList<ReportQueryObject>();
 
 		for (Object[] result : resultList) {
-			reportList.add((WorkshopVisitReport) result[1]);
+
+			ReportQueryObject resultObject = (ReportQueryObject) result[2];
+			if (result[1].toString().equals(
+					"class fi.testcenter.domain.report.WorkshopVisitReport"))
+				resultObject.setReportClass("WorkshopVisitReport");
+			else
+				resultObject.setReportClass("PhoneCallTestReport");
+			reportList.add(resultObject);
 		}
 
 		return reportList;

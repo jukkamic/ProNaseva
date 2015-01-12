@@ -49,7 +49,7 @@
 								Näytä</a>
 							</td>
 							<td>
-								${report.reportDate}
+								${report.testDate}
 							</td>
 							<td>${report.importer.name}
 							</td>
@@ -120,6 +120,9 @@
 						Tarkastaja
 					</th>
 					<th>
+						Raporttityyppi
+					</th>
+					<th>
 						Tila
 					</th>
 				</tr>
@@ -129,7 +132,7 @@
 								Näytä</a>
 							</td>
 							<td>
-								${report.reportDate}
+								${report.testDate}
 							</td>
 							<td>${report.importer.name}
 							</td>
@@ -138,6 +141,14 @@
 							</td>
 							<td>
 								${report.user.lastName}, ${report.user.firstName}								
+							</td>
+							<td>
+								<c:if test="${report.reportClass == 'PhoneCallTestReport'}">
+									<p>Puhelutestiraportti</p>
+								</c:if>
+								<c:if test="${report.reportClass == 'WorkshopVisitReport'}">
+									<p>Korjaamotestiraportti</p>
+								</c:if>
 							</td>
 							<td>
 								<c:choose>

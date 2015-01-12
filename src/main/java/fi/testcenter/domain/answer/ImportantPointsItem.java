@@ -21,6 +21,12 @@ public class ImportantPointsItem {
 		this.score = -1;
 	}
 
+	public ImportantPointsItem(String item) {
+		this.item = item;
+		this.importance = -1;
+		this.score = -1;
+	}
+
 	public String getItem() {
 		return item;
 	}

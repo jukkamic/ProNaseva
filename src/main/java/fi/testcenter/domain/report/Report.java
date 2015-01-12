@@ -199,8 +199,8 @@ public class Report {
 					reportQuestionGroup, question, answerOrderNumber);
 			ImportantPointsQuestion listQuestion = (ImportantPointsQuestion) question;
 			List<ImportantPointsItem> answerItems = new ArrayList<ImportantPointsItem>();
-			for (int i = 0; i < listQuestion.getQuestionItems().size(); i++)
-				answerItems.add(new ImportantPointsItem());
+			for (String item : listQuestion.getQuestionItems())
+				answerItems.add(new ImportantPointsItem(item));
 			answer.setAnswerItems(answerItems);
 			return answer;
 		}

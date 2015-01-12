@@ -1,26 +1,17 @@
 package fi.testcenter.pdf;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.Chunk;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
-import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.CostListingAnswer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.ImportantPointsItem;
@@ -31,373 +22,32 @@ import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
 import fi.testcenter.domain.question.PointsQuestion;
-import fi.testcenter.domain.report.ReportPart;
-import fi.testcenter.domain.report.ReportQuestionGroup;
-import fi.testcenter.domain.report.WorkshopVisitReport;
 
 @Component
-public class ReportPdfCreator {
+public class PdfUtilityClass {
 
-	private BaseFont baseFont;
-	private BaseFont wingdings;
+	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
 
-	private Font reportPartTitleFont;
-	private Font groupTitleFont;
-	private Font defaultTextFont;
-	private Font boldFont;
-	private Font italicFont;
+	final BaseFont BASE_FONT = getBaseFont();
+	final BaseFont WINGDINGS_BASE_FONT = getWingdingBaseFont();
 
-	private Font wingdingFont;
+	final Font REPORT_PART_TITLE_FONT = new Font(BASE_FONT, 20, Font.BOLD);;
+	final Font GROUP_TITLE_FONT = new Font(BASE_FONT, 16, Font.BOLD);;
+	final Font DEFAULT_FONT = new Font(BASE_FONT, 11);;
+	final Font BOLD = new Font(BASE_FONT, 11, Font.BOLD);;
+	final Font ITALIC = new Font(BASE_FONT, 11, Font.ITALIC);;
 
-	final int SUBQUESTIONINDENT = 25;
+	final Font WINGDING_FONT = new Font(WINGDINGS_BASE_FONT, 12);;
 
-	@Autowired
-	HeaderHelper headerHelper;
+	public PdfUtilityClass() {
+	}
 
-	WorkshopVisitReport report;
+	public static BaseFont getBaseFont() {
 
-	public ReportPdfCreator() {
 		try {
-			this.baseFont = BaseFont.createFont("c:/windows/fonts/arial.ttf",
+			return BaseFont.createFont("c:/windows/fonts/arial.ttf",
 					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-			this.wingdings = BaseFont.createFont(
-					"c:/windows/fonts/wingding.ttf", BaseFont.IDENTITY_H,
-					BaseFont.EMBEDDED);
-			this.reportPartTitleFont = new Font(baseFont, 20, Font.BOLD);
 
-			this.groupTitleFont = new Font(baseFont, 16, Font.BOLD);
-			this.defaultTextFont = new Font(baseFont, 11);
-			this.boldFont = new Font(baseFont, 11, Font.BOLD);
-			this.italicFont = new Font(baseFont, 11, Font.ITALIC);
-			this.wingdingFont = new Font(wingdings, 12);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public ByteArrayOutputStream generateReportPdf(WorkshopVisitReport report)
-			throws IOException, DocumentException {
-
-		this.report = report;
-
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-		Document doc = new Document(PageSize.A4, 50, 30, 120, 90);
-		PdfWriter writer = PdfWriter.getInstance(doc, baos);
-
-		writer.setPageEvent(new BackgroundImageHelper());
-
-		headerHelper.setReport(report);
-		headerHelper.setReportPartTitle("Tulostiivistelmä");
-		writer.setPageEvent(headerHelper);
-		doc.open();
-		doc.add(new Chunk(Chunk.NEWLINE));
-
-		doc.add(getFrontPage());
-
-		doc.newPage();
-		doc.add(getSummaryPage());
-
-		if (report.getReportParts() != null
-				&& report.getReportParts().size() > 0) {
-			headerHelper.setReportPartTitle(report.getReportParts().get(0)
-					.getReportTemplatePart().getTitle());
-		}
-
-		doc.newPage();
-
-		for (ReportPart part : report.getReportParts()) {
-
-			doc.add(getPartTitle(part.getReportTemplatePart().getTitle()));
-
-			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
-				doc.add(getGroupTitle(group.getQuestionGroupOrderNumber(),
-						group.getReportTemplateQuestionGroup().getTitle()));
-				for (Answer answer : group.getAnswers()) {
-					if (!answer.isRemoveAnswerFromReport()) {
-						if (answer instanceof MultipleChoiceAnswer)
-							doc.add(getMultipleChoiceAnswerParagraph((MultipleChoiceAnswer) answer));
-						if (answer instanceof TextAnswer)
-							doc.add(getTextAnswerParagraph((TextAnswer) answer));
-						if (answer instanceof CostListingAnswer)
-							doc.add(getCostListingParagraph((CostListingAnswer) answer));
-						if (answer instanceof ImportantPointsAnswer)
-							doc.add(getImportantPointsParagraph((ImportantPointsAnswer) answer));
-						if (answer instanceof PointsAnswer)
-							doc.add(getPointsAnswerParagraph((PointsAnswer) answer));
-					}
-				}
-
-				if (group.getScore() != -1) {
-					Paragraph totalScore = new Paragraph(new Chunk("Yhteensä: "
-							+ group.getScore() + " / " + group.getMaxScore(),
-							boldFont));
-					totalScore.setAlignment(Element.ALIGN_RIGHT);
-					totalScore.setSpacingBefore(10);
-					doc.add(totalScore);
-
-				}
-				if (part.getReportQuestionGroups().indexOf(group) == part
-						.getReportQuestionGroups().size() - 1
-						&& report.getReportParts().size() > (report
-								.getReportParts().indexOf(part) + 1))
-					headerHelper.setReportPartTitle(report.getReportParts()
-							.get(report.getReportParts().indexOf(part) + 1)
-							.getReportTemplatePart().getTitle());
-
-				doc.newPage();
-
-			}
-
-		}
-
-		doc.close();
-		return baos;
-
-	}
-
-	public Paragraph getFrontPage() {
-		Paragraph kansilehti = new Paragraph();
-		kansilehti.setIndentationLeft(90);
-
-		Font font = new Font(baseFont, 24, Font.BOLD);
-		Paragraph p = new Paragraph(new Chunk(report.getImporter().getName(),
-				font));
-		p.setSpacingBefore(40);
-		kansilehti.add(p);
-
-		p = new Paragraph(new Chunk("Korjaamotestiraportti", font));
-		p.setSpacingBefore(15);
-		kansilehti.add(p);
-
-		font = new Font(baseFont, 18, Font.BOLD);
-		String workshop = report.getWorkshop().getName();
-		if (report.getWorkshop().getCity() != null
-				&& report.getWorkshop().getCity().length() > 0)
-			workshop += ", " + report.getWorkshop().getCity();
-		p = new Paragraph(new Chunk(workshop, font));
-		p.setSpacingBefore(60);
-		kansilehti.add(p);
-
-		p = new Paragraph(new Chunk(report.getTestDateString(), font));
-		p.setSpacingBefore(15);
-		kansilehti.add(p);
-
-		char overallSmiley = ' ';
-
-		if (report.getOverallResultSmiley().equals(String.valueOf("SMILE")))
-			overallSmiley = (char) 0x4A;
-		if (report.getOverallResultSmiley().equals(String.valueOf("NEUTRAL")))
-			overallSmiley = (char) 0x4B;
-		if (report.getOverallResultSmiley().equals(String.valueOf("FROWN")))
-			overallSmiley = (char) 0x4C;
-
-		Font smileyFont = new Font(wingdings, 60);
-		p = new Paragraph(new Chunk("Yleisarvosana:    ", font));
-		Chunk smileyChunk = new Chunk(overallSmiley, smileyFont);
-		smileyChunk.setTextRise(-16);
-		p.add(smileyChunk);
-		p.setSpacingBefore(60);
-		kansilehti.add(p);
-
-		return kansilehti;
-
-	}
-
-	public Paragraph getSummaryPage() {
-		try {
-			Font summarySmileys = new Font(wingdings, 30);
-
-			Paragraph para = new Paragraph();
-			para.setIndentationLeft(90);
-			para.setIndentationRight(30);
-
-			PdfPTable table = new PdfPTable(3);
-			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 235, 105, 105 });
-
-			table.getDefaultCell().setBorder(0);
-
-			para.add(new Chunk(Chunk.NEWLINE));
-			table.setHorizontalAlignment(Element.ALIGN_LEFT);
-			table.setSpacingBefore(30);
-
-			PdfPCell cell = new PdfPCell(new Paragraph(new Chunk(
-					"Tulosten yhteenveto", boldFont)));
-			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			cell.setBorder(Rectangle.BOTTOM);
-			table.addCell(cell);
-
-			cell = new PdfPCell(new Paragraph(new Chunk("Pisteet", boldFont)));
-			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setBorder(Rectangle.BOTTOM);
-			table.addCell(cell);
-
-			cell = new PdfPCell(new Paragraph(new Chunk("Arvosana", boldFont)));
-			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			cell.setBorder(Rectangle.BOTTOM);
-			table.addCell(cell);
-
-			for (ReportPart part : report.getReportParts()) {
-				int groupsTotal = 0;
-				int groupsMax = 0;
-				for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
-					if (group.getReportTemplateQuestionGroup()
-							.isShowInReportSummary()) {
-						cell = new PdfPCell(new Paragraph(new Chunk(group
-								.getReportTemplateQuestionGroup().getTitle(),
-								defaultTextFont)));
-						cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setBorder(0);
-						table.addCell(cell);
-
-						if (group.getMaxScore() > 0)
-							cell = new PdfPCell(new Paragraph(new Chunk(
-									group.getScore() + " / "
-											+ group.getMaxScore(),
-									defaultTextFont)));
-						else
-							cell = new PdfPCell(new Paragraph(new Chunk("--",
-									defaultTextFont)));
-
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setBorder(0);
-						table.addCell(cell);
-						if (group.getScoreSmiley() != null) {
-							char smiley = ' ';
-
-							if (group.getScoreSmiley().equals(
-									String.valueOf("SMILE")))
-								smiley = (char) 0x4A;
-							if (group.getScoreSmiley().equals(
-									String.valueOf("NEUTRAL")))
-								smiley = (char) 0x4B;
-							if (group.getScoreSmiley().equals(
-									String.valueOf("FROWN")))
-								smiley = (char) 0x4C;
-
-							cell = new PdfPCell(new Paragraph(new Chunk(smiley,
-									summarySmileys)));
-							cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setBorder(0);
-							table.addCell(cell);
-
-						}
-
-						else {
-							cell = new PdfPCell();
-							cell.setBorder(0);
-							table.addCell(cell);
-						}
-						groupsTotal += group.getScore();
-						groupsMax += group.getMaxScore();
-					}
-
-				}
-
-				if (groupsMax > 0) {
-					cell = new PdfPCell(new Paragraph(new Chunk("Yhteensä: ",
-							boldFont)));
-
-					cell.setPaddingTop(15);
-					cell.setPaddingBottom(15);
-					cell.setBorder(0);
-
-					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-					table.addCell(cell);
-
-					cell = new PdfPCell(new Paragraph(new Chunk(groupsTotal
-							+ " / " + groupsMax, boldFont)));
-					cell.setPaddingTop(15);
-					cell.setPaddingBottom(15);
-					cell.setBorder(0);
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-					table.addCell(cell);
-					table.completeRow();
-				}
-
-			}
-
-			for (ReportPart part : report.getReportParts()) {
-
-				if (part.getReportTemplatePart()
-						.isShowScoreInReportHighlights()) {
-					cell = new PdfPCell(new Paragraph(new Chunk(part
-							.getReportTemplatePart().getTitle(),
-							defaultTextFont)));
-					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setBorder(0);
-					table.addCell(cell);
-
-					if (part.getMaxScore() > 0)
-						cell = new PdfPCell(new Paragraph(new Chunk(
-								String.valueOf(part.getScorePercentage())
-										+ " %", defaultTextFont)));
-					else
-						cell = new PdfPCell(new Paragraph(new Chunk("--",
-								defaultTextFont)));
-
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setBorder(0);
-					table.addCell(cell);
-
-					if (part.getScoreSmiley() != null
-							&& part.getScoreSmiley() != "") {
-						char smiley = ' ';
-
-						if (part.getScoreSmiley().equals(
-								String.valueOf("SMILE")))
-							smiley = (char) 0x4A;
-						if (part.getScoreSmiley().equals(
-								String.valueOf("NEUTRAL")))
-							smiley = (char) 0x4B;
-						if (part.getScoreSmiley().equals(
-								String.valueOf("FROWN")))
-							smiley = (char) 0x4C;
-
-						cell = new PdfPCell(new Paragraph(new Chunk(smiley,
-								summarySmileys)));
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setBorder(0);
-						table.addCell(cell);
-
-					} else {
-						cell = new PdfPCell();
-						cell.setBorder(0);
-						table.addCell(cell);
-					}
-				}
-			}
-
-			cell = new PdfPCell(
-					new Paragraph(new Chunk("Yhteensä: ", boldFont)));
-			cell.setPaddingTop(15);
-			cell.setPaddingBottom(15);
-			cell.setBorder(0);
-			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			table.addCell(cell);
-
-			cell = new PdfPCell(new Paragraph(new Chunk(String.valueOf(report
-					.getTotalScorePercentage()) + " %", boldFont)));
-			cell.setPaddingTop(15);
-			cell.setPaddingBottom(15);
-			cell.setBorder(0);
-			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-
-			table.addCell(cell);
-			table.completeRow();
-
-			para.add(table);
-
-			return para;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -405,9 +55,20 @@ public class ReportPdfCreator {
 
 	}
 
+	public static BaseFont getWingdingBaseFont() {
+		try {
+			return BaseFont.createFont("c:/windows/fonts/wingding.ttf",
+					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	public Paragraph getPartTitle(String title) {
 
-		Paragraph p = new Paragraph(title, reportPartTitleFont);
+		Paragraph p = new Paragraph(title, REPORT_PART_TITLE_FONT);
 		p.setSpacingBefore(10);
 		p.setSpacingAfter(10);
 		p.setIndentationRight(50);
@@ -418,7 +79,7 @@ public class ReportPdfCreator {
 	public Paragraph getGroupTitle(int orderNumber, String title) {
 
 		Chunk partNumber = new Chunk(String.valueOf(orderNumber) + ". ",
-				groupTitleFont);
+				GROUP_TITLE_FONT);
 
 		Paragraph p = new Paragraph();
 
@@ -429,7 +90,7 @@ public class ReportPdfCreator {
 		p.setSpacingAfter(10);
 		p.setIndentationRight(50);
 		p.add(partNumber);
-		p.add(new Chunk(title, groupTitleFont));
+		p.add(new Chunk(title, GROUP_TITLE_FONT));
 		return p;
 	}
 
@@ -458,7 +119,7 @@ public class ReportPdfCreator {
 			} else
 				questionOrderNumber += " ";
 
-			Chunk questionNumberChunk = new Chunk(questionOrderNumber, boldFont);
+			Chunk questionNumberChunk = new Chunk(questionOrderNumber, BOLD);
 			float orderNumberIndent = questionNumberChunk.getWidthPoint();
 
 			Phrase questionPhrase = new Phrase(questionNumberChunk);
@@ -466,7 +127,7 @@ public class ReportPdfCreator {
 			para.setIndentationLeft(indentLeft);
 
 			questionPhrase.add(new Chunk(answer.getQuestion().getQuestion(),
-					boldFont));
+					BOLD));
 			Paragraph p = new Paragraph(questionPhrase);
 
 			table.setWidthPercentage(100);
@@ -499,7 +160,7 @@ public class ReportPdfCreator {
 
 			if (answer.getScore() != -1) {
 				Chunk scoreChunk = new Chunk(String.valueOf(answer.getScore()
-						+ " / " + answer.getMaxScore()), boldFont);
+						+ " / " + answer.getMaxScore()), BOLD);
 				Phrase scorePhrase = new Phrase(scoreChunk);
 				p = new Paragraph(scorePhrase);
 
@@ -516,8 +177,8 @@ public class ReportPdfCreator {
 
 			// Monivalinnat
 
-			Chunk checkbox_unchecked = new Chunk((char) 0x6F, wingdingFont);
-			Chunk checkbox_checked = new Chunk((char) 0xFE, wingdingFont);
+			Chunk checkbox_unchecked = new Chunk((char) 0x6F, WINGDING_FONT);
+			Chunk checkbox_checked = new Chunk((char) 0xFE, WINGDING_FONT);
 			int index = 0;
 			for (MultipleChoiceOption option : ((MultipleChoiceQuestion) answer
 					.getQuestion()).getOptionsList()) {
@@ -543,7 +204,7 @@ public class ReportPdfCreator {
 					table.addCell(cell);
 				}
 				cell = new PdfPCell(new Paragraph(
-						option.getMultipleChoiceOption(), defaultTextFont));
+						option.getMultipleChoiceOption(), DEFAULT_FONT));
 				cell.setPaddingTop(3);
 				cell.setPaddingBottom(3);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -570,7 +231,7 @@ public class ReportPdfCreator {
 				remarksPara.setIndentationLeft(orderNumberIndent + 20);
 				remarksPara.setIndentationRight(70);
 
-				remarksPara.add(new Chunk("Huomiot:", italicFont));
+				remarksPara.add(new Chunk("Huomiot:", ITALIC));
 				remarksPara.setSpacingBefore(0);
 				remarksPara.setSpacingAfter(3);
 
@@ -581,8 +242,7 @@ public class ReportPdfCreator {
 				remarksPara.setIndentationRight(70);
 				remarksPara.setKeepTogether(true);
 
-				remarksPara
-						.add(new Chunk(answer.getRemarks(), defaultTextFont));
+				remarksPara.add(new Chunk(answer.getRemarks(), DEFAULT_FONT));
 				remarksPara.setSpacingBefore(0);
 				remarksPara.setSpacingAfter(3);
 
@@ -620,7 +280,7 @@ public class ReportPdfCreator {
 			} else
 				questionOrderNumber += " ";
 
-			Chunk questionNumberChunk = new Chunk(questionOrderNumber, boldFont);
+			Chunk questionNumberChunk = new Chunk(questionOrderNumber, BOLD);
 
 			float orderNumberIndent = questionNumberChunk.getWidthPoint();
 
@@ -638,7 +298,7 @@ public class ReportPdfCreator {
 			para.setIndentationLeft(indentLeft);
 
 			questionPhrase.add(new Chunk(answer.getQuestion().getQuestion(),
-					boldFont));
+					BOLD));
 			Paragraph p = new Paragraph(questionPhrase);
 
 			float indent = questionNumberChunk.getWidthPoint();
@@ -658,8 +318,7 @@ public class ReportPdfCreator {
 						String.valueOf(answer.getGivenPoints())
 								+ " / "
 								+ String.valueOf(((PointsQuestion) answer
-										.getQuestion()).getMaxPoints()),
-						boldFont)));
+										.getQuestion()).getMaxPoints()), BOLD)));
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			} else
 				cell = new PdfPCell();
@@ -676,7 +335,7 @@ public class ReportPdfCreator {
 				remarksPara.setIndentationLeft(20 + indentLeft + indent);
 				remarksPara.setIndentationRight(70);
 
-				remarksPara.add(new Chunk("Huomiot:", italicFont));
+				remarksPara.add(new Chunk("Huomiot:", ITALIC));
 				remarksPara.setSpacingBefore(0);
 				remarksPara.setSpacingAfter(3);
 
@@ -687,8 +346,7 @@ public class ReportPdfCreator {
 				remarksPara.setIndentationRight(70);
 				remarksPara.setKeepTogether(true);
 
-				remarksPara
-						.add(new Chunk(answer.getRemarks(), defaultTextFont));
+				remarksPara.add(new Chunk(answer.getRemarks(), DEFAULT_FONT));
 				remarksPara.setSpacingBefore(0);
 				remarksPara.setSpacingAfter(3);
 
@@ -723,7 +381,7 @@ public class ReportPdfCreator {
 			} else
 				questionOrderNumber += " ";
 
-			Chunk questionNumberChunk = new Chunk(questionOrderNumber, boldFont);
+			Chunk questionNumberChunk = new Chunk(questionOrderNumber, BOLD);
 			float orderNumberIndent = questionNumberChunk.getWidthPoint();
 
 			Phrase questionPhrase = new Phrase(questionNumberChunk);
@@ -737,7 +395,7 @@ public class ReportPdfCreator {
 			table.setKeepTogether(true);
 
 			questionPhrase.add(new Chunk(answer.getQuestion().getQuestion(),
-					boldFont));
+					BOLD));
 			Paragraph p = new Paragraph(questionPhrase);
 
 			float indent = questionNumberChunk.getWidthPoint();
@@ -747,7 +405,7 @@ public class ReportPdfCreator {
 			para.add(p);
 
 			Paragraph answerPara = new Paragraph(new Chunk(answer.getAnswer(),
-					defaultTextFont));
+					DEFAULT_FONT));
 			answerPara.setIndentationLeft(orderNumberIndent);
 			para.add(answerPara);
 
@@ -763,7 +421,7 @@ public class ReportPdfCreator {
 	}
 
 	public Paragraph getImportantPointsParagraph(ImportantPointsAnswer answer) {
-		Font font = new Font(baseFont, 11);
+		Font font = new Font(BASE_FONT, 11);
 
 		try {
 			PdfPTable table = new PdfPTable(4);
@@ -784,7 +442,7 @@ public class ReportPdfCreator {
 			} else
 				questionOrderNumber += " ";
 
-			Chunk questionNumberChunk = new Chunk(questionOrderNumber, boldFont);
+			Chunk questionNumberChunk = new Chunk(questionOrderNumber, BOLD);
 
 			float orderNumberIndent = questionNumberChunk.getWidthPoint();
 
@@ -793,7 +451,7 @@ public class ReportPdfCreator {
 			para.setIndentationLeft(indentLeft);
 
 			questionPhrase.add(new Chunk(answer.getQuestion().getQuestion(),
-					boldFont));
+					BOLD));
 			Paragraph p = new Paragraph(questionPhrase);
 
 			table.setWidthPercentage(100);
@@ -826,7 +484,7 @@ public class ReportPdfCreator {
 			cell.setBorder(0);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Paragraph(new Chunk("Tärkeys", boldFont)));
+			cell = new PdfPCell(new Paragraph(new Chunk("Tärkeys", BOLD)));
 			cell.setBorder(0);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setPaddingBottom(5);
@@ -837,7 +495,7 @@ public class ReportPdfCreator {
 			cell.setBorder(0);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Paragraph(new Chunk("Pisteet", boldFont)));
+			cell = new PdfPCell(new Paragraph(new Chunk("Pisteet", BOLD)));
 			cell.setBorder(0);
 			cell.setPaddingTop(10);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -882,7 +540,7 @@ public class ReportPdfCreator {
 			}
 
 			if (answer.getRemarks() != null && answer.getRemarks().length() > 0) {
-				Paragraph remarksHeader = new Paragraph("Huomiot:", italicFont);
+				Paragraph remarksHeader = new Paragraph("Huomiot:", ITALIC);
 
 				cell = new PdfPCell();
 				cell.setBorder(0);
@@ -945,7 +603,7 @@ public class ReportPdfCreator {
 			} else
 				questionOrderNumber += " ";
 
-			Chunk questionNumberChunk = new Chunk(questionOrderNumber, boldFont);
+			Chunk questionNumberChunk = new Chunk(questionOrderNumber, BOLD);
 
 			float orderNumberIndent = questionNumberChunk.getWidthPoint();
 
@@ -954,7 +612,7 @@ public class ReportPdfCreator {
 			para.setIndentationLeft(indentLeft);
 
 			questionPhrase.add(new Chunk(answer.getQuestion().getQuestion(),
-					boldFont));
+					BOLD));
 			Paragraph p = new Paragraph(questionPhrase);
 
 			table.setWidthPercentage(100);
@@ -987,15 +645,15 @@ public class ReportPdfCreator {
 				cell.setBorder(0);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Paragraph(new Chunk(item,
-						defaultTextFont)));
+				cell = new PdfPCell(
+						new Paragraph(new Chunk(item, DEFAULT_FONT)));
 				cell.setPaddingTop(5);
 				cell.setPaddingBottom(5);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Paragraph(new Chunk(answer
-						.getAnswersOut().get(index++), defaultTextFont)));
+						.getAnswersOut().get(index++), DEFAULT_FONT)));
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setVerticalAlignment(Element.ALIGN_TOP);
 				cell.setPaddingTop(5);
@@ -1011,14 +669,14 @@ public class ReportPdfCreator {
 
 			cell = new PdfPCell(new Paragraph(new Chunk(
 					((CostListingQuestion) answer.getQuestion()).getTotal(),
-					boldFont)));
+					BOLD)));
 			cell.setPaddingTop(5);
 			cell.setPaddingBottom(5);
 			cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			table.addCell(cell);
 
 			cell = new PdfPCell(new Paragraph(new Chunk(answer.getTotalOut(),
-					boldFont)));
+					BOLD)));
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setVerticalAlignment(Element.ALIGN_TOP);
 			cell.setPaddingTop(5);
@@ -1030,7 +688,7 @@ public class ReportPdfCreator {
 
 			if (answer.getRemarks() != null && answer.getRemarks().length() > 0) {
 
-				Paragraph remarksHeader = new Paragraph("Huomiot:", italicFont);
+				Paragraph remarksHeader = new Paragraph("Huomiot:", ITALIC);
 
 				cell = new PdfPCell();
 				cell.setPaddingTop(5);
@@ -1046,7 +704,7 @@ public class ReportPdfCreator {
 				table.addCell(cell);
 
 				Paragraph remarksText = new Paragraph(answer.getRemarks(),
-						defaultTextFont);
+						DEFAULT_FONT);
 
 				cell = new PdfPCell();
 				cell.setColspan(2);

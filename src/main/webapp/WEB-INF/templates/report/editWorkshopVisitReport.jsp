@@ -20,7 +20,7 @@
 			</div>
 			<br><br>
 			
-<sf:form id="editReportForm" modelAttribute="report" action="saveReport" method="post">
+<sf:form id="editReportForm" modelAttribute="report" action="saveWorkshopVisitReport" method="post">
 
 
 <!-- Raportin yleistiedot -->

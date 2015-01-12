@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.domain.report.WorkshopVisitReport;
 import fi.testcenter.service.ImporterService;
+import fi.testcenter.service.ReportQueryObject;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.UserAccountService;
 import fi.testcenter.service.WorkshopService;
@@ -42,20 +42,23 @@ public class SearchController {
 	@RequestMapping(value = "/userOwnReports", method = RequestMethod.GET)
 	public String setupSearchHomePage(HttpServletRequest request, Model model) {
 
-		model.addAttribute("reportSearchList",
-				rs.findReportsByUserId(us.findLoginUser().getId()));
+		List<ReportQueryObject> ownReports = rs.findUserOwnReportList(us
+				.findLoginUser().getId());
 
-		if (request.isUserInRole("ROLE_ADMIN")) {
-			model.addAttribute("awaitApproval",
-					rs.findReportsAwaitingApproval());
-		}
+		model.addAttribute("reportSearchList", ownReports);
+
+		// if (request.isUserInRole("ROLE_ADMIN")) {
+		// model.addAttribute("awaitApproval",
+		// rs.findReportsAwaitingApproval());
+		// }
 
 		return "search/userOwnReports";
 	}
 
 	@RequestMapping(value = "/showAllUserOwnReports", method = RequestMethod.GET)
-	public String showAllUserOwnReports(Model model,
-			@ModelAttribute("reportSearchList") List<WorkshopVisitReport> reportSearchList) {
+	public String showAllUserOwnReports(
+			Model model,
+			@ModelAttribute("reportSearchList") List<ReportQueryObject> reportSearchList) {
 
 		// Nollataan searchReportCriteria jotta se ei näytä vanhoja hakuehtoja
 		// jos käyttäjä menee raporttilistan kautta raporttien hakuun
@@ -88,8 +91,9 @@ public class SearchController {
 	}
 
 	@RequestMapping(value = "/showSearchResult", method = RequestMethod.GET)
-	public String paginateSearchResult(Model model,
-			@ModelAttribute("reportSearchList") List<WorkshopVisitReport> reportSearchList,
+	public String paginateSearchResult(
+			Model model,
+			@ModelAttribute("reportSearchList") List<ReportQueryObject> reportSearchList,
 			@RequestParam("page") Integer page) {
 
 		int currentPage = page;
