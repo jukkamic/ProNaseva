@@ -19,6 +19,8 @@
 			<br>
 			<br>
 
+	<a href="/ProNaseva/admin/saveReportTemplate?name=Audi puhelutestiraportti" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Audi puhelutestiraportti <br>kantaan</a>
+	<br><br>
 	<a href="/ProNaseva/admin/saveReportTemplate?name=Volvo Auto raporttipohja" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Volvo-raporttipohja <br>kantaan</a>
 	<br><br>
 	<a href="/ProNaseva/admin/saveReportTemplate?name=Autoasi raporttipohja" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Autoasi-raporttipohja <br>kantaan</a>

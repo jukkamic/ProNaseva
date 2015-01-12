@@ -1,16 +1,12 @@
 package fi.testcenter.web;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,17 +21,15 @@ import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
 import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.CostListingAnswer;
-import fi.testcenter.domain.answer.ImportantPointsAnswer;
-import fi.testcenter.domain.answer.ImportantPointsItem;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
-import fi.testcenter.domain.answer.TextAnswer;
-import fi.testcenter.domain.question.ImportantPointsQuestion;
-import fi.testcenter.domain.question.OptionalQuestions;
-import fi.testcenter.domain.question.Question;
+import fi.testcenter.domain.report.PhoneCallTestReport;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportPart;
 import fi.testcenter.domain.report.ReportQuestionGroup;
-import fi.testcenter.domain.report.ReportTemplate;
+import fi.testcenter.domain.report.WorkshopVisitReport;
+import fi.testcenter.domain.reportTemplate.PhoneCallTestReportTemplate;
+import fi.testcenter.domain.reportTemplate.ReportTemplate;
+import fi.testcenter.domain.reportTemplate.WorkshopVisitReportTemplate;
 import fi.testcenter.pdf.ReportPdfCreator;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
@@ -47,7 +41,7 @@ import fi.testcenter.service.WorkshopService;
 @RequestMapping("/")
 @SessionAttributes(value = { "reportTemplate", "report", "formAnswers",
 		"workshops", "readyReport", "addOptionalToQuestionGroup", "importers",
-		"addQuestionToReportPart", "optionalQuestionsAnswerIndex",
+		"importer", "addQuestionToReportPart", "optionalQuestionsAnswerIndex",
 		"editReportPartNumber", "addQuestionsToOptionalAnswer",
 		"optionalQuestionsAnswer" })
 public class ReportController {
@@ -104,28 +98,66 @@ public class ReportController {
 	public String submitNewReportBasicInfo(Model model,
 			@RequestParam("importerID") Integer importerID) {
 
-		Report report = new Report();
-		Importer importer = is.finImporterById(importerID.longValue());
-		if (importer.getReportTemplateName() == null
-				|| importer.getReportTemplateName().isEmpty()) {
+		Importer importer = is.findImporterById(importerID.longValue());
+		model.addAttribute("importer", importer);
+		if (importer.getReportTemplates() == null
+				|| importer.getReportTemplates().isEmpty()) {
 			model.addAttribute("alertMessage",
 					"Maahantuojalle ei ole valittu raporttipohjaa");
 			return "report/newReportSelectImporter";
 		}
-		try {
-			report = new Report(rts.findReportTemplateByName(importer
-					.getReportTemplateName()), rs);
-		} catch (Exception e) {
-			e.printStackTrace();
+
+		if (importer.getReportTemplates().size() > 1)
+			return "report/chooseTemplateForReport";
+		else {
+			Report report;
+			ReportTemplate template = importer.getReportTemplates().get(0);
+			if (template instanceof PhoneCallTestReportTemplate)
+				report = new PhoneCallTestReport(
+						(PhoneCallTestReportTemplate) template, rs);
+
+			else
+				report = new WorkshopVisitReport(
+						(WorkshopVisitReportTemplate) template, rs);
+			report.setUser(us.findLoginUser());
+			report.setImporter(importer);
+
+			model.addAttribute("report", report);
+
+			return "redirect:prepareReport";
 		}
 
+	}
+
+	@RequestMapping(value = "/selectReportTemplate", method = RequestMethod.POST)
+	public String selectReportTemplate(Model model,
+			@RequestParam("selectedReportTemplate") Long templateId,
+			@ModelAttribute("importer") Importer importer) {
+
+		ReportTemplate chosenTemplate = new ReportTemplate();
+		Report report;
+
+		for (ReportTemplate template : importer.getReportTemplates()) {
+
+			if (template.getId() == templateId)
+				chosenTemplate = template;
+
+		}
+
+		if (chosenTemplate instanceof PhoneCallTestReportTemplate)
+			report = new PhoneCallTestReport(
+					(PhoneCallTestReportTemplate) chosenTemplate, rs);
+
+		else
+			report = new WorkshopVisitReport(
+					(WorkshopVisitReportTemplate) chosenTemplate, rs);
 		report.setUser(us.findLoginUser());
 		report.setImporter(importer);
-		report.setImporterId(importerID.longValue());
 
+		model.addAttribute("workshops", ws.getWorkshops());
 		model.addAttribute("report", report);
 
-		return "redirect:/prepareReport";
+		return "redirect:prepareReport";
 	}
 
 	@RequestMapping(value = "/prepareReport")
@@ -139,46 +171,56 @@ public class ReportController {
 		model.addAttribute("initialAnswerIndexCounter", 0);
 
 		model.addAttribute("editReportPartNumber", 0);
-		return "report/editReport";
+
+		if (report instanceof WorkshopVisitReport)
+			return "report/editWorkshopVisitReport";
+		else {
+
+			return "report/editPhoneCallTestReport";
+		}
+
 	}
 
 	@RequestMapping(value = "/saveReport", method = RequestMethod.POST)
-	public String submitReport(
-			HttpServletRequest request,
-			Model model,
-			@ModelAttribute("report") Report report,
-			@RequestParam("navigateToReportPart") Integer navigateToReportPart,
-			@RequestParam("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex,
-			@ModelAttribute("editReportPartNumber") Integer addOptionalToReportPart,
-			@RequestParam("addOptionalToQuestionGroup") Integer addOptionalToQuestionGroup,
-			BindingResult result) {
+	public String submitReport(Model model,
+			@ModelAttribute("report") Report report, BindingResult result) {
 
-		String auto = ((TextAnswer) report.getReportParts().get(0)
-				.getReportQuestionGroups().get(0).getAnswers().get(0))
-				.getAnswer();
-		model.addAttribute("auto", auto);
 		report.setWorkshop(ws.findWorkshop(report.getWorkshopId()));
-		report.checkReportHighlights();
-		report.setRemovedQuestions(); // Nollataan vastaukset
-										// MultipleChoiceQuestion- ja
-										// PointsQuestion-luokan kysymyksiin
-										// jotta ei huomioida pisteytyksessä.
-		report = report.calculateReportScore(rs);
 
-		for (ReportPart part : report.getReportParts()) {
-			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
-				for (Answer answer : group.getAnswers()) {
-					if (answer instanceof CostListingAnswer)
-						((CostListingAnswer) answer).formatCurrencies();
+		if (report instanceof PhoneCallTestReport) {
+			model.addAttribute("report", rs.saveReport(report));
+			return "report/showPhoneCallTestReport";
 
+		}
+
+		if (report instanceof WorkshopVisitReport) {
+			WorkshopVisitReport visitReport = (WorkshopVisitReport) report;
+			visitReport.checkReportHighlights();
+			visitReport.setRemovedQuestions(); // Nollataan vastaukset
+												// MultipleChoiceQuestion- ja
+												// PointsQuestion-luokan
+												// kysymyksiin
+												// jotta ei huomioida
+												// pisteytyksessä.
+			visitReport = visitReport.calculateReportScore(rs);
+
+			for (ReportPart part : visitReport.getReportParts()) {
+				for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+					for (Answer answer : group.getAnswers()) {
+						if (answer instanceof CostListingAnswer)
+							((CostListingAnswer) answer).formatCurrencies();
+
+					}
 				}
 			}
+			report = visitReport;
 		}
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
 		try {
-			report.setDate(simpleDateFormat.parse(report.getReportDate()));
+			report.setTestDate(simpleDateFormat.parse(report
+					.getTestDateString()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -196,75 +238,78 @@ public class ReportController {
 		// palataan
 		// editReport.jsp
 
-		if (navigateToReportPart != null) {
+		// if (navigateToReportPart != null) {
+		//
+		// model.addAttribute("report", report);
+		// model.addAttribute("editReportPartNumber", navigateToReportPart);
+		//
+		// return "report/editReport";
+		//
+		// } else if (optionalQuestionsAnswerIndex != null) {
 
-			model.addAttribute("report", report);
-			model.addAttribute("editReportPartNumber", navigateToReportPart);
+		// Asetetaan JSP:tä varten chosenQuestions-muuttuujaan
+		// aikaisemmin
+		// valitut valinnaiset kysymykset
 
-			return "report/editReport";
+		// OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
+		// .getReportParts().get(addOptionalToReportPart)
+		// .getReportQuestionGroups().get(addOptionalToQuestionGroup)
+		// .getAnswers().get(optionalQuestionsAnswerIndex);
+		// List<Question> optionalQuestions = ((OptionalQuestions) oqa
+		// .getQuestion()).getQuestions();
+		//
+		// int[] oldQuestions = new int[0];
+		// if (oqa.getQuestions() != null) {
+		//
+		// for (Question question : oqa.getQuestions()) {
+		//
+		// int index = optionalQuestions.indexOf(question);
+		// oldQuestions = Arrays.copyOf(oldQuestions,
+		// oldQuestions.length + 1);
+		// oldQuestions[oldQuestions.length - 1] = index;
+		// }
+		// }
+		//
+		// ChosenQuestions chosenQ = new ChosenQuestions();
+		// chosenQ.setChosenQuestions(oldQuestions);
+		// model.addAttribute("addQuestionsToOptionalAnswer", oqa);
+		// model.addAttribute("chosenQuestions", chosenQ);
+		// model.addAttribute("readyReport", report);
+		// model.addAttribute("report", report);
+		// model.addAttribute("editReportPartNumber",
+		// addOptionalToReportPart);
+		// model.addAttribute("addOptionalToQuestionGroup",
+		// addOptionalToQuestionGroup);
+		// model.addAttribute("optionalQuestionsAnswerIndex",
+		// optionalQuestionsAnswerIndex);
+		//
+		// model.addAttribute("optionalQuestions", optionalQuestions);
+		//
+		// return "report/addOptionalQuestions";
+		// }
+		//
+		// else {
+		//
+		// model.addAttribute("readyReport", report);
+		// model.addAttribute("report", report);
+		//
+		// // if (report.isSmileysSet() == false) {
+		// //
+		// // model.addAttribute("editSmileys", false);
+		// // if (report.getReportStatus() == "DRAFT"
+		// // || report.getReportStatus() == "AWAIT_APPROVAL")
+		// // model.addAttribute("editSmileys", true);
+		// // if (report.getReportStatus() == "APPROVED"
+		// // && request.isUserInRole("ROLE_ADMIN"))
+		// // model.addAttribute("editSmileys", true);
+		//
+		// } else
+		// model.addAttribute("editSmileys", false);
 
-		} else if (optionalQuestionsAnswerIndex != null) {
-
-			// Asetetaan JSP:tä varten chosenQuestions-muuttuujaan
-			// aikaisemmin
-			// valitut valinnaiset kysymykset
-			OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
-					.getReportParts().get(addOptionalToReportPart)
-					.getReportQuestionGroups().get(addOptionalToQuestionGroup)
-					.getAnswers().get(optionalQuestionsAnswerIndex);
-			List<Question> optionalQuestions = ((OptionalQuestions) oqa
-					.getQuestion()).getQuestions();
-
-			int[] oldQuestions = new int[0];
-			if (oqa.getQuestions() != null) {
-
-				for (Question question : oqa.getQuestions()) {
-
-					int index = optionalQuestions.indexOf(question);
-					oldQuestions = Arrays.copyOf(oldQuestions,
-							oldQuestions.length + 1);
-					oldQuestions[oldQuestions.length - 1] = index;
-				}
-			}
-
-			ChosenQuestions chosenQ = new ChosenQuestions();
-			chosenQ.setChosenQuestions(oldQuestions);
-			model.addAttribute("addQuestionsToOptionalAnswer", oqa);
-			model.addAttribute("chosenQuestions", chosenQ);
-			model.addAttribute("readyReport", report);
-			model.addAttribute("report", report);
-			model.addAttribute("editReportPartNumber", addOptionalToReportPart);
-			model.addAttribute("addOptionalToQuestionGroup",
-					addOptionalToQuestionGroup);
-			model.addAttribute("optionalQuestionsAnswerIndex",
-					optionalQuestionsAnswerIndex);
-
-			model.addAttribute("optionalQuestions", optionalQuestions);
-
-			return "report/addOptionalQuestions";
-		}
-
-		else {
-
-			model.addAttribute("readyReport", report);
-			model.addAttribute("report", report);
-
-			if (report.isSmileysSet() == false) {
-
-				model.addAttribute("editSmileys", false);
-				if (report.getReportStatus() == "DRAFT"
-						|| report.getReportStatus() == "AWAIT_APPROVAL")
-					model.addAttribute("editSmileys", true);
-				if (report.getReportStatus() == "APPROVED"
-						&& request.isUserInRole("ROLE_ADMIN"))
-					model.addAttribute("editSmileys", true);
-
-			} else
-				model.addAttribute("editSmileys", false);
-
-			return "report/showReport";
-		}
+		return "report/showReport";
 	}
+
+	// }
 
 	@RequestMapping(value = "/addChosenQuestions", method = RequestMethod.POST)
 	public String addChosenQuestions(
@@ -289,7 +334,7 @@ public class ReportController {
 
 	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)
 	public String submitReportForApproval(Model model,
-			@ModelAttribute("report") Report report) {
+			@ModelAttribute("report") WorkshopVisitReport report) {
 
 		report.setReportStatus("AWAIT_APPROVAL");
 		model.addAttribute("report", report);
@@ -309,19 +354,19 @@ public class ReportController {
 			@ModelAttribute("readyReport") Report formReport,
 			@ModelAttribute("report") Report report) {
 
-		report.checkReportHighlights();
-		if (report.getOverallResultSmiley() != null
-				&& report.getOverallResultSmiley() != "") {
-			report.setSmileysSet(true);
-			model.addAttribute("editSmileys", false);
-		} else
-			model.addAttribute("editSmileys", true);
-		try {
-			report = rs.saveReport(report);
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
+		// report.checkReportHighlights();
+		// if (report.getOverallResultSmiley() != null
+		// && report.getOverallResultSmiley() != "") {
+		// report.setSmileysSet(true);
+		// model.addAttribute("editSmileys", false);
+		// } else
+		// model.addAttribute("editSmileys", true);
+		// try {
+		// report = rs.saveReport(report);
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		//
+		// }
 
 		model.addAttribute("readyReport", report);
 		model.addAttribute("report", report);
@@ -330,48 +375,31 @@ public class ReportController {
 
 	@RequestMapping(value = "/getPdf", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> getPdf(@ModelAttribute("report") Report report) {
-		try {
-
-			// POISTA TÄMÄ:
-			for (ReportPart part : report.getReportParts()) {
-				for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
-					for (Answer answer : group.getAnswers())
-						if (answer instanceof ImportantPointsAnswer) {
-							int index = 0;
-							for (ImportantPointsItem item : ((ImportantPointsAnswer) answer)
-									.getAnswerItems()) {
-								item.setItem(((ImportantPointsQuestion) answer
-										.getQuestion()).getQuestionItems().get(
-										index++));
-							}
-							rs.saveAnswer(answer);
-						}
-				}
-			}
-
-			report = rs.getReportById(report.getId());
-			byte[] contents;
-			contents = pdfCreator.generateReportPdf(report).toByteArray();
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.parseMediaType("application/pdf"));
-			String filename = report.getWorkshop().getName() + "-"
-					+ report.getReportDate().replace('.', '-') + ".pdf";
-			headers.setContentDispositionFormData(filename, filename);
-			headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-			ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
-					contents, headers, HttpStatus.OK);
-			return response;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
+		// try {
+		//
+		// // report = rs.getReportById(report.getId());
+		// byte[] contents;
+		// contents = pdfCreator.generateReportPdf(report).toByteArray();
+		// HttpHeaders headers = new HttpHeaders();
+		// headers.setContentType(MediaType.parseMediaType("application/pdf"));
+		// String filename = report.getWorkshop().getName() + "-"
+		// + report.getTestDateString().replace('.', '-') + ".pdf";
+		// headers.setContentDispositionFormData(filename, filename);
+		// headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		// ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+		// contents, headers, HttpStatus.OK);
+		// return response;
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// return null;
+		// }
+		return null;
 	}
 
 	@RequestMapping(value = "/printDone")
 	public String printDone(Model model,
-			@ModelAttribute("report") ReportTemplate report) {
+			@ModelAttribute("report") WorkshopVisitReportTemplate report) {
 
 		model.addAttribute("report", report);
 		return "report/showReport";
@@ -379,7 +407,7 @@ public class ReportController {
 
 	@RequestMapping(value = "editReport")
 	public String editReport(Model model,
-			@ModelAttribute("report") Report report) {
+			@ModelAttribute("report") WorkshopVisitReport report) {
 
 		List<Workshop> workshops = ws.getWorkshops();
 
@@ -395,7 +423,8 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "deleteReport")
-	public String editReport(@ModelAttribute("report") Report report) {
+	public String editReport(
+			@ModelAttribute("report") WorkshopVisitReport report) {
 
 		rs.deleteReport(report);
 
@@ -404,7 +433,8 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "approveReport")
-	public String approveReport(@ModelAttribute("report") Report report) {
+	public String approveReport(
+			@ModelAttribute("report") WorkshopVisitReport report) {
 
 		report.setReportStatus("APPROVED");
 		rs.saveReport(report);
@@ -415,7 +445,7 @@ public class ReportController {
 
 	@RequestMapping(value = "editSmileys")
 	public String approveReport(Model model,
-			@ModelAttribute("report") Report report) {
+			@ModelAttribute("report") WorkshopVisitReport report) {
 
 		model.addAttribute("editSmileys", true);
 		model.addAttribute("openSummaryPanel", true);
@@ -430,24 +460,25 @@ public class ReportController {
 	public String showSelectedReport(HttpServletRequest request, Model model,
 			@RequestParam("id") Integer id) {
 
-		Report selectedReport = rs.getReportById(id.longValue());
-
-		model.addAttribute("report", selectedReport);
-		model.addAttribute("edit", "TRUE");
-		model.addAttribute("readyReport", selectedReport);
-
-		if (selectedReport.isSmileysSet() == false) {
-
-			model.addAttribute("editSmileys", false);
-			if (selectedReport.getReportStatus() == "DRAFT"
-					|| selectedReport.getReportStatus() == "AWAIT_APPROVAL")
-				model.addAttribute("editSmileys", true);
-			if (selectedReport.getReportStatus() == "APPROVED"
-					&& request.isUserInRole("ROLE_ADMIN"))
-				model.addAttribute("editSmileys", true);
-
-		} else
-			model.addAttribute("editSmileys", false);
+		// WorkshopVisitReport selectedReport =
+		// rs.getReportById(id.longValue());
+		//
+		// model.addAttribute("report", selectedReport);
+		// model.addAttribute("edit", "TRUE");
+		// model.addAttribute("readyReport", selectedReport);
+		//
+		// if (selectedReport.isSmileysSet() == false) {
+		//
+		// model.addAttribute("editSmileys", false);
+		// if (selectedReport.getReportStatus() == "DRAFT"
+		// || selectedReport.getReportStatus() == "AWAIT_APPROVAL")
+		// model.addAttribute("editSmileys", true);
+		// if (selectedReport.getReportStatus() == "APPROVED"
+		// && request.isUserInRole("ROLE_ADMIN"))
+		// model.addAttribute("editSmileys", true);
+		//
+		// } else
+		// model.addAttribute("editSmileys", false);
 
 		return "report/showReport";
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.WorkshopVisitReport;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportService;
 import fi.testcenter.service.UserAccountService;
@@ -55,7 +55,7 @@ public class SearchController {
 
 	@RequestMapping(value = "/showAllUserOwnReports", method = RequestMethod.GET)
 	public String showAllUserOwnReports(Model model,
-			@ModelAttribute("reportSearchList") List<Report> reportSearchList) {
+			@ModelAttribute("reportSearchList") List<WorkshopVisitReport> reportSearchList) {
 
 		// Nollataan searchReportCriteria jotta se ei näytä vanhoja hakuehtoja
 		// jos käyttäjä menee raporttilistan kautta raporttien hakuun
@@ -89,7 +89,7 @@ public class SearchController {
 
 	@RequestMapping(value = "/showSearchResult", method = RequestMethod.GET)
 	public String paginateSearchResult(Model model,
-			@ModelAttribute("reportSearchList") List<Report> reportSearchList,
+			@ModelAttribute("reportSearchList") List<WorkshopVisitReport> reportSearchList,
 			@RequestParam("page") Integer page) {
 
 		int currentPage = page;

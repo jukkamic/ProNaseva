@@ -27,12 +27,12 @@ public class ImporterService {
 		return ir.findAll();
 	}
 
-	public Importer finImporterById(Long id) {
+	public Importer findImporterById(Long id) {
 		return ir.findOne(id.longValue());
 	}
 
-	public void saveImporter(Importer importer) {
-		ir.save(importer);
+	public Importer saveImporter(Importer importer) {
+		return ir.save(importer);
 	}
 
 	public void deleteImporter(Importer importer) {

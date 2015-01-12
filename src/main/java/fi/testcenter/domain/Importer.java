@@ -1,11 +1,18 @@
 package fi.testcenter.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
+
+import fi.testcenter.domain.reportTemplate.ReportTemplate;
 
 @Entity
 public class Importer implements Serializable {
@@ -26,7 +33,13 @@ public class Importer implements Serializable {
 	private String city;
 	private String email;
 	private String telNum;
-	private String reportTemplateName;
+
+	@ManyToMany
+	@JoinTable
+	private List<ReportTemplate> reportTemplates = new ArrayList<ReportTemplate>();
+
+	@Transient
+	private List<String> chosenTemplates = new ArrayList<String>();
 
 	private boolean active;
 
@@ -45,6 +58,22 @@ public class Importer implements Serializable {
 
 	public String getName() {
 		return name;
+	}
+
+	public List<ReportTemplate> getReportTemplates() {
+		return reportTemplates;
+	}
+
+	public List<String> getChosenTemplates() {
+		return chosenTemplates;
+	}
+
+	public void setChosenTemplates(List<String> chosenTemplates) {
+		this.chosenTemplates = chosenTemplates;
+	}
+
+	public void setReportTemplates(List<ReportTemplate> reportTemplates) {
+		this.reportTemplates = reportTemplates;
 	}
 
 	public void setName(String name) {
@@ -101,14 +130,6 @@ public class Importer implements Serializable {
 
 	public void setActive(boolean active) {
 		this.active = active;
-	}
-
-	public String getReportTemplateName() {
-		return reportTemplateName;
-	}
-
-	public void setReportTemplateName(String reportTemplateName) {
-		this.reportTemplateName = reportTemplateName;
 	}
 
 	public String getCity() {

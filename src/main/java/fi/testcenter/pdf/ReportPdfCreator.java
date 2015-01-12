@@ -31,9 +31,9 @@ import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
 import fi.testcenter.domain.question.PointsQuestion;
-import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportPart;
 import fi.testcenter.domain.report.ReportQuestionGroup;
+import fi.testcenter.domain.report.WorkshopVisitReport;
 
 @Component
 public class ReportPdfCreator {
@@ -54,7 +54,7 @@ public class ReportPdfCreator {
 	@Autowired
 	HeaderHelper headerHelper;
 
-	Report report;
+	WorkshopVisitReport report;
 
 	public ReportPdfCreator() {
 		try {
@@ -76,7 +76,7 @@ public class ReportPdfCreator {
 		}
 	}
 
-	public ByteArrayOutputStream generateReportPdf(Report report)
+	public ByteArrayOutputStream generateReportPdf(WorkshopVisitReport report)
 			throws IOException, DocumentException {
 
 		this.report = report;
@@ -180,7 +180,7 @@ public class ReportPdfCreator {
 		p.setSpacingBefore(60);
 		kansilehti.add(p);
 
-		p = new Paragraph(new Chunk(report.getReportDate(), font));
+		p = new Paragraph(new Chunk(report.getTestDateString(), font));
 		p.setSpacingBefore(15);
 		kansilehti.add(p);
 

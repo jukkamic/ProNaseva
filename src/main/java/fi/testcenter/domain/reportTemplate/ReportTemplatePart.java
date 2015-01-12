@@ -1,4 +1,4 @@
-package fi.testcenter.domain.report;
+package fi.testcenter.domain.reportTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,10 @@ public class ReportTemplatePart {
 	private Long id;
 
 	private String title;
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "REPORTPART_ID")
-	@OrderColumn(name = "QGROUPORDER")
+	@JoinColumn(name = "TEMPLATEPART_JOIN")
+	@OrderColumn(name = "TEMPLATEPART_ORDER")
 	private List<ReportTemplateQuestionGroup> questionGroups = new ArrayList<ReportTemplateQuestionGroup>();
 
 	boolean showScorePercentage;
@@ -43,7 +44,8 @@ public class ReportTemplatePart {
 		return questionGroups;
 	}
 
-	public void setQuestionGroups(List<ReportTemplateQuestionGroup> questionGroups) {
+	public void setQuestionGroups(
+			List<ReportTemplateQuestionGroup> questionGroups) {
 		this.questionGroups = questionGroups;
 	}
 

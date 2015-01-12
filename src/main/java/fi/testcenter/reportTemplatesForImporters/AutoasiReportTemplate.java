@@ -11,14 +11,14 @@ import fi.testcenter.domain.question.OptionalQuestions;
 import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.question.TextQuestion;
-import fi.testcenter.domain.report.ReportTemplate;
-import fi.testcenter.domain.report.ReportTemplatePart;
-import fi.testcenter.domain.report.ReportTemplateQuestionGroup;
+import fi.testcenter.domain.reportTemplate.ReportTemplatePart;
+import fi.testcenter.domain.reportTemplate.ReportTemplateQuestionGroup;
+import fi.testcenter.domain.reportTemplate.WorkshopVisitReportTemplate;
 
 public class AutoasiReportTemplate {
-	public static ReportTemplate getReportTemplate() {
+	public static WorkshopVisitReportTemplate getReportTemplate() {
 
-		ReportTemplate reportTemplate = new ReportTemplate();
+		WorkshopVisitReportTemplate reportTemplate = new WorkshopVisitReportTemplate();
 		reportTemplate.setCurrent(true);
 		reportTemplate.setTemplateName("Autoasi raporttipohja");
 		ArrayList<ReportTemplatePart> reportParts = new ArrayList<ReportTemplatePart>();

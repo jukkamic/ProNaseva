@@ -7,6 +7,7 @@
 	<persistence-unit name="ProNasevaPersistence" transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>dataSource</jta-data-source>
+		<class>fi.testcenter.domain.reportTemplate.ReportTemplateQuestionGroup</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="showSql" value="true" />

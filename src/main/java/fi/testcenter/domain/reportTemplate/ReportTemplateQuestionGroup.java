@@ -1,4 +1,4 @@
-package fi.testcenter.domain.report;
+package fi.testcenter.domain.reportTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +25,9 @@ public class ReportTemplateQuestionGroup {
 	private String title;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "QUESTIONGROUP_ID")
-	@OrderColumn(name = "QUESTIONORDER")
-	private List<Question> questions = new ArrayList<Question>();
+	@JoinColumn
+	@OrderColumn
+	private List<Question> questionsList = new ArrayList<Question>();
 
 	private boolean showScore;
 	private int score;
@@ -36,6 +36,9 @@ public class ReportTemplateQuestionGroup {
 	private int starCount;
 	private String scoreSmiley;
 	private boolean showInReportSummary = false;
+
+	public ReportTemplateQuestionGroup() {
+	}
 
 	public String getTitle() {
 		return title;
@@ -54,11 +57,11 @@ public class ReportTemplateQuestionGroup {
 	}
 
 	public List<Question> getQuestions() {
-		return questions;
+		return questionsList;
 	}
 
 	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+		this.questionsList = questions;
 	}
 
 	public boolean isShowScore() {
@@ -107,6 +110,14 @@ public class ReportTemplateQuestionGroup {
 
 	public void setShowInReportSummary(boolean showInReportSummary) {
 		this.showInReportSummary = showInReportSummary;
+	}
+
+	public List<Question> getQuestionsList() {
+		return questionsList;
+	}
+
+	public void setQuestionsList(List<Question> questionsList) {
+		this.questionsList = questionsList;
 	}
 
 	public String getScoreSmiley() {

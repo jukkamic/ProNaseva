@@ -26,7 +26,7 @@ import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportPart;
 import fi.testcenter.domain.report.ReportQuestionGroup;
-import fi.testcenter.domain.report.ReportTemplate;
+import fi.testcenter.domain.report.WorkshopVisitReport;
 import fi.testcenter.repository.AnswerRepository;
 import fi.testcenter.repository.ImpPtItemRepository;
 import fi.testcenter.repository.ImporterRepository;
@@ -69,11 +69,6 @@ public class ReportService {
 	@PersistenceContext()
 	EntityManager em;
 
-	@Transactional(readOnly = true)
-	public ReportTemplate getReportTemplate() {
-		return rts.createReportTemplate("Volvo");
-	}
-
 	@Transactional
 	public Report saveReport(Report report) {
 
@@ -91,7 +86,7 @@ public class ReportService {
 	}
 
 	@Transactional
-	public void deleteReport(Report report) {
+	public void deleteReport(WorkshopVisitReport report) {
 		for (ReportPart part : report.getReportParts()) {
 			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
 				for (Answer answer : group.getAnswers()) {
@@ -118,15 +113,15 @@ public class ReportService {
 	}
 
 	@Transactional
-	public List<Report> findSearchReports() {
+	public List<WorkshopVisitReport> findSearchReports() {
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r ORDER BY r.date DESC")
+						"SELECT r.date, NEW fi.testcenter.domain.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM WorkshopVisitReport r ORDER BY r.date DESC")
 				.getResultList();
 
-		ArrayList<Report> resultReports = new ArrayList<Report>();
+		ArrayList<WorkshopVisitReport> resultReports = new ArrayList<WorkshopVisitReport>();
 		for (Object[] result : reports) {
-			resultReports.add((Report) result[1]);
+			resultReports.add((WorkshopVisitReport) result[1]);
 		}
 
 		return resultReports;
@@ -134,30 +129,30 @@ public class ReportService {
 	}
 
 	@Transactional
-	public List<Report> findReportsAwaitingApproval() {
+	public List<WorkshopVisitReport> findReportsAwaitingApproval() {
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.report.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.date DESC")
+						"SELECT r.date, NEW fi.testcenter.domain.report.WorkshopVisitReport(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM WorkshopVisitReport r WHERE r.reportStatus = 'AWAIT_APPROVAL' order by r.date DESC")
 				.getResultList();
 
-		ArrayList<Report> resultReports = new ArrayList<Report>();
+		ArrayList<WorkshopVisitReport> resultReports = new ArrayList<WorkshopVisitReport>();
 		for (Object[] result : reports) {
-			resultReports.add((Report) result[1]);
+			resultReports.add((WorkshopVisitReport) result[1]);
 		}
 
 		return resultReports;
 	}
 
 	@Transactional
-	public List<Report> findReportsByUserId(Long userId) {
+	public List<WorkshopVisitReport> findReportsByUserId(Long userId) {
 		List<Object[]> reports = em
 				.createQuery(
-						"SELECT r.date, NEW fi.testcenter.domain.report.Report(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM Report r WHERE r.user.id = :userId ORDER BY r.date DESC")
+						"SELECT r.date, NEW fi.testcenter.domain.report.WorkshopVisitReport(r.id, r.reportDate, r.importer, r.workshop, r.user, r.reportStatus) FROM WorkshopVisitReport r WHERE r.user.id = :userId ORDER BY r.date DESC")
 				.setParameter("userId", userId).getResultList();
 
-		ArrayList<Report> resultReports = new ArrayList<Report>();
+		ArrayList<WorkshopVisitReport> resultReports = new ArrayList<WorkshopVisitReport>();
 		for (Object[] result : reports) {
-			resultReports.add((Report) result[1]);
+			resultReports.add((WorkshopVisitReport) result[1]);
 		}
 		return resultReports;
 
@@ -175,16 +170,17 @@ public class ReportService {
 	}
 
 	@Transactional
-	public List<Report> findReportsBySearchCriteria(
+	public List<WorkshopVisitReport> findReportsBySearchCriteria(
 			SearchReportCriteria searchReportCriteria) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Object[]> q = cb.createQuery(Object[].class);
-		Root<Report> report = q.from(Report.class);
-		q.multiselect(report.get("date"), cb.construct(Report.class,
-				report.get("id"), report.get("reportDate"),
-				report.get("importer"), report.get("workshop"),
-				report.get("user"), report.get("reportStatus")));
+		Root<WorkshopVisitReport> report = q.from(WorkshopVisitReport.class);
+		q.multiselect(report.get("date"), cb.construct(
+				WorkshopVisitReport.class, report.get("id"),
+				report.get("reportDate"), report.get("importer"),
+				report.get("workshop"), report.get("user"),
+				report.get("reportStatus")));
 
 		Predicate criteria = cb.conjunction();
 		if (searchReportCriteria.getUserId() != null) {
@@ -311,10 +307,10 @@ public class ReportService {
 		}
 
 		List<Object[]> resultList = typedQuery.getResultList();
-		List<Report> reportList = new ArrayList<Report>();
+		List<WorkshopVisitReport> reportList = new ArrayList<WorkshopVisitReport>();
 
 		for (Object[] result : resultList) {
-			reportList.add((Report) result[1]);
+			reportList.add((WorkshopVisitReport) result[1]);
 		}
 
 		return reportList;
@@ -362,4 +358,5 @@ public class ReportService {
 	public void deleteAnswer(Answer answer) {
 		ar.delete(answer);
 	}
+
 }

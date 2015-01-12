@@ -18,13 +18,13 @@ import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
-import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.WorkshopVisitReport;
 
 @Component
 public class HeaderHelper extends PdfPageEventHelper {
 
 	PdfTemplate totalPages;
-	Report report;
+	WorkshopVisitReport report;
 	String reportPartTitle;
 
 	public void onOpenDocument(PdfWriter writer, Document document) {
@@ -108,11 +108,11 @@ public class HeaderHelper extends PdfPageEventHelper {
 
 	}
 
-	public Report getReport() {
+	public WorkshopVisitReport getReport() {
 		return report;
 	}
 
-	public void setReport(Report report) {
+	public void setReport(WorkshopVisitReport report) {
 		this.report = report;
 	}
 

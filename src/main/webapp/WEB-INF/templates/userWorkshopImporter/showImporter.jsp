@@ -5,6 +5,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <style>
 p {
@@ -55,9 +56,18 @@ label {
 				<label for="telNum">Puhelinnumero: </label>
 				<p id="telNum">${importer.telNum} </p> 
 				<br>
-				<label for="reportTemplate">Raporttipohja: </label>
-				<c:if test="${importer.reportTemplateName != 'null'}">
-					<p id="reportTemplate">${importer.reportTemplateName} </p>
+				<label for="reportTemplate">Raporttipohjat: </label>
+				<c:if test="${importer.reportTemplates != 'null'}">
+					<c:forEach var="template" items="${importer.reportTemplates }" varStatus="count">
+						
+						<c:if test="${count.count < fn:length(importer.reportTemplates)}">
+							<p>${template.templateName}, </p>
+						</c:if>
+						<c:if test="${count.count == fn:length(importer.reportTemplates)}">
+							<p>${template.templateName}</p>
+						</c:if>
+					
+					</c:forEach>
 				</c:if> 
 				<br><br>
 	

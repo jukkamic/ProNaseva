@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
+import fi.testcenter.domain.reportTemplate.ReportTemplatePart;
+
 @Entity
 public class ReportPart {
 
@@ -29,7 +31,7 @@ public class ReportPart {
 
 	@ManyToOne
 	@JoinColumn
-	Report report;
+	WorkshopVisitReport report;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn
@@ -93,11 +95,11 @@ public class ReportPart {
 		this.reportQuestionGroups = reportQuestionGroups;
 	}
 
-	public Report getReport() {
+	public WorkshopVisitReport getReport() {
 		return report;
 	}
 
-	public void setReport(Report report) {
+	public void setReport(WorkshopVisitReport report) {
 		this.report = report;
 	}
 

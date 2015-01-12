@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 
 import fi.testcenter.domain.answer.Answer;
+import fi.testcenter.domain.reportTemplate.ReportTemplateQuestionGroup;
 
 @Entity
 public class ReportQuestionGroup {

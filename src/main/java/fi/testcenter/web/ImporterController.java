@@ -1,8 +1,9 @@
 package fi.testcenter.web;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.Importer;
+import fi.testcenter.domain.reportTemplate.ReportTemplate;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportTemplateService;
 
@@ -68,9 +70,9 @@ public class ImporterController {
 	@RequestMapping(value = "/newImporter", method = RequestMethod.GET)
 	public String prepareNewImporterForm(Model model) {
 
+		List<ReportTemplate> templates = rts.findCurrentReportTemplates();
 		model.addAttribute("importer", new Importer());
-		model.addAttribute("reportTemplateList",
-				rts.findCurrentReportTemplates());
+		model.addAttribute("reportTemplateList", templates);
 
 		return "userWorkshopImporter/editImporter";
 	}
@@ -79,7 +81,7 @@ public class ImporterController {
 	public String processNewImporterForm(
 			@ModelAttribute("importer") Importer importer) {
 
-		is.saveImporter(importer);
+		setImporterChosenTemplates(importer);
 
 		return "redirect:/showImporterList?page=1";
 	}
@@ -87,7 +89,7 @@ public class ImporterController {
 	@RequestMapping(value = "/showImporter", method = RequestMethod.GET)
 	public String showImporter(Model model, @RequestParam("id") Integer id) {
 
-		model.addAttribute("importer", is.finImporterById(id.longValue()));
+		model.addAttribute("importer", is.findImporterById(id.longValue()));
 
 		model.addAttribute("reportTemplateList",
 				rts.findCurrentReportTemplates());
@@ -99,7 +101,7 @@ public class ImporterController {
 	public String prepareEditImporterForm(Model model,
 			@RequestParam("id") Integer id) {
 
-		model.addAttribute("importer", is.finImporterById(id.longValue()));
+		model.addAttribute("importer", is.findImporterById(id.longValue()));
 		model.addAttribute("edit", "TRUE");
 		model.addAttribute("reportTemplateList",
 				rts.findCurrentReportTemplates());
@@ -111,7 +113,7 @@ public class ImporterController {
 	public String processEditImporterForm(
 			@ModelAttribute("importer") Importer importer) {
 
-		is.saveImporter(importer);
+		importer = setImporterChosenTemplates(importer);
 
 		return "redirect:/showImporter?id=" + importer.getId();
 	}
@@ -121,6 +123,20 @@ public class ImporterController {
 
 		is.deleteImporter(importer);
 		return "redirect:/showImporterList?page=1";
+	}
+
+	public Importer setImporterChosenTemplates(Importer importer) {
+		List<String> chosenTemplates = importer.getChosenTemplates();
+		importer.setReportTemplates(null);
+		importer = is.saveImporter(importer);
+		ArrayList<ReportTemplate> templateList = new ArrayList<ReportTemplate>();
+		for (String chosenTemplate : chosenTemplates) {
+			templateList.add(rts.findReportTemplateByName(chosenTemplate));
+		}
+
+		importer.setReportTemplates(templateList);
+
+		return is.saveImporter(importer);
 	}
 
 }

@@ -56,18 +56,24 @@
 				<input type="text" style="width: 15em; max-width: 100%" id="telNum" name="telNum" value="${importer.telNum}"/>
 				<br><br>
 				<label for="template">Raporttipohja: </label>
-				<sf:select style="width: auto; max-width: 100%" id="role" path="reportTemplateName"
+				<sf:select multiple="true" style="width: auto; max-width: 100%" id="role" path="chosenTemplates"
 					class="form-control">
-					<c:if test="${importer.reportTemplateName == null or importer.reportTemplateName == '' }">
+					<c:if test="${importer.reportTemplates == null }">
 						<option value=''>-- Valitse --</option>
 					</c:if>
-					<c:if test="${importer.reportTemplateName != null and importer.reportTemplateName != '' }">
+					<c:if test="${importer.reportTemplates!= null }">
 						<option value=''>-- Valitse --</option>
 					</c:if> 
 					<c:forEach var="template" items="${reportTemplateList}">
 					
+						<c:set var="selectedTemplate" value="false" />
+						<c:forEach items="${importer.reportTemplates}" var="importerTemplate">
+							<c:if test="${importerTemplate.templateName == template.templateName }">
+								<c:set var="selectedTemplate" value="true" />
+							</c:if>
+						</c:forEach>
 						<c:choose>
-							<c:when test="${importer.reportTemplateName == template.templateName}">
+							<c:when test="${selectedTemplate == 'true'}">
 								<option value="${template.templateName}" selected="selected">${template.templateName}</option>
 							</c:when>
 							<c:otherwise>

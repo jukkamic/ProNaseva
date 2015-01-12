@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.User;
-import fi.testcenter.domain.report.Report;
+import fi.testcenter.domain.report.WorkshopVisitReport;
 import fi.testcenter.repository.UserRepository;
 
 @Service
@@ -74,7 +74,7 @@ public class UserAccountService {
 
 	@Transactional
 	public void deleteUser(User user) {
-		List<Report> userReports = new ArrayList<Report>();
+		List<WorkshopVisitReport> userReports = new ArrayList<WorkshopVisitReport>();
 		try {
 			userReports = rs.findReportsByUserId(user.getId());
 		} catch (Exception e) {

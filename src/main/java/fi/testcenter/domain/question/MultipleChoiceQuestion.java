@@ -24,6 +24,10 @@ public class MultipleChoiceQuestion extends Question {
 
 	}
 
+	public MultipleChoiceQuestion(String question) {
+		super.setQuestion(question);
+	}
+
 	public void setOptionsList(List<MultipleChoiceOption> options) {
 		this.optionsList = options;
 	}
