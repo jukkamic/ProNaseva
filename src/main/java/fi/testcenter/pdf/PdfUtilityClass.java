@@ -1,5 +1,7 @@
 package fi.testcenter.pdf;
 
+import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -187,7 +189,10 @@ public class PdfUtilityClass {
 				cell.setBorder(0);
 				table.addCell(cell);
 
-				if (answer.getChosenOptionIndex() == index++) {
+				if (answer.getChosenOptionIndex() == index++
+						|| (answer.getChosenSelections() != null && Arrays
+								.asList(answer.getChosenSelections()).contains(
+										option.getMultipleChoiceOption()))) {
 
 					cell = new PdfPCell(new Paragraph(checkbox_checked));
 					cell.setBorder(0);

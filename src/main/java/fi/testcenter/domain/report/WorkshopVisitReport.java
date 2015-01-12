@@ -45,8 +45,6 @@ public class WorkshopVisitReport extends Report {
 	@Transient
 	Logger log = Logger.getLogger("fi.testcenter.domain.report");
 
-	private int totalScorePercentage;
-
 	private String vehicleModel;
 	private String vehicleRegistrationNumber;
 	private String vehicleRegistrationDate;
@@ -144,14 +142,6 @@ public class WorkshopVisitReport extends Report {
 		this.reportTemplate = reportTemplate;
 	}
 
-	public int getTotalScorePercentage() {
-		return totalScorePercentage;
-	}
-
-	public void setTotalScorePercentage(int totalScorePercentage) {
-		this.totalScorePercentage = totalScorePercentage;
-	}
-
 	public String getVehicleModel() {
 		return vehicleModel;
 	}
@@ -218,7 +208,7 @@ public class WorkshopVisitReport extends Report {
 
 	// LASKETAAN RAPORTIN PISTEET MONIVALINTOJEN POHJALTA:
 
-	public WorkshopVisitReport calculateReportScore(ReportService rs) {
+	public void calculateReportScore() {
 
 		for (ReportPart reportPart : this.reportParts) {
 			reportPart.setMaxScore(0);
@@ -446,9 +436,9 @@ public class WorkshopVisitReport extends Report {
 			}
 		}
 
-		totalScorePercentage = (int) Math.round((double) reportTotalScore
-				/ (double) reportMaxScore * 100);
-		return (WorkshopVisitReport) rs.saveReport(this);
+		super.setTotalScorePercentage((int) Math
+				.round((double) reportTotalScore / (double) reportMaxScore
+						* 100));
 
 	}
 

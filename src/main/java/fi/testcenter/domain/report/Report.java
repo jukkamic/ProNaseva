@@ -51,6 +51,11 @@ public class Report {
 
 	ReportTemplate reportTemplate;
 
+	private int totalScorePercentage = -1;
+
+	private int totalScore = -1;
+	private int totalMaxScore;
+
 	private String testDateString;
 
 	private String reportStatus; // 'DRAFT', 'AWAIT_APPROVAL', or 'APPROVED'
@@ -160,6 +165,30 @@ public class Report {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public int getTotalScorePercentage() {
+		return totalScorePercentage;
+	}
+
+	public void setTotalScorePercentage(int totalScorePercentage) {
+		this.totalScorePercentage = totalScorePercentage;
+	}
+
+	public int getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public int getTotalMaxScore() {
+		return totalMaxScore;
+	}
+
+	public void setTotalMaxScore(int totalMaxScore) {
+		this.totalMaxScore = totalMaxScore;
 	}
 
 	public Answer getAnswerInstance(ReportQuestionGroup reportQuestionGroup,

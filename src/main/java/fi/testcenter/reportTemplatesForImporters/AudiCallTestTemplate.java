@@ -16,7 +16,7 @@ public class AudiCallTestTemplate {
 		PhoneCallTestReportTemplate template = new PhoneCallTestReportTemplate();
 
 		template.setCurrent(true);
-		template.setTemplateName("Audi puhelutestiraportti");
+		template.setTemplateName("Audi-puhelinkyselyraportti");
 
 		ArrayList<ReportTemplateQuestionGroup> questionGroups = new ArrayList<ReportTemplateQuestionGroup>();
 

@@ -8,19 +8,9 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class BackgroundImageHelper extends PdfPageEventHelper {
 	private Image img;
 
-	public BackgroundImageHelper() {
+	public BackgroundImageHelper(Image img) {
 
-		// try {
-		// String path = new ClassPathResource("/printReportBackground.jpg")
-		// .getFile().getAbsolutePath();
-		// System.out.println(path);
-		// this.img = Image.getInstance(path);
-		//
-		// img.scaleAbsolute(595, 842);
-		// img.setAbsolutePosition(0, 0);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
+		this.img = img;
 	}
 
 	@Override
@@ -28,7 +18,7 @@ public class BackgroundImageHelper extends PdfPageEventHelper {
 
 		try {
 
-			// writer.getDirectContentUnder().addImage(img);
+			writer.getDirectContentUnder().addImage(img);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

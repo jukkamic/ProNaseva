@@ -137,8 +137,6 @@ public class ImporterController {
 
 		importer.setReportTemplates(templateList);
 
-		for (ReportTemplate t : importer.getReportTemplates())
-			log.debug("Importer chosen template class: " + t.getClass());
 		return is.saveImporter(importer);
 	}
 

@@ -50,7 +50,7 @@ public class ReportTemplateService {
 		case "Autoasi raporttipohja":
 			return AutoasiReportTemplate.getReportTemplate();
 
-		case "Audi puhelutestiraportti":
+		case "Audi puhelinkyselyraportti":
 			return AudiCallTestTemplate.getReportTemplate();
 		}
 
@@ -66,18 +66,6 @@ public class ReportTemplateService {
 		List<ReportTemplate> resultList = em.createQuery(queryString)
 				.getResultList();
 
-		for (ReportTemplate t : resultList)
-			log.debug("Templateluokka " + t.getClass());
-		// for (ReportTemplate template : resultList) {
-		// if (template instanceof WorkshopVisitReportTemplate) {
-		// returnList.add((WorkshopVisitReportTemplate) template);
-		// log.debug("WorkshopVisitReportTemplate");
-		//
-		// } else {
-		// returnList.add((PhoneCallTestReportTemplate) template);
-		// log.debug("PhoneCallTestReportTemplate");
-		// }
-		// }
 		return resultList;
 	}
 
@@ -137,16 +125,6 @@ public class ReportTemplateService {
 					.createQuery("SELECT rt FROM ReportTemplate rt WHERE rt.importer.id = :id AND rt.current = true");
 			query.setParameter("id", importerId);
 			templateList = query.getResultList();
-
-			// for (ReportTemplate template : templateList) {
-			// if (template instanceof WorkshopVisitReportTemplate) {
-			// returnList.add((WorkshopVisitReportTemplate) template);
-			// log.debug("WorkshopVisitReportTemplate");
-			//
-			// } else
-			// returnList.add((PhoneCallTestReportTemplate) template);
-			// log.debug("PhoneCallTestReportTemplate");
-			// }
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

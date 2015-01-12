@@ -67,10 +67,10 @@
 							</td>
 							<td>
 								<c:if test="${report.reportClass == 'PhoneCallTestReport'}">
-									<p>Puhelutestiraportti</p>
+									<p>Puhelinkysely</p>
 								</c:if>
 								<c:if test="${report.reportClass == 'WorkshopVisitReport'}">
-									<p>Korjaamotestiraportti</p>
+									<p>Korjaamotesti</p>
 								</c:if>
 							</td>
 							<td>

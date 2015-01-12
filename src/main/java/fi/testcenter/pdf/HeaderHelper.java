@@ -18,21 +18,39 @@ import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfTemplate;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.WorkshopVisitReport;
 
 @Component
 public class HeaderHelper extends PdfPageEventHelper {
 
 	PdfTemplate totalPages;
-	WorkshopVisitReport report;
+	Report report;
 	String reportPartTitle;
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
+	}
+
+	public String getReportPartTitle() {
+		return reportPartTitle;
+	}
+
+	public void setReportPartTitle(String reportPartTitle) {
+		this.reportPartTitle = reportPartTitle;
+	}
 
 	public void onOpenDocument(PdfWriter writer, Document document) {
 		totalPages = writer.getDirectContent().createTemplate(30, 16);
 	}
 
 	public void onStartPage(PdfWriter writer, Document document) {
-		if (document.getPageNumber() > 1) {
+		if ((report instanceof WorkshopVisitReport && document.getPageNumber() > 1)
+				|| !(report instanceof WorkshopVisitReport)) {
 			try {
 				BaseFont bf = BaseFont.createFont("c:/windows/fonts/arial.ttf",
 						BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -72,17 +90,26 @@ public class HeaderHelper extends PdfPageEventHelper {
 
 				header.completeRow();
 
-				chunk = new Chunk(this.reportPartTitle, new Font(bf, 12,
-						Font.ITALIC));
-				p = new Paragraph(chunk);
+				if (this.reportPartTitle != null) {
+					chunk = new Chunk(this.reportPartTitle, new Font(bf, 12,
+							Font.ITALIC));
+					p = new Paragraph(chunk);
+
+				} else
+					p = new Paragraph();
 				cell = new PdfPCell(p);
 				cell.setPaddingBottom(10);
 				cell.setBorder(Rectangle.BOTTOM);
 
 				header.addCell(cell);
 
-				chunk = new Chunk(String.format("Sivu %d /",
-						writer.getPageNumber() - 1), new Font(bf, 12));
+				int page;
+				if (report instanceof WorkshopVisitReport)
+					page = writer.getPageNumber() - 1;
+				else
+					page = writer.getPageNumber();
+				chunk = new Chunk(String.format("Sivu %d /", page, new Font(bf,
+						12)));
 				p = new Paragraph(chunk);
 				cell = new PdfPCell(p);
 				cell.setBorder(Rectangle.BOTTOM);
@@ -103,24 +130,14 @@ public class HeaderHelper extends PdfPageEventHelper {
 	}
 
 	public void onCloseDocument(PdfWriter writer, Document document) {
+		int totalPageCount;
+		if (report instanceof WorkshopVisitReport)
+			totalPageCount = writer.getPageNumber() - 2;
+		else
+			totalPageCount = writer.getPageNumber() - 1;
 		ColumnText.showTextAligned(totalPages, Element.ALIGN_LEFT, new Phrase(
-				String.valueOf(writer.getPageNumber() - 2)), 2, 2, 0);
+				String.valueOf(totalPageCount)), 2, 2, 0);
 
 	}
 
-	public WorkshopVisitReport getReport() {
-		return report;
-	}
-
-	public void setReport(WorkshopVisitReport report) {
-		this.report = report;
-	}
-
-	public String getReportPartTitle() {
-		return reportPartTitle;
-	}
-
-	public void setReportPartTitle(String reportPartTitle) {
-		this.reportPartTitle = reportPartTitle;
-	}
 }

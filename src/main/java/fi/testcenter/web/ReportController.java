@@ -1,5 +1,6 @@
 package fi.testcenter.web;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.support.ServletContextResource;
+
+import com.itextpdf.text.Image;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
@@ -76,7 +80,7 @@ public class ReportController {
 	private PhoneCallTestReportPdf phoneCallTestReportPdfCreator;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String setupForm() {
+	public String setupForm(HttpServletRequest request) {
 
 		return "start";
 	}
@@ -196,10 +200,14 @@ public class ReportController {
 
 	@RequestMapping(value = "/savePhoneCallTestReport", method = RequestMethod.POST)
 	public String submitReport(Model model,
-			@ModelAttribute("report") Report report, BindingResult result) {
+			@ModelAttribute("report") PhoneCallTestReport report,
+			BindingResult result) {
+
+		report.calculateReportScore();
 
 		report.setWorkshop(ws.findWorkshopById(report.getWorkshopId()));
 		model.addAttribute("report", rs.saveReport(report));
+
 		return "report/showPhoneCallTestReport";
 
 	}
@@ -207,7 +215,7 @@ public class ReportController {
 	@RequestMapping(value = "/saveWorkshopVisitReport", method = RequestMethod.POST)
 	public String submitReport(
 			Model model,
-			@ModelAttribute("report") Report report,
+			@ModelAttribute("report") WorkshopVisitReport report,
 			BindingResult result,
 			@RequestParam("navigateToReportPart") Integer navigateToReportPart,
 			@RequestParam("optionalQuestionsAnswerIndex") Integer optionalQuestionsAnswerIndex,
@@ -216,17 +224,17 @@ public class ReportController {
 			HttpServletRequest request) {
 
 		report.setWorkshop(ws.findWorkshopById(report.getWorkshopId()));
-		WorkshopVisitReport visitReport = (WorkshopVisitReport) report;
-		visitReport.checkReportHighlights();
-		visitReport.setRemovedQuestions(); // Nollataan vastaukset
-											// MultipleChoiceQuestion- ja
-											// PointsQuestion-luokan
-											// kysymyksiin
-											// jotta ei huomioida
-											// pisteytyksessä.
-		visitReport = visitReport.calculateReportScore(rs);
 
-		for (ReportPart part : visitReport.getReportParts()) {
+		report.checkReportHighlights();
+		report.setRemovedQuestions(); // Nollataan vastaukset
+										// MultipleChoiceQuestion- ja
+										// PointsQuestion-luokan
+										// kysymyksiin
+										// jotta ei huomioida
+										// pisteytyksessä.
+		report.calculateReportScore();
+
+		for (ReportPart part : report.getReportParts()) {
 			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
 				for (Answer answer : group.getAnswers()) {
 					if (answer instanceof CostListingAnswer)
@@ -235,10 +243,9 @@ public class ReportController {
 				}
 			}
 		}
-		report = visitReport;
 
 		try {
-			report = rs.saveReport(report);
+			report = (WorkshopVisitReport) rs.saveReport(report);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -251,10 +258,10 @@ public class ReportController {
 		// palataan
 		// editReport.jsp
 
-		visitReport = (WorkshopVisitReport) report;
+		report = (WorkshopVisitReport) report;
 		if (navigateToReportPart != null) {
 
-			model.addAttribute("report", visitReport);
+			model.addAttribute("report", report);
 			model.addAttribute("editReportPartNumber", navigateToReportPart);
 
 			return "report/editWorkshopVisitReport";
@@ -265,7 +272,7 @@ public class ReportController {
 			// aikaisemmin
 			// valitut valinnaiset kysymykset
 
-			OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) visitReport
+			OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) report
 					.getReportParts().get(addOptionalToReportPart)
 					.getReportQuestionGroups().get(addOptionalToQuestionGroup)
 					.getAnswers().get(optionalQuestionsAnswerIndex);
@@ -288,8 +295,8 @@ public class ReportController {
 			chosenQ.setChosenQuestions(oldQuestions);
 			model.addAttribute("addQuestionsToOptionalAnswer", oqa);
 			model.addAttribute("chosenQuestions", chosenQ);
-			model.addAttribute("readyReport", visitReport);
-			model.addAttribute("report", visitReport);
+			model.addAttribute("readyReport", report);
+			model.addAttribute("report", report);
 			model.addAttribute("editReportPartNumber", addOptionalToReportPart);
 			model.addAttribute("addOptionalToQuestionGroup",
 					addOptionalToQuestionGroup);
@@ -303,16 +310,16 @@ public class ReportController {
 
 		else {
 
-			model.addAttribute("readyReport", visitReport);
-			model.addAttribute("report", visitReport);
+			model.addAttribute("readyReport", report);
+			model.addAttribute("report", report);
 
-			if (visitReport.isSmileysSet() == false) {
+			if (report.isSmileysSet() == false) {
 
 				model.addAttribute("editSmileys", false);
-				if (visitReport.getReportStatus() == "DRAFT"
-						|| visitReport.getReportStatus() == "AWAIT_APPROVAL")
+				if (report.getReportStatus() == "DRAFT"
+						|| report.getReportStatus() == "AWAIT_APPROVAL")
 					model.addAttribute("editSmileys", true);
-				if (visitReport.getReportStatus() == "APPROVED"
+				if (report.getReportStatus() == "APPROVED"
 						&& request.isUserInRole("ROLE_ADMIN"))
 					model.addAttribute("editSmileys", true);
 
@@ -389,18 +396,29 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/getPdf", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getPdf(@ModelAttribute("report") Report report) {
+	public ResponseEntity<byte[]> getPdf(
+			@ModelAttribute("report") Report report, HttpServletRequest request) {
 		try {
 
-			// report = rs.getReportById(report.getId());
+			File file;
+			ServletContextResource imageResource = new ServletContextResource(
+					request.getSession().getServletContext(),
+					"resources/printReportBackground.jpg");
+
+			file = imageResource.getFile();
+
+			Image image = Image.getInstance(file.getAbsolutePath());
+			image.scaleAbsolute(595, 842);
+			image.setAbsolutePosition(0, 0);
+
 			byte[] contents;
 			if (report instanceof WorkshopVisitReport)
 				contents = workshopVisitReportPdfCreator.generateReportPdf(
-						(WorkshopVisitReport) report).toByteArray();
+						(WorkshopVisitReport) report, image).toByteArray();
 
 			else if (report instanceof PhoneCallTestReport)
 				contents = phoneCallTestReportPdfCreator.generateReportPdf(
-						(PhoneCallTestReport) report).toByteArray();
+						(PhoneCallTestReport) report, image).toByteArray();
 			else
 				return null;
 

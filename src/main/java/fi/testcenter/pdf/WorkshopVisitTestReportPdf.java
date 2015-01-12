@@ -12,6 +12,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
@@ -32,7 +33,6 @@ import fi.testcenter.domain.report.WorkshopVisitReport;
 @Component
 public class WorkshopVisitTestReportPdf {
 
-	final int SUBQUESTIONINDENT = 25;
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
 
 	@Autowired
@@ -43,8 +43,8 @@ public class WorkshopVisitTestReportPdf {
 
 	WorkshopVisitReport report;
 
-	public ByteArrayOutputStream generateReportPdf(WorkshopVisitReport report)
-			throws IOException, DocumentException {
+	public ByteArrayOutputStream generateReportPdf(WorkshopVisitReport report,
+			Image image) throws IOException, DocumentException {
 
 		this.report = report;
 
@@ -53,7 +53,7 @@ public class WorkshopVisitTestReportPdf {
 		Document doc = new Document(PageSize.A4, 50, 30, 120, 90);
 		PdfWriter writer = PdfWriter.getInstance(doc, baos);
 
-		writer.setPageEvent(new BackgroundImageHelper());
+		writer.setPageEvent(new BackgroundImageHelper(image));
 
 		headerHelper.setReport(report);
 		headerHelper.setReportPartTitle("Tulostiivistelmä");
