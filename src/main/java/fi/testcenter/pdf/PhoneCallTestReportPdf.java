@@ -17,6 +17,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.CostListingAnswer;
+import fi.testcenter.domain.answer.DateAnswer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.MultipleChoiceAnswer;
 import fi.testcenter.domain.answer.PointsAnswer;
@@ -76,6 +77,8 @@ public class PhoneCallTestReportPdf {
 					if (answer instanceof PointsAnswer)
 						doc.add(pdf
 								.getPointsAnswerParagraph((PointsAnswer) answer));
+					if (answer instanceof DateAnswer)
+						doc.add(pdf.getDateAnswerParagraph((DateAnswer) answer));
 				}
 			}
 
@@ -90,8 +93,10 @@ public class PhoneCallTestReportPdf {
 			}
 
 			doc.add(new Paragraph(Chunk.NEWLINE));
-			doc.add(new Paragraph(Chunk.NEWLINE));
 
+			System.out.println(writer.getVerticalPosition(true));
+			if (writer.getVerticalPosition(true) < 150)
+				doc.newPage();
 		}
 
 		doc.add(new Paragraph(Chunk.NEWLINE));

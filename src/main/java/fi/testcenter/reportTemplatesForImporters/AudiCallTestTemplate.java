@@ -77,37 +77,37 @@ public class AudiCallTestTemplate {
 		optionsList.add(new MultipleChoiceOption("Kyllä", 1));
 		optionsList.add(new MultipleChoiceOption("Ei", 0));
 		mcq.setOptionsList(optionsList);
-		questionList.add(mcq);
 
 		subQuestionList = new ArrayList<Question>();
 
-		mcq = new MultipleChoiceQuestion("Puhelinnumero?");
+		MultipleChoiceQuestion subMcq = new MultipleChoiceQuestion(
+				"Puhelinnumero?");
 		optionsList = new ArrayList<MultipleChoiceOption>();
 		optionsList.add(new MultipleChoiceOption("Kyllä", 1));
 		optionsList.add(new MultipleChoiceOption("Ei", 0));
-		mcq.setOptionsList(optionsList);
-		subQuestionList.add(mcq);
+		subMcq.setOptionsList(optionsList);
+		subQuestionList.add(subMcq);
 
-		mcq = new MultipleChoiceQuestion("Rekisterinumero?");
+		subMcq = new MultipleChoiceQuestion("Rekisterinumero?");
 		optionsList = new ArrayList<MultipleChoiceOption>();
 		optionsList.add(new MultipleChoiceOption("Kyllä", 1));
 		optionsList.add(new MultipleChoiceOption("Ei", 0));
-		mcq.setOptionsList(optionsList);
-		subQuestionList.add(mcq);
+		subMcq.setOptionsList(optionsList);
+		subQuestionList.add(subMcq);
 
-		mcq = new MultipleChoiceQuestion("Alustanumero?");
+		subMcq = new MultipleChoiceQuestion("Alustanumero?");
 		optionsList = new ArrayList<MultipleChoiceOption>();
 		optionsList.add(new MultipleChoiceOption("Kyllä", 1));
 		optionsList.add(new MultipleChoiceOption("Ei", 0));
-		mcq.setOptionsList(optionsList);
-		subQuestionList.add(mcq);
+		subMcq.setOptionsList(optionsList);
+		subQuestionList.add(subMcq);
 
-		mcq = new MultipleChoiceQuestion("Sähköpostiosoite?");
+		subMcq = new MultipleChoiceQuestion("Sähköpostiosoite?");
 		optionsList = new ArrayList<MultipleChoiceOption>();
 		optionsList.add(new MultipleChoiceOption("Kyllä", 1));
 		optionsList.add(new MultipleChoiceOption("Ei", 0));
-		mcq.setOptionsList(optionsList);
-		subQuestionList.add(mcq);
+		subMcq.setOptionsList(optionsList);
+		subQuestionList.add(subMcq);
 
 		mcq.setSubQuestions(subQuestionList);
 
@@ -153,14 +153,14 @@ public class AudiCallTestTemplate {
 				.add(new MultipleChoiceOption(
 						"Kyllä, vuokra-auto ja viittaus ajokortin näyttämisen vaatimuksesta",
 						"Kyllä, vuokra-auto ja viittaus<br>ajokortin näyttämisen vaatimuksesta",
-						3));
+						4));
 		optionsList
 				.add(new MultipleChoiceOption(
 						"Ei, vuokra-auto, ei viittausta ajokortin näyttämisen vaatimuksesta",
 						"Ei, vuokra-auto, ei viittausta<br>ajokortin näyttämisen vaatimuksesta",
 						2));
 		optionsList.add(new MultipleChoiceOption("Kyllä, muuta",
-				"Kyllä, muuta<br>&nbsp", 3));
+				"Kyllä, muuta<br>&nbsp", 4));
 		optionsList.add(new MultipleChoiceOption("Ei, ei tarjousta",
 				"Ei, ei tarjousta<br>&nbsp", 0));
 		mcq.setOptionsList(optionsList);
@@ -206,32 +206,16 @@ public class AudiCallTestTemplate {
 		mcq.setOptionsList(optionsList);
 		questionList.add(mcq);
 
-		mcq = new MultipleChoiceQuestion(
-				"Muistutettiinko varatusta ajasta ennen auton jättämistä?");
-		optionsList = new ArrayList<MultipleChoiceOption>();
-		optionsList.add(new MultipleChoiceOption("Kyllä", 2));
-		optionsList.add(new MultipleChoiceOption("Ei", 0));
-		mcq.setOptionsList(optionsList);
-
-		subQuestionList = new ArrayList<Question>();
-		MultipleChoiceQuestion subQuestion = new MultipleChoiceQuestion(
-				"Jos kyllä, miten se tapahtui?");
-		subQuestion.setMultipleSelectionsAllowed(true);
-		optionsList = new ArrayList<MultipleChoiceOption>();
-		optionsList.add(new MultipleChoiceOption("Tekstiviesti", -1));
-		optionsList.add(new MultipleChoiceOption("Sähköposti", -1));
-		optionsList.add(new MultipleChoiceOption("Puhelu", -1));
-		optionsList.add(new MultipleChoiceOption("Muu (kuten posti, telefax)",
-				-1));
-		subQuestion.setOptionsList(optionsList);
-
-		subQuestionList.add(subQuestion);
-
-		mcq.setSubQuestions(subQuestionList);
-		questionList.add(mcq);
-
 		group.setQuestions(questionList);
 
+		questionGroups.add(group);
+
+		group = new ReportTemplateQuestionGroup();
+		group.setTitle("Huomioita");
+
+		questionList = new ArrayList<Question>();
+		questionList.add(new TextQuestion("Muita huomioita:"));
+		group.setQuestions(questionList);
 		questionGroups.add(group);
 
 		template.setQuestionGroups(questionGroups);

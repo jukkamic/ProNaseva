@@ -15,6 +15,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
 import fi.testcenter.domain.answer.CostListingAnswer;
+import fi.testcenter.domain.answer.DateAnswer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.ImportantPointsItem;
 import fi.testcenter.domain.answer.MultipleChoiceAnswer;
@@ -116,8 +117,7 @@ public class PdfUtilityClass {
 				indentLeft = 40;
 				questionOrderNumber += String.valueOf(answer
 						.getSubquestionAnswerOrderNumber()) + ". ";
-				System.out.println("question order number "
-						+ questionOrderNumber);
+
 			} else
 				questionOrderNumber += " ";
 
@@ -149,11 +149,6 @@ public class PdfUtilityClass {
 			p.setIndentationLeft(orderNumberIndent);
 			p.setFirstLineIndent(-orderNumberIndent);
 
-			if (answer.getSubquestionAnswerOrderNumber() > 0) {
-				System.out.println("indentLeft " + indentLeft);
-				System.out.println("questionOrderNumberIndent "
-						+ orderNumberIndent);
-			}
 			cell.addElement(p);
 
 			table.addCell(cell);
@@ -280,8 +275,7 @@ public class PdfUtilityClass {
 				indentLeft = 40;
 				questionOrderNumber += String.valueOf(answer
 						.getSubquestionAnswerOrderNumber()) + ". ";
-				System.out.println("question order number "
-						+ questionOrderNumber);
+
 			} else
 				questionOrderNumber += " ";
 
@@ -381,8 +375,7 @@ public class PdfUtilityClass {
 				indentLeft = 40;
 				questionOrderNumber += String.valueOf(answer
 						.getSubquestionAnswerOrderNumber()) + ". ";
-				System.out.println("question order number "
-						+ questionOrderNumber);
+
 			} else
 				questionOrderNumber += " ";
 
@@ -425,6 +418,64 @@ public class PdfUtilityClass {
 
 	}
 
+	public Paragraph getDateAnswerParagraph(DateAnswer answer) {
+		try {
+			Paragraph para = new Paragraph();
+			PdfPTable table = new PdfPTable(2);
+
+			String questionOrderNumber = String.valueOf(answer
+					.getReportQuestionGroup().getQuestionGroupOrderNumber())
+					+ "." + String.valueOf(answer.getAnswerOrderNumber()) + ".";
+
+			float indentLeft = 20;
+
+			if (answer.getSubquestionAnswerOrderNumber() > 0) {
+				indentLeft = 40;
+				questionOrderNumber += String.valueOf(answer
+						.getSubquestionAnswerOrderNumber()) + ". ";
+
+			} else
+				questionOrderNumber += " ";
+
+			Chunk questionNumberChunk = new Chunk(questionOrderNumber, BOLD);
+			float orderNumberIndent = questionNumberChunk.getWidthPoint();
+
+			Phrase questionPhrase = new Phrase(questionNumberChunk);
+
+			para.setIndentationLeft(indentLeft);
+
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 475 - (indentLeft), 40 });
+			table.setSpacingBefore(5);
+
+			table.setKeepTogether(true);
+
+			questionPhrase.add(new Chunk(answer.getQuestion().getQuestion(),
+					BOLD));
+			Paragraph p = new Paragraph(questionPhrase);
+
+			float indent = questionNumberChunk.getWidthPoint();
+			p.setIndentationLeft(indent);
+			p.setFirstLineIndent(-indent);
+
+			para.add(p);
+
+			Paragraph answerPara = new Paragraph(new Chunk(
+					answer.getDateString(), DEFAULT_FONT));
+			answerPara.setIndentationLeft(orderNumberIndent);
+			para.add(answerPara);
+
+			return para;
+
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+
 	public Paragraph getImportantPointsParagraph(ImportantPointsAnswer answer) {
 		Font font = new Font(BASE_FONT, 11);
 
@@ -442,8 +493,7 @@ public class PdfUtilityClass {
 				indentLeft = 40;
 				questionOrderNumber += String.valueOf(answer
 						.getSubquestionAnswerOrderNumber()) + ". ";
-				System.out.println("question order number "
-						+ questionOrderNumber);
+
 			} else
 				questionOrderNumber += " ";
 
@@ -603,8 +653,7 @@ public class PdfUtilityClass {
 				indentLeft = 40;
 				questionOrderNumber += String.valueOf(answer
 						.getSubquestionAnswerOrderNumber()) + ". ";
-				System.out.println("question order number "
-						+ questionOrderNumber);
+
 			} else
 				questionOrderNumber += " ";
 
