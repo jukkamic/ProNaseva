@@ -3,7 +3,8 @@ package fi.testcenter.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.Chunk;
@@ -13,6 +14,7 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import fi.testcenter.domain.answer.Answer;
@@ -28,18 +30,23 @@ import fi.testcenter.domain.report.ReportQuestionGroup;
 @Component
 public class PhoneCallTestReportPdf {
 
-	@Autowired
 	PdfUtilityClass pdf;
 
-	@Autowired
 	HeaderHelper headerHelper;
+
+	HttpServletRequest request;
 
 	PhoneCallTestReport report;
 
 	public ByteArrayOutputStream generateReportPdf(PhoneCallTestReport report,
-			Image backgroundImage) throws IOException, DocumentException {
+			Image backgroundImage, BaseFont baseFont, BaseFont wingdingsBaseFont)
+			throws IOException, DocumentException {
 
 		this.report = report;
+
+		this.pdf = new PdfUtilityClass(baseFont, wingdingsBaseFont);
+
+		headerHelper = new HeaderHelper(pdf);
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -54,8 +61,10 @@ public class PhoneCallTestReportPdf {
 				.getTemplateName());
 		writer.setPageEvent(headerHelper);
 		doc.open();
+
 		doc.add(new Chunk(Chunk.NEWLINE));
 
+		doc.add(new Chunk(Chunk.NEWLINE));
 		for (ReportQuestionGroup group : report.getReportQuestionGroups()) {
 			doc.add(pdf.getGroupTitle(group.getQuestionGroupOrderNumber(),
 					group.getReportTemplateQuestionGroup().getTitle()));

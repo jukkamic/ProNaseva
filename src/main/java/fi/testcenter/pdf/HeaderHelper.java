@@ -1,7 +1,5 @@
 package fi.testcenter.pdf;
 
-import org.springframework.stereotype.Component;
-
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -10,7 +8,6 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -21,12 +18,17 @@ import com.itextpdf.text.pdf.PdfWriter;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.WorkshopVisitReport;
 
-@Component
 public class HeaderHelper extends PdfPageEventHelper {
+
+	PdfUtilityClass pdf;
 
 	PdfTemplate totalPages;
 	Report report;
 	String reportPartTitle;
+
+	public HeaderHelper(PdfUtilityClass pdf) {
+		this.pdf = pdf;
+	}
 
 	public Report getReport() {
 		return report;
@@ -52,10 +54,9 @@ public class HeaderHelper extends PdfPageEventHelper {
 		if ((report instanceof WorkshopVisitReport && document.getPageNumber() > 1)
 				|| !(report instanceof WorkshopVisitReport)) {
 			try {
-				BaseFont bf = BaseFont.createFont("c:/windows/fonts/arial.ttf",
-						BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-				Font importerWorkshopFont = new Font(bf, 14, Font.BOLD);
+				Font importerWorkshopFont = new Font(pdf.BASE_FONT, 14,
+						Font.BOLD);
 
 				PdfPTable header = new PdfPTable(3);
 
@@ -91,8 +92,8 @@ public class HeaderHelper extends PdfPageEventHelper {
 				header.completeRow();
 
 				if (this.reportPartTitle != null) {
-					chunk = new Chunk(this.reportPartTitle, new Font(bf, 12,
-							Font.ITALIC));
+					chunk = new Chunk(this.reportPartTitle, new Font(
+							pdf.BASE_FONT, 12, Font.ITALIC));
 					p = new Paragraph(chunk);
 
 				} else
@@ -108,8 +109,8 @@ public class HeaderHelper extends PdfPageEventHelper {
 					page = writer.getPageNumber() - 1;
 				else
 					page = writer.getPageNumber();
-				chunk = new Chunk(String.format("Sivu %d /", page, new Font(bf,
-						12)));
+				chunk = new Chunk(String.format("Sivu %d /", page, new Font(
+						pdf.BASE_FONT, 12)));
 				p = new Paragraph(chunk);
 				cell = new PdfPCell(p);
 				cell.setBorder(Rectangle.BOTTOM);

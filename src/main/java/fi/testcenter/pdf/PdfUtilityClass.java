@@ -3,7 +3,6 @@ package fi.testcenter.pdf;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Element;
@@ -26,47 +25,53 @@ import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
 import fi.testcenter.domain.question.PointsQuestion;
 
-@Component
 public class PdfUtilityClass {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
+	//
+	// @Autowired
+	// ResourceLoader resourceLoader;
 
-	final BaseFont BASE_FONT = getBaseFont();
-	final BaseFont WINGDINGS_BASE_FONT = getWingdingBaseFont();
+	BaseFont BASE_FONT;
+	BaseFont WINGDINGS_BASE_FONT;
 
-	final Font REPORT_PART_TITLE_FONT = new Font(BASE_FONT, 20, Font.BOLD);;
-	final Font GROUP_TITLE_FONT = new Font(BASE_FONT, 16, Font.BOLD);;
-	final Font DEFAULT_FONT = new Font(BASE_FONT, 11);;
-	final Font BOLD = new Font(BASE_FONT, 11, Font.BOLD);;
-	final Font ITALIC = new Font(BASE_FONT, 11, Font.ITALIC);;
+	Font REPORT_PART_TITLE_FONT;
+	Font GROUP_TITLE_FONT;
+	Font DEFAULT_FONT;
+	Font BOLD;
+	Font ITALIC;
+	Font WINGDING_FONT;
 
-	final Font WINGDING_FONT = new Font(WINGDINGS_BASE_FONT, 12);;
+	public PdfUtilityClass(BaseFont BASE_FONT, BaseFont WINGDINGS_BASE_FONT) {
 
-	public PdfUtilityClass() {
-	}
+		this.BASE_FONT = BASE_FONT;
+		this.WINGDINGS_BASE_FONT = WINGDINGS_BASE_FONT;
+		//
+		// Resource file = resourceLoader.getResource("file:/ARIAL.TTF");
+		// File arialFile = file.getFile();
+		//
+		// BASE_FONT = BaseFont.createFont(arialFile.getPath(),
+		// BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		//
 
-	public static BaseFont getBaseFont() {
+		// file = resourceLoader.getResource("file:/WINGDING.TTF");
+		// File wingdingFontFile = file.getFile();
+		//
+		// WINGDINGS_BASE_FONT = BaseFont.createFont(wingdingFontFile.getPath(),
+		// BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-		try {
-			return BaseFont.createFont("c:/windows/fonts/arial.ttf",
-					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		REPORT_PART_TITLE_FONT = new Font(BASE_FONT, 20, Font.BOLD);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		GROUP_TITLE_FONT = new Font(BASE_FONT, 16, Font.BOLD);
 
-	}
+		DEFAULT_FONT = new Font(BASE_FONT, 11);
 
-	public static BaseFont getWingdingBaseFont() {
-		try {
-			return BaseFont.createFont("c:/windows/fonts/wingding.ttf",
-					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		BOLD = new Font(BASE_FONT, 11, Font.BOLD);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		ITALIC = new Font(BASE_FONT, 11, Font.ITALIC);
+
+		WINGDING_FONT = new Font(WINGDINGS_BASE_FONT, 12);
+
 	}
 
 	public Paragraph getPartTitle(String title) {

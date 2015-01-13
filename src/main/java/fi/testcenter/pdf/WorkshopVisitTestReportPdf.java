@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.Chunk;
@@ -16,6 +17,7 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -35,16 +37,22 @@ public class WorkshopVisitTestReportPdf {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
 
-	@Autowired
 	HeaderHelper headerHelper;
 
-	@Autowired
 	PdfUtilityClass pdf;
+
+	@Autowired
+	ApplicationContext context;
 
 	WorkshopVisitReport report;
 
 	public ByteArrayOutputStream generateReportPdf(WorkshopVisitReport report,
-			Image image) throws IOException, DocumentException {
+			Image image, BaseFont baseFont, BaseFont wingdingsBaseFont)
+			throws IOException, DocumentException {
+
+		pdf = new PdfUtilityClass(baseFont, wingdingsBaseFont);
+
+		headerHelper = new HeaderHelper(pdf);
 
 		this.report = report;
 
@@ -135,7 +143,7 @@ public class WorkshopVisitTestReportPdf {
 		Paragraph kansilehti = new Paragraph();
 		kansilehti.setIndentationLeft(90);
 
-		Font font = new Font(pdf.getBaseFont(), 24, Font.BOLD);
+		Font font = new Font(pdf.BASE_FONT, 24, Font.BOLD);
 		Paragraph p = new Paragraph(new Chunk(report.getImporter().getName(),
 				font));
 		p.setSpacingBefore(40);
@@ -145,7 +153,7 @@ public class WorkshopVisitTestReportPdf {
 		p.setSpacingBefore(15);
 		kansilehti.add(p);
 
-		font = new Font(pdf.getBaseFont(), 18, Font.BOLD);
+		font = new Font(pdf.BASE_FONT, 18, Font.BOLD);
 		String workshop = report.getWorkshop().getName();
 		if (report.getWorkshop().getCity() != null
 				&& report.getWorkshop().getCity().length() > 0)

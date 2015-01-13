@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.support.ServletContextResource;
 
 import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.BaseFont;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
@@ -65,6 +68,9 @@ public class ReportController {
 	private WorkshopService ws;
 
 	@Autowired
+	ResourceLoader resourceLoader;
+
+	@Autowired
 	private ReportTemplateService rts;
 
 	@Autowired
@@ -81,6 +87,20 @@ public class ReportController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request) {
+
+		// try {
+		// Resource file = resourceLoader.getResource("file:ARIAL.TTF");
+		// File arialFile = file.getFile();
+
+		// BaseFont font = BaseFont.createFont(arialFile.getPath(),
+		// BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		// Font newFont = new Font(font, 12);
+		// log.debug("basefont:" + newFont.getBaseFont());
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// return null;
+		// }
 
 		return "start";
 	}
@@ -400,6 +420,20 @@ public class ReportController {
 			@ModelAttribute("report") Report report, HttpServletRequest request) {
 		try {
 
+			Resource resourceFile = resourceLoader
+					.getResource("file:ARIAL.TTF");
+			File arialFile = resourceFile.getFile();
+
+			BaseFont BASE_FONT = BaseFont.createFont(arialFile.getPath(),
+					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+
+			resourceFile = resourceLoader.getResource("file:WINGDING.TTF");
+			File wingdingFontFile = resourceFile.getFile();
+
+			BaseFont WINGDINGS_BASE_FONT = BaseFont.createFont(
+					wingdingFontFile.getPath(), BaseFont.IDENTITY_H,
+					BaseFont.EMBEDDED);
+
 			File file;
 			ServletContextResource imageResource = new ServletContextResource(
 					request.getSession().getServletContext(),
@@ -414,11 +448,13 @@ public class ReportController {
 			byte[] contents;
 			if (report instanceof WorkshopVisitReport)
 				contents = workshopVisitReportPdfCreator.generateReportPdf(
-						(WorkshopVisitReport) report, image).toByteArray();
+						(WorkshopVisitReport) report, image, BASE_FONT,
+						WINGDINGS_BASE_FONT).toByteArray();
 
 			else if (report instanceof PhoneCallTestReport)
 				contents = phoneCallTestReportPdfCreator.generateReportPdf(
-						(PhoneCallTestReport) report, image).toByteArray();
+						(PhoneCallTestReport) report, image, BASE_FONT,
+						WINGDINGS_BASE_FONT).toByteArray();
 			else
 				return null;
 
