@@ -130,20 +130,19 @@
 <!-- Answers loop -->
 									
 		<c:forEach var="answer" items="${questionGroup.answers}" varStatus="questionCounter">
-			<c:set var="question" value="${answer.question}" />
-
+			
 		<br>
-		<c:if test="${question.question != null}">
+		<c:if test="${answer.question.question != null}">
 			<h3 style="display: inline; padding-right: 0; margin-right: 0;">${answer.answerOrderNumber}.</h3>
 			<c:if test="${answer.subquestionAnswerOrderNumber != null && answer.subquestionAnswerOrderNumber != 0}">
 				<h3 style="display: inline; padding-left: 0; margin-left: 0; padding-right: 0; margin-right: 0;">${answer.subquestionAnswerOrderNumber}.</h3>
 			</c:if>
-			<h3 style="display: inline; padding-left: 0; margin-left: 0; "> ${question.question}</h3>
+			<h3 style="display: inline; padding-left: 0; margin-left: 0; "> ${answer.question.question}</h3>
 		</c:if>
 		
 <!-- Multiple choice question -->
 										
-		<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
+		<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.MultipleChoiceAnswer"}'>
 		
 		<div class="checkbox" style="font-size: 1.2em;">
 			<label>											
@@ -166,7 +165,7 @@
 		</c:if>
 
 		<c:choose>
-			<c:when test="${question.multipleSelectionsAllowed == true}">
+			<c:when test="${answer.question.multipleSelectionsAllowed == true}">
 				<c:forEach var="option" items="${question.optionsList}">
 					<label class="checkbox">											
 						<sf:checkbox value="${option.multipleChoiceOption}" 
@@ -178,7 +177,7 @@
 			<c:otherwise>
 				<div class="Demo-boot" style="padding-top: 15px;">
 					<div class="btn-group" data-toggle="buttons">
-						<c:forEach var="option" items="${question.optionsList}" varStatus="optionsCounter">
+						<c:forEach var="option" items="${answer.question.optionsList}" varStatus="optionsCounter">
 							
 							<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 								raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
@@ -231,7 +230,7 @@
 			</c:if> 
 		
 		<!-- Points question -->
-			<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
+			<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.PointsAnswer"}'>
 			
 			<div class="checkbox" style="font-size: 1.2em;">
 				<label>											
@@ -254,7 +253,7 @@
 		
 			<div class="Demo-boot" style="padding-top: 15px;">
 					<div class="btn-group" data-toggle="buttons">
-						<c:forEach var="points" begin="0" end="${question.maxPoints}">
+						<c:forEach var="points" begin="0" end="${answer.question.maxPoints}">
 							
 							<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 									raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
@@ -298,7 +297,7 @@
 			</c:if> 
 		
 		<!-- Text question -->
-			<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
+			<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.TextAnswer"}'>
 				
 				
 				<div class="checkbox" style="font-size: 1.2em;">
@@ -323,7 +322,7 @@
 					
 
 				<c:choose>
-					<c:when test="${question.textAreaInput == true }">
+					<c:when test="${answer.question.textAreaInput == true }">
 						<sf:textarea rows="5" style="width:100%;" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answer" />
 					</c:when>
 					<c:otherwise>
@@ -334,7 +333,7 @@
 				
 			</c:if>
 		<!-- Cost listing question -->
-  			<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
+  			<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.CostListingAnswer"}'>
 				
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
@@ -344,13 +343,13 @@
 					</label>
 					<br>
 				</div>
-					<c:forEach var="listQuestion" items="${question.questionItems}" varStatus="costListingAnswerCounter">
+					<c:forEach var="listQuestion" items="${answer.question.questionItems}" varStatus="costListingAnswerCounter">
 						<h4>${listQuestion}</h4>
 						<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].answersIn[${costListingAnswerCounter.index}]" /> €
 						<br>
 					</c:forEach>
 					<br>
-				<h4><b>${question.total}</b></h4>
+				<h4><b>${answer.question.total}</b></h4>
 				<sf:input style="width: 5em" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].totalIn" /> €
 				<br>
 					<h4>Huomioita:</h4>
@@ -361,7 +360,7 @@
 
 		
 		<!-- ListAndScoreImportantPoints -->
-	   			<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
+	   			<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.ImportantPointsAnswer"}'>
 	 			
 				<div class="checkbox" style="font-size: 1.2em;">
 					<label>											
@@ -466,7 +465,7 @@
   		<input type="hidden" id="optionalQuestionsAnswerIndex" name="optionalQuestionsAnswerIndex" />
   		<input type="hidden" id="addOptionalToQuestionGroup" name="addOptionalToQuestionGroup" />
   		
-		<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
+		<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.OptionalQuestionsAnswer"}'>
 			
 			<c:set var="optionalQuestionsAnswer" value="${answer}" scope="request" />
 			<c:set var="questionGroupCounter" value="${questionGroupCounter}" scope="request" />
