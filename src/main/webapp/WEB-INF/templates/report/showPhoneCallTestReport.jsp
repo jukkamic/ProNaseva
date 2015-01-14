@@ -149,10 +149,17 @@
 								varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
 								riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
 								ei ole tägejä -->
+						<c:set var="contains" value="false" />
+						<c:forEach var="chosenOption" items="${answer.chosenOptions}" >
+							<c:if test="${chosenOption == option}">
+								<c:set var="contains" value="true" />
+							</c:if>
+						</c:forEach>
+												
 						<c:choose>
 							<c:when test="${option.radiobuttonText != null }">
 								<c:choose>
-									<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
+									<c:when test="${contains == 'true'}">
 										<button class="btn btn-large btn-primary disabled" type="button">
 											${option.radiobuttonText}
 																																											
@@ -167,7 +174,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
+									<c:when test="${contains == 'true'}">
 										<button class="btn btn-large btn-primary disabled" type="button">
 											${option.multipleChoiceOption}
 											

@@ -82,20 +82,6 @@ public class ReportController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request) {
 
-		// try {
-		// Resource file = resourceLoader.getResource("file:ARIAL.TTF");
-		// File arialFile = file.getFile();
-
-		// BaseFont font = BaseFont.createFont(arialFile.getPath(),
-		// BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-		// Font newFont = new Font(font, 12);
-		// log.debug("basefont:" + newFont.getBaseFont());
-		//
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// return null;
-		// }
-
 		return "start";
 	}
 
@@ -217,9 +203,11 @@ public class ReportController {
 			@ModelAttribute("report") PhoneCallTestReport report,
 			BindingResult result) {
 
+		report.setWorkshop(ws.findWorkshopById(report.getWorkshopId()));
+		report = (PhoneCallTestReport) rs.saveReport(report);
+		report.setMultipleChoiceAnswers(rs);
 		report.calculateReportScore();
 
-		report.setWorkshop(ws.findWorkshopById(report.getWorkshopId()));
 		model.addAttribute("report", rs.saveReport(report));
 
 		return "report/showPhoneCallTestReport";
@@ -239,13 +227,16 @@ public class ReportController {
 
 		report.setWorkshop(ws.findWorkshopById(report.getWorkshopId()));
 
-		report.checkReportHighlights();
+		report = (WorkshopVisitReport) rs.saveReport(report);
 		report.setRemovedQuestions(); // Nollataan vastaukset
 										// MultipleChoiceQuestion- ja
 										// PointsQuestion-luokan
 										// kysymyksiin
 										// jotta ei huomioida
 										// pisteytyksessä.
+		report.checkIfReportHighlightsSelected();
+		report.setMultipleChoiceAnswers(rs);
+
 		report.calculateReportScore();
 
 		for (ReportPart part : report.getReportParts()) {
@@ -258,13 +249,7 @@ public class ReportController {
 			}
 		}
 
-		try {
-			report = (WorkshopVisitReport) rs.saveReport(report);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
+		report = (WorkshopVisitReport) rs.saveReport(report);
 
 		// Jos käyttäjä on clickannut navigointia toisen raportinosan
 		// muokkaukseen, asetetaan tallennuksen jälkeen tarvittavat
@@ -387,22 +372,22 @@ public class ReportController {
 
 	@RequestMapping(value = "/saveSmileysAndHighlights", method = RequestMethod.POST)
 	public String saveSmileyAndHighlights(Model model,
-			@ModelAttribute("readyReport") Report formReport,
-			@ModelAttribute("report") Report report) {
+			@ModelAttribute("readyReport") WorkshopVisitReport formReport,
+			@ModelAttribute("report") WorkshopVisitReport report) {
 
-		// report.checkReportHighlights();
-		// if (report.getOverallResultSmiley() != null
-		// && report.getOverallResultSmiley() != "") {
-		// report.setSmileysSet(true);
-		// model.addAttribute("editSmileys", false);
-		// } else
-		// model.addAttribute("editSmileys", true);
-		// try {
-		// report = rs.saveReport(report);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		//
-		// }
+		report.checkIfReportHighlightsSelected();
+		if (report.getOverallResultSmiley() != null
+				&& report.getOverallResultSmiley() != "") {
+			report.setSmileysSet(true);
+			model.addAttribute("editSmileys", false);
+		} else
+			model.addAttribute("editSmileys", true);
+		try {
+			report = (WorkshopVisitReport) rs.saveReport(report);
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
 
 		model.addAttribute("readyReport", report);
 		model.addAttribute("report", report);

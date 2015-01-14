@@ -106,48 +106,20 @@ public class PhoneCallTestReport extends Report {
 				if (answer.isRemoveAnswerFromReport() != true) {
 					if (answer instanceof MultipleChoiceAnswer) {
 						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
-						MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) mca
-								.getQuestion();
+						mca.setScoreForChosenOptions();
 
-						int questionMaxScore = 0;
-						for (MultipleChoiceOption option : mcq.getOptionsList()) {
-							if (option.getPoints() != -1
-									&& option.getPoints() > questionMaxScore) {
-								questionMaxScore = option.getPoints();
+						// Lisätään kysymysryhmän pisteisiin ja
+						// asetetaan
+						// kysymysryhmän pisteet näkyviksi raportissa
 
-							}
-						}
-
-						mca.setMaxScore(questionMaxScore); // Asetetaan
-						// monivalintakysymyksen
-						// maksimipistemäärä
-
-						// Lasketaan pisteet jos käyttäjä on tehnyt valinnan
-						// ja monivalinta ei ole sellainen, jonka vastausta
-						// ei pisteytetä (pistemäärä -1)
-
-						if (mca.getChosenOptionIndex() != -1
-								&& mcq.getOptionsList()
-										.get(mca.getChosenOptionIndex())
-										.getPoints() != -1) {
-
-							mca.setScore(mcq.getOptionsList()
-									.get(mca.getChosenOptionIndex())
-									.getPoints());
-
-							// Lisätään kysymysryhmän pisteisiin ja
-							// asetetaan
-							// kysymysryhmän pisteet näkyviksi raportissa
-
+						if (mca.getScore() != -1) {
 							if (questionGroup.getScore() == -1)
 								questionGroup.setScore(0);
 
 							questionGroup.setMaxScore(questionGroup
 									.getMaxScore() + mca.getMaxScore());
 							questionGroup.setScore(questionGroup.getScore()
-									+ mcq.getOptionsList()
-											.get(mca.getChosenOptionIndex())
-											.getPoints());
+									+ mca.getScore());
 
 						}
 
@@ -178,60 +150,23 @@ public class PhoneCallTestReport extends Report {
 						if (oqa.getQuestions() != null) {
 							for (Question optionalQuestion : oqa.getQuestions()) {
 								if (optionalQuestion instanceof MultipleChoiceQuestion) {
-									MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) optionalQuestion;
-									MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
-											.getOptionalAnswers().get(
-													optionalAnswersCounter++);
+									MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+									mca.setScoreForChosenOptions();
 
-									int maxScore = 0;
-									for (MultipleChoiceOption option : mcq
-											.getOptionsList()) {
-										if (option.getPoints() != -1
-												&& option.getPoints() > maxScore) {
-											maxScore = option.getPoints();
+									// Lisätään kysymysryhmän pisteisiin ja
+									// asetetaan
+									// kysymysryhmän pisteet näkyviksi
+									// raportissa
 
-										}
-									}
-
-									mca.setMaxScore(maxScore); // Asetetaan
-									// monivalintakysymyksen
-									// maksimipistemäärä
-
-									// Lasketaan pisteet jos käyttäjä on
-									// tehnyt
-									// valinnan
-									// ja
-									// monivalinta ei ole sellainen, jota ei
-									// pisteytetä
-									// (pistemäärä -1)
-
-									if (mca.getChosenOptionIndex() != -1
-											&& mcq.getOptionsList()
-													.get(mca.getChosenOptionIndex())
-													.getPoints() != -1) {
-
-										mca.setScore(mcq
-												.getOptionsList()
-												.get(mca.getChosenOptionIndex())
-												.getPoints());
+									if (mca.getScore() != -1) {
 										if (questionGroup.getScore() == -1)
 											questionGroup.setScore(0);
 
-										// Lisätään kysymysryhmän pisteisiin
-										// ja
-										// asetetaan
-										// kysymysryhmän pisteet näkyviksi
-										// raportissa
-
 										questionGroup.setMaxScore(questionGroup
-												.getMaxScore() + maxScore);
-
-										questionGroup
-												.setScore(questionGroup
-														.getScore()
-														+ mcq.getOptionsList()
-																.get(mca.getChosenOptionIndex())
-																.getPoints());
+												.getMaxScore()
+												+ mca.getMaxScore());
+										questionGroup.setScore(questionGroup
+												.getScore() + mca.getScore());
 
 									}
 
@@ -290,4 +225,32 @@ public class PhoneCallTestReport extends Report {
 
 	}
 
+	public void setMultipleChoiceAnswers(ReportService rs) {
+
+		for (ReportQuestionGroup group : this.reportQuestionGroups) {
+
+			for (Answer answer : group.getAnswers()) {
+				if (answer instanceof MultipleChoiceAnswer) {
+					MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+					int mcaIndex = group.getAnswers().indexOf(mca);
+					ArrayList<MultipleChoiceOption> newChosenOptionList = new ArrayList<MultipleChoiceOption>();
+					if (mca.getChosenOptionsIndex() != null) {
+						for (int index : mca.getChosenOptionsIndex()) {
+							newChosenOptionList
+									.add(((MultipleChoiceQuestion) answer
+											.getQuestion()).getOptionsList()
+											.get(index));
+
+						}
+
+						mca.setChosenOptions(newChosenOptionList);
+						mca = (MultipleChoiceAnswer) rs.saveAnswer(mca);
+						group.getAnswers().set(mcaIndex, mca);
+
+					}
+				}
+			}
+		}
+
+	}
 }

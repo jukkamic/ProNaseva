@@ -1,7 +1,6 @@
 package fi.testcenter.pdf;
 
 import java.io.File;
-import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -199,7 +198,7 @@ public class PdfUtilityClass {
 
 			Chunk checkbox_unchecked = new Chunk((char) 0x6F, WINGDING_FONT);
 			Chunk checkbox_checked = new Chunk((char) 0xFE, WINGDING_FONT);
-			int index = 0;
+
 			for (MultipleChoiceOption option : ((MultipleChoiceQuestion) answer
 					.getQuestion()).getOptionsList()) {
 
@@ -207,10 +206,8 @@ public class PdfUtilityClass {
 				cell.setBorder(0);
 				table.addCell(cell);
 
-				if (answer.getChosenOptionIndex() == index++
-						|| (answer.getChosenSelections() != null && Arrays
-								.asList(answer.getChosenSelections()).contains(
-										option.getMultipleChoiceOption()))) {
+				if (answer.getChosenOptions() != null
+						&& answer.getChosenOptions().contains(option)) {
 
 					cell = new PdfPCell(new Paragraph(checkbox_checked));
 					cell.setBorder(0);

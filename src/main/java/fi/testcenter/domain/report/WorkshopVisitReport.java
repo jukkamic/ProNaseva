@@ -224,39 +224,8 @@ public class WorkshopVisitReport extends Report {
 					if (answer.isRemoveAnswerFromReport() != true) {
 						if (answer instanceof MultipleChoiceAnswer) {
 							MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
-							MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) mca
-									.getQuestion();
-
-							int questionMaxScore = 0;
-							for (MultipleChoiceOption option : mcq
-									.getOptionsList()) {
-								if (option.getPoints() != -1
-										&& option.getPoints() > questionMaxScore) {
-									questionMaxScore = option.getPoints();
-
-								}
-							}
-
-							mca.setMaxScore(questionMaxScore); // Asetetaan
-							// monivalintakysymyksen
-							// maksimipistemäärä
-
-							// Lasketaan pisteet jos käyttäjä on tehnyt valinnan
-							// ja monivalinta ei ole sellainen, jonka vastausta
-							// ei pisteytetä (pistemäärä -1)
-
-							if (mca.getChosenOptionIndex() != -1
-									&& mcq.getOptionsList()
-											.get(mca.getChosenOptionIndex())
-											.getPoints() != -1) {
-
-								mca.setScore(mcq.getOptionsList()
-										.get(mca.getChosenOptionIndex())
-										.getPoints());
-
-								// Lisätään kysymysryhmän pisteisiin ja
-								// asetetaan
-								// kysymysryhmän pisteet näkyviksi raportissa
+							mca.setScoreForChosenOptions();
+							if (mca.getScore() != -1) {
 
 								if (questionGroup.getScore() == -1)
 									questionGroup.setScore(0);
@@ -265,14 +234,10 @@ public class WorkshopVisitReport extends Report {
 
 								questionGroup.setMaxScore(questionGroup
 										.getMaxScore() + mca.getMaxScore());
-								questionGroup
-										.setScore(questionGroup.getScore()
-												+ mcq.getOptionsList()
-														.get(mca.getChosenOptionIndex())
-														.getPoints());
+								questionGroup.setScore(questionGroup.getScore()
+										+ mca.getScore());
 
 							}
-
 						}
 
 						if (answer instanceof PointsAnswer) {
@@ -297,80 +262,34 @@ public class WorkshopVisitReport extends Report {
 
 						if (answer instanceof OptionalQuestionsAnswer) {
 							OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
-							int optionalAnswersCounter = 0;
+
 							if (oqa.getQuestions() != null) {
-								for (Question optionalQuestion : oqa
-										.getQuestions()) {
-									if (optionalQuestion instanceof MultipleChoiceQuestion) {
-										MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) optionalQuestion;
-										MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
-												.getOptionalAnswers()
-												.get(optionalAnswersCounter++);
+								for (Answer optionalAnswer : oqa
+										.getOptionalAnswers()) {
+									if (optionalAnswer instanceof MultipleChoiceAnswer) {
 
-										int maxScore = 0;
-										for (MultipleChoiceOption option : mcq
-												.getOptionsList()) {
-											if (option.getPoints() != -1
-													&& option.getPoints() > maxScore) {
-												maxScore = option.getPoints();
+										MultipleChoiceAnswer mca = (MultipleChoiceAnswer) optionalAnswer;
+										mca.setScoreForChosenOptions();
 
-											}
-										}
+										if (questionGroup.getScore() == -1)
+											questionGroup.setScore(0);
+										if (reportPart.getScore() == -1)
+											reportPart.setScore(0);
 
-										mca.setMaxScore(maxScore); // Asetetaan
-										// monivalintakysymyksen
-										// maksimipistemäärä
-
-										// Lasketaan pisteet jos käyttäjä on
-										// tehnyt
-										// valinnan
-										// ja
-										// monivalinta ei ole sellainen, jota ei
-										// pisteytetä
-										// (pistemäärä -1)
-
-										if (mca.getChosenOptionIndex() != -1
-												&& mcq.getOptionsList()
-														.get(mca.getChosenOptionIndex())
-														.getPoints() != -1) {
-
-											mca.setScore(mcq
-													.getOptionsList()
-													.get(mca.getChosenOptionIndex())
-													.getPoints());
-											if (questionGroup.getScore() == -1)
-												questionGroup.setScore(0);
-
-											if (reportPart.getScore() == -1)
-												reportPart.setScore(0);
-											// Lisätään kysymysryhmän pisteisiin
-											// ja
-											// asetetaan
-											// kysymysryhmän pisteet näkyviksi
-											// raportissa
-
-											questionGroup
-													.setMaxScore(questionGroup
-															.getMaxScore()
-															+ maxScore);
-
-											questionGroup
-													.setScore(questionGroup
-															.getScore()
-															+ mcq.getOptionsList()
-																	.get(mca.getChosenOptionIndex())
-																	.getPoints());
-
-										}
+										questionGroup.setMaxScore(questionGroup
+												.getMaxScore()
+												+ mca.getMaxScore());
+										questionGroup.setScore(questionGroup
+												.getScore() + mca.getScore());
 
 									}
 
-									if (optionalQuestion instanceof PointsQuestion) {
+									if (optionalAnswer instanceof PointsAnswer) {
 
-										PointsQuestion pointsQuestion = (PointsQuestion) optionalQuestion;
-										PointsAnswer pointsAnswer = (PointsAnswer) oqa
-												.getOptionalAnswers()
-												.get(optionalAnswersCounter++);
+										PointsAnswer pointsAnswer = (PointsAnswer) optionalAnswer;
+										PointsQuestion pointsQuestion = (PointsQuestion) pointsAnswer
+												.getQuestion();
+
 										if (pointsAnswer.getGivenPoints() != -1) {
 
 											if (questionGroup.getScore() == -1)
@@ -449,7 +368,7 @@ public class WorkshopVisitReport extends Report {
 					if (answer instanceof MultipleChoiceAnswer
 							&& answer.isRemoveAnswerFromReport()) {
 						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
-						mca.setChosenOptionIndex(-1);
+						mca.setChosenOptions(null);
 						mca.setRemarks(null);
 					}
 					if (answer instanceof PointsAnswer
@@ -463,7 +382,7 @@ public class WorkshopVisitReport extends Report {
 		}
 	}
 
-	public void checkReportHighlights() {
+	public void checkIfReportHighlightsSelected() {
 		this.highlightsSet = false;
 		for (ReportPart part : this.reportParts) {
 			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
@@ -483,6 +402,37 @@ public class WorkshopVisitReport extends Report {
 				}
 			}
 		}
+
+	}
+
+	public void setMultipleChoiceAnswers(ReportService rs) {
+		for (ReportPart part : this.reportParts)
+			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+
+				for (Answer answer : group.getAnswers()) {
+					if (answer instanceof MultipleChoiceAnswer) {
+						MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+						int mcaIndex = group.getAnswers().indexOf(mca);
+						ArrayList<MultipleChoiceOption> newChosenOptionList = new ArrayList<MultipleChoiceOption>();
+						if (mca.getChosenOptionsIndex() != null) {
+							for (int index : mca.getChosenOptionsIndex()) {
+								if (index != -1)
+									newChosenOptionList
+											.add(((MultipleChoiceQuestion) answer
+													.getQuestion())
+													.getOptionsList()
+													.get(index));
+
+							}
+
+							mca.setChosenOptions(newChosenOptionList);
+							mca = (MultipleChoiceAnswer) rs.saveAnswer(mca);
+							group.getAnswers().set(mcaIndex, mca);
+
+						}
+					}
+				}
+			}
 
 	}
 }

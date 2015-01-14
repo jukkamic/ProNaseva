@@ -173,8 +173,14 @@
 							
 							<!-- Jos kysymykselle on ennalta tehty valinta esim. muokattaessa 
 								raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
+							<c:set var="contains" value="false" />
+							<c:forEach var="chosenOption" items="${answer.chosenOptions}" >
+								<c:if test="${chosenOption == option}">
+								<c:set var="contains" value="true" />
+								</c:if>
+							</c:forEach>
 							<c:choose>
-							<c:when test="${answer.chosenOptionIndex == optionsCounter.index}"> 
+							<c:when test="${contains == 'true'}"> 
 								<label class="btn btn-primary active">
 								</c:when>
 							<c:otherwise>
@@ -188,25 +194,25 @@
 									ei ole tägejä -->
 							<c:choose>
 								<c:when test="${option.radiobuttonText != null }">
-									<sf:radiobutton id="button" path="reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionIndex" 
+									<sf:radiobutton id="button" path="reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionsIndex" 
 									value="${optionsCounter.index}" /> ${option.radiobuttonText}
 								</c:when>
 								<c:otherwise>
-									<sf:radiobutton id="button" path="reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionIndex"
+									<sf:radiobutton id="button" path="reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionsIndex"
 									value="${optionsCounter.index}" /> ${option.multipleChoiceOption}
 								</c:otherwise>
 								</c:choose>
 							</label>
 						</c:forEach> 
 						 <c:choose>
-								<c:when test="${answer.chosenOptionIndex == -1}"> 
+								<c:when test="${empty answer.chosenOptions}"> 
 									<label class="btn btn-default active">
 									</c:when>
 								<c:otherwise>
 									<label class="btn btn-default">
 								</c:otherwise>
 							</c:choose> 
-							<sf:radiobutton id="button" path="reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionIndex" 
+							<sf:radiobutton id="button" path="reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].chosenOptionsIndex" 
 									value="-1" /> Ei valintaa
 							
 					</div>

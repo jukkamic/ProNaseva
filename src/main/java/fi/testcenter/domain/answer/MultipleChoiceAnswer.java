@@ -1,17 +1,26 @@
 package fi.testcenter.domain.answer;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
+import javax.persistence.OrderColumn;
 
+import fi.testcenter.domain.question.MultipleChoiceOption;
+import fi.testcenter.domain.question.MultipleChoiceQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.ReportQuestionGroup;
 
 @Entity
 public class MultipleChoiceAnswer extends Answer {
 
-	private String[] chosenSelections;
+	private int[] chosenOptionsIndex;
 
-	private int chosenOptionIndex = -1;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@OrderColumn
+	private List<MultipleChoiceOption> chosenOptions;
 
 	@Column(length = 1500)
 	private String remarks = "";
@@ -51,6 +60,22 @@ public class MultipleChoiceAnswer extends Answer {
 				subquestionAnswerOrderNumber);
 	}
 
+	public int[] getChosenOptionsIndex() {
+		return chosenOptionsIndex;
+	}
+
+	public void setChosenOptionsIndex(int[] chosenOptionsIndex) {
+		this.chosenOptionsIndex = chosenOptionsIndex;
+	}
+
+	public List<MultipleChoiceOption> getChosenOptions() {
+		return chosenOptions;
+	}
+
+	public void setChosenOptions(List<MultipleChoiceOption> chosenOptions) {
+		this.chosenOptions = chosenOptions;
+	}
+
 	public String getRemarks() {
 		return remarks;
 	}
@@ -59,20 +84,35 @@ public class MultipleChoiceAnswer extends Answer {
 		this.remarks = remarks;
 	}
 
-	public int getChosenOptionIndex() {
-		return chosenOptionIndex;
-	}
+	public void setScoreForChosenOptions() {
 
-	public void setChosenOptionIndex(int chosenOptionIndex) {
-		this.chosenOptionIndex = chosenOptionIndex;
-	}
+		MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) super
+				.getQuestion();
 
-	public String[] getChosenSelections() {
-		return chosenSelections;
-	}
+		super.setScore(-1);
+		super.setMaxScore(0);
 
-	public void setChosenSelections(String[] chosenSelections) {
-		this.chosenSelections = chosenSelections;
-	}
+		int questionMaxScore = 0;
+		for (MultipleChoiceOption option : mcq.getOptionsList()) {
 
+			if (option.getPoints() != -1) {
+				if (questionMaxScore < option.getPoints()
+						&& !mcq.isMultipleSelectionsAllowed())
+					questionMaxScore += option.getPoints();
+				if (mcq.isMultipleSelectionsAllowed())
+					questionMaxScore += option.getPoints();
+			}
+
+			if (chosenOptions != null && chosenOptions.contains(option)) {
+				if (super.getScore() == -1)
+					super.setScore(0);
+
+				if (mcq.isMultipleSelectionsAllowed() == true)
+					super.setScore(super.getScore() + option.getPoints());
+				else
+					super.setScore(option.getPoints());
+			}
+			super.setMaxScore(questionMaxScore);
+		}
+	}
 }

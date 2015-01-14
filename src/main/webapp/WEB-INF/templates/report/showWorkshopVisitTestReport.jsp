@@ -175,13 +175,31 @@
 	 								
 								<c:choose>
 								<c:when test="${answer.question.multipleSelectionsAllowed == true}">
-												<c:forEach var="option" items="${answer.question.optionsList}">
-													<label class="checkbox" style="">											
-													<sf:checkbox value="${option.multipleChoiceOption}" 
-														path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].chosenSelections" label="${option.multipleChoiceOption}" disabled="true" />
-													</label>
-													<br>
-												</c:forEach>
+										<table style="font-size: 12pt; margin-left: 2.5em">
+							
+										<c:forEach var="option" items="${answer.question.optionsList}" varStatus="optionsCounter">
+											<c:set var="contains" value="false" />
+											<c:forEach var="chosenOption" items="${answer.chosenOptions}" >
+												<c:if test="${chosenOption == option}">
+												<c:set var="contains" value="true" />
+												</c:if>
+										</c:forEach>
+										<tr>
+										<td>	
+											<c:if test="${contains == 'true' }">				
+											<input name="multiSelect" type="checkbox" checked="checked" 
+												 disabled> 
+											</c:if>
+											<c:if test="${contains == 'false' }">				
+											<input name="multiSelect" type="checkbox" disabled>
+											</c:if>
+										</td>
+										<td style="padding-left: 2em; ">
+											${option.multipleChoiceOption} 
+										</td>
+										</tr>
+										</c:forEach>
+										</table>
 								</c:when>
 								<c:otherwise>
 								<div class="Demo-boot" style="padding-top: 15px;">
@@ -193,10 +211,19 @@
 														varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
 														riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
 														ei ole tägejä -->
+												<c:set var="contains" value="false" />
+												<c:forEach var="chosenOption" items="${answer.chosenOptions}" >
+													<c:if test="${chosenOption == option}">
+													<c:set var="contains" value="true" />
+													</c:if>
+												</c:forEach>
+												
 												<c:choose>
 													<c:when test="${option.radiobuttonText != null }">
+													
+													
 														<c:choose>
-															<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
+															<c:when test="${contains == 'true'}">
 																<button class="btn btn-large btn-primary disabled" type="button">
 																	${option.radiobuttonText}
 																																																	
@@ -211,7 +238,7 @@
 													</c:when>
 													<c:otherwise>
 														<c:choose>
-															<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
+															<c:when test="${contains == 'true'}">
 																<button class="btn btn-large btn-primary disabled" type="button">
 																	${option.multipleChoiceOption}
 																	
