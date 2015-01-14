@@ -28,6 +28,12 @@ public class TextAnswer extends Answer {
 		super(reportQuestionGroup, question, answerOrderNumber);
 	}
 
+	public TextAnswer(OptionalQuestionsAnswer optionalQuestionsAnswer,
+			Question question, int answerOrderNumber) {
+		super(optionalQuestionsAnswer, question, answerOrderNumber);
+
+	}
+
 	public TextAnswer(ReportQuestionGroup reportQuestionGroup,
 			Question question, int answerOrderNumber,
 			int subquestionAnswerOrderNumber) {

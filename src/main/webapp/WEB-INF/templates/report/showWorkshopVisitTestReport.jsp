@@ -94,7 +94,7 @@
 	<!-- Report part loop -->
 	
 	
-	<c:set var="questionGroupScoreIndexCounter" value="0" scope="request" />
+	
 	<c:forEach var="reportPart" items="${report.reportParts}" varStatus="reportPartCounter">
 	<h3>${reportPart.reportTemplatePart.title}</h3>
 	<br>			
@@ -135,19 +135,18 @@
 							<c:forEach var="answer" items="${questionGroup.answers}"
 								varStatus="answerCounter">
 							
-							<c:set var="question" value="${answer.question}" />
 							
 							<br>
-							<c:if test="${question.question != null}">
+							<c:if test="${answer.question.question != null}">
 								<h3 style="display: inline; padding-right: 0; margin-right: 0;">${answer.answerOrderNumber}.</h3>
 								<c:if test="${answer.subquestionAnswerOrderNumber != null && answer.subquestionAnswerOrderNumber != 0}">
 									<h3 style="display: inline; padding-left: 0; margin-left: 0; padding-right: 0; margin-right: 0;">${answer.subquestionAnswerOrderNumber}.</h3>
 								</c:if>
-								<h3 style="display: inline; padding-left: 0; margin-left: 0; "> ${question.question}</h3>
+								<h3 style="display: inline; padding-left: 0; margin-left: 0; "> ${answer.question.question}</h3>
 							</c:if>
 							
 	<!-- Multiple choice question -->
-								<c:if test='${question["class"] == "class fi.testcenter.domain.question.MultipleChoiceQuestion"}'>
+								<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.MultipleChoiceAnswer"}'>
 																										
 									
 									<c:if test="${answer.removeAnswerFromReport == 'true'}">
@@ -175,8 +174,8 @@
 
 	 								
 								<c:choose>
-								<c:when test="${question.multipleSelectionsAllowed == true}">
-												<c:forEach var="option" items="${question.optionsList}">
+								<c:when test="${answer.question.multipleSelectionsAllowed == true}">
+												<c:forEach var="option" items="${answer.question.optionsList}">
 													<label class="checkbox" style="">											
 													<sf:checkbox value="${option.multipleChoiceOption}" 
 														path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].answers[${answerCounter.index}].chosenSelections" label="${option.multipleChoiceOption}" disabled="true" />
@@ -187,7 +186,7 @@
 								<c:otherwise>
 								<div class="Demo-boot" style="padding-top: 15px;">
 										<div class="btn-group" data-toggle="buttons">
-											<c:forEach var="option" items="${question.optionsList}" varStatus="optionsCounter">
+											<c:forEach var="option" items="${answer.question.optionsList}" varStatus="optionsCounter">
 
 												
 												<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
@@ -243,7 +242,7 @@
 
 		<!-- Points question -->
 		
-								<c:if test='${question["class"] == "class fi.testcenter.domain.question.PointsQuestion"}'>
+								<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.PointsAnswer"}'>
 																										
 									
 									<c:if test="${answer.removeAnswerFromReport == 'true'}">
@@ -271,7 +270,7 @@
 																
 								<div class="Demo-boot" style="padding-top: 15px;">
 										<div class="btn-group" data-toggle="buttons">
-											<c:forEach var="points" begin="0" end="${question.maxPoints}">
+											<c:forEach var="points" begin="0" end="${answer.question.maxPoints}">
 													
 												<c:choose>
 													<c:when test="${answer.givenPoints == points}">
@@ -300,7 +299,7 @@
 								</c:if>
 	
 		<!--  Text question -->
-								<c:if test='${question["class"] == "class fi.testcenter.domain.question.TextQuestion"}'>
+								<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.TextAnswer"}'>
 									
 									<c:if test="${answer.removeAnswerFromReport == 'true'}">
 										<div class="checkbox" style="font-size: 1.2em;">
@@ -332,7 +331,7 @@
 								
 								
 	<!-- Cost listing question -->
-							<c:if test='${question["class"] == "class fi.testcenter.domain.question.CostListingQuestion"}'>
+							<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.CostListingAnswer"}'>
 								
 								<c:if test="${answer.removeAnswerFromReport == 'true'}">
 									<div class="checkbox" style="font-size: 1.2em;">
@@ -347,7 +346,7 @@
 									<c:if test="${answer.removeAnswerFromReport == 'false'}">
 									
 									
-									<c:forEach var="listQuestion" items="${question.questionItems}" varStatus="costListingAnswerCounter">
+									<c:forEach var="listQuestion" items="${answer.question.questionItems}" varStatus="costListingAnswerCounter">
 										
 										<h4>${listQuestion}</h4>
 										
@@ -366,7 +365,7 @@
 							</c:if>
 								
 <!-- ListAndScoreImportantPoints -->
-							<c:if test='${question["class"] == "class fi.testcenter.domain.question.ImportantPointsQuestion"}'>
+							<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.ImportantPointsAnswer"}'>
 								
 								<c:if test="${answer.removeAnswerFromReport == 'true'}">
 									<div class="checkbox" style="font-size: 1.2em;">
@@ -381,7 +380,7 @@
 									<c:if test="${answer.removeAnswerFromReport == 'false'}">
 								
 				
-									<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
+									<c:forEach var="questionItem" items="${answer.question.questionItems}" varStatus="questionItemCounter">
 									<div style="border-bottom: 3px solid #eee;">
 										<h3>${questionItem}</h3>
 										<table>
@@ -391,7 +390,7 @@
 										<div class="Demo-boot" style="padding-top: 15px;">
 										<div class="btn-group" data-toggle="buttons">
 
-										<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber">
+										<c:forEach begin="1" end="${answer.question.numberOfItemsToChoose}" varStatus="importanceNumber">
 											<c:choose>
 												<c:when test="${answer.answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
 													<button class="btn btn-large btn-primary disabled" type="button">
@@ -419,7 +418,7 @@
 										<div class="Demo-boot" style="padding-top: 15px;">
 										<div class="btn-group" data-toggle="buttons">
 										
-											<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
+											<c:forEach begin="1" end="${answer.question.maxScoreForQuestionItem}" varStatus="score">
 											<c:choose>
 												<c:when test="${answer.answerItems[questionItemCounter.index].score == score.index}">
 													<button class="btn btn-large btn-primary disabled" type="button">
@@ -457,9 +456,9 @@
 		<!-- Optional questions -->
 		
 	 					
-						<c:if test='${question["class"] == "class fi.testcenter.domain.question.OptionalQuestions"}'>
+						<c:if test='${answer["class"] == "class fi.testcenter.domain.answer.OptionalQuestionsAnswer"}'>
 							
-							<c:set var="questionCount" value="${answerCounter.count}" scope="request" />
+
 							<c:set var="answerCounter" value="${answerCounter}" scope="request" />
 							<c:set var="reportPartCounter" value="${reportPartCounter}" scope="request" />
 							<c:set var="questionGroupCounter" value="${questionGroupCounter}" scope="request" />
@@ -471,19 +470,16 @@
 								
 
 						</c:forEach> <!-- Questions loop end -->
-	
-							
-							 
-<%-- 							<c:if test="${report.questionGroupScore[questionGroupScoreIndexCounter].showScore == true}">
+					 
+							<c:if test="${questionGroup.score != -1}">
 							<br>
-							<h4 style="float: right; font-weight: bold;">Pisteet: ${report.questionGroupScore[questionGroupScoreIndexCounter].score} / 
-								${report.questionGroupScore[questionGroupScoreIndexCounter].maxScore} </h4>
+							<h4 style="float: right; font-weight: bold;">Pisteet: ${questionGroup.score} / 
+								${questionGroup.maxScore} </h4>
 							
-							</c:if> --%>
+							</c:if> 
 							
 							</div></div></div>
-			
-				<c:set var="questionGroupScoreIndexCounter" value="${questionGroupScoreIndexCounter + 1}" scope="request" />
+
 				
 			</c:forEach> <!-- Question group loop end -->
 			

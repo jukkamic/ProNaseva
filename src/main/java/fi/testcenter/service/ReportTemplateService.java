@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.reportTemplate.ReportTemplate;
 import fi.testcenter.reportTemplatesForImporters.AudiCallTestTemplate;
-import fi.testcenter.reportTemplatesForImporters.AutoasiReportTemplate;
+import fi.testcenter.reportTemplatesForImporters.AutoasiWorkshopTestReportTemplate;
 import fi.testcenter.reportTemplatesForImporters.VolvoReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
 import fi.testcenter.repository.PhoneCallTestReportTemplateRepository;
@@ -48,7 +48,7 @@ public class ReportTemplateService {
 			return VolvoReportTemplate.getReportTemplate();
 
 		case "Autoasi raporttipohja":
-			return AutoasiReportTemplate.getReportTemplate();
+			return AutoasiWorkshopTestReportTemplate.getReportTemplate();
 
 		case "Audi puhelinkyselyraportti":
 			return AudiCallTestTemplate.getReportTemplate();

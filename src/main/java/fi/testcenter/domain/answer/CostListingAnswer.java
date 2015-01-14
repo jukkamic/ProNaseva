@@ -27,27 +27,17 @@ public class CostListingAnswer extends Answer {
 
 	String remarks;
 
-	public List<String> getAnswersIn() {
-		return answersIn;
-	}
-
-	public void setAnswersIn(List<String> answersIn) {
-		this.answersIn = answersIn;
-	}
-
-	public List<String> getAnswersOut() {
-		return answersOut;
-	}
-
-	public void setAnswersOut(List<String> answersOut) {
-		this.answersOut = answersOut;
-	}
-
 	public CostListingAnswer() {
 	}
 
 	public CostListingAnswer(Question question, int answerOrderNumber) {
 		super(question, answerOrderNumber);
+	}
+
+	public CostListingAnswer(OptionalQuestionsAnswer optionalQuestionsAnswer,
+			Question question, int answerOrderNumber) {
+		super(optionalQuestionsAnswer, question, answerOrderNumber);
+
 	}
 
 	public CostListingAnswer(Question question) {
@@ -73,6 +63,22 @@ public class CostListingAnswer extends Answer {
 
 	public void setAnswers(List<BigDecimal> answers) {
 		this.answers = answers;
+	}
+
+	public List<String> getAnswersIn() {
+		return answersIn;
+	}
+
+	public void setAnswersIn(List<String> answersIn) {
+		this.answersIn = answersIn;
+	}
+
+	public List<String> getAnswersOut() {
+		return answersOut;
+	}
+
+	public void setAnswersOut(List<String> answersOut) {
+		this.answersOut = answersOut;
 	}
 
 	public String getTotalIn() {

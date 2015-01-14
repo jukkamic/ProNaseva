@@ -37,7 +37,8 @@ public class OptionalQuestionsAnswer extends Answer {
 	@OrderColumn
 	List<Question> optionalQuestions;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "optionalQuestionsAnswer")
+	@JoinColumn
 	@OrderColumn
 	List<Answer> optionalAnswers = new ArrayList<Answer>();
 
@@ -52,20 +53,28 @@ public class OptionalQuestionsAnswer extends Answer {
 		super(group, question);
 	}
 
-	public List<Answer> getAnswers() {
-		return optionalAnswers;
-	}
-
-	public void setAnswers(List<Answer> answers) {
-		this.optionalAnswers = answers;
-	}
-
 	public List<Question> getQuestions() {
 		return optionalQuestions;
 	}
 
 	public void setQuestions(List<Question> questions) {
 		this.optionalQuestions = questions;
+	}
+
+	public List<Question> getOptionalQuestions() {
+		return optionalQuestions;
+	}
+
+	public void setOptionalQuestions(List<Question> optionalQuestions) {
+		this.optionalQuestions = optionalQuestions;
+	}
+
+	public List<Answer> getOptionalAnswers() {
+		return optionalAnswers;
+	}
+
+	public void setOptionalAnswers(List<Answer> optionalAnswers) {
+		this.optionalAnswers = optionalAnswers;
 	}
 
 	public OptionalQuestionsAnswer addOptionalQuestions(
@@ -84,28 +93,29 @@ public class OptionalQuestionsAnswer extends Answer {
 					.getQuestions().get(questionIndex);
 
 			newQuestionList.add(question);
+
 			if (optionalQuestions == null
 					|| !(optionalQuestions.contains(question))) {
 
 				if (question instanceof MultipleChoiceQuestion) {
-					newAnswerList.add(new MultipleChoiceAnswer(question,
+					newAnswerList.add(new MultipleChoiceAnswer(this, question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof PointsQuestion) {
-					newAnswerList.add(rs.saveAnswer(new PointsAnswer(question,
-							optionalAnswerOrderNumber++)));
+					newAnswerList.add(rs.saveAnswer(new PointsAnswer(this,
+							question, optionalAnswerOrderNumber++)));
 				}
 				if (question instanceof TextQuestion) {
-					newAnswerList.add(new TextAnswer(question,
+					newAnswerList.add(new TextAnswer(this, question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof ImportantPointsQuestion) {
-					newAnswerList.add(new ImportantPointsAnswer(question,
+					newAnswerList.add(new ImportantPointsAnswer(this, question,
 							optionalAnswerOrderNumber++));
 				}
 				if (question instanceof CostListingQuestion) {
-					CostListingAnswer answer = new CostListingAnswer(question,
-							optionalAnswerOrderNumber++);
+					CostListingAnswer answer = new CostListingAnswer(this,
+							question, optionalAnswerOrderNumber++);
 					CostListingQuestion clq = (CostListingQuestion) question;
 					List<String> answersInList = new ArrayList<String>();
 					for (int i = 0; i < clq.getQuestionItems().size(); i++)
@@ -120,9 +130,9 @@ public class OptionalQuestionsAnswer extends Answer {
 
 				for (Answer answer : optionalAnswers) {
 					if (answer != null && answer.getQuestion() == question) {
+						answer.setAnswerOrderNumber(optionalAnswerOrderNumber++);
 						newAnswerList.add(answer);
-						optionalAnswers.set(optionalAnswers.indexOf(answer),
-								null);
+
 					}
 
 				}

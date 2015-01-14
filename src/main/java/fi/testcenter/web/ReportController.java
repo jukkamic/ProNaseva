@@ -365,7 +365,7 @@ public class ReportController {
 		model.addAttribute("report", report);
 		model.addAttribute("initialAnswerIndexCounter", 0);
 		model.addAttribute("editReportPartNumber", 0);
-		return "report/editWorkshopVisitTestReport";
+		return "report/editWorkshopVisitReport";
 	}
 
 	@RequestMapping(value = "/submitReportForApproval", method = RequestMethod.GET)

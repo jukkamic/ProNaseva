@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 
 import fi.testcenter.domain.question.Question;
@@ -25,6 +26,10 @@ public class Answer {
 	@JoinColumn
 	ReportQuestionGroup reportQuestionGroup;
 
+	@ManyToOne
+	@JoinTable(name = "OPTIONALANSWER_ANSWER")
+	OptionalQuestionsAnswer optionalQuestionsAnswer;
+
 	private int score = -1;
 	private int maxScore;
 	private boolean highlightAnswer;
@@ -42,6 +47,14 @@ public class Answer {
 	}
 
 	public Answer(Question question, int answerOrderNumber) {
+		this.question = question;
+		this.answerOrderNumber = answerOrderNumber;
+
+	}
+
+	public Answer(OptionalQuestionsAnswer optionalQuestionsAnswer,
+			Question question, int answerOrderNumber) {
+		this.optionalQuestionsAnswer = optionalQuestionsAnswer;
 		this.question = question;
 		this.answerOrderNumber = answerOrderNumber;
 
@@ -138,6 +151,15 @@ public class Answer {
 
 	public void setSubquestionAnswerOrderNumber(int subquestionAnswerOrderNumber) {
 		this.subquestionAnswerOrderNumber = subquestionAnswerOrderNumber;
+	}
+
+	public OptionalQuestionsAnswer getOptionalQuestionsAnswer() {
+		return optionalQuestionsAnswer;
+	}
+
+	public void setOptionalQuestionsAnswer(
+			OptionalQuestionsAnswer optionalQuestionsAnswer) {
+		this.optionalQuestionsAnswer = optionalQuestionsAnswer;
 	}
 
 }

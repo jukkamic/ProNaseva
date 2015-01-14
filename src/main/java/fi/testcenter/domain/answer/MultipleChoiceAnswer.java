@@ -27,6 +27,13 @@ public class MultipleChoiceAnswer extends Answer {
 		super(question, answerOrderNumber);
 	}
 
+	public MultipleChoiceAnswer(
+			OptionalQuestionsAnswer optionalQuestionsAnswer, Question question,
+			int answerOrderNumber) {
+		super(optionalQuestionsAnswer, question, answerOrderNumber);
+
+	}
+
 	public MultipleChoiceAnswer(ReportQuestionGroup reportQuestionGroup,
 			Question question) {
 		super(reportQuestionGroup, question);

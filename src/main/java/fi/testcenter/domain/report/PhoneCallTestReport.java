@@ -180,7 +180,7 @@ public class PhoneCallTestReport extends Report {
 								if (optionalQuestion instanceof MultipleChoiceQuestion) {
 									MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) optionalQuestion;
 									MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
-											.getAnswers().get(
+											.getOptionalAnswers().get(
 													optionalAnswersCounter++);
 
 									int maxScore = 0;
@@ -241,7 +241,7 @@ public class PhoneCallTestReport extends Report {
 
 									PointsQuestion pointsQuestion = (PointsQuestion) optionalQuestion;
 									PointsAnswer pointsAnswer = (PointsAnswer) oqa
-											.getAnswers().get(
+											.getOptionalAnswers().get(
 													optionalAnswersCounter++);
 									if (pointsAnswer.getGivenPoints() != -1) {
 

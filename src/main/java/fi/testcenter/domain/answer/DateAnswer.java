@@ -29,6 +29,12 @@ public class DateAnswer extends Answer {
 		super(question, answerOrderNumber);
 	}
 
+	public DateAnswer(OptionalQuestionsAnswer optionalQuestionsAnswer,
+			Question question, int answerOrderNumber) {
+		super(optionalQuestionsAnswer, question, answerOrderNumber);
+
+	}
+
 	public DateAnswer(ReportQuestionGroup reportQuestionGroup,
 			Question question, int answerOrderNumber) {
 		super(reportQuestionGroup, question, answerOrderNumber);

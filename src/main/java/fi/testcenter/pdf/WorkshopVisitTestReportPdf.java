@@ -24,6 +24,7 @@ import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.CostListingAnswer;
 import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.MultipleChoiceAnswer;
+import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.answer.PointsAnswer;
 import fi.testcenter.domain.answer.TextAnswer;
 import fi.testcenter.domain.report.ReportPart;
@@ -106,6 +107,28 @@ public class WorkshopVisitTestReportPdf {
 						if (answer instanceof PointsAnswer)
 							doc.add(pdf
 									.getPointsAnswerParagraph((PointsAnswer) answer));
+						if (answer instanceof OptionalQuestionsAnswer) {
+							OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
+							for (Answer optionalAnswer : oqa
+									.getOptionalAnswers()) {
+								if (optionalAnswer instanceof MultipleChoiceAnswer)
+									doc.add(pdf
+											.getMultipleChoiceAnswerParagraph((MultipleChoiceAnswer) optionalAnswer));
+								if (optionalAnswer instanceof TextAnswer)
+									doc.add(pdf
+											.getTextAnswerParagraph((TextAnswer) optionalAnswer));
+								if (optionalAnswer instanceof CostListingAnswer)
+									doc.add(pdf
+											.getCostListingParagraph((CostListingAnswer) optionalAnswer));
+								if (optionalAnswer instanceof ImportantPointsAnswer)
+									doc.add(pdf
+											.getImportantPointsParagraph((ImportantPointsAnswer) optionalAnswer));
+								if (optionalAnswer instanceof PointsAnswer)
+									doc.add(pdf
+											.getPointsAnswerParagraph((PointsAnswer) optionalAnswer));
+							}
+						}
+
 					}
 				}
 
@@ -277,8 +300,11 @@ public class WorkshopVisitTestReportPdf {
 							cell.setBorder(0);
 							table.addCell(cell);
 						}
-						groupsTotal += group.getScore();
-						groupsMax += group.getMaxScore();
+						if (group.getScore() != -1) {
+							groupsTotal += group.getScore();
+							groupsMax += group.getMaxScore();
+						}
+
 					}
 
 				}

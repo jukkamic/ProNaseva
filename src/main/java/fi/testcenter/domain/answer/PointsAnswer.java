@@ -25,6 +25,12 @@ public class PointsAnswer extends Answer {
 		this.givenPoints = -1;
 	}
 
+	public PointsAnswer(OptionalQuestionsAnswer optionalQuestionsAnswer,
+			Question question, int answerOrderNumber) {
+		super(optionalQuestionsAnswer, question, answerOrderNumber);
+		this.givenPoints = -1;
+	}
+
 	public PointsAnswer(ReportQuestionGroup reportQuestionGroup,
 			Question question, int answerOrderNumber) {
 		super(reportQuestionGroup, question, answerOrderNumber);

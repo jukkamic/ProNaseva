@@ -4,30 +4,26 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-
-	
-
-
-<c:forEach var="answer" items="${optionalAnswer.answers}">
+<c:set var="reportPartTitle" value="" scope="request" />
+<c:forEach var="answer" items="${optionalAnswer.optionalAnswers}">
 <c:if test="${answer.highlightAnswer == 'true' }">
 
-
 <div style="border-bottom: 3px solid #eee;">
-<c:if test="${optionalAnswer.reportQuestionGroup.reportPart.reportTemplatePart.title != reportPartTitle}">
-	<h3>${optionalAnswer.reportQuestionGroup.reportPart.reportTemplatePart.title}</h3>
-	<c:set var="reportPartTitle" value="${optionalAnswer.reportQuestionGroup.reportPart.reportTemplatePart.title}" scope="request" />
+<c:if test="${answer.optionalQuestionsAnswer.reportQuestionGroup.reportPart.reportTemplatePart.title != reportPartTitle}">
+	<h3>${answer.optionalQuestionsAnswer.reportQuestionGroup.reportPart.reportTemplatePart.title}</h3>
+	<c:set var="reportPartTitle" value="${answer.optionalQuestionsAnswer.reportQuestionGroup.reportPart.reportTemplatePart.title}" scope="request" />
 </c:if>
 
-<c:if test="${optionalAnswer.reportQuestionGroup.reportTemplateQuestionGroup.title != questionGroupTitle}">
-	<h3>${optionalAnswer.reportQuestionGroup.questionGroupOrderNumber}. ${optionalAnswer.reportQuestionGroup.reportTemplateQuestionGroup.title}</h3>
-	<c:set var="questionGroupTitle" value="${optionalAnswer.reportQuestionGroup.reportTemplateQuestionGroup.title}" scope="request" />
+<c:if test="${answer.optionalQuestionsAnswer.reportQuestionGroup.reportTemplateQuestionGroup.title != questionGroupTitle}">
+	<h3>${answer.optionalQuestionsAnswer.reportQuestionGroup.questionGroupOrderNumber}. ${answer.optionalQuestionsAnswer.reportQuestionGroup.reportTemplateQuestionGroup.title}</h3>
+	<c:set var="questionGroupTitle" value="${answer.optionalQuestionsAnswer.reportQuestionGroup.reportTemplateQuestionGroup.title}" scope="request" />
 </c:if>
 		
 
     <!-- Multiple choice answer -->
 		
 		<c:if test="${answer['class'] == 'class fi.testcenter.domain.answer.MultipleChoiceAnswer'}">
-			<h3>${optionalAnswer.reportQuestionGroup.questionGroupOrderNumber}.${answer.answerOrderNumber}.
+			<h3>${optionalAnswer.optionalQuestionsAnswer.reportQuestionGroup.questionGroupOrderNumber}.${answer.answerOrderNumber}.
 			<c:if test="${answer.subquestionAnswerOrderNumber != null and answer.subquestionAnswerOrderNumber != 0}">
 				${answer.subquestionAnswerOrderNumber}.
 			</c:if>									

@@ -122,9 +122,17 @@ public class PdfUtilityClass {
 
 			Paragraph para = new Paragraph();
 
-			String questionOrderNumber = String.valueOf(answer
-					.getReportQuestionGroup().getQuestionGroupOrderNumber())
-					+ "." + String.valueOf(answer.getAnswerOrderNumber()) + ".";
+			int questionGroupOrderNumber;
+			if (answer.getOptionalQuestionsAnswer() == null)
+				questionGroupOrderNumber = answer.getReportQuestionGroup()
+						.getQuestionGroupOrderNumber();
+			else
+				questionGroupOrderNumber = answer.getOptionalQuestionsAnswer()
+						.getReportQuestionGroup().getQuestionGroupOrderNumber();
+			String questionOrderNumber = String
+					.valueOf(questionGroupOrderNumber)
+					+ "."
+					+ String.valueOf(answer.getAnswerOrderNumber()) + ".";
 
 			float indentLeft = 20;
 
@@ -280,9 +288,17 @@ public class PdfUtilityClass {
 
 			PdfPTable table = new PdfPTable(2);
 
-			String questionOrderNumber = String.valueOf(answer
-					.getReportQuestionGroup().getQuestionGroupOrderNumber())
-					+ "." + String.valueOf(answer.getAnswerOrderNumber()) + ".";
+			int questionGroupOrderNumber;
+			if (answer.getOptionalQuestionsAnswer() == null)
+				questionGroupOrderNumber = answer.getReportQuestionGroup()
+						.getQuestionGroupOrderNumber();
+			else
+				questionGroupOrderNumber = answer.getOptionalQuestionsAnswer()
+						.getReportQuestionGroup().getQuestionGroupOrderNumber();
+			String questionOrderNumber = String
+					.valueOf(questionGroupOrderNumber)
+					+ "."
+					+ String.valueOf(answer.getAnswerOrderNumber()) + ".";
 
 			float indentLeft = 20;
 
@@ -295,7 +311,6 @@ public class PdfUtilityClass {
 				questionOrderNumber += " ";
 
 			Chunk questionNumberChunk = new Chunk(questionOrderNumber, BOLD);
-
 			float orderNumberIndent = questionNumberChunk.getWidthPoint();
 
 			Phrase questionPhrase = new Phrase(questionNumberChunk);
@@ -346,7 +361,7 @@ public class PdfUtilityClass {
 			if (answer.getRemarks() != null && answer.getRemarks().length() > 0) {
 				Paragraph remarksPara = new Paragraph();
 				remarksPara.setKeepTogether(true);
-				remarksPara.setIndentationLeft(20 + indentLeft + indent);
+				remarksPara.setIndentationLeft(orderNumberIndent);
 				remarksPara.setIndentationRight(70);
 
 				remarksPara.add(new Chunk("Huomiot:", ITALIC));
@@ -356,7 +371,7 @@ public class PdfUtilityClass {
 				para.add(remarksPara);
 
 				remarksPara = new Paragraph();
-				remarksPara.setIndentationLeft(20 + indentLeft + indent);
+				remarksPara.setIndentationLeft(orderNumberIndent);
 				remarksPara.setIndentationRight(70);
 				remarksPara.setKeepTogether(true);
 
@@ -380,9 +395,17 @@ public class PdfUtilityClass {
 			Paragraph para = new Paragraph();
 			PdfPTable table = new PdfPTable(2);
 
-			String questionOrderNumber = String.valueOf(answer
-					.getReportQuestionGroup().getQuestionGroupOrderNumber())
-					+ "." + String.valueOf(answer.getAnswerOrderNumber()) + ".";
+			int questionGroupOrderNumber;
+			if (answer.getOptionalQuestionsAnswer() == null)
+				questionGroupOrderNumber = answer.getReportQuestionGroup()
+						.getQuestionGroupOrderNumber();
+			else
+				questionGroupOrderNumber = answer.getOptionalQuestionsAnswer()
+						.getReportQuestionGroup().getQuestionGroupOrderNumber();
+			String questionOrderNumber = String
+					.valueOf(questionGroupOrderNumber)
+					+ "."
+					+ String.valueOf(answer.getAnswerOrderNumber()) + ".";
 
 			float indentLeft = 20;
 
@@ -438,9 +461,17 @@ public class PdfUtilityClass {
 			Paragraph para = new Paragraph();
 			PdfPTable table = new PdfPTable(2);
 
-			String questionOrderNumber = String.valueOf(answer
-					.getReportQuestionGroup().getQuestionGroupOrderNumber())
-					+ "." + String.valueOf(answer.getAnswerOrderNumber()) + ".";
+			int questionGroupOrderNumber;
+			if (answer.getOptionalQuestionsAnswer() == null)
+				questionGroupOrderNumber = answer.getReportQuestionGroup()
+						.getQuestionGroupOrderNumber();
+			else
+				questionGroupOrderNumber = answer.getOptionalQuestionsAnswer()
+						.getReportQuestionGroup().getQuestionGroupOrderNumber();
+			String questionOrderNumber = String
+					.valueOf(questionGroupOrderNumber)
+					+ "."
+					+ String.valueOf(answer.getAnswerOrderNumber()) + ".";
 
 			float indentLeft = 20;
 
@@ -498,9 +529,17 @@ public class PdfUtilityClass {
 			PdfPTable table = new PdfPTable(4);
 			Paragraph para = new Paragraph();
 
-			String questionOrderNumber = String.valueOf(answer
-					.getReportQuestionGroup().getQuestionGroupOrderNumber())
-					+ "." + String.valueOf(answer.getAnswerOrderNumber()) + ".";
+			int questionGroupOrderNumber;
+			if (answer.getOptionalQuestionsAnswer() == null)
+				questionGroupOrderNumber = answer.getReportQuestionGroup()
+						.getQuestionGroupOrderNumber();
+			else
+				questionGroupOrderNumber = answer.getOptionalQuestionsAnswer()
+						.getReportQuestionGroup().getQuestionGroupOrderNumber();
+			String questionOrderNumber = String
+					.valueOf(questionGroupOrderNumber)
+					+ "."
+					+ String.valueOf(answer.getAnswerOrderNumber()) + ".";
 
 			float indentLeft = 20;
 
@@ -658,9 +697,17 @@ public class PdfUtilityClass {
 
 			PdfPTable table = new PdfPTable(3);
 			table.setSpacingBefore(10);
-			String questionOrderNumber = String.valueOf(answer
-					.getReportQuestionGroup().getQuestionGroupOrderNumber())
-					+ "." + String.valueOf(answer.getAnswerOrderNumber()) + ".";
+			int questionGroupOrderNumber;
+			if (answer.getOptionalQuestionsAnswer() == null)
+				questionGroupOrderNumber = answer.getReportQuestionGroup()
+						.getQuestionGroupOrderNumber();
+			else
+				questionGroupOrderNumber = answer.getOptionalQuestionsAnswer()
+						.getReportQuestionGroup().getQuestionGroupOrderNumber();
+			String questionOrderNumber = String
+					.valueOf(questionGroupOrderNumber)
+					+ "."
+					+ String.valueOf(answer.getAnswerOrderNumber()) + ".";
 
 			float indentLeft = 20;
 
@@ -753,7 +800,9 @@ public class PdfUtilityClass {
 			cell.setPaddingRight(5);
 			table.addCell(cell);
 
-			para.add(table);
+			cell = new PdfPCell(new Paragraph());
+			cell.setBorder(0);
+			table.addCell(cell);
 
 			if (answer.getRemarks() != null && answer.getRemarks().length() > 0) {
 
@@ -762,7 +811,7 @@ public class PdfUtilityClass {
 				cell = new PdfPCell();
 				cell.setPaddingTop(5);
 				cell.setPaddingBottom(3);
-				cell.setColspan(3);
+				cell.setColspan(2);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setBorder(0);
 				cell.addElement(remarksHeader);
@@ -786,6 +835,7 @@ public class PdfUtilityClass {
 
 			}
 
+			para.add(table);
 			return para;
 		} catch (Exception e) {
 			e.printStackTrace();

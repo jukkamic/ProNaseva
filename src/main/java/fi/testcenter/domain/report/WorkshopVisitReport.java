@@ -304,7 +304,7 @@ public class WorkshopVisitReport extends Report {
 									if (optionalQuestion instanceof MultipleChoiceQuestion) {
 										MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) optionalQuestion;
 										MultipleChoiceAnswer mca = (MultipleChoiceAnswer) oqa
-												.getAnswers()
+												.getOptionalAnswers()
 												.get(optionalAnswersCounter++);
 
 										int maxScore = 0;
@@ -369,7 +369,7 @@ public class WorkshopVisitReport extends Report {
 
 										PointsQuestion pointsQuestion = (PointsQuestion) optionalQuestion;
 										PointsAnswer pointsAnswer = (PointsAnswer) oqa
-												.getAnswers()
+												.getOptionalAnswers()
 												.get(optionalAnswersCounter++);
 										if (pointsAnswer.getGivenPoints() != -1) {
 
@@ -472,8 +472,8 @@ public class WorkshopVisitReport extends Report {
 						this.highlightsSet = true;
 					if (answer instanceof OptionalQuestionsAnswer) {
 						OptionalQuestionsAnswer opa = (OptionalQuestionsAnswer) answer;
-						if (opa.getAnswers() != null) {
-							for (Answer loopAnswer : opa.getAnswers()) {
+						if (opa.getOptionalAnswers() != null) {
+							for (Answer loopAnswer : opa.getOptionalAnswers()) {
 								if (loopAnswer.isHighlightAnswer())
 									this.highlightsSet = true;
 							}

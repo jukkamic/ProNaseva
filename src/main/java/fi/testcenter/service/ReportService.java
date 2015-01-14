@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.answer.Answer;
-import fi.testcenter.domain.answer.ImportantPointsAnswer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
 import fi.testcenter.domain.report.PhoneCallTestReport;
 import fi.testcenter.domain.report.Report;
@@ -104,13 +103,14 @@ public class ReportService {
 			for (Answer answer : group.getAnswers()) {
 				if (answer instanceof OptionalQuestionsAnswer) {
 					OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
-					List<Answer> deleteList = oqa.getAnswers();
-					oqa.setAnswers(null);
+					List<Answer> deleteList = oqa.getOptionalAnswers();
+					oqa.setOptionalAnswers(null);
 					oqa.setReportQuestionGroup(null);
 					if (deleteList != null) {
 						try {
 							ar.save(oqa);
-							deleteAnswers(deleteList);
+							// deleteAnswers(deleteList);
+							ar.deleteInBatch(deleteList);
 
 						} catch (Exception e) {
 							e.printStackTrace();
@@ -369,18 +369,18 @@ public class ReportService {
 		return ar.save(answer);
 	}
 
-	@Transactional
-	public void deleteAnswers(List<Answer> answers) {
-		for (Answer answer : answers) {
-			if (answer instanceof ImportantPointsAnswer
-					&& ((ImportantPointsAnswer) answer).getAnswerItems() != null) {
-				ipr.deleteInBatch(((ImportantPointsAnswer) answer)
-						.getAnswerItems());
-			}
-
-		}
-		ar.deleteInBatch(answers);
-	}
+	// @Transactional
+	// public void deleteAnswers(List<Answer> answers) {
+	// for (Answer answer : answers) {
+	// if (answer instanceof ImportantPointsAnswer
+	// && ((ImportantPointsAnswer) answer).getAnswerItems() != null) {
+	// ipr.deleteInBatch(((ImportantPointsAnswer) answer)
+	// .getAnswerItems());
+	// }
+	//
+	// }
+	// ar.deleteInBatch(answers);
+	// }
 
 	// @Transactional
 	// public OptionalQuestionsAnswer saveOptionalQuestionsAnswer(
@@ -389,11 +389,11 @@ public class ReportService {
 	// return oqar.save(oqa);
 	// }
 
-	@Transactional
-	public void deleteOptionalAnswer(OptionalQuestionsAnswer answer) {
-
-		oqar.delete(answer);
-	}
+	// @Transactional
+	// public void deleteOptionalAnswer(OptionalQuestionsAnswer answer) {
+	//
+	// oqar.delete(answer);
+	// }
 
 	@Transactional
 	public void deleteAnswer(Answer answer) {

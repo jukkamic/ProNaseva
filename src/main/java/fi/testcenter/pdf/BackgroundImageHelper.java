@@ -23,7 +23,7 @@ public class BackgroundImageHelper extends PdfPageEventHelper {
 
 		try {
 			Resource fileResource = resourceLoader
-					.getResource("classpath:images/bg.jpg");
+					.getResource("classpath:images/reportBackground.jpg");
 
 			this.img = Image.getInstance(fileResource.getURL());
 			img.scaleAbsolute(595, 842);
