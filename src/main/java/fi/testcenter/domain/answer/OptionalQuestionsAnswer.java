@@ -137,13 +137,13 @@ public class OptionalQuestionsAnswer extends Answer {
 			for (Answer answer : optionalAnswers) {
 				if (answer != null) {
 					optionalAnswers.set(optionalAnswers.indexOf(answer), null);
-					rs.saveOptionalQuestionsAnswer(this);
+					rs.saveAnswer(this);
 					rs.deleteAnswer(answer);
 				}
 
 			}
 			optionalAnswers = newAnswerList;
-			savedAnswer = rs.saveOptionalQuestionsAnswer(this);
+			savedAnswer = (OptionalQuestionsAnswer) rs.saveAnswer(this);
 
 		} catch (Exception e) {
 			e.printStackTrace();

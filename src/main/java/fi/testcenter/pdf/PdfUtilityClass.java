@@ -1,8 +1,13 @@
 package fi.testcenter.pdf;
 
+import java.io.File;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Element;
@@ -25,13 +30,12 @@ import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
 import fi.testcenter.domain.question.PointsQuestion;
 
+@Component
 public class PdfUtilityClass {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
-	//
-	// @Autowired
-	// ResourceLoader resourceLoader;
 
+	ResourceLoader resourceLoader;
 	BaseFont BASE_FONT;
 	BaseFont WINGDINGS_BASE_FONT;
 
@@ -42,35 +46,41 @@ public class PdfUtilityClass {
 	Font ITALIC;
 	Font WINGDING_FONT;
 
-	public PdfUtilityClass(BaseFont BASE_FONT, BaseFont WINGDINGS_BASE_FONT) {
+	@Autowired
+	public PdfUtilityClass(ResourceLoader resourceLoader) {
 
-		this.BASE_FONT = BASE_FONT;
-		this.WINGDINGS_BASE_FONT = WINGDINGS_BASE_FONT;
-		//
-		// Resource file = resourceLoader.getResource("file:/ARIAL.TTF");
-		// File arialFile = file.getFile();
-		//
-		// BASE_FONT = BaseFont.createFont(arialFile.getPath(),
-		// BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-		//
+		this.resourceLoader = resourceLoader;
 
-		// file = resourceLoader.getResource("file:/WINGDING.TTF");
-		// File wingdingFontFile = file.getFile();
-		//
-		// WINGDINGS_BASE_FONT = BaseFont.createFont(wingdingFontFile.getPath(),
-		// BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+		try {
+			Resource fileResource = resourceLoader
+					.getResource("classpath:fonts/ARIAL.TTF");
 
-		REPORT_PART_TITLE_FONT = new Font(BASE_FONT, 20, Font.BOLD);
+			File baseFontFile = fileResource.getFile();
+			BASE_FONT = BaseFont.createFont(baseFontFile.getPath(),
+					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-		GROUP_TITLE_FONT = new Font(BASE_FONT, 16, Font.BOLD);
+			fileResource = resourceLoader
+					.getResource("classpath:fonts/WINGDING.TTF");
+			baseFontFile = fileResource.getFile();
 
-		DEFAULT_FONT = new Font(BASE_FONT, 11);
+			WINGDINGS_BASE_FONT = BaseFont.createFont(baseFontFile.getPath(),
+					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-		BOLD = new Font(BASE_FONT, 11, Font.BOLD);
+			REPORT_PART_TITLE_FONT = new Font(BASE_FONT, 20, Font.BOLD);
 
-		ITALIC = new Font(BASE_FONT, 11, Font.ITALIC);
+			GROUP_TITLE_FONT = new Font(BASE_FONT, 16, Font.BOLD);
 
-		WINGDING_FONT = new Font(WINGDINGS_BASE_FONT, 12);
+			DEFAULT_FONT = new Font(BASE_FONT, 11);
+
+			BOLD = new Font(BASE_FONT, 11, Font.BOLD);
+
+			ITALIC = new Font(BASE_FONT, 11, Font.ITALIC);
+
+			WINGDING_FONT = new Font(WINGDINGS_BASE_FONT, 12);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 

@@ -153,14 +153,14 @@ public class AudiCallTestTemplate {
 				.add(new MultipleChoiceOption(
 						"Kyllä, vuokra-auto ja viittaus ajokortin näyttämisen vaatimuksesta",
 						"Kyllä, vuokra-auto ja viittaus<br>ajokortin näyttämisen vaatimuksesta",
-						4));
+						3));
 		optionsList
 				.add(new MultipleChoiceOption(
 						"Ei, vuokra-auto, ei viittausta ajokortin näyttämisen vaatimuksesta",
 						"Ei, vuokra-auto, ei viittausta<br>ajokortin näyttämisen vaatimuksesta",
 						2));
 		optionsList.add(new MultipleChoiceOption("Kyllä, muuta",
-				"Kyllä, muuta<br>&nbsp", 4));
+				"Kyllä, muuta<br>&nbsp", 3));
 		optionsList.add(new MultipleChoiceOption("Ei, ei tarjousta",
 				"Ei, ei tarjousta<br>&nbsp", 0));
 		mcq.setOptionsList(optionsList);

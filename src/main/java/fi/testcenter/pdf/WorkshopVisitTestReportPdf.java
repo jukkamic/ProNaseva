@@ -13,11 +13,9 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -37,8 +35,13 @@ public class WorkshopVisitTestReportPdf {
 
 	Logger log = Logger.getLogger("fi.testcenter.web.ReportController");
 
+	@Autowired
 	HeaderHelper headerHelper;
 
+	@Autowired
+	BackgroundImageHelper backgroundImageHelper;
+
+	@Autowired
 	PdfUtilityClass pdf;
 
 	@Autowired
@@ -46,13 +49,8 @@ public class WorkshopVisitTestReportPdf {
 
 	WorkshopVisitReport report;
 
-	public ByteArrayOutputStream generateReportPdf(WorkshopVisitReport report,
-			Image image, BaseFont baseFont, BaseFont wingdingsBaseFont)
+	public ByteArrayOutputStream generateReportPdf(WorkshopVisitReport report)
 			throws IOException, DocumentException {
-
-		pdf = new PdfUtilityClass(baseFont, wingdingsBaseFont);
-
-		headerHelper = new HeaderHelper(pdf);
 
 		this.report = report;
 
@@ -61,7 +59,7 @@ public class WorkshopVisitTestReportPdf {
 		Document doc = new Document(PageSize.A4, 50, 30, 120, 90);
 		PdfWriter writer = PdfWriter.getInstance(doc, baos);
 
-		writer.setPageEvent(new BackgroundImageHelper(image));
+		writer.setPageEvent(backgroundImageHelper);
 
 		headerHelper.setReport(report);
 		headerHelper.setReportPartTitle("Tulostiivistelmä");

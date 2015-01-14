@@ -1,5 +1,8 @@
 package fi.testcenter.pdf;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Element;
@@ -18,17 +21,15 @@ import com.itextpdf.text.pdf.PdfWriter;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.WorkshopVisitReport;
 
+@Component
 public class HeaderHelper extends PdfPageEventHelper {
 
+	@Autowired
 	PdfUtilityClass pdf;
 
 	PdfTemplate totalPages;
 	Report report;
 	String reportPartTitle;
-
-	public HeaderHelper(PdfUtilityClass pdf) {
-		this.pdf = pdf;
-	}
 
 	public Report getReport() {
 		return report;

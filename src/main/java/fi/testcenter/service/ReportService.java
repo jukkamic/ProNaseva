@@ -15,7 +15,6 @@ import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,9 +38,6 @@ import fi.testcenter.web.SearchReportCriteria;
 
 @Service
 public class ReportService {
-
-	private Logger log = Logger
-			.getLogger("fi.testcenter.service.ReportService");
 
 	@Autowired
 	private ReportRepository rr;
@@ -113,7 +109,7 @@ public class ReportService {
 					oqa.setReportQuestionGroup(null);
 					if (deleteList != null) {
 						try {
-							saveOptionalQuestionsAnswer(oqa);
+							ar.save(oqa);
 							deleteAnswers(deleteList);
 
 						} catch (Exception e) {
@@ -386,12 +382,12 @@ public class ReportService {
 		ar.deleteInBatch(answers);
 	}
 
-	@Transactional
-	public OptionalQuestionsAnswer saveOptionalQuestionsAnswer(
-			OptionalQuestionsAnswer oqa) {
-
-		return oqar.save(oqa);
-	}
+	// @Transactional
+	// public OptionalQuestionsAnswer saveOptionalQuestionsAnswer(
+	// OptionalQuestionsAnswer oqa) {
+	//
+	// return oqar.save(oqa);
+	// }
 
 	@Transactional
 	public void deleteOptionalAnswer(OptionalQuestionsAnswer answer) {

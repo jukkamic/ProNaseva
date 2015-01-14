@@ -1,6 +1,5 @@
 package fi.testcenter.web;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,10 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.context.support.ServletContextResource;
-
-import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.BaseFont;
 
 import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.Workshop;
@@ -420,41 +414,14 @@ public class ReportController {
 			@ModelAttribute("report") Report report, HttpServletRequest request) {
 		try {
 
-			Resource resourceFile = resourceLoader
-					.getResource("file:ARIAL.TTF");
-			File arialFile = resourceFile.getFile();
-
-			BaseFont BASE_FONT = BaseFont.createFont(arialFile.getPath(),
-					BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-
-			resourceFile = resourceLoader.getResource("file:WINGDING.TTF");
-			File wingdingFontFile = resourceFile.getFile();
-
-			BaseFont WINGDINGS_BASE_FONT = BaseFont.createFont(
-					wingdingFontFile.getPath(), BaseFont.IDENTITY_H,
-					BaseFont.EMBEDDED);
-
-			File file;
-			ServletContextResource imageResource = new ServletContextResource(
-					request.getSession().getServletContext(),
-					"resources/printReportBackground.jpg");
-
-			file = imageResource.getFile();
-
-			Image image = Image.getInstance(file.getAbsolutePath());
-			image.scaleAbsolute(595, 842);
-			image.setAbsolutePosition(0, 0);
-
 			byte[] contents;
 			if (report instanceof WorkshopVisitReport)
 				contents = workshopVisitReportPdfCreator.generateReportPdf(
-						(WorkshopVisitReport) report, image, BASE_FONT,
-						WINGDINGS_BASE_FONT).toByteArray();
+						(WorkshopVisitReport) report).toByteArray();
 
 			else if (report instanceof PhoneCallTestReport)
 				contents = phoneCallTestReportPdfCreator.generateReportPdf(
-						(PhoneCallTestReport) report, image, BASE_FONT,
-						WINGDINGS_BASE_FONT).toByteArray();
+						(PhoneCallTestReport) report).toByteArray();
 			else
 				return null;
 

@@ -3,18 +3,15 @@ package fi.testcenter.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
-import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import fi.testcenter.domain.answer.Answer;
@@ -30,30 +27,28 @@ import fi.testcenter.domain.report.ReportQuestionGroup;
 @Component
 public class PhoneCallTestReportPdf {
 
+	@Autowired
 	PdfUtilityClass pdf;
 
+	@Autowired
 	HeaderHelper headerHelper;
 
-	HttpServletRequest request;
+	@Autowired
+	BackgroundImageHelper backgroundImageHelper;
 
 	PhoneCallTestReport report;
 
-	public ByteArrayOutputStream generateReportPdf(PhoneCallTestReport report,
-			Image backgroundImage, BaseFont baseFont, BaseFont wingdingsBaseFont)
+	public ByteArrayOutputStream generateReportPdf(PhoneCallTestReport report)
 			throws IOException, DocumentException {
 
 		this.report = report;
-
-		this.pdf = new PdfUtilityClass(baseFont, wingdingsBaseFont);
-
-		headerHelper = new HeaderHelper(pdf);
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
 		Document doc = new Document(PageSize.A4, 50, 30, 120, 90);
 		PdfWriter writer = PdfWriter.getInstance(doc, baos);
 
-		writer.setPageEvent(new BackgroundImageHelper(backgroundImage));
+		writer.setPageEvent(backgroundImageHelper);
 
 		headerHelper.setReport(report);
 
