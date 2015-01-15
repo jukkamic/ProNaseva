@@ -11,9 +11,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
-import javax.persistence.Transient;
-
-import org.apache.log4j.Logger;
 
 import fi.testcenter.domain.question.CostListingQuestion;
 import fi.testcenter.domain.question.ImportantPointsQuestion;
@@ -28,9 +25,6 @@ import fi.testcenter.web.ChosenQuestions;
 
 @Entity
 public class OptionalQuestionsAnswer extends Answer {
-
-	@Transient
-	Logger log = Logger.getLogger("fi.testcenter.domain.report");
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "OPTIONALANSWER_QUESTION", joinColumns = @JoinColumn(name = "OPTIONALANSWER_ID"), inverseJoinColumns = @JoinColumn(name = "QUESTION_ID"))

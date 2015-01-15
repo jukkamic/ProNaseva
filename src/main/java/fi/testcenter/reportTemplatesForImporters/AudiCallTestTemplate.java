@@ -58,7 +58,7 @@ public class AudiCallTestTemplate {
 		mcq = new MultipleChoiceQuestion(
 				"Kauanko aikaa kului, ennen kuin henkilökohtainen puhelu toteutui?");
 		optionsList = new ArrayList<MultipleChoiceOption>();
-		optionsList.add(new MultipleChoiceOption("Minuuttia <=1", 2));
+		optionsList.add(new MultipleChoiceOption("Minuuttia <=1", 1));
 		optionsList.add(new MultipleChoiceOption(">1", 0));
 		mcq.setOptionsList(optionsList);
 		questionList.add(mcq);
@@ -104,7 +104,7 @@ public class AudiCallTestTemplate {
 
 		subMcq = new MultipleChoiceQuestion("Sähköpostiosoite?");
 		optionsList = new ArrayList<MultipleChoiceOption>();
-		optionsList.add(new MultipleChoiceOption("Kyllä", 1));
+		optionsList.add(new MultipleChoiceOption("Kyllä", 0));
 		optionsList.add(new MultipleChoiceOption("Ei", 0));
 		subMcq.setOptionsList(optionsList);
 		subQuestionList.add(subMcq);

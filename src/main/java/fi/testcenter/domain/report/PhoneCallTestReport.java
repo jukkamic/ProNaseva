@@ -236,11 +236,12 @@ public class PhoneCallTestReport extends Report {
 					ArrayList<MultipleChoiceOption> newChosenOptionList = new ArrayList<MultipleChoiceOption>();
 					if (mca.getChosenOptionsIndex() != null) {
 						for (int index : mca.getChosenOptionsIndex()) {
-							newChosenOptionList
-									.add(((MultipleChoiceQuestion) answer
-											.getQuestion()).getOptionsList()
-											.get(index));
-
+							if (index != -1) {
+								newChosenOptionList
+										.add(((MultipleChoiceQuestion) answer
+												.getQuestion())
+												.getOptionsList().get(index));
+							}
 						}
 
 						mca.setChosenOptions(newChosenOptionList);

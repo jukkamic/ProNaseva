@@ -7,6 +7,6 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources/fonts"/>
         <property name="java-output-path" value="/ProNaseva/build/classes"/>
-        <property name="context-root" value="ProNaseva.war"/>
+        <property name="context-root" value="ProNaseva"/>
     </wb-module>
 </project-modules>
