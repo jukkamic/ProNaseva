@@ -38,8 +38,8 @@
 	<link rel="stylesheet" href="<c:url value='/resources/css/jquery-ui.theme.css' />"/>
 	
 	<link rel="stylesheet" href="<c:url value='/resources/css/font-awesome.css' />"/>
-
-
+	
+	<link rel="stylesheet" href="<c:url value='/resources/css/bootstrapButtonColors.css' />"/>
 
 
 <!-- Accordion Menun siirto avattuun paneeliin -->

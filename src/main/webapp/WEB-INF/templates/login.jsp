@@ -32,8 +32,9 @@
 				<br><br><br>
 				<input class="btn btn-large btn-primary" type="submit" value="Kirjaudu" />
 			</form>
-						
+
 		</div>
+		
 		
 		<br>
 

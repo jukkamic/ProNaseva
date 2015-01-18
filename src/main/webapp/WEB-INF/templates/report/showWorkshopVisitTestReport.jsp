@@ -224,13 +224,13 @@
 													
 														<c:choose>
 															<c:when test="${contains == 'true'}">
-																<button class="btn btn-large btn-primary disabled" type="button">
+																<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 																	${option.radiobuttonText}
 																																																	
 																</button>
 															</c:when>
 															<c:otherwise>
-																<button class="btn btn-large btn-default" type="button" disabled>
+																<button class="btn btn-large btn-showSelections" disabled type="button">
 																	${option.radiobuttonText}
 																</button>
 															</c:otherwise>
@@ -239,13 +239,13 @@
 													<c:otherwise>
 														<c:choose>
 															<c:when test="${contains == 'true'}">
-																<button class="btn btn-large btn-primary disabled" type="button">
+																<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 																	${option.multipleChoiceOption}
 																	
 																</button>
 															</c:when>
 															<c:otherwise>
-																<button class="btn btn-large btn-default" type="button" disabled>
+																<button class="btn btn-large btn-showSelections" type="button" disabled>
 																	${option.multipleChoiceOption}
 																</button>
 															</c:otherwise>
