@@ -35,10 +35,10 @@
 					<c:forEach var="workshop" items="${workshops}">
 						<c:choose>
 							<c:when test='${workshop.id == report.workshop.id}'>
-								<option selected="selected" value="${workshop.id}">${workshop}</option>
+								<option selected="selected" value="${workshop.id}">${workshop}, ${workshop.city}</option>
 							</c:when>
 							<c:otherwise>
-								<option value="${workshop.id}">${workshop}</option>
+								<option value="${workshop.id}">${workshop}, ${workshop.city}</option>
 							</c:otherwise>
 						</c:choose>
 					</c:forEach>

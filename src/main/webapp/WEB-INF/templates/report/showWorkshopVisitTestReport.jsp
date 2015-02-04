@@ -27,7 +27,7 @@
 	<br>
 	<div style="border-bottom: 1px solid #eee;">
 	<h4>Maahantuoja: ${report.importer.name}</h4>
-	<h4>Tarkastettu korjaamo: ${report.workshop.name}</h4>
+	<h4>Tarkastettu korjaamo: ${report.workshop.name}, ${report.workshop.city}</h4>
 	<h4>Tarkastuksen päivämäärä: ${report.testDateString}</h4>
 	
 	<h4>

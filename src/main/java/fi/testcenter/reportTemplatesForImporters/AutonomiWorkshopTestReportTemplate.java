@@ -21,7 +21,7 @@ public class AutonomiWorkshopTestReportTemplate {
 
 		WorkshopVisitReportTemplate reportTemplate = new WorkshopVisitReportTemplate();
 		reportTemplate.setCurrent(true);
-		reportTemplate.setTemplateName("Autonomi korjaamoraporttipohja");
+		reportTemplate.setTemplateName("Autonomi korjaamoraportti");
 		ArrayList<ReportTemplatePart> reportParts = new ArrayList<ReportTemplatePart>();
 
 		ReportTemplatePart reportPart1 = new ReportTemplatePart();
