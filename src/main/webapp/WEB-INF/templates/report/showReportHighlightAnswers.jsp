@@ -56,60 +56,100 @@
 			
 			${answer.question.question}</h3>
 		
-					<div class="Demo-boot" style="padding-top: 15px;">
-						<div class="btn-group" data-toggle="buttons">
-							<c:forEach var="option" items="${answer.question.optionsList}" varStatus="optionsCounter">
-																						
-								<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
-										varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
-										riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
-										ei ole tägejä -->
-								<c:choose>
-									<c:when test="${option.radiobuttonText != null }">
-										<c:choose>
-											<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
-												<button class="btn btn-large btn-primary disabled" type="button">
-													${option.radiobuttonText}
-																																													
-												</button>
-											</c:when>
-											<c:otherwise>
-												<button class="btn btn-large btn-default" type="button" disabled>
-													${option.radiobuttonText}
-												</button>
-											</c:otherwise>
-										</c:choose>
-									</c:when>
-									<c:otherwise>
-										<c:choose>
-											<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
-												<button class="btn btn-large btn-primary disabled" type="button">
-													${option.multipleChoiceOption}
-													
-												</button>
-											</c:when>
-											<c:otherwise>
-												<button class="btn btn-large btn-default" type="button" disabled>
-													${option.multipleChoiceOption}
-												</button>
-											</c:otherwise>
-										</c:choose>	
-									</c:otherwise>
-								</c:choose>														
-							</c:forEach> 
-							
-																		
-						</div>
-					</div>
-					
-					<c:if test="${answer.remarks != '' and answer.remarks != null}">
-						<br>
-						<h4>Huomioita:</h4>
-						<p style="font-size: 1.2em;">${answer.remarks}</p>
-					</c:if>
-					<br><br>
+
+<c:choose>
+<c:when test="${answer.question.multipleSelectionsAllowed == true}">
+		<table style="font-size: 12pt; margin-left: 2.5em">
+
+		<c:forEach var="option" items="${answer.question.optionsList}" varStatus="optionsCounter">
+			<c:set var="contains" value="false" />
+			<c:forEach var="chosenOption" items="${answer.chosenOptions}" >
+				<c:if test="${chosenOption == option}">
+				<c:set var="contains" value="true" />
 				</c:if>
-		
+		</c:forEach>
+		<tr>
+		<td>	
+			<c:if test="${contains == 'true' }">				
+			<input name="multiSelect" type="checkbox" checked="checked" 
+				 disabled> 
+			</c:if>
+			<c:if test="${contains == 'false' }">				
+			<input name="multiSelect" type="checkbox" disabled>
+			</c:if>
+		</td>
+		<td style="padding-left: 2em; ">
+			${option.multipleChoiceOption} 
+		</td>
+		</tr>
+		</c:forEach>
+		</table>
+</c:when>
+<c:otherwise>
+<div class="Demo-boot" style="padding-top: 15px;">
+		<div class="btn-group" data-toggle="buttons">
+			<c:forEach var="option" items="${answer.question.optionsList}" varStatus="optionsCounter">
+
+				
+				<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
+						varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
+						riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
+						ei ole tägejä -->
+				<c:set var="contains" value="false" />
+				<c:forEach var="chosenOption" items="${answer.chosenOptions}" >
+					<c:if test="${chosenOption == option}">
+					<c:set var="contains" value="true" />
+					</c:if>
+				</c:forEach>
+				
+				<c:choose>
+					<c:when test="${option.radiobuttonText != null }">
+						<c:choose>
+							<c:when test="${contains == 'true'}">
+								<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
+									${option.radiobuttonText}
+																																									
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-large btn-showSelections" disabled type="button">
+									${option.radiobuttonText}
+								</button>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<c:choose>
+							<c:when test="${contains == 'true'}">
+								<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
+									${option.multipleChoiceOption}
+									
+								</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn btn-large btn-showSelections" type="button" disabled>
+									${option.multipleChoiceOption}
+								</button>
+							</c:otherwise>
+						</c:choose>	
+					</c:otherwise>
+				</c:choose>														
+			</c:forEach> 
+			
+														
+		</div>
+	</div>
+	</c:otherwise>
+	</c:choose>
+	<br>
+	<c:if test="${answer.remarks != 'null' && answer.remarks != '' }">
+		<h4>Huomioita:</h4>
+		<p style="font-size: 1.2em;">${answer.remarks}</p>
+	</c:if>
+	<br><br>
+	
+</c:if>
+
 <!-- Points question -->
 <c:if test="${answer['class'] == 'class fi.testcenter.domain.answer.PointsAnswer'}">
 
@@ -126,13 +166,13 @@
 					
 				<c:choose>
 					<c:when test="${answer.givenPoints == points}">
-						<button class="btn btn-large btn-primary disabled" type="button">
+						<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 							${points}
 							
 						</button>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-large btn-default" type="button" disabled>
+						<button class="btn btn-large btn-showSelections" disabled type="button">
 							${points}
 						</button>
 					</c:otherwise>
@@ -143,9 +183,11 @@
 	</div>
 
 	<br>
-	<h4>Huomioita:</h4>
-	<p style="font-size: 1.2em;">${answer.remarks}</p>
-	
+	<c:if test="${answer.remarks != '' and answer.remarks != null}">
+		<br>
+		<h4>Huomioita:</h4>
+		<p style="font-size: 1.2em;">${answer.remarks}</p>
+	</c:if>
 	<br><br>
 </c:if>
 
@@ -179,6 +221,11 @@
 						<h4><b>${answer.question.total}</b></h4>
 						<p style="font-size: 1.2em;">${answer.total} €</p>
 					<br>
+			<c:if test="${answer.remarks != '' and answer.remarks != null}">
+				<br>
+				<h4>Huomioita:</h4>
+				<p style="font-size: 1.2em;">${answer.remarks}</p>
+			</c:if>
 			</c:if>
 
 		

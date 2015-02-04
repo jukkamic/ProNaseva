@@ -437,8 +437,13 @@ public class PdfUtilityClass {
 
 			para.add(p);
 
-			Paragraph answerPara = new Paragraph(new Chunk(answer.getAnswer(),
-					DEFAULT_FONT));
+			Paragraph answerPara;
+			if (answer.getAnswer() == null || answer.getAnswer().equals("")
+					|| answer.getAnswer().equals(" "))
+				answerPara = new Paragraph(new Chunk(Chunk.NEWLINE));
+			else
+				answerPara = new Paragraph(new Chunk(answer.getAnswer(),
+						DEFAULT_FONT));
 			answerPara.setIndentationLeft(orderNumberIndent);
 			para.add(answerPara);
 

@@ -35,10 +35,10 @@
 							raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
 						<c:choose>
 						<c:when test="${optionalQuestionsAnswer.optionalAnswers[counter.index].givenPoints == points}"> 
-							<label class="btn btn-primary active">
+							<label class="btn btn-showSelections active">
 							</c:when>
 						<c:otherwise>
-							<label class="btn btn-primary">
+							<label class="btn btn-showSelections">
 						</c:otherwise>
 					</c:choose>   
 					
@@ -53,10 +53,10 @@
 				</c:forEach> 
 				 <c:choose>
 						<c:when test="${optionalQuestionsAnswer.optionalAnswers[counter.index].givenPoints == -1}"> 
-							<label class="btn btn-default active">
+							<label class="btn btn-default active" style="min-height: 4em; border-color: #000">
 							</c:when>
 						<c:otherwise>
-							<label class="btn btn-default">
+							<label class="btn btn-default" style="min-height: 4em; border-color: #000">
 						</c:otherwise>
 					</c:choose> 
 					<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].optionalAnswers[${counter.index}].givenPoints" 

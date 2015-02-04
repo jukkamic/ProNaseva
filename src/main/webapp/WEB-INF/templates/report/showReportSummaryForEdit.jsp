@@ -40,35 +40,35 @@
 				<div class="btn-group" data-toggle="buttons">
 					
 						<c:if test="${readyReport.overallResultSmiley == 'SMILE' }"> 
-							<label class="btn btn-primary active">
+							<label class="btn btn-selectedOption active">
  						</c:if>
 						<c:if test="${readyReport.overallResultSmiley != 'SMILE' }"> 
-							<label class="btn btn-primary">
+							<label class="btn btn-showSelections">
  						</c:if>
 					
-						<sf:radiobutton id="button" path="overallResultSmiley" value="SMILE" /> <i class="fa fa-smile-o fa-2x"></i>
+						<sf:radiobutton id="button" path="overallResultSmiley" value="SMILE" /> <i class="fa fa-smile-o fa-4x"></i>
 			
 						</label>
 						
 						<c:if test="${readyReport.overallResultSmiley == 'NEUTRAL' }"> 
-							<label class="btn btn-primary active">
+							<label class="btn btn-selectedOption active">
  						</c:if>
 						<c:if test="${readyReport.overallResultSmiley != 'NEUTRAL' }"> 
-							<label class="btn btn-primary">
+							<label class="btn btn-showSelections">
  						</c:if>
 					
-						<sf:radiobutton id="button" path="overallResultSmiley" value="NEUTRAL"/> <i class="fa fa-meh-o fa-2x"></i>
+						<sf:radiobutton id="button" path="overallResultSmiley" value="NEUTRAL"/> <i class="fa fa-meh-o fa-4x"></i>
 			
 						</label>
 						
 						<c:if test="${readyReport.overallResultSmiley == 'FROWN' }"> 
-							<label class="btn btn-primary active">
+							<label class="btn btn-selectedOption active">
  						</c:if>
 						<c:if test="${readyReport.overallResultSmiley != 'FROWN' }"> 
-							<label class="btn btn-primary">
+							<label class="btn btn-showSelections">
  						</c:if>
 					
-						<sf:radiobutton id="button" path="overallResultSmiley" value="FROWN"/> <i class="fa fa-frown-o fa-2x"></i>
+						<sf:radiobutton id="button" path="overallResultSmiley" value="FROWN"/> <i class="fa fa-frown-o fa-4x"></i>
 			
 						</label>
 					</div>
@@ -111,35 +111,35 @@
 									<div class="btn-group" data-toggle="buttons">
 									
 										<c:if test="${questionGroup.scoreSmiley == 'SMILE' }"> 
-											<label class="btn btn-primary active">
+											<label class="btn btn-selectedOption active">
 				 						</c:if>
 										<c:if test="${questionGroup.scoreSmiley != 'SMILE' }"> 
-											<label class="btn btn-primary inline">
+											<label class="btn btn-showSelections inline">
 				 						</c:if>
 									
-										<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].scoreSmiley" value="SMILE" /> <i class="fa fa-smile-o fa-2x"></i>
+										<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].scoreSmiley" value="SMILE" /> <i class="fa fa-smile-o fa-4x"></i>
 							
 										</label>
 										
 										<c:if test="${questionGroup.scoreSmiley == 'NEUTRAL' }"> 
-											<label class="btn btn-primary active">
+											<label class="btn btn-selectedOption active">
 				 						</c:if>
 										<c:if test="${questionGroup.scoreSmiley != 'NEUTRAL' }"> 
-											<label class="btn btn-primary">
+											<label class="btn btn-showSelections">
 				 						</c:if>
 									
-										<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].scoreSmiley" value="NEUTRAL"/> <i class="fa fa-meh-o fa-2x"></i>
+										<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].scoreSmiley" value="NEUTRAL"/> <i class="fa fa-meh-o fa-4x"></i>
 							
 										</label>
 										
 										<c:if test="${questionGroup.scoreSmiley == 'FROWN' }"> 
-											<label class="btn btn-primary active">
+											<label class="btn btn-selectedOption active">
 				 						</c:if>
 										<c:if test="${questionGroup.scoreSmiley != 'FROWN' }"> 
-											<label class="btn btn-primary">
+											<label class="btn btn-showSelections">
 				 						</c:if>
 									
-										<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].scoreSmiley" value="FROWN"/> <span class="fa fa-frown-o fa-2x"></span>
+										<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].reportQuestionGroups[${questionGroupCounter.index}].scoreSmiley" value="FROWN"/> <span class="fa fa-frown-o fa-4x"></span>
 							
 										</label>
 									</div>
@@ -173,41 +173,43 @@
 						<c:if test="${reportPart.maxScore == 0}">
 							<h4>Pisteet: --</h4>
 						</c:if>
+				
+
 						
 						<c:if test="${reportPart.maxScore > 0 }">
 							<div class="Demo-boot" style="padding-top: 15px;">
 								<div class="btn-group" data-toggle="buttons">
 							
 								<c:if test="${reportPart.scoreSmiley == 'SMILE' }"> 
-									<label class="btn btn-primary active">
+									<label class="btn btn-selectedOption active">
 		 						</c:if>
 								<c:if test="${reportPart.scoreSmiley  != 'SMILE' }"> 
-									<label class="btn btn-primary">
+									<label class="btn btn-showSelections inline">
 		 						</c:if>
 							
-								<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].scoreSmiley" value="SMILE" /> <i class="fa fa-smile-o fa-2x"></i>
+								<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].scoreSmiley" value="SMILE" /> <i class="fa fa-smile-o fa-4x"></i>
 					
 								</label>
 								
 								<c:if test="${reportPart.scoreSmiley  == 'NEUTRAL' }"> 
-									<label class="btn btn-primary active">
+									<label class="btn btn-selectedOption active">
 		 						</c:if>
 								<c:if test="${reportPart.scoreSmiley  != 'NEUTRAL' }"> 
-									<label class="btn btn-primary">
+									<label class="btn btn-showSelections inline">
 		 						</c:if>
 							
-								<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].scoreSmiley" value="NEUTRAL"/> <i class="fa fa-meh-o fa-2x"></i>
+								<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].scoreSmiley" value="NEUTRAL"/> <i class="fa fa-meh-o fa-4x"></i>
 					
 								</label>
 								
 								<c:if test="${reportPart.scoreSmiley == 'FROWN' }"> 
-									<label class="btn btn-primary active">
+									<label class="btn btn-selectedOption active">
 		 						</c:if>
 								<c:if test="${reportPart.scoreSmiley != 'FROWN' }"> 
-									<label class="btn btn-primary">
+									<label class="btn btn-showSelections inline">
 		 						</c:if>
 							
-								<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].scoreSmiley" value="FROWN"/> <i class="fa fa-frown-o fa-2x"></i>
+								<sf:radiobutton id="button" path="reportParts[${reportPartCounter.index}].scoreSmiley" value="FROWN"/> <i class="fa fa-frown-o fa-4x"></i>
 					
 								</label>
 							</div>

@@ -35,27 +35,27 @@
 				<div class="btn-group" data-toggle="buttons">
 					
 						<c:if test="${readyReport.overallResultSmiley == 'SMILE' }"> 
-							<button class="btn btn-primary disabled" type="button"><i class="fa fa-smile-o fa-2x"></i></button>
+							<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-smile-o fa-2x smileys"></i></button>
 						</c:if>
 						
 						<c:if test="${readyReport.overallResultSmiley != 'SMILE' }"> 
-							<button class="btn btn-default" type="button" disabled><i class="fa fa-smile-o fa-2x"></i></button>
+							<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-smile-o fa-2x smileys"></i></button>
  						</c:if>
 
 						<c:if test="${readyReport.overallResultSmiley == 'NEUTRAL' }"> 
-							<button class="btn btn-primary disabled" type="button"><i class="fa fa-meh-o fa-2x"></i></button>
+							<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-meh-o fa-2x smileys"></i></button>
 						</c:if>
 						
 						<c:if test="${readyReport.overallResultSmiley != 'NEUTRAL' }"> 
-							<button class="btn btn-default" type="button" disabled><i class="fa fa-meh-o fa-2x"></i></button>
+							<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-meh-o fa-2x smileys"></i></button>
  						</c:if>
  						
  						<c:if test="${readyReport.overallResultSmiley == 'FROWN' }"> 
-							<button class="btn btn-primary disabled" type="button"><i class="fa fa-frown-o fa-2x"></i></button>
+							<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-frown-o fa-2x smileys"></i></button>
 						</c:if>
 						
 						<c:if test="${readyReport.overallResultSmiley != 'FROWN' }"> 
-							<button class="btn btn-default" type="button" disabled><i class="fa fa-frown-o fa-2x"></i></button>
+							<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-frown-o fa-2x smileys"></i></button>
  						</c:if>
  				
 					</div>
@@ -96,26 +96,26 @@
 									<div class="btn-group" data-toggle="buttons">
 									
 										<c:if test="${questionGroup.scoreSmiley == 'SMILE' }"> 
-											<button class="btn btn-primary disabled" type="button"><i class="fa fa-smile-o fa-2x"></i></button>
+											<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-smile-o fa-2x"></i></button>
 				 						</c:if>
 										<c:if test="${questionGroup.scoreSmiley != 'SMILE' }"> 
-											<button class="btn btn-default" type="button" disabled><i class="fa fa-smile-o fa-2x"></i></button>
+											<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-smile-o fa-2x"></i></button>
 				 						</c:if>
 									
 									
 										<c:if test="${questionGroup.scoreSmiley == 'NEUTRAL' }"> 
-											<button class="btn btn-primary disabled" type="button"><i class="fa fa-meh-o fa-2x"></i></button>
+											<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-meh-o fa-2x"></i></button>
 				 						</c:if>
 										<c:if test="${questionGroup.scoreSmiley != 'NEUTRAL' }"> 
-											<button class="btn btn-default" type="button" disabled><i class="fa fa-meh-o fa-2x"></i></button>
+											<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-meh-o fa-2x"></i></button>
 				 						</c:if>
 				 						
 				 															
 										<c:if test="${questionGroup.scoreSmiley == 'FROWN' }"> 
-											<button class="btn btn-primary disabled" type="button"><i class="fa fa-frown-o fa-2x"></i></button>
+											<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-frown-o fa-2x"></i></button>
 				 						</c:if>
 										<c:if test="${questionGroup.scoreSmiley != 'FROWN' }"> 
-											<button class="btn btn-default" type="button" disabled><i class="fa fa-frown-o fa-2x"></i></button>
+											<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-frown-o fa-2x"></i></button>
 				 						</c:if>
 
 									</div>
@@ -158,26 +158,26 @@
 							
 												
 						<c:if test="${reportPart.scoreSmiley == 'SMILE' }">  
-							<button class="btn btn-primary disabled" type="button"><i class="fa fa-smile-o fa-2x"></i></button>
+							<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-smile-o fa-2x"></i></button>
  						</c:if>
 						<c:if test="${reportPart.scoreSmiley  != 'SMILE' }">  
-							<button class="btn btn-default" type="button" disabled><i class="fa fa-smile-o fa-2x"></i></button>
+							<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-smile-o fa-2x"></i></button>
  						</c:if>
 			
 			
 						<c:if test="${reportPart.scoreSmiley == 'NEUTRAL' }"> 
-							<button class="btn btn-primary disabled" type="button"><i class="fa fa-meh-o fa-2x"></i></button>
+							<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-meh-o fa-2x"></i></button>
  						</c:if>
 						<c:if test="${reportPart.scoreSmiley != 'NEUTRAL' }"> 
-							<button class="btn btn-default" type="button" disabled><i class="fa fa-meh-o fa-2x"></i></button>
+							<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-meh-o fa-2x"></i></button>
  						</c:if>
  						
  															
 						<c:if test="${reportPart.scoreSmiley == 'FROWN' }"> 
-							<button class="btn btn-primary disabled" type="button"><i class="fa fa-frown-o fa-2x"></i></button>
+							<button class="btn btn-selectedOption disabled" type="button"><i class="fa fa-frown-o fa-2x"></i></button>
  						</c:if>
 						<c:if test="${reportPart.scoreSmiley != 'FROWN' }"> 
-							<button class="btn btn-default" type="button" disabled><i class="fa fa-frown-o fa-2x"></i></button>
+							<button class="btn btn-showSelections" type="button" disabled><i class="fa fa-frown-o fa-2x"></i></button>
  						</c:if>
 			
 

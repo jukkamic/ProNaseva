@@ -30,13 +30,13 @@
 						
 					<c:choose>
 						<c:when test="${optionalQuestionsAnswer.optionalAnswers[counter.index].givenPoints == points}">
-							<button class="btn btn-large btn-primary disabled" type="button">
+							<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 								${points}
 								
 							</button>
 						</c:when>
 						<c:otherwise>
-							<button class="btn btn-large btn-default" type="button" disabled>
+							<button class="btn btn-large btn-showSelections" disabled type="button">
 								${points}
 							</button>
 						</c:otherwise>
@@ -47,9 +47,13 @@
 		</div>
 
 		<br>
+		
+		
+		<c:if test="${optionalQuestionsAnswer.optionalAnswers[counter.index].remarks != 'null' && optionalQuestionsAnswer.optionalAnswers[counter.index].remarks != '' }">
+					
 		<h4>Huomioita:</h4>
 		<p style="font-size: 1.2em;">${optionalQuestionsAnswer.optionalAnswers[counter.index].remarks}</p>
-		
+		</c:if>
 		<br><br>
 	</c:if>
 

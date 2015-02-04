@@ -73,6 +73,72 @@ public class WorkshopVisitTestReportPdf {
 		doc.newPage();
 		doc.add(getSummaryPage());
 
+		headerHelper.setReportPartTitle("Keskeiset huomiot");
+		doc.newPage();
+		doc.add(pdf.getPartTitle("Keskeiset huomiot"));
+		for (ReportPart part : report.getReportParts()) {
+			boolean partTitlePrinted = false;
+			for (ReportQuestionGroup group : part.getReportQuestionGroups()) {
+				boolean groupTitlePrinted = false;
+				for (Answer answer : group.getAnswers()) {
+					if (answer.isHighlightAnswer()) {
+						if (!partTitlePrinted) {
+							Paragraph p = new Paragraph(part
+									.getReportTemplatePart().getTitle(),
+									pdf.GROUP_TITLE_FONT);
+							p.setSpacingBefore(10);
+							p.setSpacingAfter(10);
+							p.setIndentationRight(50);
+
+							doc.add(p);
+							partTitlePrinted = true;
+						}
+						if (!groupTitlePrinted) {
+							doc.add(pdf.getGroupTitle(group
+									.getQuestionGroupOrderNumber(), group
+									.getReportTemplateQuestionGroup()
+									.getTitle()));
+							groupTitlePrinted = true;
+						}
+
+						Paragraph para = getAnswerParagraph(answer);
+						para.setIndentationLeft(20);
+						doc.add(para);
+
+					} else if (answer instanceof OptionalQuestionsAnswer) {
+
+						OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
+						for (Answer optionalAnswer : oqa.getOptionalAnswers()) {
+							if (optionalAnswer.isHighlightAnswer()) {
+								if (!partTitlePrinted) {
+									Paragraph p = new Paragraph(
+											part.getReportTemplatePart()
+													.getTitle(),
+											pdf.GROUP_TITLE_FONT);
+									p.setSpacingBefore(10);
+									p.setSpacingAfter(10);
+									p.setIndentationRight(50);
+
+									doc.add(p);
+								}
+								if (!groupTitlePrinted)
+									doc.add(pdf.getGroupTitle(
+											group.getQuestionGroupOrderNumber(),
+											group.getReportTemplateQuestionGroup()
+													.getTitle()));
+
+								Paragraph para = getAnswerParagraph(optionalAnswer);
+								para.setIndentationLeft(20);
+								doc.add(para);
+
+							}
+						}
+					}
+
+				}
+			}
+		}
+
 		if (report.getReportParts() != null
 				&& report.getReportParts().size() > 0) {
 			headerHelper.setReportPartTitle(report.getReportParts().get(0)
@@ -92,42 +158,17 @@ public class WorkshopVisitTestReportPdf {
 				for (Answer answer : group.getAnswers()) {
 					if (!answer.isRemoveAnswerFromReport()) {
 
-						if (answer instanceof MultipleChoiceAnswer)
-							doc.add(pdf
-									.getMultipleChoiceAnswerParagraph((MultipleChoiceAnswer) answer));
-						if (answer instanceof TextAnswer)
-							doc.add(pdf
-									.getTextAnswerParagraph((TextAnswer) answer));
-						if (answer instanceof CostListingAnswer)
-							doc.add(pdf
-									.getCostListingParagraph((CostListingAnswer) answer));
-						if (answer instanceof ImportantPointsAnswer)
-							doc.add(pdf
-									.getImportantPointsParagraph((ImportantPointsAnswer) answer));
-						if (answer instanceof PointsAnswer)
-							doc.add(pdf
-									.getPointsAnswerParagraph((PointsAnswer) answer));
 						if (answer instanceof OptionalQuestionsAnswer) {
 							OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) answer;
 							for (Answer optionalAnswer : oqa
 									.getOptionalAnswers()) {
-								if (optionalAnswer instanceof MultipleChoiceAnswer)
-									doc.add(pdf
-											.getMultipleChoiceAnswerParagraph((MultipleChoiceAnswer) optionalAnswer));
-								if (optionalAnswer instanceof TextAnswer)
-									doc.add(pdf
-											.getTextAnswerParagraph((TextAnswer) optionalAnswer));
-								if (optionalAnswer instanceof CostListingAnswer)
-									doc.add(pdf
-											.getCostListingParagraph((CostListingAnswer) optionalAnswer));
-								if (optionalAnswer instanceof ImportantPointsAnswer)
-									doc.add(pdf
-											.getImportantPointsParagraph((ImportantPointsAnswer) optionalAnswer));
-								if (optionalAnswer instanceof PointsAnswer)
-									doc.add(pdf
-											.getPointsAnswerParagraph((PointsAnswer) optionalAnswer));
+								doc.add(getAnswerParagraph(optionalAnswer));
+
 							}
 						}
+
+						else
+							doc.add(getAnswerParagraph(answer));
 
 					}
 				}
@@ -158,6 +199,22 @@ public class WorkshopVisitTestReportPdf {
 		doc.close();
 		return baos;
 
+	}
+
+	private Paragraph getAnswerParagraph(Answer answer) {
+		if (answer instanceof MultipleChoiceAnswer)
+			return pdf
+					.getMultipleChoiceAnswerParagraph((MultipleChoiceAnswer) answer);
+		if (answer instanceof TextAnswer)
+			return pdf.getTextAnswerParagraph((TextAnswer) answer);
+		if (answer instanceof CostListingAnswer)
+			return pdf.getCostListingParagraph((CostListingAnswer) answer);
+		if (answer instanceof ImportantPointsAnswer)
+			return pdf
+					.getImportantPointsParagraph((ImportantPointsAnswer) answer);
+		if (answer instanceof PointsAnswer)
+			return pdf.getPointsAnswerParagraph((PointsAnswer) answer);
+		return null;
 	}
 
 	public Paragraph getFrontPage() {

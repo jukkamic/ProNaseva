@@ -1,3 +1,8 @@
+.smileys {
+	min-height: 0;
+  min-width: 0;
+}
+
 .btn-showSelections { 
   color: #0D0D0D; 
   background-color: #C7C7C7; 
@@ -49,11 +54,14 @@ fieldset[disabled] .btn-showSelections.active {
    border-color: #000;
 }
 
-/* Valittu nappi */
+/* Valittu nappi raportin tarkastelussa */
+
 .btn-selectedOption { 
   color: #000; 
   background-color: #22C722; 
-  border-color: #000; 
+  border-color: #000;
+    min-height: 4em;
+  min-width: 8em; 
 } 
  
 .btn-selectedOption:hover, 

@@ -265,17 +265,14 @@
 									raporttia uudelleen, kyseinen valintanappi näkyy valittuna. -->
 								<c:choose>
 								<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].givenPoints == points}"> 
-									<label class="btn btn-primary active">
+									<label class="btn btn-showSelections active">
 									</c:when>
 								<c:otherwise>
-									<label class="btn btn-primary">
+									<label class="btn btn-showSelections">
 								</c:otherwise>
 							</c:choose>   
 							
-							<!-- Jos MultipleChoiceOption-oliolle on asetettu pitkää valintanapin tekstiä
-									varten erillinen radiobuttonText, jossa napin teksti on jaettu kahdelle 
-									riville <br> tägillä, näytetään radiobuttonText, muuten option teksti jossa 
-									ei ole tägejä -->
+
 							<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].givenPoints"
 									value="${points}" /> &nbsp&nbsp${points}&nbsp&nbsp
 
@@ -283,10 +280,10 @@
 						</c:forEach> 
 						 <c:choose>
 								<c:when test="${reportParts[editReportPartNumber].reportQuestionGroups[questionGroupCounter.index].answers[questionCounter.index].givenPoints == -1}"> 
-									<label class="btn btn-default active">
+									<label class="btn btn-default active" style="min-height: 4em; border-color: #000">
 									</c:when>
 								<c:otherwise>
-									<label class="btn btn-default">
+									<label class="btn btn-default" style="min-height: 4em; border-color: #000">
 								</c:otherwise>
 							</c:choose> 
 							<sf:radiobutton id="button" path="reportParts[${editReportPartNumber}].reportQuestionGroups[${questionGroupCounter.index}].answers[${questionCounter.index}].givenPoints" 
@@ -377,7 +374,8 @@
 					<br>
 				</div>
 
-					<c:forEach var="questionItem" items="${question.questionItems}" varStatus="questionItemCounter">
+					<c:forEach var="questionItem" items="${answer.question.questionItems}" varStatus="questionItemCounter">
+					
 						<div style="border-bottom: 3px solid #eee;">
 						<h3>${questionItem}</h3>
 						<table>
@@ -387,7 +385,7 @@
 						<div class="Demo-boot" style="padding-top: 15px;">
 						<div class="btn-group" data-toggle="buttons"> 
 						
-							<c:forEach begin="1" end="${question.numberOfItemsToChoose}" varStatus="importanceNumber"> 
+							<c:forEach begin="1" end="${answer.question.numberOfItemsToChoose}" varStatus="importanceNumber"> 
 								<c:choose>
 									<c:when test="${answer.answerItems[questionItemCounter.index].importance == importanceNumber.index}"> 
 										<label class="btn btn-primary active">
@@ -425,7 +423,7 @@
 						<div class="Demo-boot" style="padding-top: 15px;">
 						<div class="btn-group" data-toggle="buttons">
 						
- 	 						<c:forEach begin="1" end="${question.maxScoreForQuestionItem}" varStatus="score">
+ 	 						<c:forEach begin="1" end="${answer.question.maxScoreForQuestionItem}" varStatus="score">
 								<c:choose>
 									<c:when test="${answer.answerItems[questionItemCounter.index].score == score.index}"> 
 										<label class="btn btn-primary active">

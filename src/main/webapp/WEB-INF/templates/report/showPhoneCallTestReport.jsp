@@ -160,13 +160,13 @@
 							<c:when test="${option.radiobuttonText != null }">
 								<c:choose>
 									<c:when test="${contains == 'true'}">
-										<button class="btn btn-large btn-primary disabled" type="button">
+										<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 											${option.radiobuttonText}
 																																											
 										</button>
 									</c:when>
 									<c:otherwise>
-										<button class="btn btn-large btn-default" type="button" disabled>
+										<<button class="btn btn-large btn-showSelections" disabled type="button">
 											${option.radiobuttonText}
 										</button>
 									</c:otherwise>
@@ -175,13 +175,13 @@
 							<c:otherwise>
 								<c:choose>
 									<c:when test="${contains == 'true'}">
-										<button class="btn btn-large btn-primary disabled" type="button">
+										<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 											${option.multipleChoiceOption}
 											
 										</button>
 									</c:when>
 									<c:otherwise>
-										<button class="btn btn-large btn-default" type="button" disabled>
+										<button class="btn btn-large btn-showSelections" type="button" disabled>
 											${option.multipleChoiceOption}
 										</button>
 									</c:otherwise>
@@ -196,10 +196,13 @@
 			</c:otherwise>
 			</c:choose>
 			<br>
-			<h4>Huomioita:</h4>
-			<p style="font-size: 1.2em;">${answer.remarks}</p>
+			<c:if test="${answer.remarks != 'null' && answer.remarks != '' }">
+				<h4>Huomioita:</h4>
+				<p style="font-size: 1.2em;">${answer.remarks}</p>
+			</c:if>
+			<br>
 			
-			<br><br>
+			<br>
 			</c:if>
 		</c:if>
 
@@ -244,9 +247,10 @@
 			</div>
 
 			<br>
-			<h4>Huomioita:</h4>
-			<p style="font-size: 1.2em;">${answer.remarks}</p>
-			
+			<c:if test="${answer.remarks != 'null' && answer.remarks != '' }">
+				<h4>Huomioita:</h4>
+				<p style="font-size: 1.2em;">${answer.remarks}</p>
+			</c:if>
 			<br><br>
 			</c:if>
 		</c:if>
@@ -299,9 +303,10 @@
 					<p style="font-size: 1.2em;">${answer.total} €</p>
 				<br>
 				<br>
-				<h4>Huomioita:</h4>
-				<p style="font-size: 1.2em;">${answer.remarks}</p>
-
+				<c:if test="${answer.remarks != 'null' && answer.remarks != '' }">
+					<h4>Huomioita:</h4>
+					<p style="font-size: 1.2em;">${answer.remarks}</p>
+				</c:if>
 				<br><br>
 				</c:if>
 		</c:if>
@@ -387,9 +392,10 @@
 				</c:forEach>
 			</c:if>	
 			<br>
-			<h4>Huomioita:</h4>
-			<p style="font-size: 1.2em;">${answer.remarks}</p>
-
+			<c:if test="${answer.remarks != 'null' && answer.remarks != '' }">
+				<h4>Huomioita:</h4>
+				<p style="font-size: 1.2em;">${answer.remarks}</p>
+			</c:if>
 			<br><br>
 			
 		</c:if>	

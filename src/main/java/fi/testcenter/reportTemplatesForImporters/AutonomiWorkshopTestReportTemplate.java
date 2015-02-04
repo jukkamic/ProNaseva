@@ -15,12 +15,13 @@ import fi.testcenter.domain.reportTemplate.ReportTemplatePart;
 import fi.testcenter.domain.reportTemplate.ReportTemplateQuestionGroup;
 import fi.testcenter.domain.reportTemplate.WorkshopVisitReportTemplate;
 
-public class AutoasiWorkshopTestReportTemplate {
+public class AutonomiWorkshopTestReportTemplate {
+
 	public static WorkshopVisitReportTemplate getReportTemplate() {
 
 		WorkshopVisitReportTemplate reportTemplate = new WorkshopVisitReportTemplate();
 		reportTemplate.setCurrent(true);
-		reportTemplate.setTemplateName("Autoasi-korjaamotesti");
+		reportTemplate.setTemplateName("Autonomi korjaamoraporttipohja");
 		ArrayList<ReportTemplatePart> reportParts = new ArrayList<ReportTemplatePart>();
 
 		ReportTemplatePart reportPart1 = new ReportTemplatePart();

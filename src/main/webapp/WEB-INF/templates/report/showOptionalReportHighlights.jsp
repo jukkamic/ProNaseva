@@ -42,13 +42,13 @@
 									<c:when test="${option.radiobuttonText != null }">
 										<c:choose>
 											<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
-												<button class="btn btn-large btn-primary disabled" type="button">
+												<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 													${option.radiobuttonText}
 																																													
 												</button>
 											</c:when>
 											<c:otherwise>
-												<button class="btn btn-large btn-default" type="button" disabled>
+												<button class="btn btn-large btn-showSelections" disabled type="button">
 													${option.radiobuttonText}
 												</button>
 											</c:otherwise>
@@ -57,13 +57,13 @@
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${answer.chosenOptionIndex == optionsCounter.index}">
-												<button class="btn btn-large btn-primary disabled" type="button">
+												<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 													${option.option}
 													
 												</button>
 											</c:when>
 											<c:otherwise>
-												<button class="btn btn-large btn-default" type="button" disabled>
+												<button class="btn btn-large btn-showSelections" disabled type="button">
 													${option.option}
 												</button>
 											</c:otherwise>
@@ -76,7 +76,7 @@
 						</div>
 					</div>
 					
-					<c:if test="${answer.remarks != '' and reportHighlight.answer.remarks != null}">
+					<c:if test="${answer.remarks != '' and answer.remarks != null}">
 						<br>
 						<h4>Huomioita:</h4>
 						<p style="font-size: 1.2em;">${answer.remarks}</p>
@@ -100,13 +100,13 @@
 					
 				<c:choose>
 					<c:when test="${answer.givenPoints == points}">
-						<button class="btn btn-large btn-primary disabled" type="button">
+						<button class="btn btn-large btn-selectedOption disabled" disabled type="button">
 							${points}
 							
 						</button>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-large btn-default" type="button" disabled>
+						<button class="btn btn-large btn-showSelections" disabled type="button">
 							${points}
 						</button>
 					</c:otherwise>
@@ -116,10 +116,11 @@
 		</div>
 	</div>
 
-	<br>
-	<h4>Huomioita:</h4>
-	<p style="font-size: 1.2em;">${answer.remarks}</p>
-	
+	<c:if test="${answer.remarks != '' and answer.remarks != null}">
+		<br>
+		<h4>Huomioita:</h4>
+		<p style="font-size: 1.2em;">${answer.remarks}</p>
+	</c:if>
 	<br><br>
 </c:if>
 
@@ -153,6 +154,11 @@
 						<h4><b>${answer.question.total}</b></h4>
 						<p style="font-size: 1.2em;">${answer.total} €</p>
 					<br>
+				<c:if test="${answer.remarks != '' and answer.remarks != null}">
+					<br>
+					<h4>Huomioita:</h4>
+					<p style="font-size: 1.2em;">${answer.remarks}</p>
+				</c:if>
 			</c:if>
 			</div>
 		</c:if>
