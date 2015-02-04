@@ -54,7 +54,7 @@
 							<td>${report.importer.name}
 							</td>
 							<td>
-								${report.workshop.name}
+								${report.workshop.name}, ${report.workshop.city}
 							</td>
 							<td>
 								${report.user.lastName}, ${report.user.firstName}								
@@ -73,7 +73,7 @@
 									</c:when>
 								</c:choose>
 						</tr>
-						
+					
 				</c:forEach>
 			</table>
 		
@@ -137,7 +137,7 @@
 							<td>${report.importer.name}
 							</td>
 							<td>
-								${report.workshop.name}
+								${report.workshop.name}, ${report.workshop.city}
 							</td>
 							<td>
 								${report.user.lastName}, ${report.user.firstName}								
