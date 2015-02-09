@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fi.testcenter.domain.reportTemplate.ReportTemplate;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportQueryObject;
 import fi.testcenter.service.ReportService;
@@ -21,7 +22,8 @@ import fi.testcenter.service.UserAccountService;
 import fi.testcenter.service.WorkshopService;
 
 @SessionAttributes({ "report", "reportSearchList", "readyReport",
-		"searchReportCriteria", "importers", "workshops", "users" })
+		"searchReportCriteria", "importers", "workshops", "users",
+		"summarySearchCriteria" })
 @Controller
 public class SearchController {
 
@@ -151,8 +153,25 @@ public class SearchController {
 
 		ReportSummarySearchCriteria criteria = new ReportSummarySearchCriteria();
 		criteria.setImporter(is.findImporterById(importerId));
+		model.addAttribute("summarySearchCriteria", criteria);
 
-		return "search/selectImporterForSummary";
+		return "search/selectReportTemplateForSummary";
+
+	}
+
+	@RequestMapping(value = "/templateForReportSummary", method = RequestMethod.POST)
+	public String prepareSelectSummaryTemplateForm(
+			Model model,
+			@RequestParam("templateId") Long id,
+			@ModelAttribute("summarySearchCriteria") ReportSummarySearchCriteria criteria) {
+
+		for (ReportTemplate template : criteria.getImporter()
+				.getReportTemplates()) {
+			if (template.getId() == id)
+				criteria.setTemplate(template);
+		}
+
+		return "search/createReportSummary";
 
 	}
 }
