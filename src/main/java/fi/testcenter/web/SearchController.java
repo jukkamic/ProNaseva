@@ -136,4 +136,23 @@ public class SearchController {
 		return "search/searchReport";
 
 	}
+
+	@RequestMapping(value = "/reportSummaries", method = RequestMethod.GET)
+	public String prepareSelectImporterForm(Model model) {
+
+		model.addAttribute("importers", is.getImporters());
+		return "search/selectImporterForSummary";
+
+	}
+
+	@RequestMapping(value = "/reportSummaries", method = RequestMethod.POST)
+	public String processSelectImporterForm(Model model,
+			@RequestParam("importer") Long importerId) {
+
+		ReportSummarySearchCriteria criteria = new ReportSummarySearchCriteria();
+		criteria.setImporter(is.findImporterById(importerId));
+
+		return "search/selectImporterForSummary";
+
+	}
 }
