@@ -27,6 +27,8 @@
 	<br><br>
 	<a href="/ProNaseva/admin/saveReportTemplate?name=Autonomi korjaamoraporttipohja" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Autonomi-korjaamotestipohja <br>kantaan</a>
 	<br><br>
+	<a href="/ProNaseva/admin/saveReportTemplate?name=Autokeskus korjaamotesti" class="btn btn-large btn btn-primary"><span class="glyphicon glyphicon-save" style="text-decoration: none;"></span> Vie Autokeskus-korjaamotestipohja<br>kantaan</a>
+	<br><br>
 	<c:if test="${not empty unusedTemplates}">	
 		<br>
 		<h3>Käyttämättömät raporttipohjat:</h3>

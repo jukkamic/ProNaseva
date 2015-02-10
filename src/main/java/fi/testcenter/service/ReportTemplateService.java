@@ -17,6 +17,7 @@ import fi.testcenter.domain.Importer;
 import fi.testcenter.domain.reportTemplate.ReportTemplate;
 import fi.testcenter.reportTemplatesForImporters.AudiCallTestTemplate;
 import fi.testcenter.reportTemplatesForImporters.AutoasiWorkshopTestReportTemplate;
+import fi.testcenter.reportTemplatesForImporters.AutokeskusWorkshopTestReportTemplate;
 import fi.testcenter.reportTemplatesForImporters.AutonomiWorkshopTestReportTemplate;
 import fi.testcenter.reportTemplatesForImporters.VolvoReportTemplate;
 import fi.testcenter.repository.ImporterRepository;
@@ -56,6 +57,9 @@ public class ReportTemplateService {
 
 		case "Autonomi korjaamoraporttipohja":
 			return AutonomiWorkshopTestReportTemplate.getReportTemplate();
+
+		case "Autokeskus korjaamotesti":
+			return AutokeskusWorkshopTestReportTemplate.getReportTemplate();
 		}
 
 		return null;
