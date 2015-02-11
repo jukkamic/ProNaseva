@@ -24,8 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 import fi.testcenter.domain.answer.Answer;
 import fi.testcenter.domain.answer.MultipleChoiceAnswer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
+import fi.testcenter.domain.answer.PointsAnswer;
 import fi.testcenter.domain.question.MultipleChoiceOption;
 import fi.testcenter.domain.question.MultipleChoiceQuestion;
+import fi.testcenter.domain.question.OptionalQuestions;
+import fi.testcenter.domain.question.PointsQuestion;
 import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.PhoneCallTestReport;
 import fi.testcenter.domain.report.Report;
@@ -34,6 +37,7 @@ import fi.testcenter.domain.report.ReportQuestionGroup;
 import fi.testcenter.domain.report.WorkshopVisitReport;
 import fi.testcenter.domain.reportSummary.AnswerSummary;
 import fi.testcenter.domain.reportSummary.MultipleChoiceAnswerSummary;
+import fi.testcenter.domain.reportSummary.PointsAnswerSummary;
 import fi.testcenter.domain.reportSummary.QuestionGroupSummary;
 import fi.testcenter.domain.reportSummary.ReportPartSummary;
 import fi.testcenter.domain.reportSummary.ReportSummary;
@@ -475,7 +479,7 @@ public class ReportService {
 					ReportPart summaryReportPart = wsReport.getReportParts()
 							.get(partIndex);
 					ReportQuestionGroup summaryReportQuestionGroup = summaryReportPart
-							.getReportQuestionGroups().get(groupIndex++);
+							.getReportQuestionGroups().get(groupIndex);
 
 					if (summaryReportQuestionGroup.getScore() != -1) {
 						totalScoreForQuestionGroups += summaryReportQuestionGroup
@@ -492,6 +496,7 @@ public class ReportService {
 
 				// TEHDÄÄN KYSYMYSRYHMÄN KYSYMYSTEN VASTAUSYHTEENVEDOT
 
+				int questionIndex = 0;
 				for (Question question : group.getQuestions()) {
 					if (question instanceof MultipleChoiceQuestion) {
 
@@ -501,8 +506,37 @@ public class ReportService {
 										summaryReports));
 
 					}
+					// if (question instanceof PointsQuestion) {
+					// groupSummary.getAnswerSummaries().add(
+					// (AnswerSummary) getPointsAnswerSummary(
+					// (PointsQuestion) question, partIndex,
+					// groupIndex, questionIndex,
+					// summaryReports));
+					// }
+					if (question instanceof OptionalQuestions) {
+						OptionalQuestions oq = (OptionalQuestions) question;
+
+						int optionalAnswerQuestionsIndex = 0;
+						for (Question optionalQuestion : oq.getQuestions()) {
+
+							if (optionalQuestion instanceof PointsQuestion) {
+
+								groupSummary
+										.getAnswerSummaries()
+										.add((AnswerSummary) getPointsAnswerSummary(
+												(PointsQuestion) optionalQuestion,
+												partIndex, groupIndex,
+												questionIndex,
+												optionalAnswerQuestionsIndex,
+												summaryReports));
+							}
+							optionalAnswerQuestionsIndex++;
+						}
+					}
+					questionIndex++;
 				}
 				partSummary.getQuestionGroupSummaries().add(groupSummary);
+				groupIndex++;
 
 			}
 			summary.getReportPartSummaries().add(partSummary);
@@ -512,13 +546,62 @@ public class ReportService {
 		return summary;
 	}
 
+	private PointsAnswerSummary getPointsAnswerSummary(PointsQuestion question,
+			int partIndex, int groupIndex, int questionIndex,
+			int optionalAnswerQuestionsIndex, List<Report> reports) {
+		PointsAnswerSummary summary = new PointsAnswerSummary();
+		summary.setQuestion(question);
+		int totalScore = 0;
+		int count = 0;
+		int[] pointCounts = new int[question.getMaxPoints() + 1];
+		for (int i = 0; i < pointCounts.length; i++) {
+			pointCounts[i] = 0;
+		}
+
+		for (Report report : reports) {
+			if (report instanceof WorkshopVisitReport) {
+				WorkshopVisitReport wsReport = (WorkshopVisitReport) report;
+				OptionalQuestionsAnswer oqa = (OptionalQuestionsAnswer) wsReport
+						.getReportParts().get(partIndex)
+						.getReportQuestionGroups().get(groupIndex).getAnswers()
+						.get(questionIndex);
+
+				for (Answer listAnswer : oqa.getOptionalAnswers()) {
+					PointsAnswer answer = null;
+					if (listAnswer.getQuestion().getId()
+							.equals(question.getId())) {
+
+						answer = (PointsAnswer) listAnswer;
+						System.out.println("match" + answer.getScore());
+
+					}
+
+					if (answer != null && answer.getGivenPoints() != -1) {
+
+						pointCounts[answer.getGivenPoints()] = pointCounts[answer
+								.getGivenPoints()] + 1;
+						totalScore += answer.getGivenPoints();
+						count++;
+					}
+				}
+
+			}
+			double average = (double) totalScore / count;
+			average = Math.round(average * 10) / 10;
+			summary.setAverageScore(average);
+			summary.setAnswerCountForPoints(pointCounts);
+			summary.setTimesAskedInReports(count);
+		}
+		return summary;
+
+	}
+
 	private MultipleChoiceAnswerSummary getMultipleChoiceAnswerSummary(
 			MultipleChoiceQuestion mcq, List<Report> reports) {
 		MultipleChoiceAnswerSummary mcaSummary = new MultipleChoiceAnswerSummary();
 		Map<String, Integer> chosenOptionsCount = new LinkedHashMap<String, Integer>();
 		mcaSummary.setQuestion(mcq);
 
-		int maxScore;
 		double totalScore = 0;
 		int count = 0;
 
@@ -527,6 +610,7 @@ public class ReportService {
 					Integer.valueOf(0));
 		}
 
+		int maxScore;
 		for (Report report : reports) {
 			if (report instanceof WorkshopVisitReport) {
 

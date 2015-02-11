@@ -1,7 +1,6 @@
 package fi.testcenter.web;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import fi.testcenter.domain.reportSummary.AnswerSummary;
 import fi.testcenter.domain.reportSummary.MultipleChoiceAnswerSummary;
+import fi.testcenter.domain.reportSummary.PointsAnswerSummary;
 import fi.testcenter.domain.reportSummary.QuestionGroupSummary;
 import fi.testcenter.domain.reportSummary.ReportPartSummary;
 import fi.testcenter.domain.reportSummary.ReportSummary;
@@ -195,27 +195,48 @@ public class SearchController {
 		ReportSummary reportSummary = rs.generateReportSummary(criteria);
 		for (ReportPartSummary partSummary : reportSummary
 				.getReportPartSummaries()) {
-			log.debug("\nRAPORTINOSA: "
-					+ partSummary.getReportTemplatePart().getTitle());
-			log.debug("Tulos: " + partSummary.getAverageScorePercengage()
-					+ " %");
+			// log.debug("\nRAPORTINOSA: "
+			// + partSummary.getReportTemplatePart().getTitle());
+			// log.debug("Tulos: " + partSummary.getAverageScorePercengage()
+			// + " %");
 			for (QuestionGroupSummary groupSummary : partSummary
 					.getQuestionGroupSummaries()) {
-				log.debug("\nKYSYMYSRYHMÄ: "
-						+ groupSummary.getReportTemplateQuestionGroup()
-								.getTitle());
-				log.debug("Tulos: " + groupSummary.getAverageScorePercengage()
-						+ " %\n\n");
+				// log.debug("\nKYSYMYSRYHMÄ: "
+				// + groupSummary.getReportTemplateQuestionGroup()
+				// .getTitle());
+				// log.debug("Tulos: " +
+				// groupSummary.getAverageScorePercengage()
+				// + " %\n\n");
 				for (AnswerSummary answerSummary : groupSummary
 						.getAnswerSummaries()) {
 					if (answerSummary instanceof MultipleChoiceAnswerSummary) {
 						MultipleChoiceAnswerSummary mcaSummary = (MultipleChoiceAnswerSummary) answerSummary;
-						log.debug(mcaSummary.getQuestion().getQuestion());
-						for (Map.Entry<String, Integer> entry : mcaSummary
-								.getChosenOptionsCount().entrySet())
-							log.debug(entry.getKey() + " - " + entry.getValue()
-									+ " kpl");
+						// log.debug(mcaSummary.getQuestion().getQuestion());
+						// for (Map.Entry<String, Integer> entry : mcaSummary
+						// .getChosenOptionsCount().entrySet())
+						// log.debug(entry.getKey() + " - " + entry.getValue()
+						// + " kpl");
+						log.debug("MULTIPLECHOICEQUESTION "
+								+ mcaSummary.getQuestion().getQuestion()
+								+ " keskiarvopisteet : "
+								+ mcaSummary.getAverageScore());
 					}
+
+					if (answerSummary instanceof PointsAnswerSummary) {
+						PointsAnswerSummary ptSummary = (PointsAnswerSummary) answerSummary;
+						log.debug("POINTS ANSWER SUMMARY: "
+								+ ptSummary.getQuestion().getQuestion()
+								+ " keskiarvopisteet : "
+								+ ptSummary.getAverageScore()
+								+ "\n Vastaukset : ");
+						int points = 0;
+						for (int count : ptSummary.getAnswerCountForPoints()) {
+							log.debug("\n" + points++ + " pistettä : " + count
+									+ " kertaa.");
+						}
+
+					}
+
 				}
 			}
 		}
