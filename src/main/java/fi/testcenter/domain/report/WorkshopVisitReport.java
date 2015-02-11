@@ -8,8 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderColumn;
 import javax.persistence.Transient;
@@ -52,10 +50,6 @@ public class WorkshopVisitReport extends Report {
 	private String overallResultSmiley;
 	private boolean smileysSet = false;
 	private boolean highlightsSet = false;
-
-	@ManyToOne
-	@JoinColumn
-	private WorkshopVisitReportTemplate reportTemplate;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "report")
 	@OrderColumn
@@ -132,10 +126,6 @@ public class WorkshopVisitReport extends Report {
 		super.setWorkshop(workshop);
 		super.setUser(user);
 		super.setReportStatus(reportStatus);
-	}
-
-	public WorkshopVisitReportTemplate getReportTemplate() {
-		return reportTemplate;
 	}
 
 	public void setReportTemplate(WorkshopVisitReportTemplate reportTemplate) {

@@ -21,7 +21,7 @@
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="addNewReport">Uusi raportti</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="userOwnReports">Omat raportit</a>
 			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="searchReport">Hae raportti</a>
-			<!-- <a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="reportSummaries">Raporttiyhteenvedot</a> -->
+			<a class="btn btn-large btn-block btn-primary" style="font-size:2em; text-decoration: none" href="reportSummaries">Raporttiyhteenvedot</a>
 			<br><br><br>
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="showImporterList?page=1">Maahantuojat</a>
 			<a class="btn btn-large btn-block btn-default" style="font-size:2em; text-decoration: none" href="showWorkshopList?page=1">Korjaamot</a>

@@ -39,7 +39,7 @@ public class PhoneCallTestReport extends Report {
 	public PhoneCallTestReport(PhoneCallTestReportTemplate reportTemplate,
 			ReportService rs) {
 
-		this.reportTemplate = reportTemplate;
+		super.setReportTemplate(reportTemplate);
 
 		super.setTestDate(new Date());
 		super.setReportStatus("DRAFT");

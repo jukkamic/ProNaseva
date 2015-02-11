@@ -3,7 +3,9 @@ package fi.testcenter.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,12 +22,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.testcenter.domain.answer.Answer;
+import fi.testcenter.domain.answer.MultipleChoiceAnswer;
 import fi.testcenter.domain.answer.OptionalQuestionsAnswer;
+import fi.testcenter.domain.question.MultipleChoiceOption;
+import fi.testcenter.domain.question.MultipleChoiceQuestion;
+import fi.testcenter.domain.question.Question;
 import fi.testcenter.domain.report.PhoneCallTestReport;
 import fi.testcenter.domain.report.Report;
 import fi.testcenter.domain.report.ReportPart;
 import fi.testcenter.domain.report.ReportQuestionGroup;
 import fi.testcenter.domain.report.WorkshopVisitReport;
+import fi.testcenter.domain.reportSummary.AnswerSummary;
+import fi.testcenter.domain.reportSummary.MultipleChoiceAnswerSummary;
+import fi.testcenter.domain.reportSummary.QuestionGroupSummary;
+import fi.testcenter.domain.reportSummary.ReportPartSummary;
+import fi.testcenter.domain.reportSummary.ReportSummary;
+import fi.testcenter.domain.reportTemplate.ReportTemplatePart;
+import fi.testcenter.domain.reportTemplate.ReportTemplateQuestionGroup;
+import fi.testcenter.domain.reportTemplate.WorkshopVisitReportTemplate;
 import fi.testcenter.repository.AnswerRepository;
 import fi.testcenter.repository.ImpPtItemRepository;
 import fi.testcenter.repository.ImporterRepository;
@@ -33,6 +47,7 @@ import fi.testcenter.repository.OptionalQuestionsAnswerRepository;
 import fi.testcenter.repository.ReportQuestionGroupRepository;
 import fi.testcenter.repository.ReportRepository;
 import fi.testcenter.repository.WorkshopRepository;
+import fi.testcenter.web.ReportSummarySearchCriteria;
 import fi.testcenter.web.SearchReportCriteria;
 
 @Service
@@ -400,4 +415,162 @@ public class ReportService {
 		ar.delete(answer);
 	}
 
+	@Transactional
+	public ReportSummary generateReportSummary(
+			ReportSummarySearchCriteria criteria) {
+		// SIISTITTÄVÄ HAKUJA MYÖHEMMIN NIIN ETTÄ KESKIARVOT HAETAAN SQL-HAULLA
+		TypedQuery query = em
+				.createQuery(
+						"SELECT r FROM Report r WHERE r.importer = :importer AND r.reportTemplate = :template",
+						WorkshopVisitReport.class);
+		query.setParameter("importer", criteria.getImporter());
+		query.setParameter("template", criteria.getTemplate());
+
+		List<Report> summaryReports = query.getResultList();
+		ReportSummary summary = new ReportSummary();
+
+		int partIndex = 0;
+
+		// REPORTPARTSUMMARY-LOOP
+
+		for (ReportTemplatePart part : ((WorkshopVisitReportTemplate) criteria
+				.getTemplate()).getReportParts()) {
+			ReportPartSummary partSummary = new ReportPartSummary();
+			partSummary.setReportTemplatePart(part);
+			int totalScoreForReportParts = 0;
+			int partCount = 0;
+
+			for (Report summaryReport : summaryReports) {
+				WorkshopVisitReport wsReport = (WorkshopVisitReport) summaryReport;
+				ReportPart summaryReportPart = wsReport.getReportParts().get(
+						partIndex);
+
+				if (summaryReportPart.getScore() != -1) {
+
+					totalScoreForReportParts += summaryReportPart
+							.getScorePercentage();
+					partCount++;
+				}
+			}
+
+			if (partCount > 0) {
+				partSummary.setAverageScorePercengage(totalScoreForReportParts
+						/ partCount);
+
+			}
+
+			// QUESTIONGROUPSUMMARY-LOOP
+
+			int groupIndex = 0;
+			for (ReportTemplateQuestionGroup group : part.getQuestionGroups()) {
+				QuestionGroupSummary groupSummary = new QuestionGroupSummary();
+				groupSummary.setReportTemplateQuestionGroup(group);
+
+				// LASKETAAN KYSYMYSRYHMÄN PISTEET RAPORTEISTA
+
+				int totalScoreForQuestionGroups = 0;
+				int groupCount = 0;
+				for (Report summaryReport : summaryReports) {
+					WorkshopVisitReport wsReport = (WorkshopVisitReport) summaryReport;
+					ReportPart summaryReportPart = wsReport.getReportParts()
+							.get(partIndex);
+					ReportQuestionGroup summaryReportQuestionGroup = summaryReportPart
+							.getReportQuestionGroups().get(groupIndex++);
+
+					if (summaryReportQuestionGroup.getScore() != -1) {
+						totalScoreForQuestionGroups += summaryReportQuestionGroup
+								.getScorePercentage();
+
+						groupCount++;
+					}
+
+				}
+				if (groupCount > 0)
+					groupSummary
+							.setAverageScorePercengage(totalScoreForQuestionGroups
+									/ groupCount);
+
+				// TEHDÄÄN KYSYMYSRYHMÄN KYSYMYSTEN VASTAUSYHTEENVEDOT
+
+				for (Question question : group.getQuestions()) {
+					if (question instanceof MultipleChoiceQuestion) {
+
+						groupSummary.getAnswerSummaries().add(
+								(AnswerSummary) getMultipleChoiceAnswerSummary(
+										(MultipleChoiceQuestion) question,
+										summaryReports));
+
+					}
+				}
+				partSummary.getQuestionGroupSummaries().add(groupSummary);
+
+			}
+			summary.getReportPartSummaries().add(partSummary);
+			partIndex++;
+		}
+
+		return summary;
+	}
+
+	private MultipleChoiceAnswerSummary getMultipleChoiceAnswerSummary(
+			MultipleChoiceQuestion mcq, List<Report> reports) {
+		MultipleChoiceAnswerSummary mcaSummary = new MultipleChoiceAnswerSummary();
+		Map<String, Integer> chosenOptionsCount = new LinkedHashMap<String, Integer>();
+		mcaSummary.setQuestion(mcq);
+
+		int maxScore;
+		double totalScore = 0;
+		int count = 0;
+
+		for (MultipleChoiceOption option : mcq.getOptionsList()) {
+			chosenOptionsCount.put(option.getMultipleChoiceOption(),
+					Integer.valueOf(0));
+		}
+
+		for (Report report : reports) {
+			if (report instanceof WorkshopVisitReport) {
+
+				WorkshopVisitReport wsReport = (WorkshopVisitReport) report;
+				for (ReportPart part : wsReport.getReportParts()) {
+					for (ReportQuestionGroup group : part
+							.getReportQuestionGroups()) {
+						for (Answer answer : group.getAnswers()) {
+							if (answer instanceof MultipleChoiceAnswer) {
+
+								if (answer.getQuestion().getId()
+										.equals(mcq.getId())) {
+
+									MultipleChoiceAnswer mca = (MultipleChoiceAnswer) answer;
+									maxScore = mca.getMaxScore();
+									if (!mca.isRemoveAnswerFromReport()) {
+
+										for (MultipleChoiceOption chosenOption : mca
+												.getChosenOptions()) {
+											int addToCount = chosenOptionsCount
+													.get(chosenOption
+															.getMultipleChoiceOption())
+													.intValue() + 1;
+											chosenOptionsCount
+													.put(chosenOption
+															.getMultipleChoiceOption(),
+															Integer.valueOf(addToCount));
+
+										}
+										if (mca.getScore() != -1) {
+											totalScore += mca.getScore();
+											count++;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		mcaSummary.setAverageScore(Math.round(totalScore / count * 100) / 100);
+		mcaSummary.setChosenOptionsCount(chosenOptionsCount);
+
+		return mcaSummary;
+	}
 }

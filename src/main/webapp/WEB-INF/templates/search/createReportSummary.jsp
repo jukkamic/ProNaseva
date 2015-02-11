@@ -18,21 +18,10 @@
 			<br>
 			<br>
 
-			<form action="templateForReportSummary" method="post">
+			<sf:form action="createReportSummary">
 
-				<label for="reportTemplate">Valitse raporttipohja: </label>
-				<br>
-				<select style="width: auto; max-width: 100%" id="importer" name="templateId"
-					class="form-control">
-					<c:forEach var="template" items="${summarySearchCriteria.importer.reportTemplates}">
-						<option value="${template.id}">${template.templateName}</option>
-					</c:forEach>
-				</select>
-
-				<br>
-				<br>
-				<button class="btn btn-large btn-primary" type="submit"><span class="glyphicon glyphicon-arrow-right" style="text-decoration: none;"></span> Seuraava</button>
-			</form>
+				<button class="btn btn-large btn-primary" type="submit"><span class="glyphicon glyphicon-arrow-right" style="text-decoration: none;"></span> Lataa korjaamoraporttien yhteenveto</button>
+			</sf:form>
 			
 		</div>
 

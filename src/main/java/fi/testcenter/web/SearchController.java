@@ -1,6 +1,7 @@
 package fi.testcenter.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,6 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import fi.testcenter.domain.reportSummary.AnswerSummary;
+import fi.testcenter.domain.reportSummary.MultipleChoiceAnswerSummary;
+import fi.testcenter.domain.reportSummary.QuestionGroupSummary;
+import fi.testcenter.domain.reportSummary.ReportPartSummary;
+import fi.testcenter.domain.reportSummary.ReportSummary;
 import fi.testcenter.domain.reportTemplate.ReportTemplate;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportQueryObject;
@@ -167,10 +173,52 @@ public class SearchController {
 
 		for (ReportTemplate template : criteria.getImporter()
 				.getReportTemplates()) {
-			if (template.getId() == id)
+
+			if (template.getId().equals(id)) {
+
 				criteria.setTemplate(template);
+
+			}
+
 		}
 
+		model.addAttribute("summarySearchCriteria", criteria);
+		return "search/createReportSummary";
+
+	}
+
+	@RequestMapping(value = "/createReportSummary", method = RequestMethod.POST)
+	public String createReportSummary(
+			Model model,
+			@ModelAttribute("summarySearchCriteria") ReportSummarySearchCriteria criteria) {
+
+		ReportSummary reportSummary = rs.generateReportSummary(criteria);
+		for (ReportPartSummary partSummary : reportSummary
+				.getReportPartSummaries()) {
+			log.debug("\nRAPORTINOSA: "
+					+ partSummary.getReportTemplatePart().getTitle());
+			log.debug("Tulos: " + partSummary.getAverageScorePercengage()
+					+ " %");
+			for (QuestionGroupSummary groupSummary : partSummary
+					.getQuestionGroupSummaries()) {
+				log.debug("\nKYSYMYSRYHMÄ: "
+						+ groupSummary.getReportTemplateQuestionGroup()
+								.getTitle());
+				log.debug("Tulos: " + groupSummary.getAverageScorePercengage()
+						+ " %\n\n");
+				for (AnswerSummary answerSummary : groupSummary
+						.getAnswerSummaries()) {
+					if (answerSummary instanceof MultipleChoiceAnswerSummary) {
+						MultipleChoiceAnswerSummary mcaSummary = (MultipleChoiceAnswerSummary) answerSummary;
+						log.debug(mcaSummary.getQuestion().getQuestion());
+						for (Map.Entry<String, Integer> entry : mcaSummary
+								.getChosenOptionsCount().entrySet())
+							log.debug(entry.getKey() + " - " + entry.getValue()
+									+ " kpl");
+					}
+				}
+			}
+		}
 		return "search/createReportSummary";
 
 	}
