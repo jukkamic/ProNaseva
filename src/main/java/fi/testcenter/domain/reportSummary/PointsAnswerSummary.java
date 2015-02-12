@@ -2,9 +2,10 @@ package fi.testcenter.domain.reportSummary;
 
 public class PointsAnswerSummary extends AnswerSummary {
 
-	int timesAskedInReports;
+	int timesAskedInReports = 0;
 	int[] answerCountForPoints;
-	double averageScore;
+	double averageScore = -1;
+	int maxScore = 0;
 
 	public int getTimesAskedInReports() {
 		return timesAskedInReports;
@@ -28,6 +29,14 @@ public class PointsAnswerSummary extends AnswerSummary {
 
 	public void setAverageScore(double averageScore) {
 		this.averageScore = averageScore;
+	}
+
+	public int getMaxScore() {
+		return maxScore;
+	}
+
+	public void setMaxScore(int maxScore) {
+		this.maxScore = maxScore;
 	}
 
 }

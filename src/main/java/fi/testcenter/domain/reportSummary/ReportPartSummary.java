@@ -9,7 +9,8 @@ public class ReportPartSummary {
 
 	List<QuestionGroupSummary> questionGroupSummaries = new ArrayList<QuestionGroupSummary>();
 	ReportTemplatePart reportTemplatePart;
-	int averageScorePercengage;
+	int averageScorePercengage = -1;
+	boolean showInSummary = false;
 
 	public List<QuestionGroupSummary> getQuestionGroupSummaries() {
 		return questionGroupSummaries;
@@ -34,6 +35,14 @@ public class ReportPartSummary {
 
 	public void setAverageScorePercengage(int averageScorePercengage) {
 		this.averageScorePercengage = averageScorePercengage;
+	}
+
+	public boolean isShowInSummary() {
+		return showInSummary;
+	}
+
+	public void setShowInSummary(boolean showInSummary) {
+		this.showInSummary = showInSummary;
 	}
 
 }

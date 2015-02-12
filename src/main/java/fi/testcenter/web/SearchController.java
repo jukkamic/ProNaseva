@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,13 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import fi.testcenter.domain.reportSummary.AnswerSummary;
-import fi.testcenter.domain.reportSummary.MultipleChoiceAnswerSummary;
-import fi.testcenter.domain.reportSummary.PointsAnswerSummary;
-import fi.testcenter.domain.reportSummary.QuestionGroupSummary;
-import fi.testcenter.domain.reportSummary.ReportPartSummary;
 import fi.testcenter.domain.reportSummary.ReportSummary;
 import fi.testcenter.domain.reportTemplate.ReportTemplate;
+import fi.testcenter.pdf.WorkshopVisitTestReportSummary;
 import fi.testcenter.service.ImporterService;
 import fi.testcenter.service.ReportQueryObject;
 import fi.testcenter.service.ReportService;
@@ -46,6 +46,9 @@ public class SearchController {
 
 	@Autowired
 	private UserAccountService us;
+
+	@Autowired
+	private WorkshopVisitTestReportSummary reportSummaryGenerator;
 
 	@RequestMapping(value = "/userOwnReports", method = RequestMethod.GET)
 	public String setupSearchHomePage(HttpServletRequest request, Model model) {
@@ -188,59 +191,79 @@ public class SearchController {
 	}
 
 	@RequestMapping(value = "/createReportSummary", method = RequestMethod.POST)
-	public String createReportSummary(
+	public ResponseEntity<byte[]> createReportSummary(
 			Model model,
 			@ModelAttribute("summarySearchCriteria") ReportSummarySearchCriteria criteria) {
 
 		ReportSummary reportSummary = rs.generateReportSummary(criteria);
-		for (ReportPartSummary partSummary : reportSummary
-				.getReportPartSummaries()) {
-			// log.debug("\nRAPORTINOSA: "
-			// + partSummary.getReportTemplatePart().getTitle());
-			// log.debug("Tulos: " + partSummary.getAverageScorePercengage()
-			// + " %");
-			for (QuestionGroupSummary groupSummary : partSummary
-					.getQuestionGroupSummaries()) {
-				// log.debug("\nKYSYMYSRYHMÄ: "
-				// + groupSummary.getReportTemplateQuestionGroup()
-				// .getTitle());
-				// log.debug("Tulos: " +
-				// groupSummary.getAverageScorePercengage()
-				// + " %\n\n");
-				for (AnswerSummary answerSummary : groupSummary
-						.getAnswerSummaries()) {
-					if (answerSummary instanceof MultipleChoiceAnswerSummary) {
-						MultipleChoiceAnswerSummary mcaSummary = (MultipleChoiceAnswerSummary) answerSummary;
-						// log.debug(mcaSummary.getQuestion().getQuestion());
-						// for (Map.Entry<String, Integer> entry : mcaSummary
-						// .getChosenOptionsCount().entrySet())
-						// log.debug(entry.getKey() + " - " + entry.getValue()
-						// + " kpl");
-						log.debug("MULTIPLECHOICEQUESTION "
-								+ mcaSummary.getQuestion().getQuestion()
-								+ " keskiarvopisteet : "
-								+ mcaSummary.getAverageScore());
-					}
+		// for (ReportPartSummary partSummary : reportSummary
+		// .getReportPartSummaries()) {
+		// // log.debug("\nRAPORTINOSA: "
+		// // + partSummary.getReportTemplatePart().getTitle());
+		// // log.debug("Tulos: " + partSummary.getAverageScorePercengage()
+		// // + " %");
+		// for (QuestionGroupSummary groupSummary : partSummary
+		// .getQuestionGroupSummaries()) {
+		// // log.debug("\nKYSYMYSRYHMÄ: "
+		// // + groupSummary.getReportTemplateQuestionGroup()
+		// // .getTitle());
+		// // log.debug("Tulos: " +
+		// // groupSummary.getAverageScorePercengage()
+		// // + " %\n\n");
+		// for (AnswerSummary answerSummary : groupSummary
+		// .getAnswerSummaries()) {
+		// if (answerSummary instanceof MultipleChoiceAnswerSummary) {
+		// MultipleChoiceAnswerSummary mcaSummary =
+		// (MultipleChoiceAnswerSummary) answerSummary;
+		// // log.debug(mcaSummary.getQuestion().getQuestion());
+		// // for (Map.Entry<String, Integer> entry : mcaSummary
+		// // .getChosenOptionsCount().entrySet())
+		// // log.debug(entry.getKey() + " - " + entry.getValue()
+		// // + " kpl");
+		// log.debug("MULTIPLECHOICEQUESTION "
+		// + mcaSummary.getQuestion().getQuestion()
+		// + " keskiarvopisteet : "
+		// + mcaSummary.getAverageScore());
+		// }
+		//
+		// if (answerSummary instanceof PointsAnswerSummary) {
+		// PointsAnswerSummary ptSummary = (PointsAnswerSummary) answerSummary;
+		// log.debug("POINTS ANSWER SUMMARY: "
+		// + ptSummary.getQuestion().getQuestion()
+		// + " keskiarvopisteet : "
+		// + ptSummary.getAverageScore()
+		// + "\n Vastaukset : ");
+		// int points = 0;
+		// for (int count : ptSummary.getAnswerCountForPoints()) {
+		// log.debug("\n" + points++ + " pistettä : " + count
+		// + " kertaa.");
+		// }
+		//
+		// }
+		//
+		// }
+		// }
+		// }
 
-					if (answerSummary instanceof PointsAnswerSummary) {
-						PointsAnswerSummary ptSummary = (PointsAnswerSummary) answerSummary;
-						log.debug("POINTS ANSWER SUMMARY: "
-								+ ptSummary.getQuestion().getQuestion()
-								+ " keskiarvopisteet : "
-								+ ptSummary.getAverageScore()
-								+ "\n Vastaukset : ");
-						int points = 0;
-						for (int count : ptSummary.getAnswerCountForPoints()) {
-							log.debug("\n" + points++ + " pistettä : " + count
-									+ " kertaa.");
-						}
+		try {
 
-					}
+			byte[] contents = reportSummaryGenerator
+					.generateWorkshopVisitTestReportSummary(reportSummary)
+					.toByteArray();
 
-				}
-			}
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.parseMediaType("application/pdf"));
+			String filename = reportSummary.getImporter().getName()
+					+ "-raporttiyhteenveto" + ".pdf";
+			headers.setContentDispositionFormData(filename, filename);
+			headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+			ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+					contents, headers, HttpStatus.OK);
+			return response;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return "search/createReportSummary";
-
 	}
 }

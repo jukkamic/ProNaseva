@@ -39,6 +39,7 @@ import fi.testcenter.domain.reportSummary.AnswerSummary;
 import fi.testcenter.domain.reportSummary.MultipleChoiceAnswerSummary;
 import fi.testcenter.domain.reportSummary.PointsAnswerSummary;
 import fi.testcenter.domain.reportSummary.QuestionGroupSummary;
+import fi.testcenter.domain.reportSummary.ReportInfo;
 import fi.testcenter.domain.reportSummary.ReportPartSummary;
 import fi.testcenter.domain.reportSummary.ReportSummary;
 import fi.testcenter.domain.reportTemplate.ReportTemplatePart;
@@ -432,6 +433,17 @@ public class ReportService {
 
 		List<Report> summaryReports = query.getResultList();
 		ReportSummary summary = new ReportSummary();
+		summary.setImporter(criteria.getImporter());
+
+		List<ReportInfo> reportInfos = new ArrayList<ReportInfo>();
+		for (Report report : summaryReports) {
+			ReportInfo info = new ReportInfo();
+			info.setWorkshop(report.getWorkshop());
+			info.setTotalScorePercentage(report.getTotalScorePercentage());
+			reportInfos.add(info);
+
+		}
+		summary.setReportInfo(reportInfos);
 
 		int partIndex = 0;
 
@@ -504,15 +516,11 @@ public class ReportService {
 								(AnswerSummary) getMultipleChoiceAnswerSummary(
 										(MultipleChoiceQuestion) question,
 										summaryReports));
+						groupSummary.setShowInSummary(true);
+						partSummary.setShowInSummary(true);
 
 					}
-					// if (question instanceof PointsQuestion) {
-					// groupSummary.getAnswerSummaries().add(
-					// (AnswerSummary) getPointsAnswerSummary(
-					// (PointsQuestion) question, partIndex,
-					// groupIndex, questionIndex,
-					// summaryReports));
-					// }
+
 					if (question instanceof OptionalQuestions) {
 						OptionalQuestions oq = (OptionalQuestions) question;
 
@@ -529,8 +537,28 @@ public class ReportService {
 												questionIndex,
 												optionalAnswerQuestionsIndex,
 												summaryReports));
+								groupSummary.setShowInSummary(true);
+								partSummary.setShowInSummary(true);
 							}
 							optionalAnswerQuestionsIndex++;
+						}
+						questionIndex++;
+
+					}
+					if (!question.getSubQuestions().isEmpty()) {
+						for (Question subQuestion : question.getSubQuestions()) {
+							if (subQuestion instanceof MultipleChoiceQuestion) {
+
+								groupSummary
+										.getAnswerSummaries()
+										.add((AnswerSummary) getMultipleChoiceAnswerSummary(
+												(MultipleChoiceQuestion) subQuestion,
+												summaryReports));
+								groupSummary.setShowInSummary(true);
+								partSummary.setShowInSummary(true);
+
+							}
+
 						}
 					}
 					questionIndex++;
@@ -552,6 +580,7 @@ public class ReportService {
 		PointsAnswerSummary summary = new PointsAnswerSummary();
 		summary.setQuestion(question);
 		int totalScore = 0;
+		int maxScore = 0;
 		int count = 0;
 		int[] pointCounts = new int[question.getMaxPoints() + 1];
 		for (int i = 0; i < pointCounts.length; i++) {
@@ -572,7 +601,6 @@ public class ReportService {
 							.equals(question.getId())) {
 
 						answer = (PointsAnswer) listAnswer;
-						System.out.println("match" + answer.getScore());
 
 					}
 
@@ -582,6 +610,8 @@ public class ReportService {
 								.getGivenPoints()] + 1;
 						totalScore += answer.getGivenPoints();
 						count++;
+						maxScore = ((PointsQuestion) answer.getQuestion())
+								.getMaxPoints();
 					}
 				}
 
@@ -591,6 +621,7 @@ public class ReportService {
 			summary.setAverageScore(average);
 			summary.setAnswerCountForPoints(pointCounts);
 			summary.setTimesAskedInReports(count);
+			summary.setMaxScore(maxScore);
 		}
 		return summary;
 
@@ -599,18 +630,17 @@ public class ReportService {
 	private MultipleChoiceAnswerSummary getMultipleChoiceAnswerSummary(
 			MultipleChoiceQuestion mcq, List<Report> reports) {
 		MultipleChoiceAnswerSummary mcaSummary = new MultipleChoiceAnswerSummary();
-		Map<String, Integer> chosenOptionsCount = new LinkedHashMap<String, Integer>();
+		Map<MultipleChoiceOption, Integer> chosenOptionsCount = new LinkedHashMap<MultipleChoiceOption, Integer>();
 		mcaSummary.setQuestion(mcq);
 
 		double totalScore = 0;
 		int count = 0;
 
 		for (MultipleChoiceOption option : mcq.getOptionsList()) {
-			chosenOptionsCount.put(option.getMultipleChoiceOption(),
-					Integer.valueOf(0));
+			chosenOptionsCount.put(option, Integer.valueOf(0));
 		}
 
-		int maxScore;
+		int maxScore = 0;
 		for (Report report : reports) {
 			if (report instanceof WorkshopVisitReport) {
 
@@ -630,13 +660,23 @@ public class ReportService {
 
 										for (MultipleChoiceOption chosenOption : mca
 												.getChosenOptions()) {
+
+											MultipleChoiceOption key = new MultipleChoiceOption();
+
+											for (Map.Entry<MultipleChoiceOption, Integer> entry : chosenOptionsCount
+													.entrySet()) {
+												if (entry
+														.getKey()
+														.getMultipleChoiceOption()
+														.equals(chosenOption
+																.getMultipleChoiceOption()))
+													key = entry.getKey();
+											}
+
 											int addToCount = chosenOptionsCount
-													.get(chosenOption
-															.getMultipleChoiceOption())
-													.intValue() + 1;
+													.get(key).intValue() + 1;
 											chosenOptionsCount
-													.put(chosenOption
-															.getMultipleChoiceOption(),
+													.put(key,
 															Integer.valueOf(addToCount));
 
 										}
@@ -652,8 +692,11 @@ public class ReportService {
 				}
 			}
 		}
-		mcaSummary.setAverageScore(Math.round(totalScore / count * 100) / 100);
+		if (count > 0)
+			mcaSummary
+					.setAverageScore(Math.round(totalScore / count * 100) / 100);
 		mcaSummary.setChosenOptionsCount(chosenOptionsCount);
+		mcaSummary.setMaxScore(maxScore);
 
 		return mcaSummary;
 	}

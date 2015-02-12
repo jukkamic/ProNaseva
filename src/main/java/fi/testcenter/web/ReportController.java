@@ -74,10 +74,10 @@ public class ReportController {
 	private UserAccountService us;
 
 	@Autowired
-	private WorkshopVisitTestReportPdf workshopVisitReportPdfCreator;
+	private WorkshopVisitTestReportPdf workshopVisitReportPdfGenerator;
 
 	@Autowired
-	private PhoneCallTestReportPdf phoneCallTestReportPdfCreator;
+	private PhoneCallTestReportPdf phoneCallTestReportPdfGenerator;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String setupForm(HttpServletRequest request) {
@@ -395,17 +395,16 @@ public class ReportController {
 	}
 
 	@RequestMapping(value = "/getPdf", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getPdf(
-			@ModelAttribute("report") Report report, HttpServletRequest request) {
+	public ResponseEntity<byte[]> getPdf(@ModelAttribute("report") Report report) {
 		try {
 
 			byte[] contents;
 			if (report instanceof WorkshopVisitReport)
-				contents = workshopVisitReportPdfCreator.generateReportPdf(
+				contents = workshopVisitReportPdfGenerator.generateReportPdf(
 						(WorkshopVisitReport) report).toByteArray();
 
 			else if (report instanceof PhoneCallTestReport)
-				contents = phoneCallTestReportPdfCreator.generateReportPdf(
+				contents = phoneCallTestReportPdfGenerator.generateReportPdf(
 						(PhoneCallTestReport) report).toByteArray();
 			else
 				return null;
