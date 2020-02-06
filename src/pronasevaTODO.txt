@@ -1,0 +1,11 @@
+TODO:
+
+- Raporttien haku: admin saa tulokseksi kaikki, muille vain valmiit. 
+- Asiakask�ytt�j�lle raporttihaku
+- Raporttipohjan k�yt�st� poiston pvm
+- Raporttipohjan tietokantaan vienti: tarkistetaan onko kysymys vanhastaan kannassa. Raportinosiin ja kysymysryhmiin pseudo-idt?
+
+- nimetaan uudelleen
+- show date answer ei toimi phonecalltestreport.jsp:ssä
+- katso muutenkin date answer käyttö.
+- showAllAwaitApproval ei toiminut kun meni omista raporteista katsomaan kaikkia vahvistettavana olevia.

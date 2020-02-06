@@ -1,0 +1,109 @@
+.smileys {
+	min-height: 0;
+  min-width: 0;
+}
+
+.btn-showSelections { 
+  color: #0D0D0D; 
+  background-color: #C7C7C7; 
+  border-color: #000; 
+  min-height: 4em;
+  min-width: 8em;
+  
+} 
+ 
+.btn-showSelections:hover, 
+.btn-showSelections:focus, 
+.btn-showSelections:active, 
+.btn-showSelections.active, 
+.open .dropdown-toggle.btn-showSelections { 
+  color: #0D0D0D; 
+  background-color: #22C722; 
+  border-color: #000; 
+} 
+ 
+.btn-showSelections:active, 
+.btn-showSelections.active, 
+.open .dropdown-toggle.btn-showSelections { 
+  background-image: none; 
+   border-color: #000;
+} 
+ 
+.btn-showSelections.disabled, 
+.btn-showSelections[disabled], 
+fieldset[disabled] .btn-showSelections, 
+.btn-showSelections.disabled:hover, 
+.btn-showSelections[disabled]:hover, 
+fieldset[disabled] .btn-showSelections:hover, 
+.btn-showSelections.disabled:focus, 
+.btn-showSelections[disabled]:focus, 
+fieldset[disabled] .btn-showSelections:focus, 
+.btn-showSelections.disabled:active, 
+.btn-showSelections[disabled]:active, 
+fieldset[disabled] .btn-showSelections:active, 
+.btn-showSelections.disabled.active, 
+.btn-showSelections[disabled].active, 
+fieldset[disabled] .btn-showSelections.active { 
+  background-color: #C7C7C7; 
+  border-color: #000; 
+} 
+ 
+.btn-showSelections .badge { 
+  color: #C7C7C7; 
+  background-color: #0D0D0D; 
+   border-color: #000;
+}
+
+/* Valittu nappi raportin tarkastelussa */
+
+.btn-selectedOption { 
+  color: #000; 
+  background-color: #22C722; 
+  border-color: #000;
+    min-height: 4em;
+  min-width: 8em; 
+} 
+ 
+.btn-selectedOption:hover, 
+.btn-selectedOption:focus, 
+.btn-selectedOption:active, 
+.btn-selectedOption.active, 
+.open .dropdown-toggle.btn-selectedOption { 
+  color: #000; 
+  background-color: #22C722; 
+  border-color: #000; 
+} 
+ 
+.btn-selectedOption:active, 
+.btn-selectedOption.active, 
+.open .dropdown-toggle.btn-selectedOption { 
+  background-image: none; 
+   border-color: #000;
+} 
+ 
+.btn-selectedOption.disabled, 
+.btn-selectedOption[disabled], 
+fieldset[disabled] .btn-selectedOption, 
+.btn-selectedOption.disabled:hover, 
+.btn-selectedOption[disabled]:hover, 
+fieldset[disabled] .btn-selectedOption:hover, 
+.btn-selectedOption.disabled:focus, 
+.btn-selectedOption[disabled]:focus, 
+fieldset[disabled] .btn-selectedOption:focus, 
+.btn-selectedOption.disabled:active, 
+.btn-selectedOption[disabled]:active, 
+fieldset[disabled] .btn-selectedOption:active, 
+.btn-selectedOption.disabled.active, 
+.btn-selectedOption[disabled].active, 
+fieldset[disabled] .btn-selectedOption.active { 
+  background-color: #22C722; 
+  border-color: #000; 
+} 
+ 
+.btn-selectedOption .badge { 
+  color: #22C722; 
+  background-color: #000; 
+   border-color: #000;
+}
+
+
